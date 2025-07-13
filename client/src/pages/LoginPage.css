@@ -1,0 +1,215 @@
+/* Full height layout */
+body, html, #root {
+  margin: 0;
+  height: 100%;
+  font-family: system-ui, sans-serif;
+  background-color: #d9eff6;
+}
+
+/* Page container */
+.login-page {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Card container */
+.login-container {
+  display: flex;
+  width: 800px;
+  height: 500px;
+  background-color: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Left half */
+.login-left {
+  flex: 1;
+  background-color: #034172;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  text-align: center;
+  border-top-right-radius: 100px;
+  border-bottom-right-radius: 100px;
+}
+
+.login-left h2 {
+  font-size: 3.4rem;
+  margin-bottom: 10px;
+  font-weight: 800;
+}
+
+.login-left p {
+  font-size: 1.7rem;
+  color: #e0f7f0; /* lighter but still readable against green */
+  font-weight: 600;
+}
+
+/* Right half */
+.login-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+
+/* Login form */
+.login-form {
+  width: 100%;
+  max-width: 320px;
+}
+
+.login-form h2 {
+  color: #034172;
+  font-size: 4.0rem;
+  margin-top: 0;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Floating label input group */
+.input-group {
+  position: relative;
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 14px 0 6px 0;
+  font-size: 1rem;
+  border: none;
+  border-bottom: 2px solid #034172;
+  background: transparent;
+  color: #333;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+/* Hide the placeholder but still use it for :placeholder-shown */
+.input-group input::placeholder {
+  color: transparent;
+}
+
+.input-group input:focus {
+  border-bottom: 2px solid #2c6d52;
+  transform: translateY(1px);
+}
+
+.input-group label {
+  position: absolute;
+  top: 14px;
+  left: 0;
+  font-size: 1rem;
+  color: #777;
+  pointer-events: none;
+  transition: all 0.2s ease;
+}
+
+/* Float label up when focused or filled */
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+  top: -8px;
+  font-size: 0.8rem;
+  color: #2c6d52;
+}
+
+/* Forgot password */
+.forgot-password {
+  text-align: right;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+
+.forgot-password a {
+  color: #034172;
+  text-decoration: none;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+}
+
+/* Submit button */
+.primary-btn {
+  width: 100%;
+  padding: 14px;
+  background-color: #034172;
+  color: white;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.primary-btn:hover {
+  background-color: #24603f;
+}
+
+/* Signup link */
+.signup-link {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.signup-link a {
+  color: #034172;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.signup-link a:hover {
+  text-decoration: underline;
+}
+
+
+.input-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* spacing between icon and text */
+}
+
+.input-group label .icon {
+  font-size: 1.2rem;
+  color: #034172;
+}
+
+.password-group {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 1.1rem;
+  color: #034172;
+  padding-right: 5px;
+}
+
+.input-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.input-group label .icon {
+  font-size: 1.2rem;
+  color:  #034172;
+}

@@ -1,0 +1,104 @@
+.topnav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 60px;
+  background-color: #f7f7f7;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+  transition: left 0.3s ease;
+}
+
+.topnav-icons {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* space between notification and profile */
+}
+
+.dropdown-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 60px; /* Match .topnav height for consistent alignment */
+  cursor: pointer;
+  
+}
+
+.topnav-icon {
+  font-size: 28px;
+  color: #333;
+  display: block;
+}
+
+.profile-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-right: 20px;
+}
+
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.dropdown-icon {
+  font-size: 0.9rem;
+  color: #333;
+  user-select: none;
+}
+
+/* Shared dropdown menu style */
+.dropdown-menu {
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 180px;
+  min-height: 200px;
+  z-index: 999;
+  padding: 8px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align items at the top */
+  height: 240px; /* fixed height */
+}
+
+.dropdown-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.dropdown-menu li {
+  padding: 10px 16px;
+  cursor: pointer;
+  color: #333;
+  transition: background 0.2s ease;
+  white-space: nowrap;
+}
+
+.dropdown-menu li:hover {
+  background-color: #f0f0f0;
+}
+
+.dropdown-menu hr {
+  margin: 8px 0;
+  border: none;
+  border-top: 1px solid #ddd;
+}
+
+.dropdown-menu li.logout {
+  color: #c0392b;
+  font-weight: bold;
+}
