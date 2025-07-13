@@ -1,0 +1,242 @@
+.appointments-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px;
+  font-family: Arial, sans-serif;
+}
+
+.calendar-title {
+  text-align: left;
+  margin: 0 0 10px 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.calendar-card {
+  background: #f7f7f7;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 10px 0px 0px;
+  border: 0.5px solid #ccc;
+}
+
+/* Custom header with month label left and nav buttons right */
+.custom-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  width: 100%;
+  padding: 0 16px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.label {
+  font-size: 20px;
+  font-weight: 600;
+  color: #222;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  width: 180px; /* Adjust as needed */
+  padding: 0;
+  margin-right: 24px; /* Space between label and arrows */
+  flex-shrink: 1;
+  flex-grow: 0;
+}
+
+.add-appointment-btn {
+  padding: 6px 14px;
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+  margin-right: 24px;
+}
+
+.appointments-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+  padding: 32px 24px;
+  border-radius: 12px;
+  min-width: 320px;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.appointments-modal h3 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.appointments-modal ul {
+  padding-left: 18px;
+  margin: 0 0 12px 0;
+}
+
+.modal-add-appointment-btn {
+  margin-top: 12px;
+  background: #1976d2 !important;
+  color: #fff !important;
+  font-weight: bold;
+  border-radius: 4px;
+  text-transform: none;
+}
+
+.add-appointment-btn:hover {
+  background: #1251a3;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 8px;
+  
+}
+
+
+.nav-btn {
+  border: 1px solid white;
+  border-radius: 4px;
+  padding: 4px 12px;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  color: #333;
+  transition: background-color 0.2s;
+  background-color: #eee;
+}
+
+.nav-btn:hover {
+  background-color: #034172;
+}
+.nav-btn:hover svg {
+  color: white;
+}
+
+/* Custom weekdays above calendar */
+.custom-weekdays {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0 6px;
+  padding: 0 6px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  user-select: none;
+}
+
+.custom-weekday {
+  flex: 1;
+  text-align: center;
+  font-weight: 600;
+  font-size: 25px;
+  color: #555;
+}
+
+/* Hide default react-big-calendar weekday headers inside month view */
+.rbc-month-view .rbc-header {
+  display: none !important;
+}
+
+/* Remove borders around date cells for clean look */
+.rbc-month-view .rbc-date-cell {
+  position: relative;      /* enable absolute positioning inside */
+  padding: 10px 10px 0 0;    /* top padding for spacing */
+  border: none !important;
+}
+
+.rbc-month-view .rbc-day-bg:hover {
+  background-color: #e3f0ff !important; /* Choose your preferred hover color */
+  cursor: pointer;
+}
+
+/* Highlight today's date */
+/* Remove the blue tile background */
+.rbc-today {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+
+/* Style events */
+.rbc-event {
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rbc-month-view {
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  overflow: hidden;
+}
+
+
+
+.custom-weekday.is-today {
+  color: #007bff;
+  font-weight: 700;
+}
+
+.rbc-now .rbc-button-link {
+  color: #007bff; /* or any highlight color */
+  font-weight: bold;
+}
+
+.form-group {
+  margin-bottom: 16px;
+  width: 100%;
+}
+.form-group label {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+.autocomplete-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-top: none;
+  max-height: 120px;
+  overflow-y: auto;
+  position: absolute;
+  z-index: 10;
+  width: 90%;
+}
+.autocomplete-item {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+.autocomplete-item:hover {
+  background: #e3f0ff;
+}
