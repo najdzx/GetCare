@@ -1,7 +1,7 @@
 .sidebar {
   width: 240px;
-  background-color: #034172;
-  color: white;
+  background: #434bb8;
+  color: #fff;
   height: 100vh;
   position: fixed;
   top: 0;
@@ -10,7 +10,6 @@
   flex-direction: column;
   transition: width 0.3s ease;
   z-index: 1000;
-  
 }
 
 .sidebar.collapsed {
@@ -23,13 +22,10 @@
   align-items: center;
   padding: 12px 20px; /* same padding as nav links */
   margin-bottom: 30px;
-  border-radius: 8px;
   font-weight: 800;
   cursor: default;
   justify-content: flex-start; /* force left alignment */
-
 }
-
 
 .logo {
   display: flex;
@@ -49,17 +45,20 @@
   filter: brightness(0) invert(1); /* Makes black SVG appear white */
 }
 
-
 /* Nav styles unchanged */
 .sidebar nav ul {
   list-style: none;
   padding: 0;
   margin: 0;
   width: 100%;
+  position: relative;
 }
 
 .sidebar nav ul li {
   margin-bottom: 15px;
+  /*width: 80%;*/
+  position: relative;
+  z-index: 1;
 }
 
 .sidebar nav ul li a {
@@ -69,21 +68,23 @@
   text-decoration: none;
   font-weight: 600;
   padding: 12px 20px;
-  border-radius: 8px;
-  transition: background-color 0.2s ease;
-  white-space: nowrap;  /* ✅ Prevents wrapping */
-  overflow: hidden;     /* ✅ Hide overflow just in case */
+  transition: background-color 0.2s ease, color 0.2s;
+  white-space: nowrap;  /* Prevents wrapping */
+  overflow: hidden;     /* Hide overflow just in case */
   text-overflow: ellipsis;
-  
+  position: relative;
+  z-index: 2;
+  background: none;
 }
 
 .sidebar nav ul li a:hover {
-  background-color: #045a9c; /* brighter blue for hover */
+  background: #e3e8f0; /* subtle light gray */
+  color: #434bb8; /* brighter blue for hover */
 }
 
 .sidebar nav ul li a.active {
-  background-color: #0565ae; /* slightly deeper active color */
-  
+  background: #fff;
+  color: #434bb8; /* slightly deeper active color */
 }
 
 .sidebar nav ul li a svg {
@@ -99,4 +100,21 @@
   display: none;
 }
 
+/* Animated curved indicator for active item */
+.sidebar-active-indicator {
+  position: absolute;
+  left: 0;
+  width: 90%;
+  background: #ff4f91;
+  border-radius: 20px 0 0 20px;
+  transition: top 0.3s cubic-bezier(.4,2,.3,1), height 0.3s cubic-bezier(.4,2,.3,1);
+  z-index: 0;
+  box-shadow: 0 2px 12px 0 rgba(255,79,145,0.15);
+  pointer-events: none;
+}
 
+.sidebar.collapsed .sidebar-active-indicator {
+  border-radius: 20px;
+  left: 0;
+  width: 80%;
+} 
