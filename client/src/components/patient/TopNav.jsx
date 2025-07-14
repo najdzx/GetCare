@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MdNotifications } from 'react-icons/md';
-import './TopNav.css';
+import '../Layout/TopNav.css';
 
 const TopNav = ({ collapsed }) => {
   const [profileOpen, setProfileOpen] = useState(false);

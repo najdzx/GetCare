@@ -11,7 +11,7 @@ import {
   MdAnalytics,
   MdEmojiPeople,
 } from 'react-icons/md';
-import './Sidebar.css';
+import '../Layout/Sidebar.css';
 
 
 const Sidebar = ({ collapsed, setCollapsed }) => {

@@ -344,6 +344,7 @@ function MyClinic() {
                       <div className="schedule-cell">
                         <select>
                           <option>Appointments only</option>
+                          <option>Appointments & Walk-ins</option>
                         </select>
                       </div>
                       <div className="schedule-cell">
