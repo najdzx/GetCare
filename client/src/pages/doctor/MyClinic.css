@@ -4,7 +4,8 @@
   padding: 8px 24px;
   background: #f7f7f7;
   border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 830px;
 }
 
 .dashboard-grid.clinic-grid {
@@ -187,20 +188,41 @@
 /* The rest of your .myclinic-container and form styles remain unchanged */
 
 .next-clinic-btn {
-  background: #1976d2;
-  color: #fff;
+  background: #f5f5f5;
   border: none;
-  border-radius: 6px;
+  color: #212121;
+  border-radius: 4px;
   padding: 0 28px;
   font-size: 16px;
   font-weight: 500;
   cursor: pointer;
   height: 40px;
   margin-bottom: 0;
-  transition: background 0.2s;
+  border: 1px solid #e0e0e0;
+  transition: background 0.2s, color 0.2s;
 }
 .next-clinic-btn:hover {
-  background: #115293;
+  background: #434bb8;
+  color: #fff;
+}
+
+.cancel-btn {
+  background: #f5f5f5;
+  border: none;
+  color: #212121;
+  border-radius: 4px;
+  padding: 0 20px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  height: 40px;
+  margin-bottom: 0;
+  border: 1px solid #e0e0e0;
+  transition: background 0.2s, color 0.2s;
+}
+.cancel-btn:hover {
+  background: #434bb8;
+  color: #fff;
 }
 .myclinic-stepper {
   display: flex;
@@ -329,4 +351,164 @@
   cursor: pointer;
   font-weight: 500;
   font-size: 15px;
+}
+
+
+.schedule-days {
+  display: flex;
+  gap: 32px;
+  margin-bottom: 18px;
+  margin-top: 32px;
+}
+
+.schedule-day-label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-weight: 500;
+  min-width: 48px;
+  font-size: 16px;
+  gap: 4px;
+}
+.schedule-day-label {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.schedule-day-label span {
+  display: block;
+  margin-bottom: 8px;
+}
+.schedule-days input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #434bb8;
+  margin-top: 6px;
+}
+
+
+.schedule-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.schedule-row-label {
+  font-weight: 500;
+  min-width: 90px;
+}
+
+.schedule-row select,
+.schedule-row input,
+.schedule-row button {
+  height: 40px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+.schedule-row select {
+  width: 200px; /* Change this value as needed */
+}
+.schedule-row input {
+  width: 280px; /* Change this value as needed */
+}
+
+.schedule-row select,
+.schedule-row input {
+  padding: 0 12px;
+  border-radius: 4px;
+  border: 1.5px solid #e0e0e0;
+  background: #f7f7f7;
+}
+
+.schedule-row select:focus,
+.schedule-row input:focus {
+  border-color: #1976d2;
+  background: #fff;
+  outline: none;
+}
+
+.schedule-row button {
+  background: #888;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0 18px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.schedule-row button:hover {
+  background: #434bb8;
+}
+
+.schedule-header-row {
+  font-weight: 400;
+  color: black;
+  background: transparent;
+  margin-bottom: 24px;
+}
+
+.schedule-label {
+  min-width: 190px;
+  display: inline-block;
+  font-size: 15px;
+  margin-right: 12px;
+}
+
+
+
+.myclinic-schedule-section {
+  position: relative;
+  height: 830px; /* adjust as needed for your layout */
+}
+
+.myclinic-actions {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+.save-btn {
+  background: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  color: #212121;
+  border-radius: 4px;
+  padding: 0 28px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  height: 40px;
+  margin-bottom: 0;
+  transition: background 0.2s, color 0.2s;
+}
+.save-btn:hover {
+  background: #434bb8;
+  color: #fff;
+}
+
+.back-btn {
+  background: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  color: #212121;
+  border-radius: 4px;
+  padding: 0 28px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  height: 40px;
+  margin-bottom: 0;
+  transition: background 0.2s, color 0.2s;
+}
+.back-btn:hover {
+  background: #434bb8;
+  color: #fff;
 }
