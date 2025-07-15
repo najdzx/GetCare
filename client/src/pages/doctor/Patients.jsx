@@ -246,19 +246,7 @@ const Patients = () => {
                   </div>
                 </div>
 
-                <div className="appointment-history">
-                  <h4>📅 Appointment History</h4>
-                  {selectedPatient.history && selectedPatient.history.length > 0 ? (
-                    <ul>
-                      {selectedPatient.history.map((appt, index) => (
-                        <li key={index}>- {appt.date} – {appt.reason}</li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p>No past appointments.</p>
-                  )}
-                  <button className="view-full-history">View Full History</button>
-                </div>
+                {/* Remove the appointment-history section here */}
               </>
             )}
 
