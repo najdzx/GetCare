@@ -10,7 +10,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 import Appointments from './pages/doctor/Appointments';
 import Patients from './pages/doctor/Patients';
 import Notes from './pages/doctor/Notes';
-import Chat from './pages/doctor/Chat';
+import Chat from './pages/doctor/chat/ChatMessenger';
 import Files from './pages/doctor/Files';
 import Analytics from './pages/doctor/Analytics';
 import Engagement from './pages/doctor/Engagement';
