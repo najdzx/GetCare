@@ -15,7 +15,7 @@ const DoctorLayout = () => {
           marginLeft: collapsed ? '80px' : '240px',
           padding: '80px 20px 20px',
           transition: 'margin-left 0.3s ease',
-          backgroundColor: 'blue',
+          backgroundColor: 'white',
           minHeight: '100vh',
         }}
       >
