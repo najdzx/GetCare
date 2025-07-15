@@ -10,7 +10,7 @@
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/your-org/GETCARE.git
-   cd GETCARE/client
+   cd GETCARE
    ```
 
 2. **Install dependencies:**
