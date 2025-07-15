@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MdNotifications } from 'react-icons/md';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import '../Layout/TopNav.css';
 
 const TopNav = ({ collapsed }) => {
@@ -58,7 +59,7 @@ const TopNav = ({ collapsed }) => {
             alt="User Profile"
             className="profile-pic"
           />
-          <span className="dropdown-icon">˅</span>
+          <KeyboardArrowDownIcon className="dropdown-icon" fontSize="small" />
           {profileOpen && (
             <div className="dropdown-menu">
               <ul>

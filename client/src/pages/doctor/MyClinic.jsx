@@ -332,14 +332,10 @@ function MyClinic() {
                     <div className="schedule-row" key={day}>
                       <div className="schedule-row-label">{DAY_LABELS[day]}</div>
                       <div className="schedule-cell">
-                        <select>
-                          <option>01:00 AM</option>
-                        </select>
+                        <input type="time" className="schedule-time-input" />
                       </div>
                       <div className="schedule-cell">
-                        <select>
-                          <option>02:30 AM</option>
-                        </select>
+                        <input type="time" className="schedule-time-input" />
                       </div>
                       <div className="schedule-cell">
                         <select>
