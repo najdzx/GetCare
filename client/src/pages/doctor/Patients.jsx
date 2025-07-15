@@ -228,19 +228,19 @@ const Patients = () => {
 
                   <div className="patient-right">
                     <div className="patient-column">
-                      <div className="field-row"><span className="field-label">First Name:</span><span className="field-value">{selectedPatient.firstName || '—'}</span></div>
-                      <div className="field-row"><span className="field-label">Middle Name:</span><span className="field-value">{selectedPatient.middleName || '—'}</span></div>
-                      <div className="field-row"><span className="field-label">Last Name:</span><span className="field-value">{selectedPatient.lastName || '—'}</span></div>
-                      <div className="field-row"><span className="field-label">Sex:</span><span className="field-value">{selectedPatient.sex || '—'}</span></div>
-                      <div className="field-row"><span className="field-label">Date of Birth:</span><span className="field-value">{selectedPatient.dob || '—'}</span></div>
-                      <div className="field-row"><span className="field-label">Civil Status:</span><span className="field-value">{selectedPatient.civilStatus || '—'}</span></div>
+                      <div className="field-row"><span className="field-label">First Name:</span><span className="field-value">{selectedPatient.firstName || ''}</span></div>
+                      <div className="field-row"><span className="field-label">Middle Name:</span><span className="field-value">{selectedPatient.middleName || ''}</span></div>
+                      <div className="field-row"><span className="field-label">Last Name:</span><span className="field-value">{selectedPatient.lastName || ''}</span></div>
+                      <div className="field-row"><span className="field-label">Sex:</span><span className="field-value">{selectedPatient.sex || ''}</span></div>
+                      <div className="field-row"><span className="field-label">Date of Birth:</span><span className="field-value">{selectedPatient.dob || ''}</span></div>
+                      <div className="field-row"><span className="field-label">Civil Status:</span><span className="field-value">{selectedPatient.civilStatus || ''}</span></div>
                     </div>
                     <div className="patient-column">
-                      <div className="field-row"><span className="field-label">Suffix:</span><span className="field-value">{selectedPatient.suffix || '—'}</span></div>
-                      <div className="field-row"><span className="field-label">Blood Type:</span><span className="field-value">{selectedPatient.bloodType || '—'}</span></div>
-                      <div className="field-row"><span className="field-label">PhilHealth No.:</span><span className="field-value">{selectedPatient.philhealth || '—'}</span></div>
-                      <div className="field-row"><span className="field-label">Email:</span><span className="field-value">{selectedPatient.email || '—'}</span></div>
-                      <div className="field-row"><span className="field-label">Primary Mobile:</span><span className="field-value">{selectedPatient.mobile || '—'}</span></div>
+                      <div className="field-row"><span className="field-label">Suffix:</span><span className="field-value">{selectedPatient.suffix || ''}</span></div>
+                      <div className="field-row"><span className="field-label">Blood Type:</span><span className="field-value">{selectedPatient.bloodType || ''}</span></div>
+                      <div className="field-row"><span className="field-label">PhilHealth No.:</span><span className="field-value">{selectedPatient.philhealth || ''}</span></div>
+                      <div className="field-row"><span className="field-label">Email:</span><span className="field-value">{selectedPatient.email || ''}</span></div>
+                      <div className="field-row"><span className="field-label">Primary Mobile:</span><span className="field-value">{selectedPatient.mobile || ''}</span></div>
                       <div className="field-row"><span className="field-label">Address:</span><span className="field-value">{selectedPatient.address || '300 san guillermo st. putatan, muntinlupa city'}</span></div>
                     </div>
                   </div>

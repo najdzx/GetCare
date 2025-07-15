@@ -33,7 +33,7 @@
 
 .card-icon {
   font-size: 1.5rem;
-  color: #034172;
+  color: #434bb8;
 }
 
 .card-header select {
@@ -65,15 +65,17 @@
 .view-btn {
   margin-top: 10px;
   padding: 6px 12px;
-  background-color: #034172;
-  color: white;
+  background: #f5f5f5;
   border: none;
-  border-radius: 6px;
+  color: #212121;
+  border-radius: 4px;
   cursor: pointer;
   font-size: 0.9rem;
-  transition: background-color 0.2s ease;
+  border: 1px solid #e0e0e0;
+  transition: background 0.2s, color 0.2s;
 }
 
 .view-btn:hover {
-  background-color: #045a9c;
+  background: #434bb8;
+  color: #fff;
 }

@@ -30,12 +30,12 @@
 .patients-card-header h3 {
   margin: 0;
   font-size: 1.1rem;
-  color: #034172;
+  color: #434bb8;
 }
 
 .patients-icon {
   font-size: 1.5rem;
-  color: #034172;
+  color: #434bb8;
 }
 
 /* Table */
@@ -51,7 +51,7 @@
   font-weight: bold;
   padding-bottom: 8px;
   border-bottom: 1px solid #ccc;
-  color: #034172;
+  color: #434bb8;
 }
 
 .patients-table-row {
@@ -74,8 +74,8 @@
 }
 
 .patients-table-row button {
-  background-color: #034172;
-  color: white;
+  background-color: #f5f5f5;
+  color: #212121;
   padding: 6px 12px;
   border: none;
   border-radius: 6px;
@@ -85,7 +85,8 @@
 }
 
 .patients-table-row button:hover {
-  background-color: #045a9c;
+  background-color: #434bb8;
+  color: #fff
 }
 
 .patients-empty {
@@ -276,6 +277,7 @@
   font-weight: 600;
   color: #034172;
   text-align: left;
+  
 }
 
 .field-value {
