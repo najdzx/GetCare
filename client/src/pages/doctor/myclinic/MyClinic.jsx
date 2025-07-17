@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './MyClinic.css';
 
 const DAYS = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
@@ -139,12 +139,12 @@ function MyClinic() {
               </div>
               <div className="myclinic-toggle-group">
                 <button
-                  className={clinic.isHospital ? 'toggle-btn active' : 'toggle-btn'}
+                  className={`toggle-btn${clinic.isHospital ? ' active' : ''}`}
                   onClick={() => setClinic({ ...clinic, isHospital: true })}
                   type="button"
                 >YES</button>
                 <button
-                  className={!clinic.isHospital ? 'toggle-btn active' : 'toggle-btn'}
+                  className={`toggle-btn${!clinic.isHospital ? ' active' : ''}`}
                   onClick={() => setClinic({ ...clinic, isHospital: false })}
                   type="button"
                 >NO</button>
@@ -318,7 +318,7 @@ function MyClinic() {
               {/* Only show schedule rows for checked days */}
               <div className="schedule-details">
                 {/* Header labels */}
-                <div className="schedule-row schedule-header-row">
+                <div className={`schedule-row schedule-header-row`}>
                   <div className="schedule-row-label"></div>
                   <label className="schedule-label">Start Time</label>
                   <label className="schedule-label">End Time</label>

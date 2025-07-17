@@ -51,16 +51,18 @@ const ChatMessenger = () => {
   };
 
   return (
-    <div className="messenger-container">
-      <ChatSidebar
-        patients={patients}
-        selectedPatient={selectedPatient}
-        onSelect={setSelectedPatient}
-      />
-      <ChatWindow
-        patient={selectedPatient}
-        socket={socket}
-      />
+    <div className="messenger-outer-wrapper">
+      <div className="messenger-container">
+        <ChatSidebar
+          patients={patients}
+          selectedPatient={selectedPatient}
+          onSelect={setSelectedPatient}
+        />
+        <ChatWindow
+          patient={selectedPatient}
+          socket={socket}
+        />
+      </div>
     </div>
   );
 };
