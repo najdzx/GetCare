@@ -43,10 +43,10 @@ const Dashboard = () => {
     <div className="dashboard-grid">
 
       {/* Appointments */}
-      <div className="card">
-        <div className="card-header">
-          <div className="card-title">
-            <MdEventNote className="card-icon" />
+      <div className="dashboard-card">
+        <div className="dashboard-card-header">
+          <div className="dashboard-card-title">
+            <MdEventNote className="dashboard-card-icon" />
             <h3>Appointments</h3>
           </div>
           <select value={filter} onChange={(e) => setFilter(e.target.value)}>
@@ -56,56 +56,56 @@ const Dashboard = () => {
             <option>This Month</option>
           </select>
         </div>
-        <p className="card-number">{metrics.appointments}</p>
-        <button className="view-btn" onClick={() => navigate('/doctor/appointments')}>
+        <p className="dashboard-card-number">{metrics.appointments}</p>
+        <button className="dashboard-view-btn" onClick={() => navigate('/doctor/appointments')}>
           View
         </button>
       </div>
 
       {/* Assigned Patients */}
-      <div className="card">
-        <div className="card-header">
-          <div className="card-title">
-            <MdPeople className="card-icon" />
+      <div className="dashboard-card">
+        <div className="dashboard-card-header">
+          <div className="dashboard-card-title">
+            <MdPeople className="dashboard-card-icon" />
             <h3>Assigned Patients</h3>
           </div>
         </div>
-        <p className="card-number">{metrics.assignedPatients}</p>
-        <button className="view-btn" onClick={() => navigate('/doctor/patients')}>
+        <p className="dashboard-card-number">{metrics.assignedPatients}</p>
+        <button className="dashboard-view-btn" onClick={() => navigate('/doctor/patients')}>
           View
         </button>
       </div>
 
       {/* Referred Patients */}
-      <div className="card">
-        <div className="card-header">
-          <div className="card-title">
-            <MdPersonAdd className="card-icon" />
+      <div className="dashboard-card">
+        <div className="dashboard-card-header">
+          <div className="dashboard-card-title">
+            <MdPersonAdd className="dashboard-card-icon" />
             <h3>Referred Patients</h3>
           </div>
         </div>
-        <p className="card-number">{metrics.referredPatients}</p>
-        <button className="view-btn" onClick={() => navigate('/doctor/patients')}>
+        <p className="dashboard-card-number">{metrics.referredPatients}</p>
+        <button className="dashboard-view-btn" onClick={() => navigate('/doctor/patients')}>
           View
         </button>
       </div>
 
       {/* Shared Notes */}
-      <div className="card">
-        <div className="card-header">
-          <div className="card-title">
-            <MdNote className="card-icon" />
+      <div className="dashboard-card">
+        <div className="dashboard-card-header">
+          <div className="dashboard-card-title">
+            <MdNote className="dashboard-card-icon" />
             <h3>Shared Notes</h3>
           </div>
         </div>
-        <ul className="notes-list">
+        <ul className="dashboard-notes-list">
           {metrics.sharedNotes.map((note, idx) => (
             <li key={idx}>
               {note.doctor} → {note.patient}
             </li>
           ))}
         </ul>
-        <button className="view-btn" onClick={() => navigate('/doctor/notes')}>
+        <button className="dashboard-view-btn" onClick={() => navigate('/doctor/notes')}>
           View
         </button>
       </div>

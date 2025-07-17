@@ -5,8 +5,8 @@
   padding: 20px;
 }
 
-.card {
-  background-color: #f7f7f7;
+.dashboard-card {
+  background-color: white;
   border-radius: 12px;
   border: 1px solid #ccc;
   padding: 20px;
@@ -14,43 +14,42 @@
   transition: transform 0.2s ease;
 }
 
-.card:hover {
+.dashboard-card:hover {
   transform: translateY(-2px);
 }
 
-.card-header {
+.dashboard-card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 12px;
 }
 
-.card-title {
+.dashboard-card-title {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.card-icon {
+.dashboard-card-icon {
   font-size: 1.5rem;
   color: #434bb8;
 }
 
-.card-header select {
+.dashboard-card-header select {
   padding: 4px 8px;
   border-radius: 6px;
   border: 1px solid #ccc;
   font-size: 0.9rem;
 }
 
-.card-number {
+.dashboard-card-number {
   font-size: 2rem;
   font-weight: bold;
   margin-top: 10px;
 }
 
-/* Notes list inside the card */
-.notes-list {
+.dashboard-notes-list {
   padding-left: 20px;
   margin: 0;
   list-style-type: disc;
@@ -58,11 +57,11 @@
   color: #333;
 }
 
-.notes-list li {
+.dashboard-notes-list li {
   margin-bottom: 6px;
 }
 
-.view-btn {
+.dashboard-view-btn {
   margin-top: 10px;
   padding: 6px 12px;
   background: #f5f5f5;
@@ -75,7 +74,7 @@
   transition: background 0.2s, color 0.2s;
 }
 
-.view-btn:hover {
+.dashboard-view-btn:hover {
   background: #434bb8;
   color: #fff;
 }

@@ -186,19 +186,19 @@ const Patients = () => {
             {/* Modal Navigation */}
             <div className="modal-nav">
               <button
-                className={modalPage === 1 ? 'nav-btn active' : 'nav-btn'}
+                className={`nav-btn${modalPage === 1 ? ' active' : ''}`}
                 onClick={() => setModalPage(1)}
               >
                 Patient Info
               </button>
               <button
-                className={modalPage === 2 ? 'nav-btn active' : 'nav-btn'}
+                className={`nav-btn${modalPage === 2 ? ' active' : ''}`}
                 onClick={() => setModalPage(2)}
               >
                 Medical Background
               </button>
               <button
-                className={modalPage === 3 ? 'nav-btn active' : 'nav-btn'}
+                className={`nav-btn${modalPage === 3 ? ' active' : ''}`}
                 onClick={() => setModalPage(3)}
               >
                 SOAP Note
@@ -402,21 +402,21 @@ const Patients = () => {
                             {showRemarksMenu && (
                               <div className="remarks-menu-dropdown" style={{ right: 0, left: 'auto' }}>
                                 <button
-                                  className={remarksTemplate === 'notes' ? 'remarks-menu-option active' : 'remarks-menu-option'}
+                                  className={remarksTemplate === 'notes' ? 'remarks-menu-option-active' : 'remarks-menu-option'}
                                   onClick={() => { setRemarksTemplate('notes'); setShowRemarksMenu(false); }}
                                   type="button"
                                 >
                                   Notes
                                 </button>
                                 <button
-                                  className={remarksTemplate === 'file' ? 'remarks-menu-option active' : 'remarks-menu-option'}
+                                  className={remarksTemplate === 'file' ? 'remarks-menu-option-active' : 'remarks-menu-option'}
                                   onClick={() => { setRemarksTemplate('file'); setShowRemarksMenu(false); }}
                                   type="button"
                                 >
                                   Lab Results / File(s)
                                 </button>
                                 <button
-                                  className={remarksTemplate === 'vitals' ? 'remarks-menu-option active' : 'remarks-menu-option'}
+                                  className={remarksTemplate === 'vitals' ? 'remarks-menu-option-active' : 'remarks-menu-option'}
                                   onClick={() => { setRemarksTemplate('vitals'); setShowRemarksMenu(false); }}
                                   type="button"
                                 >
@@ -567,21 +567,21 @@ const Patients = () => {
                                 {showRemarksMenu && (
                                   <div className="remarks-menu-dropdown">
                                     <button
-                                      className={remarksTemplate === 'notes' ? 'remarks-menu-option active' : 'remarks-menu-option'}
+                                      className={remarksTemplate === 'notes' ? 'remarks-menu-option-active' : 'remarks-menu-option'}
                                       onClick={() => { setRemarksTemplate('notes'); setShowRemarksMenu(false); }}
                                       type="button"
                                     >
                                       Notes
                                     </button>
                                     <button
-                                      className={remarksTemplate === 'file' ? 'remarks-menu-option active' : 'remarks-menu-option'}
+                                      className={remarksTemplate === 'file' ? 'remarks-menu-option-active' : 'remarks-menu-option'}
                                       onClick={() => { setRemarksTemplate('file'); setShowRemarksMenu(false); }}
                                       type="button"
                                     >
                                       Lab Results / File(s)
                                     </button>
                                     <button
-                                      className={remarksTemplate === 'vitals' ? 'remarks-menu-option active' : 'remarks-menu-option'}
+                                      className={remarksTemplate === 'vitals' ? 'remarks-menu-option-active' : 'remarks-menu-option'}
                                       onClick={() => { setRemarksTemplate('vitals'); setShowRemarksMenu(false); }}
                                       type="button"
                                     >

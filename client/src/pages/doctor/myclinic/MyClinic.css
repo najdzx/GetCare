@@ -2,7 +2,7 @@
   max-width: 1300px;
   margin: 0 auto;
   padding: 8px 24px;
-  background: #f7f7f7;
+  background: white;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   height: 830px;
@@ -300,7 +300,7 @@
   font-size: 17px;
   border: 1.5px solid #e0e0e0;
   border-radius: 4px;
-  background: #f7f7f7;
+  background: white;
   transition: border-color 0.2s;
 }
 .myclinic-input:focus {
@@ -423,7 +423,7 @@
   padding: 0 12px;
   border-radius: 4px;
   border: 1.5px solid #e0e0e0;
-  background: #f7f7f7;
+  background: white;
 }
 
 .schedule-row select:focus,
