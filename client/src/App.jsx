@@ -3,18 +3,19 @@ import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import DoctorLayout from './components/doctor/DoctorLayout';
-import Dashboard from './pages/doctor/Dashboard';
+import Dashboard from './pages/doctor/dashboard/Dashboard';
 import ErrorBoundary from './components/ErrorBoundary';
 
 // 👇 Add these imports for the sub-pages
-import Appointments from './pages/doctor/Appointments';
-import Patients from './pages/doctor/Patients';
+import Appointments from './pages/doctor/appointments/Appointments';
+import Patients from './pages/doctor/patients/Patients';
 import Notes from './pages/doctor/Notes';
 import Chat from './pages/doctor/chat/ChatMessenger';
 import Files from './pages/doctor/Files';
 import Analytics from './pages/doctor/Analytics';
 import Engagement from './pages/doctor/Engagement';
-import MyClinic from './pages/doctor/MyClinic';
+import MyClinic from './pages/doctor/myclinic/MyClinic';
+import Invitations from './pages/doctor/Invitations';
 
 import PatientLayout from './components/patient/PatientLayout';
 import PatientDashboard from './pages/patient/Dashboard';
@@ -48,6 +49,7 @@ function App() {
           <Route path="files" element={<Files />} />
           <Route path="analytics" element={<Analytics />} />
           <Route path="engagement" element={<Engagement />} />
+          <Route path="invitations" element={<Invitations />} />
         </Route>
         <Route path="/patient" element={<PatientLayout />}>
           <Route index element={<PatientDashboard />} />
