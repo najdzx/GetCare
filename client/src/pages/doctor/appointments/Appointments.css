@@ -13,7 +13,7 @@
 }
 
 .calendar-card {
-  background: #f7f7f7;
+  background: white;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   padding: 10px 0px 0px;
@@ -136,8 +136,8 @@
 
 /* Custom weekdays above calendar */
 .custom-weekdays {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
   margin: 10px 0 6px;
   padding: 0 6px;
   padding-top: 10px;
@@ -146,11 +146,16 @@
 }
 
 .custom-weekday {
-  flex: 1;
   text-align: center;
   font-weight: 600;
-  font-size: 25px;
+  font-size: 14px;
   color: #555;
+  padding: 8px;
+}
+
+.custom-weekday.is-today {
+  color: #434bb8;
+  font-weight: 700;
 }
 
 /* Hide default react-big-calendar weekday headers inside month view */
@@ -170,6 +175,16 @@
   cursor: pointer;
 }
 
+/* Ensure hover effect works on the day background */
+.rbc-month-view .rbc-day-bg {
+  transition: background-color 0.2s ease;
+}
+
+.rbc-month-view .rbc-day-bg:hover {
+  background-color: #e3e8f0 !important;
+  cursor: pointer;
+}
+
 /* Highlight today's date */
 /* Remove the blue tile background */
 .rbc-today {
@@ -181,7 +196,18 @@
   font-weight: bold;
 }
 
-
+.rbc-today .rbc-button-link {
+  color: #434bb8 !important;
+  font-weight: 700;
+  background-color: #e8f0f8;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2px;
+}
 
 /* Style events */
 .rbc-event {
@@ -199,13 +225,6 @@
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
   overflow: hidden;
-}
-
-
-
-.custom-weekday.is-today {
-  color: #434bb8;
-  font-weight: 700;
 }
 
 

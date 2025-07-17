@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Calendar as BigCalendar,
   Views,
@@ -61,6 +61,7 @@ const Appointments = () => {
 
   const today = new Date();
   const todayIndex = today.getDay();
+  const todayDate = today.getDate();
 
   const [events, setEvents] = useState([
   {
@@ -159,6 +160,7 @@ const Appointments = () => {
           components={{
             toolbar: () => null,
             header: () => null,
+            // Removed custom dateCellWrapper
           }}
           formats={{
             dateFormat: 'd',

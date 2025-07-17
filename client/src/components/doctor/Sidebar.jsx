@@ -25,6 +25,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
     { name: 'Appointments', path: '/doctor/appointments', icon: <MdEventNote size={24} /> },
     { name: 'Patients', path: '/doctor/patients', icon: <MdPeople size={24} /> },
     { name: 'Notes', path: '/doctor/notes', icon: <MdNote size={24} /> },
+    { name: 'Invitations', path: '/doctor/invitations', icon: <MdPeople size={24} /> },
     { name: 'Chat', path: '/doctor/chat', icon: <MdChat size={24} /> },
     { name: 'Files', path: '/doctor/files', icon: <MdFolder size={24} /> },
     { name: 'Analytics', path: '/doctor/analytics', icon: <MdAnalytics size={24} /> },
