@@ -31,6 +31,17 @@ function MyClinic() {
 
   // Track checked days for schedule
   const [checkedDays, setCheckedDays] = useState([]);
+  
+  // Track schedule slots for each day
+  const [scheduleSlots, setScheduleSlots] = useState({
+    MON: [{ start: '09:00', end: '17:00', availability: 'Appointments only', notes: '' }],
+    TUE: [{ start: '09:00', end: '17:00', availability: 'Appointments only', notes: '' }],
+    WED: [{ start: '09:00', end: '17:00', availability: 'Appointments only', notes: '' }],
+    THU: [{ start: '09:00', end: '17:00', availability: 'Appointments only', notes: '' }],
+    FRI: [{ start: '09:00', end: '17:00', availability: 'Appointments only', notes: '' }],
+    SAT: [{ start: '09:00', end: '17:00', availability: 'Appointments only', notes: '' }],
+    SUN: [{ start: '09:00', end: '17:00', availability: 'Appointments only', notes: '' }],
+  });
 
   const handleInputChange = (e) => {
     setClinic({ ...clinic, [e.target.name]: e.target.value });
@@ -57,6 +68,34 @@ function MyClinic() {
         ? prev.filter(d => d !== day)
         : [...prev, day]
     );
+  };
+
+  // Handle schedule slot changes
+  const handleSlotChange = (day, slotIndex, field, value) => {
+    setScheduleSlots(prev => ({
+      ...prev,
+      [day]: prev[day].map((slot, index) => 
+        index === slotIndex 
+          ? { ...slot, [field]: value }
+          : slot
+      )
+    }));
+  };
+
+  // Handle adding new slot
+  const handleAddNewSlot = (day) => {
+    setScheduleSlots(prev => ({
+      ...prev,
+      [day]: [...prev[day], { start: '09:00', end: '17:00', availability: 'Appointments only', notes: '' }]
+    }));
+  };
+
+  // Handle removing slot
+  const handleRemoveSlot = (day, slotIndex) => {
+    setScheduleSlots(prev => ({
+      ...prev,
+      [day]: prev[day].filter((_, index) => index !== slotIndex)
+    }));
   };
 
 
@@ -260,6 +299,15 @@ function MyClinic() {
                           isHospital: false,
                         });
                         setCheckedDays([]);
+                        setScheduleSlots({
+                          MON: [{ start: '09:00', end: '17:00', availability: 'Appointments only', notes: '' }],
+                          TUE: [{ start: '09:00', end: '17:00', availability: 'Appointments only', notes: '' }],
+                          WED: [{ start: '09:00', end: '17:00', availability: 'Appointments only', notes: '' }],
+                          THU: [{ start: '09:00', end: '17:00', availability: 'Appointments only', notes: '' }],
+                          FRI: [{ start: '09:00', end: '17:00', availability: 'Appointments only', notes: '' }],
+                          SAT: [{ start: '09:00', end: '17:00', availability: 'Appointments only', notes: '' }],
+                          SUN: [{ start: '09:00', end: '17:00', availability: 'Appointments only', notes: '' }],
+                        });
                       }}
                     >
                       Cancel
@@ -300,57 +348,100 @@ function MyClinic() {
             </>
           )}
           {step === 2 && (
-            <div className="myclinic-schedule-section">
-              <h3>What's your schedule?</h3>
-              {/* Days checkboxes */}
-              <div className="schedule-days">
-                {DAYS.map(day => (
-                  <label key={day} className="schedule-day-label">
-                    <span>{day}</span>
-                    <input
-                      type="checkbox"
-                      checked={checkedDays.includes(day)}
-                      onChange={() => handleDayCheck(day)}
-                    />
-                  </label>
-                ))}
-              </div>
-              {/* Only show schedule rows for checked days */}
-              <div className="schedule-details">
-                {/* Header labels */}
-                <div className={`schedule-row schedule-header-row`}>
-                  <div className="schedule-row-label"></div>
-                  <label className="schedule-label">Start Time</label>
-                  <label className="schedule-label">End Time</label>
-                  <label className="schedule-label">Availability</label>
-                  <label className="schedule-label">Schedule Notes</label>
-                  <div style={{ width: 120 }}></div>
-                </div>
-                {checkedDays
-                  .sort((a, b) => DAYS.indexOf(a) - DAYS.indexOf(b))
-                  .map(day => (
-                    <div className="schedule-row" key={day}>
-                      <div className="schedule-row-label">{DAY_LABELS[day]}</div>
-                      <div className="schedule-cell">
-                        <input type="time" className="schedule-time-input" />
-                      </div>
-                      <div className="schedule-cell">
-                        <input type="time" className="schedule-time-input" />
-                      </div>
-                      <div className="schedule-cell">
-                        <select>
-                          <option>Appointments only</option>
-                          <option>Appointments & Walk-ins</option>
-                        </select>
-                      </div>
-                      <div className="schedule-cell">
-                        <input placeholder="Ex. For Follow-ups schedule here" />
-                      </div>
-                      <div className="schedule-cell">
-                        <button type="button">+ ADD NEW</button>
-                      </div>
-                    </div>
+            <>
+              <div className="myclinic-schedule-section">
+                <h3>What's your schedule?</h3>
+                {/* Days checkboxes */}
+                <div className="schedule-days">
+                  {DAYS.map(day => (
+                    <label key={day} className="schedule-day-label">
+                      <span>{day}</span>
+                      <input
+                        type="checkbox"
+                        checked={checkedDays.includes(day)}
+                        onChange={() => handleDayCheck(day)}
+                      />
+                    </label>
                   ))}
+                </div>
+                {/* Only show schedule rows for checked days */}
+                <div className="schedule-details">
+                  {/* Header labels */}
+                  <div className={`schedule-row schedule-header-row`}>
+                    <div className="schedule-row-label"></div>
+                    <label className="schedule-label">Start Time</label>
+                    <label className="schedule-label">End Time</label>
+                    <label className="schedule-label">Availability</label>
+                    <label className="schedule-label">Schedule Notes</label>
+                    <div style={{ width: 120 }}></div>
+                  </div>
+                  {checkedDays
+                    .sort((a, b) => DAYS.indexOf(a) - DAYS.indexOf(b))
+                    .map(day => (
+                      <div key={day}>
+                        {scheduleSlots[day].map((slot, slotIndex) => (
+                          <div className="schedule-row" key={`${day}-${slotIndex}`}>
+                            <div className="schedule-row-label">
+                              {slotIndex === 0 ? DAY_LABELS[day] : ''}
+                            </div>
+                            <div className="schedule-cell">
+                              <input 
+                                type="time" 
+                                className="schedule-time-input"
+                                value={slot.start}
+                                onChange={(e) => handleSlotChange(day, slotIndex, 'start', e.target.value)}
+                              />
+                            </div>
+                            <div className="schedule-cell">
+                              <input 
+                                type="time" 
+                                className="schedule-time-input"
+                                value={slot.end}
+                                onChange={(e) => handleSlotChange(day, slotIndex, 'end', e.target.value)}
+                              />
+                            </div>
+                            <div className="schedule-cell">
+                              <select
+                                value={slot.availability}
+                                onChange={(e) => handleSlotChange(day, slotIndex, 'availability', e.target.value)}
+                              >
+                                <option>Appointments only</option>
+                                <option>Appointments & Walk-ins</option>
+                              </select>
+                            </div>
+                            <div className="schedule-cell">
+                              <input 
+                                placeholder="Ex. For Follow-ups schedule here"
+                                value={slot.notes}
+                                onChange={(e) => handleSlotChange(day, slotIndex, 'notes', e.target.value)}
+                              />
+                            </div>
+                            <div className="schedule-cell">
+                              <div className="schedule-buttons">
+                                {scheduleSlots[day].length > 1 && (
+                                  <button 
+                                    type="button" 
+                                    onClick={() => handleRemoveSlot(day, slotIndex)}
+                                    className="remove-slot-btn"
+                                  >
+                                    Remove
+                                  </button>
+                                )}
+                                {slotIndex === scheduleSlots[day].length - 1 && (
+                                  <button 
+                                    type="button" 
+                                    onClick={() => handleAddNewSlot(day)}
+                                  >
+                                    + ADD NEW
+                                  </button>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ))}
+                </div>
               </div>
               <div className="myclinic-actions">
                 <button
@@ -379,12 +470,21 @@ function MyClinic() {
                       isHospital: false,
                     });
                     setCheckedDays([]);
+                    setScheduleSlots({
+                      MON: [{ start: '09:00', end: '17:00', availability: 'Appointments only', notes: '' }],
+                      TUE: [{ start: '09:00', end: '17:00', availability: 'Appointments only', notes: '' }],
+                      WED: [{ start: '09:00', end: '17:00', availability: 'Appointments only', notes: '' }],
+                      THU: [{ start: '09:00', end: '17:00', availability: 'Appointments only', notes: '' }],
+                      FRI: [{ start: '09:00', end: '17:00', availability: 'Appointments only', notes: '' }],
+                      SAT: [{ start: '09:00', end: '17:00', availability: 'Appointments only', notes: '' }],
+                      SUN: [{ start: '09:00', end: '17:00', availability: 'Appointments only', notes: '' }],
+                    });
                   }}
                 >
                   Save
                 </button>
               </div>
-            </div>
+            </>
           )}
         </div>
       )}

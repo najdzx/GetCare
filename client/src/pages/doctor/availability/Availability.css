@@ -1,0 +1,688 @@
+/* Availability page styles - separate from MyClinic */
+.availability-container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 8px 24px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 830px;
+  position: relative;
+}
+
+.availability-container h2 {
+  text-align: left;
+  margin: 0 0 6px 0;
+  font-size: 24px;
+  color: #333;
+  font-weight: 600;
+}
+
+.availability-container h3 {
+  text-align: left;
+  margin: 12px 0 6px 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.availability-stepper {
+  display: flex;
+  align-items: center;
+  margin-top: 36px;
+  gap: 18px;
+  margin-left: 60px;
+}
+
+.availability-step-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #212121;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.availability-step-label {
+  font-size: 22px;
+  font-weight: 400;
+}
+
+.availability-toggle-group {
+  margin-left: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 32px;
+}
+
+.availability-toggle-left {
+  display: flex;
+  gap: 0;
+}
+
+.availability-toggle-left .toggle-btn {
+  background: #f5f5f5;
+  border: none;
+  color: #212121;
+  font-size: 18px;
+  padding: 10px 32px;
+  cursor: pointer;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+  transition: background 0.2s, color 0.2s;
+}
+
+.availability-toggle-left .toggle-btn.active {
+  background: #434bb8;
+  color: #fff;
+}
+
+.availability-toggle-left .toggle-btn:disabled {
+  background: #f5f5f5;
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.availability-toggle-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.availability-toggle-settings-btn {
+  background: #f8f9fa;
+  border: 1px solid #e0e0e0;
+  color: #333;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.availability-toggle-settings-btn:hover:not(:disabled) {
+  background: #e9ecef;
+  border-color: #434bb8;
+  color: #434bb8;
+}
+
+.availability-toggle-settings-btn:disabled {
+  background: #f5f5f5;
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.availability-toggle-settings-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(67, 75, 184, 0.1);
+}
+
+.availability-schedule-section {
+  margin-left: 60px;
+  margin-top: 12px;
+  padding-bottom: 80px; /* Space for bottom buttons */
+}
+
+.availability-booking-settings-section {
+  background: #f8f9fa;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 16px;
+  margin-bottom: 16px;
+  animation: availabilitySlideDown 0.3s ease-out;
+}
+
+@keyframes availabilitySlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.availability-form {
+  display: flex;
+  gap: 32px;
+  margin-top: 12px;
+  margin-left: 0;
+}
+
+.availability-fields {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.availability-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.availability-label {
+  min-width: 120px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.availability-input {
+  flex: 1;
+  max-width: 150px;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 4px;
+  background: white;
+  transition: border-color 0.2s;
+}
+
+.availability-input:focus {
+  border-color: #1976d2;
+  background: #fff;
+  outline: none;
+}
+
+.availability-input:disabled {
+  background: #f5f5f5;
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.availability-schedule-section .schedule-days {
+  display: flex;
+  gap: 32px;
+  margin-bottom: 18px;
+  margin-top: 32px;
+}
+
+.availability-schedule-section .schedule-day-label {
+  display: block;
+  margin-bottom: 16px;
+  font-weight: 500;
+  min-width: 48px;
+  font-size: 16px;
+}
+
+.availability-schedule-section .schedule-day-label span {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.availability-schedule-section .schedule-days input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #434bb8;
+  margin-top: 6px;
+}
+
+.availability-schedule-section .schedule-days input[type="checkbox"]:disabled {
+  accent-color: #ccc;
+  cursor: not-allowed;
+}
+
+.availability-schedule-section .schedule-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.availability-schedule-section .schedule-row-label {
+  font-weight: 500;
+  min-width: 90px;
+  font-size: 16px;
+}
+
+.availability-schedule-section .schedule-cell {
+  flex: 0 0 auto;
+}
+
+.availability-schedule-section .schedule-time-input {
+  width: 200px;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  background: white;
+}
+
+.availability-schedule-section .schedule-time-input:disabled {
+  background: white;
+  color: #333;
+  border-color: #ddd;
+  cursor: not-allowed;
+}
+
+.availability-schedule-section .schedule-row select,
+.availability-schedule-section .schedule-row input {
+  width: 200px;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  background: white;
+  height: 40px;
+  box-sizing: border-box;
+}
+
+.availability-schedule-section .schedule-row select:focus,
+.availability-schedule-section .schedule-row input:focus {
+  outline: none;
+  border-color: #434bb8;
+  box-shadow: 0 0 0 2px rgba(67, 75, 184, 0.1);
+}
+
+.availability-schedule-section .schedule-row select:disabled,
+.availability-schedule-section .schedule-row input:disabled {
+  background: white;
+  color: #333;
+  border-color: #ddd;
+  cursor: not-allowed;
+}
+
+.availability-schedule-section .schedule-row button {
+  background: #434bb8;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.2s;
+  height: 40px;
+  width: 120px;
+  white-space: nowrap;
+}
+
+.availability-schedule-section .schedule-row button:hover {
+  background: #30368a;
+}
+
+.availability-schedule-section .schedule-row button:disabled {
+  background: #434bb8;
+  color: white;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.availability-schedule-section .remove-slot-btn {
+  background: #e53935;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.2s;
+  height: 40px;
+  width: 120px;
+  white-space: nowrap;
+}
+
+.availability-schedule-section .remove-slot-btn:hover {
+  background: #c62828;
+}
+
+.availability-schedule-section .schedule-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.availability-schedule-section .schedule-header-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+}
+
+.availability-schedule-section .schedule-label {
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+  min-width: 200px;
+  text-align: left;
+  padding-left: 0;
+  margin-right: 0;
+}
+
+.availability-schedule-section .schedule-header-row .schedule-label:first-child {
+  min-width: 90px;
+}
+
+/* Edit Button - Fixed at bottom right */
+.availability-edit-toggle {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  justify-content: flex-end;
+  z-index: 1000;
+}
+
+.availability-edit-btn {
+  background: #434bb8;
+  border: none;
+  color: #fff;
+  border-radius: 4px;
+  padding: 0 20px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  height: 40px;
+  margin-bottom: 0;
+  border: 1px solid #434bb8;
+  transition: background 0.2s, color 0.2s;
+}
+
+.availability-edit-btn:hover {
+  background: #30368a;
+  color: #fff;
+}
+
+/* Save/Cancel Buttons - Fixed at bottom right */
+.availability-actions {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 16px;
+  justify-content: flex-end;
+  z-index: 1000;
+}
+
+.availability-save-btn {
+  background: #434bb8;
+  border: none;
+  color: #fff;
+  border-radius: 4px;
+  padding: 0 20px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  height: 40px;
+  margin-bottom: 0;
+  border: 1px solid #434bb8;
+  transition: background 0.2s, color 0.2s;
+}
+
+.availability-save-btn:hover {
+  background: #30368a;
+  color: #fff;
+}
+
+.availability-cancel-btn {
+  background: #f5f5f5;
+  border: none;
+  color: #212121;
+  border-radius: 4px;
+  padding: 0 20px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  height: 40px;
+  margin-bottom: 0;
+  border: 1px solid #e0e0e0;
+  transition: background 0.2s, color 0.2s;
+}
+
+.availability-cancel-btn:hover {
+  background: #434bb8;
+  color: #fff;
+}
+
+/* Booking Settings Modal */
+.availability-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  animation: availabilityFadeIn 0.2s ease-out;
+}
+
+@keyframes availabilityFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.availability-modal {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow: hidden;
+  animation: availabilitySlideIn 0.3s ease-out;
+}
+
+@keyframes availabilitySlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.availability-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid #e0e0e0;
+  background: #f8f9fa;
+}
+
+.availability-modal-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.availability-modal-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #666;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.availability-modal-close:hover {
+  background: #e9ecef;
+  color: #333;
+}
+
+.availability-modal-content {
+  padding: 24px;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.availability-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px;
+  border-top: 1px solid #e0e0e0;
+  background: #f8f9fa;
+}
+
+.availability-modal-btn {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid;
+  transition: all 0.2s;
+}
+
+.availability-modal-cancel {
+  background: #f5f5f5;
+  border-color: #e0e0e0;
+  color: #212121;
+}
+
+.availability-modal-cancel:hover {
+  background: #e9ecef;
+  border-color: #ccc;
+}
+
+.availability-modal-save {
+  background: #434bb8;
+  border-color: #434bb8;
+  color: #fff;
+}
+
+.availability-modal-save:hover {
+  background: #30368a;
+  border-color: #30368a;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .availability-container {
+    padding: 12px;
+    height: auto;
+  }
+  
+  .availability-container h2 {
+    font-size: 20px;
+  }
+  
+  .availability-stepper,
+  .availability-toggle-group,
+  .availability-schedule-section {
+    margin-left: 0;
+  }
+  
+  .availability-toggle-group {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  
+  .availability-toggle-right {
+    width: 100%;
+  }
+  
+  .availability-schedule-section {
+    padding-bottom: 100px;
+  }
+  
+  .availability-schedule-section .schedule-days {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  
+  .availability-schedule-section .schedule-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .availability-schedule-section .schedule-cell {
+    width: 100%;
+  }
+  
+  .availability-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  
+  .availability-label {
+    min-width: auto;
+  }
+  
+  .availability-input {
+    width: 100%;
+    max-width: none;
+  }
+  
+  .availability-booking-settings-section {
+    padding: 12px;
+  }
+  
+  .availability-edit-toggle {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    left: 10px;
+    justify-content: center;
+  }
+  
+  .availability-actions {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    left: 10px;
+    justify-content: center;
+  }
+} 
+
+.availability-schedule-section .schedule-details {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.availability-schedule-section .schedule-details::-webkit-scrollbar {
+  width: 8px;
+}
+
+.availability-schedule-section .schedule-details::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 4px;
+}
+
+.availability-schedule-section .schedule-details::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.availability-schedule-section .schedule-details:hover::-webkit-scrollbar-thumb {
+  background: #434bb8;
+}
+
+.availability-schedule-section .schedule-details::-webkit-scrollbar-thumb:hover {
+  background: #30368a;
+} 
