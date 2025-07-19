@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { MdNotifications } from 'react-icons/md';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import '../Layout/TopNav.css';
+import { Modal, Box, Button, TextField } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const TopNav = ({ collapsed }) => {
   const [profileOpen, setProfileOpen] = useState(false);
@@ -9,6 +11,15 @@ const TopNav = ({ collapsed }) => {
   const profileRef = useRef(null);
   const notifRef = useRef(null);
   const left = collapsed ? '80px' : '240px';
+  const [profileModalOpen, setProfileModalOpen] = useState(false);
+  // Example profile state
+  const [profile, setProfile] = useState({
+    name: 'Dr. John Doe',
+    email: 'dr.johndoe@email.com',
+    specialty: 'General Medicine',
+  });
+
+  const navigate = useNavigate();
 
   const toggleProfile = () => {
     setProfileOpen((prev) => !prev);
@@ -63,11 +74,11 @@ const TopNav = ({ collapsed }) => {
           {profileOpen && (
             <div className="dropdown-menu">
               <ul>
-                <li>Profile</li>
+                <li onClick={() => { navigate('/doctor/profile'); setProfileOpen(false); }}>Profile</li>
                 <li>Calendar</li>
                 <li>Private Files</li>
                 <hr />
-                <li>Preferences</li>
+                <li onClick={() => { navigate('/doctor/availability'); setProfileOpen(false); }}>Availability</li>
                 <hr />
                 <li className="logout">Logout</li>
               </ul>

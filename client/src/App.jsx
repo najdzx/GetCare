@@ -16,6 +16,8 @@ import Analytics from './pages/doctor/Analytics';
 import Engagement from './pages/doctor/Engagement';
 import MyClinic from './pages/doctor/myclinic/MyClinic';
 import Invitations from './pages/doctor/Invitations';
+import Profile from './pages/doctor/profile/Profile';
+import Availability from './pages/doctor/availability/Availability';
 
 import PatientLayout from './components/patient/PatientLayout';
 import PatientDashboard from './pages/patient/Dashboard';
@@ -50,6 +52,8 @@ function App() {
           <Route path="analytics" element={<Analytics />} />
           <Route path="engagement" element={<Engagement />} />
           <Route path="invitations" element={<Invitations />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="availability" element={<Availability />} />
         </Route>
         <Route path="/patient" element={<PatientLayout />}>
           <Route index element={<PatientDashboard />} />
