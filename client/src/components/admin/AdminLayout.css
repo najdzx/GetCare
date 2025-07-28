@@ -1,0 +1,20 @@
+.admin-layout {
+  display: flex;
+  height: 100vh;
+  background-color: #f8f9fa;
+}
+
+.admin-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.admin-main-content {
+  padding: 80px 20px 20px 20px; /* 80px top for TopNav */
+  transition: margin-left 0.3s ease;
+  background-color: #f7f7f7;
+  min-height: 100vh;
+  box-sizing: border-box;
+} 

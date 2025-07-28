@@ -19,6 +19,16 @@ import Invitations from './pages/doctor/Invitations';
 import Profile from './pages/doctor/profile/Profile';
 import Availability from './pages/doctor/availability/Availability';
 
+// Admin imports
+import AdminDashboard from './pages/admin/Dashboard';
+import AdminPatients from './pages/admin/Patients';
+import AdminDoctors from './pages/admin/Doctors';
+import AdminAppointments from './pages/admin/Appointments';
+import AdminMessages from './pages/admin/Messages';
+import AdminClinics from './pages/admin/Clinics';
+import AdminAnalytics from './pages/admin/Analytics';
+import AdminSettings from './pages/admin/Settings';
+
 import PatientLayout from './components/patient/PatientLayout';
 import PatientDashboard from './pages/patient/Dashboard';
 import PatientAppointments from './pages/patient/Appointments';
@@ -55,6 +65,18 @@ function App() {
           <Route path="profile" element={<Profile />} />
           <Route path="availability" element={<Availability />} />
         </Route>
+
+        {/* Admin routes */}
+        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/admin/patients" element={<AdminPatients />} />
+        <Route path="/admin/doctors" element={<AdminDoctors />} />
+        <Route path="/admin/appointments" element={<AdminAppointments />} />
+        <Route path="/admin/messages" element={<AdminMessages />} />
+        <Route path="/admin/clinics" element={<AdminClinics />} />
+        <Route path="/admin/analytics" element={<AdminAnalytics />} />
+        <Route path="/admin/settings" element={<AdminSettings />} />
+
         <Route path="/patient" element={<PatientLayout />}>
           <Route index element={<PatientDashboard />} />
           <Route path="dashboard" element={<PatientDashboard />} />

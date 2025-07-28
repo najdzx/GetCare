@@ -1,0 +1,201 @@
+.admin-dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dashboard-header {
+  margin-bottom: 32px;
+}
+
+.dashboard-header h1 {
+  margin: 0 0 8px 0;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.dashboard-header p {
+  margin: 0;
+  color: #7f8c8d;
+  font-size: 1rem;
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.stat-card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: transform 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+}
+
+.stat-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+}
+
+.stat-content h3 {
+  margin: 0 0 8px 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #7f8c8d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 4px;
+}
+
+.stat-change {
+  font-size: 0.8rem;
+  color: #27ae60;
+  font-weight: 500;
+}
+
+/* Dashboard Sections */
+.dashboard-section {
+  background-color: white;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Recent Activities Section */
+.dashboard-section:last-child {
+  max-height: 300px;
+}
+
+.dashboard-section h2 {
+  margin: 0 0 20px 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+/* Quick Actions */
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.quick-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #2c3e50;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.quick-action-btn:hover {
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+  transform: translateY(-1px);
+}
+
+.quick-action-btn svg {
+  font-size: 1.2rem;
+  color: #3498db;
+}
+
+/* Activities List */
+.activities-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 200px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.activity-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f8f9fa;
+}
+
+.activity-item:last-child {
+  border-bottom: none;
+}
+
+.activity-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #3498db;
+  font-size: 1.1rem;
+}
+
+.activity-content p {
+  margin: 0 0 4px 0;
+  font-size: 0.9rem;
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+.activity-content span {
+  font-size: 0.8rem;
+  color: #7f8c8d;
+}
+
+/* Custom scrollbar for activities list */
+.activities-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.activities-list::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 4px;
+}
+
+.activities-list::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.activities-list:hover::-webkit-scrollbar-thumb {
+  background: #434bb8;
+}
+
+.activities-list::-webkit-scrollbar-thumb:hover {
+  background: #30368a;
+} 
