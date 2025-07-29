@@ -1,0 +1,38 @@
+/* Global Custom Scrollbar Styles */
+.custom-scrollbar {
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  background: #434bb8;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #30368a;
+}
+
+/* Firefox scrollbar */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.custom-scrollbar:hover {
+  scrollbar-color: #434bb8 transparent;
+} 

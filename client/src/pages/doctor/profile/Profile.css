@@ -10,61 +10,26 @@
 }
 
 .profile-page-card {
-  width: 100%;
-  max-width: 900px;
-  min-height: 600px;
-  max-height: 650px;
-  margin: 0 auto;
-  padding: 20px 12px 20px 12px;
-  border-radius: 20px;
-  box-shadow: 0 8px 32px rgba(60,60,120,0.18);
-  background: #fff;
+  background: white;
+  border-radius: 12px;
+  padding: 32px;
+  margin: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  max-width: 1200px;
+  width: calc(100% - 40px);
   position: relative;
-  transition: box-shadow 0.2s;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
 }
 
-/* Remove any custom scrollbar from .profile-page-card */
-
-.profile-page-card::-webkit-scrollbar,
-.profile-page-card::-webkit-scrollbar-track,
-.profile-page-card::-webkit-scrollbar-thumb,
-.profile-page-card:hover::-webkit-scrollbar-thumb {
-  all: unset;
+.profile-page-bg {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  padding: 20px;
 }
 
 .profile-scrollable-card {
-  flex: 1 1 auto;
-  min-height: 0;
+  max-height: 70vh;
   overflow-y: auto;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
-
-.profile-scrollable-card::-webkit-scrollbar {
-  width: 8px;
-}
-.profile-scrollable-card::-webkit-scrollbar-track {
-  background: transparent;
-  border-radius: 4px;
-}
-.profile-scrollable-card::-webkit-scrollbar-thumb {
-  background: transparent;
-  border-radius: 4px;
-  transition: background 0.2s ease;
-}
-.profile-scrollable-card:hover::-webkit-scrollbar-thumb {
-  background: #434bb8;
-}
-.profile-scrollable-card::-webkit-scrollbar-thumb:hover {
-  background: #30368a;
-}
-
-.profile-page-card:hover {
-  box-shadow: 0 12px 40px rgba(60,60,120,0.22);
 }
 
 .profile-page-title {
@@ -77,12 +42,13 @@
 }
 
 .profile-avatar {
-  width: 80px !important;
-  height: 80px !important;
-  margin-bottom: 10px;
-  border: 3px solid #a5b4fc;
-  box-shadow: 0 2px 8px rgba(60,60,120,0.10);
-  background: #f3f4f6;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin: 0 auto 24px;
+  display: block;
+  border: 4px solid #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .profile-upload-btn {
@@ -129,25 +95,23 @@
 }
 
 .doctor-primary-btn {
-  height: 44px;
+  background: #434bb8;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 0 24px;
-  border-radius: 8px;
-  border: none;
-  background: #434bb8;
-  color: #fff;
-  font-size: 1.05rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s;
-  flex-shrink: 0;
-  box-shadow: none;
+  gap: 8px;
 }
 
 .doctor-primary-btn:hover {
-  background: #3a4199;
+  background: #30368a;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(67, 75, 184, 0.3);
 }
 
 .doctor-primary-btn:disabled {
@@ -156,14 +120,12 @@
 }
 
 .profile-section-title {
-  margin: 18px 0 8px 0;
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: #434bb8;
-  letter-spacing: 0.5px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 24px;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 12px;
 }
 
 .profile-completion-bar {
@@ -182,43 +144,47 @@
 }
 
 .profile-action-bar {
-  position: sticky;
-  top: 0;
-  background: #fff;
-  padding: 10px 0 10px 0;
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
   display: flex;
-  justify-content: flex-end;
-  z-index: 2;
-  margin-bottom: 12px;
-  margin-top: 0;
-  box-shadow: 0 2px 8px rgba(60,60,120,0.04);
+  gap: 12px;
+  z-index: 1000;
 }
 
 .fade-anim {
   transition: opacity 0.4s;
 }
 
-@media (max-width: 900px) {
-  .profile-page-card {
-    max-width: 98vw;
-    width: 100%;
-    margin: 10px auto;
-    padding: 10px 4px 10px 4px;
-  }
+/* Ensure profile picture styling doesn't conflict */
+.patient-info-profile .profile-pic {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-@media (max-width: 600px) {
+/* Adjust patient tags select width */
+.patient-tags-select {
+  max-width: 300px !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
   .profile-page-card {
-    max-width: 98vw;
-    width: 100%;
-    margin: 4px auto;
-    padding: 4px 1vw 4px 1vw;
+    margin: 16px;
+    padding: 24px;
+    width: calc(100% - 32px);
   }
-  .profile-page-title {
-    font-size: 1.2rem;
+  
+  .profile-action-bar {
+    bottom: 16px;
+    right: 16px;
   }
-  .profile-avatar {
-    width: 90px !important;
-    height: 90px !important;
+  
+  .profile-scrollable-card {
+    max-height: 60vh;
   }
 } 

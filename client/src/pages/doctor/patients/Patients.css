@@ -232,6 +232,9 @@
   padding: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s ease;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
 }
 
 .patients-card:hover {
@@ -243,6 +246,7 @@
   align-items: center;
   gap: 12px;
   margin-bottom: 16px;
+  flex-shrink: 0;
 }
 
 .patients-card-header h3 {
@@ -261,6 +265,8 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  flex: 1;
+  min-height: 0;
 }
 
 .patients-table-header {
@@ -270,6 +276,7 @@
   padding-bottom: 8px;
   border-bottom: 1px solid #ccc;
   color: #434bb8;
+  flex-shrink: 0;
 }
 
 .patients-table-row {
@@ -315,47 +322,12 @@
   grid-column: 1 / -1;
 }
 
+/* Remove the custom scrollbar styles and keep only the basic styling */
 .patients-table-scroll {
-  height: 220px;   /* Fixed height to prevent shrinking */
+  max-height: none;
   overflow-y: auto;
-  padding-right: 8px;  /* Space for scrollbar */
-   /* Subtle background for contrast */
-  border-radius: 8px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-}
-
-/* Custom scrollbar for WebKit browsers - hover only */
-.patients-table-scroll::-webkit-scrollbar {
-  width: 8px;
-}
-
-.patients-table-scroll::-webkit-scrollbar-track {
-  background: transparent;
-  border-radius: 4px;
-}
-
-.patients-table-scroll::-webkit-scrollbar-thumb {
-  background: transparent;
-  border-radius: 4px;
-  transition: background 0.2s ease;
-}
-
-.patients-table-scroll:hover::-webkit-scrollbar-thumb {
-  background: #434bb8;
-}
-
-.patients-table-scroll::-webkit-scrollbar-thumb:hover {
-  background: #30368a;
-}
-
-/* For Firefox */
-.patients-table-scroll {
-  scrollbar-width: thin;
-  scrollbar-color: transparent transparent;
-}
-
-.patients-table-scroll:hover {
-  scrollbar-color: #434bb8 transparent;
+  flex: 1;
+  min-height: 0;
 }
 
 /* Medical Background Styles */

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { MdPeople, MdCheck, MdClose, MdSend, MdAdd, MdNote, MdSearch } from 'react-icons/md';
 import './Invitations.css';
+import '../../components/Layout/Scrollbar.css';
 
 const mockInvitations = {
   incoming: [
@@ -225,7 +226,7 @@ const Invitations = () => {
       {/* Send Invitation Modal */}
       {showSendModal && (
         <div className="modal-overlay" onClick={() => setShowSendModal(false)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+          <div className="modal-content custom-scrollbar" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
               <h3>Send Specialist Invitation</h3>
               <button className="modal-close" onClick={() => setShowSendModal(false)}>
@@ -261,7 +262,7 @@ const Invitations = () => {
                     placeholder="Search by name or specialty..."
                     className="specialist-search-input"
                   />
-                  <div className="specialists-grid">
+                  <div className="specialists-grid custom-scrollbar">
                     {filteredSpecialists.map(specialist => (
                       <div
                         key={specialist.id}

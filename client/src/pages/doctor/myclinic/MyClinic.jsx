@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './MyClinic.css';
+import '../../../components/Layout/Button.css';
+import '../../../components/Layout/Scrollbar.css';
 
 const DAYS = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
 const DAY_LABELS = {
@@ -141,13 +143,13 @@ function MyClinic() {
                   <div>Are you sure you want to delete this clinic?</div>
                   <div className="clinic-delete-actions">
                     <button
-                      className="delete-btn"
+                      className="global-btn danger"
                       onClick={() => handleDeleteClinic(c.id)}
                     >
                       Delete
                     </button>
                     <button
-                      className="cancel-btn"
+                      className="global-btn secondary"
                       onClick={() => setShowDeleteId(null)}
                     >
                       Cancel
@@ -283,7 +285,7 @@ function MyClinic() {
                   <div className="myclinic-row" style={{ justifyContent: 'flex-end', marginTop: 0, gap: 16 }}>
                     <button
                       type="button"
-                      className="cancel-btn"
+                      className="global-btn secondary"
                       onClick={() => {
                         setShowAddForm(false);
                         setStep(1);
@@ -312,7 +314,7 @@ function MyClinic() {
                     >
                       Cancel
                     </button>
-                    <button type="submit" className="next-clinic-btn">
+                    <button type="submit" className="global-btn primary">
                       Next
                     </button>
                   </div>
@@ -365,7 +367,7 @@ function MyClinic() {
                 ))}
               </div>
               {/* Only show schedule rows for checked days */}
-              <div className="schedule-details">
+              <div className="schedule-details custom-scrollbar">
                 {/* Header labels */}
                 <div className={`schedule-row schedule-header-row`}>
                   <div className="schedule-row-label"></div>
@@ -422,7 +424,7 @@ function MyClinic() {
                                   <button 
                                     type="button" 
                                     onClick={() => handleRemoveSlot(day, slotIndex)}
-                                    className="remove-slot-btn"
+                                    className="global-btn danger small"
                                   >
                                     Remove
                                   </button>
@@ -431,8 +433,9 @@ function MyClinic() {
                                   <button 
                                     type="button" 
                                     onClick={() => handleAddNewSlot(day)}
+                                    className="global-btn secondary small"
                                   >
-                                    + ADD NEW
+                                    ADD NEW
                                   </button>
                                 )}
                               </div>
@@ -446,14 +449,14 @@ function MyClinic() {
               <div className="myclinic-actions">
                 <button
                   type="button"
-                  className="back-btn"
+                  className="global-btn secondary"
                   onClick={() => setStep(1)}
                 >
                   Back
                 </button>
                 <button
                   type="button"
-                  className="save-btn"
+                  className="global-btn primary"
                   onClick={() => {
                     setClinics([...clinics, { ...clinic, id: Date.now() }]);
                     setShowAddForm(false);

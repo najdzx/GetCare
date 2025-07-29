@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Availability.css';
+import '../../../components/Layout/Scrollbar.css';
 
 const DAYS = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
 const DAY_LABELS = {
@@ -202,7 +203,7 @@ const Availability = () => {
         </div>
 
         {/* Schedule details */}
-        <div className="schedule-details">
+        <div className="schedule-details custom-scrollbar">
           {/* Header labels */}
           <div className="schedule-row schedule-header-row">
             <div className="schedule-row-label"></div>

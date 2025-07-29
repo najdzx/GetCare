@@ -39,6 +39,7 @@ import PatientFiles from './pages/patient/Files';
 import PatientDiagnostics from './pages/patient/Diagnostics';
 import PatientNotes from './pages/patient/Notes';
 import PatientChat from './pages/patient/Chat';
+import PatientProfile from './pages/patient/Profile';
 
 
 function App() {
@@ -88,6 +89,7 @@ function App() {
           <Route path="files" element={<PatientFiles />} />
           <Route path="analytics" element={<PatientAnalytics />} />
           <Route path="engagement" element={<PatientEngagement />} />
+          <Route path="profile" element={<PatientProfile />} />
         </Route>
       </Routes>
     </BrowserRouter>

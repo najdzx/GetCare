@@ -80,7 +80,6 @@
 .sidebar nav ul li a:hover {
   background: rgba(255,255,255,0.15);
   color: #ff4f91;
-  transform: scale(1.05);
 }
 
 .sidebar nav ul li a.active {

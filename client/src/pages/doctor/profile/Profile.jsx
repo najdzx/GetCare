@@ -10,6 +10,7 @@ import SchoolIcon from '@mui/icons-material/School';
 import WorkIcon from '@mui/icons-material/Work';
 import ScheduleIcon from '@mui/icons-material/Schedule';
 import './Profile.css';
+import '../../../components/Layout/Scrollbar.css';
 
 const initialProfile = {
   id: 'D-0001',
@@ -79,7 +80,7 @@ const Profile = () => {
 
   return (
     <Box className="profile-center-wrapper">
-      <Paper elevation={3} className="profile-page-card profile-scrollable-card">
+      <Paper elevation={3} className="profile-page-card profile-scrollable-card custom-scrollbar">
         <Fade in={true} key={fadeKey} timeout={400}>
           <Box>
             <h2 className="profile-page-title">My Profile</h2>
@@ -97,7 +98,7 @@ const Profile = () => {
               )}
             </Box>
             {editing ? (
-              <div className="profile-scrollable-card">
+              <div className="profile-scrollable-card custom-scrollbar">
                 <form onSubmit={handleSave}>
                   <Grid container spacing={3}>
                     <Grid item xs={12} md={6}>

@@ -4,6 +4,7 @@ import PatientInfo from './PatientInfo';
 import MedicalBackground from './MedicalBackground';
 import SoapNote from './SoapNote';
 import './Patients.css';
+import '../../../components/Layout/Scrollbar.css';
 
 const Patients = () => {
   const [myPatients, setMyPatients] = useState([]);
@@ -41,6 +42,8 @@ const Patients = () => {
           { id: 4, name: 'Alex Johnson', concern: 'Migraine' },
           { id: 5, name: 'Maria Reyes', concern: 'Back Pain' },
           { id: 6, name: 'Jaria Reyes', concern: 'Back Pain' },
+          { id: 7, name: 'Jaria Reyes', concern: 'Back Pain' },
+          { id: 8, name: 'Jaria Reyes', concern: ' Pain' },
         ]);
     setSharedCases([
           { id: 3, name: 'Jane Smith', doctor: 'Dr. Cruz', concern: 'Anxiety' },
@@ -101,7 +104,7 @@ const Patients = () => {
             <span>Concern</span>
             <span>Action</span>
           </div>
-          <div className="patients-table-scroll">
+          <div className="patients-table-scroll custom-scrollbar">
             {loading ? (
               <div className="patients-empty">Loading...</div>
                 ) : filteredMyPatients.length === 0 ? (

@@ -523,34 +523,10 @@
   color: #fff;
 }
 
+/* Remove custom scrollbar styles and keep basic styling */
 .schedule-details {
-  flex: 1;
+  max-height: 300px;
   overflow-y: auto;
-  padding-right: 4px;
-  min-height: 0;
-}
-
-.schedule-details::-webkit-scrollbar {
-  width: 8px;
-}
-
-.schedule-details::-webkit-scrollbar-track {
-  background: transparent;
-  border-radius: 4px;
-}
-
-.schedule-details::-webkit-scrollbar-thumb {
-  background: transparent;
-  border-radius: 4px;
-  transition: background 0.2s ease;
-}
-
-.schedule-details:hover::-webkit-scrollbar-thumb {
-  background: #434bb8;
-}
-
-.schedule-details::-webkit-scrollbar-thumb:hover {
-  background: #30368a;
 }
 
 .schedule-buttons {

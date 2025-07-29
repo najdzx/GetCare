@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MdNotifications } from 'react-icons/md';
 import '../Layout/TopNav.css';
+import { useNavigate } from 'react-router-dom';
 
 const TopNav = ({ collapsed }) => {
   const [profileOpen, setProfileOpen] = useState(false);
@@ -25,6 +26,14 @@ const TopNav = ({ collapsed }) => {
   const toggleNotif = () => {
     setNotifOpen((prev) => !prev);
     setProfileOpen(false);
+  };
+
+  const navigate = useNavigate();
+
+  const handleProfileClick = (e) => {
+    e.stopPropagation();
+    setProfileOpen(false);
+    navigate('/patient/profile');
   };
 
   // Close dropdowns when clicking outside
@@ -73,7 +82,7 @@ const TopNav = ({ collapsed }) => {
           {profileOpen && (
             <div className="dropdown-menu">
               <ul>
-                <li>Profile</li>
+                <li onClick={handleProfileClick}>Profile</li>
                 <li>Calendar</li>
                 <li>Private Files</li>
                 <hr />
