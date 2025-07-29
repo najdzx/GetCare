@@ -658,31 +658,8 @@
   }
 } 
 
+/* Remove custom scrollbar styles and keep basic styling */
 .availability-schedule-section .schedule-details {
-  max-height: 400px;
+  max-height: 300px;
   overflow-y: auto;
-  padding-right: 4px;
-}
-
-.availability-schedule-section .schedule-details::-webkit-scrollbar {
-  width: 8px;
-}
-
-.availability-schedule-section .schedule-details::-webkit-scrollbar-track {
-  background: transparent;
-  border-radius: 4px;
-}
-
-.availability-schedule-section .schedule-details::-webkit-scrollbar-thumb {
-  background: transparent;
-  border-radius: 4px;
-  transition: background 0.2s ease;
-}
-
-.availability-schedule-section .schedule-details:hover::-webkit-scrollbar-thumb {
-  background: #434bb8;
-}
-
-.availability-schedule-section .schedule-details::-webkit-scrollbar-thumb:hover {
-  background: #30368a;
 } 

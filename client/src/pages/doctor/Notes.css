@@ -87,36 +87,10 @@
   padding-bottom: 8px;
 }
 
+/* Remove custom scrollbar styles and keep basic styling */
 .patient-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  flex: 1;
+  max-height: 300px;
   overflow-y: auto;
-  padding-right: 4px;
-}
-
-.patient-list::-webkit-scrollbar {
-  width: 8px;
-}
-
-.patient-list::-webkit-scrollbar-track {
-  background: transparent;
-  border-radius: 4px;
-}
-
-.patient-list::-webkit-scrollbar-thumb {
-  background: transparent;
-  border-radius: 4px;
-  transition: background 0.2s ease;
-}
-
-.patient-list:hover::-webkit-scrollbar-thumb {
-  background: #434bb8;
-}
-
-.patient-list::-webkit-scrollbar-thumb:hover {
-  background: #30368a;
 }
 
 .patient-item {
@@ -443,7 +417,6 @@
   gap: 16px;
   max-height: 400px;
   overflow-y: auto;
-  padding: 4px;
 }
 
 .specialist-card {

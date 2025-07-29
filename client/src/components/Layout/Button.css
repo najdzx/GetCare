@@ -1,0 +1,109 @@
+/* Global Button Styles */
+.global-btn {
+  background: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  color: #212121;
+  border-radius: 4px;
+  padding: 0 28px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  height: 40px;
+  margin-bottom: 0;
+  margin-right: 16px;
+  transition: background 0.2s, color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  font-family: inherit;
+}
+
+.global-btn:hover {
+  background: #434bb8;
+  color: #fff;
+}
+
+.global-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.global-btn:disabled:hover {
+  background: #f5f5f5;
+  color: #212121;
+}
+
+/* Button Variants */
+.global-btn.primary {
+  background: #f5f5f5;
+  color: #212121;
+  border-color: #e0e0e0;
+}
+
+.global-btn.primary:hover {
+  background: #434bb8;
+  color: #fff;
+  border-color: #434bb8;
+}
+
+.global-btn.secondary {
+  background: #f5f5f5;
+  color: #212121;
+  border-color: #e0e0e0;
+}
+
+.global-btn.secondary:hover {
+  background: #434bb8;
+  color: #fff;
+  border-color: #434bb8;
+}
+
+.global-btn.danger {
+  background: #e53935;
+  color: #fff;
+  border-color: #e53935;
+}
+
+.global-btn.danger:hover {
+  background: #c62828;
+  border-color: #c62828;
+}
+
+.global-btn.success {
+  background: #28a745;
+  color: #fff;
+  border-color: #28a745;
+}
+
+.global-btn.success:hover {
+  background: #218838;
+  border-color: #218838;
+}
+
+/* Button Sizes */
+.global-btn.small {
+  height: 32px;
+  padding: 0 20px;
+  font-size: 14px;
+}
+
+.global-btn.large {
+  height: 48px;
+  padding: 0 32px;
+  font-size: 18px;
+}
+
+/* Button with Icon */
+.global-btn svg {
+  font-size: 18px;
+}
+
+.global-btn.small svg {
+  font-size: 16px;
+}
+
+.global-btn.large svg {
+  font-size: 20px;
+} 

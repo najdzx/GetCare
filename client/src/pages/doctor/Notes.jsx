@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { MdPerson, MdAdd, MdPeople, MdAttachFile, MdClose, MdSend, MdNote, MdCheck, MdSchedule, MdSearch } from 'react-icons/md';
 import './Notes.css';
+import '../../components/Layout/Scrollbar.css';
 
 const mockMyPatients = [
   { id: 1, name: 'John Doe', case: 'Diabetes Management', primaryDoctor: 'Dr. Smith', status: 'Active', lastVisit: '2024-01-15', type: 'primary' },
@@ -160,7 +161,7 @@ const Notes = () => {
             />
           </div>
           <h3>My Patients</h3>
-          <div className="patient-list">
+          <div className="patient-list custom-scrollbar">
             {filteredMyPatients.map(patient => (
               <div
                 key={patient.id}
@@ -183,7 +184,7 @@ const Notes = () => {
 
         <div className="sidebar-section">
           <h3>Shared Cases</h3>
-          <div className="patient-list">
+          <div className="patient-list custom-scrollbar">
             {filteredConsultations.map(patient => (
               <div
                 key={patient.id}
@@ -261,7 +262,7 @@ const Notes = () => {
               <h3>Add Note</h3>
               <button className="btn-icon" onClick={() => setShowAddModal(false)}><MdClose /></button>
             </div>
-            <div className="modal-body">
+            <div className="modal-body custom-scrollbar">
               <div className="form-group">
                 <label>Title</label>
                 <input type="text" value={newNote.title} onChange={e => setNewNote({ ...newNote, title: e.target.value })} />
@@ -310,7 +311,7 @@ const Notes = () => {
                 <MdClose />
               </button>
             </div>
-            <div className="modal-body">
+            <div className="modal-body custom-scrollbar">
               <div className="form-group">
                 <label>Patient Name</label>
                 <input
@@ -339,7 +340,7 @@ const Notes = () => {
                     placeholder="Search by name or specialty..."
                     className="specialist-search-input"
                   />
-                  <div className="specialists-grid">
+                  <div className="specialists-grid custom-scrollbar">
                     {filteredSpecialists.map(specialist => (
                       <div
                         key={specialist.id}
@@ -432,4 +433,4 @@ const Notes = () => {
   );
 };
 
-export default Notes; 
+export default Notes;

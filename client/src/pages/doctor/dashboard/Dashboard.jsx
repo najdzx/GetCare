@@ -21,6 +21,7 @@ import {
   MdShare,
 } from 'react-icons/md';
 import './Dashboard.css';
+import '../../../components/Layout/Scrollbar.css';
 
 const mockPatients = [
   { id: 1, name: 'John Doe', status: 'Active', avatar: 'JD' },
@@ -259,7 +260,7 @@ const Dashboard = () => {
           <h2>Recent Activity</h2>
           <button className="view-all-btn">View All</button>
         </div>
-        <div className="activity-list">
+        <div className="activity-list custom-scrollbar">
           {recentActivities.map((activity) => (
             <div key={activity.id} className="activity-item">
               <div className="activity-icon" style={{ color: activity.color }}>
