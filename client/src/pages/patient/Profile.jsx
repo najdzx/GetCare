@@ -1,27 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Profile.css';
 
-const patient = {
-  firstName: 'Juan',
-  lastName: 'Cruz',
-  middleName: 'Dela',
+const initialPatient = {
+  firstName: '',
+  lastName: '',
+  middleName: '',
   suffix: '',
   nickname: '',
-  dob: '1990-01-01',
-  sex: 'Male',
-  bloodType: 'O+',
-  civilStatus: 'Single',
-  philhealth: '1234-5678-9012',
-  email: 'juan.cruz@email.com',
-  mobile: '09171234567',
+  dob: '',
+  sex: '',
+  bloodType: '',
+  civilStatus: '',
+  philhealth: '',
+  email: '',
+  mobile: '',
   profilePic: '',
-  id: '123456',
+  id: '',
 };
 
 const bloodTypes = ['A+','A-','B+','B-','AB+','AB-','O+','O-','NA'];
 const civilStatuses = ['Single','Married','Separated','Widowed'];
 
 const Profile = () => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [patientData, setPatientData] = useState(initialPatient);
+
+  const handleInputChange = (field, value) => {
+    setPatientData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const handleSave = () => {
+    // Here you would typically make an API call to save the changes
+    console.log('Saving changes:', patientData);
+    setIsEditing(false);
+  };
+
+  const handleCancel = () => {
+    setPatientData(initialPatient);
+    setIsEditing(false);
+  };
+
   return (
     <div className="patient-profile-outer-container">
       <div className="patient-profile-wrapper">
@@ -30,83 +51,193 @@ const Profile = () => {
             <div className="patient-profile-info-fields">
               <div className="patient-profile-info-row">
                 <span className="patient-profile-info-label">FIRST NAME</span>
-                <span className="patient-profile-info-value">{patient.firstName}</span>
+                {isEditing ? (
+                  <input
+                    type="text"
+                    className="patient-profile-info-input"
+                    value={patientData.firstName}
+                    onChange={(e) => handleInputChange('firstName', e.target.value)}
+                  />
+                ) : (
+                  <span className="patient-profile-info-value">{patientData.firstName}</span>
+                )}
               </div>
               <div className="patient-profile-info-row">
                 <span className="patient-profile-info-label">LAST NAME</span>
-                <span className="patient-profile-info-value">{patient.lastName}</span>
+                {isEditing ? (
+                  <input
+                    type="text"
+                    className="patient-profile-info-input"
+                    value={patientData.lastName}
+                    onChange={(e) => handleInputChange('lastName', e.target.value)}
+                  />
+                ) : (
+                  <span className="patient-profile-info-value">{patientData.lastName}</span>
+                )}
               </div>
               <div className="patient-profile-info-row">
                 <span className="patient-profile-info-label">MIDDLE NAME</span>
-                <span className="patient-profile-info-value">{patient.middleName}</span>
+                {isEditing ? (
+                  <input
+                    type="text"
+                    className="patient-profile-info-input"
+                    value={patientData.middleName}
+                    onChange={(e) => handleInputChange('middleName', e.target.value)}
+                  />
+                ) : (
+                  <span className="patient-profile-info-value">{patientData.middleName}</span>
+                )}
               </div>
               <div className="patient-profile-info-row">
                 <span className="patient-profile-info-label">SUFFIX</span>
-                <span className="patient-profile-info-value">{patient.suffix}</span>
+                {isEditing ? (
+                  <input
+                    type="text"
+                    className="patient-profile-info-input"
+                    value={patientData.suffix}
+                    onChange={(e) => handleInputChange('suffix', e.target.value)}
+                  />
+                ) : (
+                  <span className="patient-profile-info-value">{patientData.suffix}</span>
+                )}
               </div>
               <div className="patient-profile-info-row">
                 <span className="patient-profile-info-label">NICKNAME</span>
-                <span className="patient-profile-info-value">{patient.nickname}</span>
+                {isEditing ? (
+                  <input
+                    type="text"
+                    className="patient-profile-info-input"
+                    value={patientData.nickname}
+                    onChange={(e) => handleInputChange('nickname', e.target.value)}
+                  />
+                ) : (
+                  <span className="patient-profile-info-value">{patientData.nickname}</span>
+                )}
               </div>
               <div className="patient-profile-info-row">
                 <span className="patient-profile-info-label">DATE OF BIRTH</span>
-                <span className="patient-profile-info-value">{patient.dob}</span>
+                {isEditing ? (
+                  <input
+                    type="date"
+                    className="patient-profile-info-input"
+                    value={patientData.dob}
+                    onChange={(e) => handleInputChange('dob', e.target.value)}
+                  />
+                ) : (
+                  <span className="patient-profile-info-value">{patientData.dob}</span>
+                )}
               </div>
               <div className="patient-profile-info-row">
                 <span className="patient-profile-info-label">SEX</span>
+                {/* SEX TAGS */}
                 <div className="patient-profile-info-tags-group">
-                  <span className={`patient-profile-info-tag ${patient.sex === 'Male' ? 'active' : 'inactive'}`}>Male</span>
-                  <span className={`patient-profile-info-tag ${patient.sex === 'Female' ? 'active' : 'inactive'}`}>Female</span>
+                  {['Male', 'Female'].map(sex => (
+                    <span
+                      key={sex}
+                      className={`patient-profile-info-tag ${patientData.sex === sex ? 'active' : 'inactive'}${isEditing ? ' clickable' : ''}`}
+                      onClick={isEditing ? () => handleInputChange('sex', sex) : undefined}
+                    >{sex}</span>
+                  ))}
                 </div>
               </div>
               <div className="patient-profile-info-row">
                 <span className="patient-profile-info-label">BLOOD TYPE</span>
+                {/* BLOOD TYPE TAGS */}
                 <div className="patient-profile-info-tags-group blood-type">
                   {bloodTypes.map(type => (
-                    <span key={type} className={`patient-profile-info-tag ${patient.bloodType === type ? 'active' : 'inactive'}`}>{type}</span>
+                    <span
+                      key={type}
+                      className={`patient-profile-info-tag ${patientData.bloodType === type ? 'active' : 'inactive'}${isEditing ? ' clickable' : ''}`}
+                      onClick={isEditing ? () => handleInputChange('bloodType', type) : undefined}
+                    >{type}</span>
                   ))}
                 </div>
               </div>
               <div className="patient-profile-info-row">
                 <span className="patient-profile-info-label">CIVIL STATUS</span>
+                {/* CIVIL STATUS TAGS */}
                 <div className="patient-profile-info-tags-group">
                   {civilStatuses.map(status => (
-                    <span key={status} className={`patient-profile-info-tag ${patient.civilStatus === status ? 'active' : 'inactive'}`}>{status}</span>
+                    <span
+                      key={status}
+                      className={`patient-profile-info-tag ${patientData.civilStatus === status ? 'active' : 'inactive'}${isEditing ? ' clickable' : ''}`}
+                      onClick={isEditing ? () => handleInputChange('civilStatus', status) : undefined}
+                    >{status}</span>
                   ))}
                 </div>
               </div>
               <div className="patient-profile-info-row">
                 <span className="patient-profile-info-label">PHIL HEALTH NO.</span>
-                <span className="patient-profile-info-value">{patient.philhealth}</span>
+                {isEditing ? (
+                  <input
+                    type="text"
+                    className="patient-profile-info-input"
+                    value={patientData.philhealth}
+                    onChange={(e) => handleInputChange('philhealth', e.target.value)}
+                  />
+                ) : (
+                  <span className="patient-profile-info-value">{patientData.philhealth}</span>
+                )}
               </div>
               <div className="patient-profile-info-row">
                 <span className="patient-profile-info-label">EMAIL</span>
-                <span className="patient-profile-info-value">{patient.email}</span>
+                {isEditing ? (
+                  <input
+                    type="email"
+                    className="patient-profile-info-input"
+                    value={patientData.email}
+                    onChange={(e) => handleInputChange('email', e.target.value)}
+                  />
+                ) : (
+                  <span className="patient-profile-info-value">{patientData.email}</span>
+                )}
               </div>
               <div className="patient-profile-info-row">
                 <span className="patient-profile-info-label">PRIMARY MOBILE</span>
-                <span className="patient-profile-info-value">{patient.mobile}</span>
+                {isEditing ? (
+                  <input
+                    type="tel"
+                    className="patient-profile-info-input"
+                    value={patientData.mobile}
+                    onChange={(e) => handleInputChange('mobile', e.target.value)}
+                  />
+                ) : (
+                  <span className="patient-profile-info-value">{patientData.mobile}</span>
+                )}
               </div>
             </div>
             <div className="patient-profile-info-profile">
               <img
                 src={
-                  patient.profilePic ||
-                  `https://ui-avatars.com/api/?name=${patient.firstName}+${patient.lastName}&background=034172&color=fff&size=100`
+                  patientData.profilePic ||
+                  `https://ui-avatars.com/api/?name=${patientData.firstName}+${patientData.lastName}&background=034172&color=fff&size=100`
                 }
                 alt="Profile"
                 className="patient-profile-info-pic"
               />
-              <p><strong>ID:</strong> {patient.id}</p>
+              <p><strong>ID:</strong> {patientData.id}</p>
             </div>
           </div>
-          <button className="global-btn primary patient-profile-edit-btn" type="button" style={{ position: 'absolute', bottom: 32, right: 32, zIndex: 10 }}>
-            Edit
-          </button>
+          <div className="patient-profile-buttons patient-profile-edit-btn">
+            {isEditing ? (
+              <>
+                <button className="global-btn secondary" type="button" onClick={handleCancel}>
+                  Cancel
+                </button>
+                <button className="global-btn primary" type="button" onClick={handleSave}>
+                  Save
+                </button>
+              </>
+            ) : (
+              <button className="global-btn primary" type="button" onClick={() => setIsEditing(true)}>
+                Edit
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default Profile; 
+export default Profile;
