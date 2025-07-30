@@ -10,8 +10,8 @@
   flex-direction: column;
   background-color: white;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border: 1px solid #ccc;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
 }
 
 .patient-profile-container {
@@ -139,8 +139,6 @@
   z-index: 10;
 }
 
-
-
 .patient-profile-tag.clickable {
   border: 2px solid #434bb8;
   background: #e3e8ff;
@@ -262,7 +260,7 @@
   height: 100px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #034172;
+  border: 1px solid #034172;
   background-color: #e0e0e0;
 }
 
@@ -306,7 +304,8 @@
 }
 
 .patient-profile-info-tag.active {
-  color: #212121;
+  background: #434bb8;
+  color: #fff;
 }
 
 .patient-profile-info-tag.inactive {
@@ -329,5 +328,68 @@
   min-width: 32px;
   padding: 4px 6px;
   font-size: 14px;
+}
+
+.patient-profile-info-value,
+.patient-profile-info-input {
+  flex: 1;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 4px;
+  background: white;
+  color: #555;
+  min-height: 16px;
+  min-width: 250px;
+  font-weight: 500;
+  font-family: inherit;
+  box-sizing: border-box;
+  transition: none;
+  display: flex;
+  align-items: center;
+}
+
+.patient-profile-info-input {
+  border: 1.5px solid #e0e0e0;
+}
+
+.patient-profile-info-input:focus {
+  outline: none;
+  border: 1.5px solid #e0e0e0;
+  background: white;
+}
+
+.patient-profile-info-input[type="date"] {
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  appearance: textfield;
+  -webkit-appearance: none;
+}
+
+.patient-profile-info-value:empty::before {
+  content: '\00a0'; /* non-breaking space */
+  display: inline-block;
+}
+
+.patient-profile-buttons.patient-profile-edit-btn {
+  position: absolute;
+  bottom: 32px;
+  right: 32px;
+  z-index: 10;
+  display: flex;
+  gap: 10px;
+}
+
+.patient-profile-info-tag.clickable:hover {
+  background: #434bb8;
+  color: #fff;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+}
+
+.patient-profile-info-tag.active.clickable {
+  background: #434bb8;
+  color: #fff;
 }
 
