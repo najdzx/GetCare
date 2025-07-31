@@ -6,6 +6,8 @@ import DoctorLayout from './components/doctor/DoctorLayout';
 import Dashboard from './pages/doctor/dashboard/Dashboard';
 import ErrorBoundary from './components/ErrorBoundary';
 
+import './App.css';
+
 // 👇 Add these imports for the sub-pages
 import Appointments from './pages/doctor/appointments/Appointments';
 import Patients from './pages/doctor/patients/Patients';

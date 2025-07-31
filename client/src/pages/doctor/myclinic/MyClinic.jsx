@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './MyClinic.css';
+import styles from './MyClinic.module.css';
 import '../../../components/Layout/Button.css';
 import '../../../components/Layout/Scrollbar.css';
 
@@ -105,15 +105,15 @@ function MyClinic() {
     <div>
       {/* Clinic Cards Grid */}
       {!showAddForm && (
-        <div className="dashboard-grid clinic-grid">
+        <div className={`${styles.dashboardGrid} ${styles.clinicGrid}`}>
           {clinics.map((c) => (
             <div
               key={c.id}
-              className="card clinic-card"
+              className={`${styles.card} ${styles.clinicCard}`}
               onMouseLeave={() => setShowDeleteId(null)}
             >
               <button
-                className="clinic-remove-btn"
+                className={styles.clinicRemoveBtn}
                 onClick={(e) => {
                   e.stopPropagation();
                   setShowDeleteId(c.id);
@@ -122,26 +122,26 @@ function MyClinic() {
               >
                 ×
               </button>
-              <div className="card-header">
-                <div className="card-title">
+              <div className={styles.cardHeader}>
+                <div className={styles.cardTitle}>
                   {c.image ? (
-                    <span className="clinic-card-img">
+                    <span className={styles.clinicCardImg}>
                       <img src={URL.createObjectURL(c.image)} alt="Clinic" />
                     </span>
                   ) : (
-                    <span role="img" aria-label="clinic" className="clinic-card-icon">🏥</span>
+                    <span role="img" aria-label="clinic" className={styles.clinicCardIcon}>🏥</span>
                   )}
                   <h3>{c.name}</h3>
                 </div>
               </div>
-              <div className="clinic-card-details">
-                <div className="clinic-card-address">{c.address}</div>
-                <div className="clinic-card-type">{c.isHospital ? 'Hospital' : 'Clinic'}</div>
+              <div className={styles.clinicCardDetails}>
+                <div className={styles.clinicCardAddress}>{c.address}</div>
+                <div className={styles.clinicCardType}>{c.isHospital ? 'Hospital' : 'Clinic'}</div>
               </div>
               {showDeleteId === c.id && (
-                <div className="clinic-delete-dialog">
+                <div className={styles.clinicDeleteDialog}>
                   <div>Are you sure you want to delete this clinic?</div>
-                  <div className="clinic-delete-actions">
+                  <div className={styles.clinicDeleteActions}>
                     <button
                       className="global-btn danger"
                       onClick={() => handleDeleteClinic(c.id)}
@@ -159,9 +159,9 @@ function MyClinic() {
               )}
             </div>
           ))}
-          <div className="card add-clinic-card" onClick={() => { setShowAddForm(true); setStep(1); }}>
-            <div className="add-clinic-content">
-              <span className="add-clinic-plus">+</span>
+          <div className={`${styles.card} ${styles.addClinicCard}`} onClick={() => { setShowAddForm(true); setStep(1); }}>
+            <div className={styles.addClinicContent}>
+              <span className={styles.addClinicPlus}>+</span>
               <div>Add Clinic</div>
             </div>
           </div>
@@ -170,119 +170,119 @@ function MyClinic() {
 
       {/* Add Clinic Form & Schedule Step */}
       {showAddForm && (
-        <div className="myclinic-container">
+        <div className={styles.myclinicContainer}>
           {step === 1 && (
             <>
               <h2>Add New Physical Clinic</h2>
-              <div className="myclinic-stepper">
-                <div className="myclinic-step-circle">1</div>
-                <span className="myclinic-step-label">Is this clinic in a hospital?</span>
+              <div className={styles.myclinicStepper}>
+                <div className={styles.myclinicStepCircle}>1</div>
+                <span className={styles.myclinicStepLabel}>Is this clinic in a hospital?</span>
               </div>
-              <div className="myclinic-toggle-group">
+              <div className={styles.myclinicToggleGroup}>
                 <button
-                  className={`toggle-btn${clinic.isHospital ? ' active' : ''}`}
+                  className={`${styles.toggleBtn}${clinic.isHospital ? ' ' + styles.toggleBtnActive : ''}`}
                   onClick={() => setClinic({ ...clinic, isHospital: true })}
                   type="button"
                 >YES</button>
                 <button
-                  className={`toggle-btn${!clinic.isHospital ? ' active' : ''}`}
+                  className={`${styles.toggleBtn}${!clinic.isHospital ? ' ' + styles.toggleBtnActive : ''}`}
                   onClick={() => setClinic({ ...clinic, isHospital: false })}
                   type="button"
                 >NO</button>
               </div>
-              <form className="myclinic-form" onSubmit={handleAddClinic}>
-                <div className="myclinic-fields">
-                  <div className="myclinic-row">
-                    <label className="myclinic-label">
-                      Clinic Name<span className="required">*</span>
+              <form className={styles.myclinicForm} onSubmit={handleAddClinic}>
+                <div className={styles.myclinicFields}>
+                  <div className={styles.myclinicRow}>
+                    <label className={styles.myclinicLabel}>
+                      Clinic Name<span className={styles.required}>*</span>
                     </label>
                     <input
                       name="name"
                       value={clinic.name}
                       onChange={handleInputChange}
                       required
-                      className="myclinic-input"
+                      className={styles.myclinicInput}
                     />
                   </div>
-                  <div className="myclinic-row">
-                    <label className="myclinic-label">
+                  <div className={styles.myclinicRow}>
+                    <label className={styles.myclinicLabel}>
                       Accreditation No.
                     </label>
                     <input
                       name="accreditation"
                       value={clinic.accreditation}
                       onChange={handleInputChange}
-                      className="myclinic-input"
+                      className={styles.myclinicInput}
                       placeholder="For PhilHealth Claim Forms"
                     />
                   </div>
-                  <div className="myclinic-row">
-                    <label className="myclinic-label">
+                  <div className={styles.myclinicRow}>
+                    <label className={styles.myclinicLabel}>
                       Room/Wing/Bldg.
                     </label>
                     <input
                       name="room"
                       value={clinic.room}
                       onChange={handleInputChange}
-                      className="myclinic-input"
+                      className={styles.myclinicInput}
                     />
                   </div>
-                  <div className="myclinic-row">
-                    <label className="myclinic-label">
-                      Address<span className="required">*</span>
+                  <div className={styles.myclinicRow}>
+                    <label className={styles.myclinicLabel}>
+                      Address<span className={styles.required}>*</span>
                     </label>
                     <input
                       name="address"
                       value={clinic.address}
                       onChange={handleInputChange}
                       required
-                      className="myclinic-input"
+                      className={styles.myclinicInput}
                     />
                   </div>
-                  <div className="myclinic-row">
-                    <label className="myclinic-label">
-                      Region<span className="required">*</span>
+                  <div className={styles.myclinicRow}>
+                    <label className={styles.myclinicLabel}>
+                      Region<span className={styles.required}>*</span>
                     </label>
                     <select
                       name="region"
                       value={clinic.region}
                       onChange={handleInputChange}
                       required
-                      className="myclinic-input"
+                      className={styles.myclinicInput}
                     >
                       <option key="region" value="">Select Region</option>
                       <option key="ncr" value="National Capital Region (NCR)">National Capital Region (NCR)</option>
                       {/* Add more regions as needed */}
                     </select>
                   </div>
-                  <div className="myclinic-row">
-                    <label className="myclinic-label">
-                      City<span className="required">*</span>
+                  <div className={styles.myclinicRow}>
+                    <label className={styles.myclinicLabel}>
+                      City<span className={styles.required}>*</span>
                     </label>
                     <select
                       name="city"
                       value={clinic.city}
                       onChange={handleInputChange}
                       required
-                      className="myclinic-input"
+                      className={styles.myclinicInput}
                       style={{ marginRight: 12, width: '50%' }}
                     >
                       <option key="city" value="">Select City</option>
                       <option key="makati" value="Makati">Makati</option>
                       {/* Add more cities as needed */}
                     </select>
-                    <label className="myclinic-label" style={{ marginLeft: 12 }}>
+                    <label className={styles.myclinicLabel} style={{ marginLeft: 12 }}>
                       ZIP Code
                     </label>
                     <input
                       name="zip"
                       value={clinic.zip}
                       onChange={handleInputChange}
-                      className="myclinic-input"
+                      className={styles.myclinicInput}
                       style={{ width: '30%' }}
                     />
                   </div>
-                  <div className="myclinic-row" style={{ justifyContent: 'flex-end', marginTop: 0, gap: 16 }}>
+                  <div className={styles.myclinicRow} style={{ justifyContent: 'flex-end', marginTop: 0, gap: 16 }}>
                     <button
                       type="button"
                       className="global-btn secondary"
@@ -319,24 +319,24 @@ function MyClinic() {
                     </button>
                   </div>
                 </div>
-                <div className="myclinic-image-section">
+                <div className={styles.myclinicImageSection}>
                   <div style={{ textAlign: 'center', marginBottom: 6, fontWeight: 600, color: '#555', fontSize: 15 }}>
                     Display Image
                   </div>
-                  <div className="myclinic-image-preview">
+                  <div className={styles.myclinicImagePreview}>
                     {clinic.image ? (
                       <img
                         src={URL.createObjectURL(clinic.image)}
                         alt="Clinic"
-                        className="myclinic-img"
+                        className={styles.myclinicImg}
                       />
                     ) : (
-                      <div className="myclinic-img-placeholder">
+                      <div className={styles.myclinicImgPlaceholder}>
                         <span role="img" aria-label="clinic" style={{ fontSize: 48 }}>🏥</span>
                       </div>
                     )}
                   </div>
-                  <label className="myclinic-img-upload">
+                  <label className={styles.myclinicImgUpload}>
                     UPDATE IMAGE
                     <input
                       type="file"
@@ -351,30 +351,31 @@ function MyClinic() {
           )}
           {step === 2 && (
             <>
-            <div className="myclinic-schedule-section">
+              <div className={styles.myclinicScheduleSection}>
               <h3>What's your schedule?</h3>
               {/* Days checkboxes */}
-              <div className="schedule-days">
+              <div className={styles.scheduleDays}>
                 {DAYS.map(day => (
-                  <label key={day} className="schedule-day-label">
-                    <span>{day}</span>
+                  <label key={day} className={styles.scheduleDayLabel}>
+                    <span className={styles.scheduleDayLabelSpan}>{day}</span>
                     <input
                       type="checkbox"
                       checked={checkedDays.includes(day)}
                       onChange={() => handleDayCheck(day)}
+                      className={styles.scheduleDaysInputCheckbox}
                     />
                   </label>
                 ))}
               </div>
               {/* Only show schedule rows for checked days */}
-              <div className="schedule-details custom-scrollbar">
+              <div className={`${styles.scheduleDetails} custom-scrollbar`}>
                 {/* Header labels */}
-                <div className={`schedule-row schedule-header-row`}>
-                  <div className="schedule-row-label"></div>
-                  <label className="schedule-label">Start Time</label>
-                  <label className="schedule-label">End Time</label>
-                  <label className="schedule-label">Availability</label>
-                  <label className="schedule-label">Schedule Notes</label>
+                <div className={`${styles.scheduleRow} ${styles.scheduleHeaderRow}`}>
+                  <div className={styles.scheduleRowLabel}></div>
+                  <label className={styles.scheduleLabel}>Start Time</label>
+                  <label className={styles.scheduleLabel}>End Time</label>
+                  <label className={styles.scheduleLabel}>Availability</label>
+                  <label className={styles.scheduleLabel}>Schedule Notes</label>
                   <div style={{ width: 120 }}></div>
                 </div>
                 {checkedDays
@@ -382,14 +383,14 @@ function MyClinic() {
                   .map(day => (
                       <div key={day}>
                         {scheduleSlots[day].map((slot, slotIndex) => (
-                          <div className="schedule-row" key={`${day}-${slotIndex}`}>
-                            <div className="schedule-row-label">
+                          <div className={styles.scheduleRow} key={`${day}-${slotIndex}`}>
+                            <div className={styles.scheduleRowLabel}>
                               {slotIndex === 0 ? DAY_LABELS[day] : ''}
                             </div>
                       <div className="schedule-cell">
                               <input 
                                 type="time" 
-                                className="schedule-time-input"
+                                className={styles.scheduleRowInput}
                                 value={slot.start}
                                 onChange={(e) => handleSlotChange(day, slotIndex, 'start', e.target.value)}
                               />
@@ -397,13 +398,14 @@ function MyClinic() {
                       <div className="schedule-cell">
                               <input 
                                 type="time" 
-                                className="schedule-time-input"
+                                className={styles.scheduleRowInput}
                                 value={slot.end}
                                 onChange={(e) => handleSlotChange(day, slotIndex, 'end', e.target.value)}
                               />
                       </div>
                       <div className="schedule-cell">
                               <select
+                                className={styles.scheduleRowSelect}
                                 value={slot.availability}
                                 onChange={(e) => handleSlotChange(day, slotIndex, 'availability', e.target.value)}
                               >
@@ -413,13 +415,14 @@ function MyClinic() {
                       </div>
                       <div className="schedule-cell">
                               <input 
+                                className={styles.scheduleRowInput}
                                 placeholder="Ex. For Follow-ups schedule here"
                                 value={slot.notes}
                                 onChange={(e) => handleSlotChange(day, slotIndex, 'notes', e.target.value)}
                               />
                       </div>
                       <div className="schedule-cell">
-                              <div className="schedule-buttons">
+                              <div className={styles.scheduleButtons}>
                                 {scheduleSlots[day].length > 1 && (
                                   <button 
                                     type="button" 
@@ -446,7 +449,7 @@ function MyClinic() {
                     ))}
                 </div>
               </div>
-              <div className="myclinic-actions">
+              <div className={styles.myclinicActions}>
                 <button
                   type="button"
                   className="global-btn secondary"

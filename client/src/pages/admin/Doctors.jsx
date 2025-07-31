@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { MdSearch, MdFilterList, MdAdd, MdEdit, MdDelete, MdPerson } from 'react-icons/md';
 import AdminLayout from '../../components/admin/AdminLayout';
-import './Doctors.css';
+import styles from './Doctors.module.css';
 
 const Doctors = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -29,37 +29,37 @@ const Doctors = () => {
 
   return (
     <AdminLayout>
-      <div className="admin-doctors">
-        <div className="doctors-header">
-          <div className="header-left">
+      <div className={styles.adminDoctors}>
+        <div className={styles.doctorsHeader}>
+          <div className={styles.headerLeft}>
             <h1>Doctors</h1>
             <p>Manage all doctors across GetCare platform</p>
           </div>
-          <button className="add-doctor-btn">
+          <button className={styles.addDoctorBtn}>
             <MdAdd />
             <span>Add Doctor</span>
           </button>
         </div>
 
         {/* Search and Filter */}
-        <div className="doctors-controls">
-          <div className="search-container">
-            <MdSearch className="search-icon" />
+        <div className={styles.doctorsControls}>
+          <div className={styles.searchContainer}>
+            <MdSearch className={styles.searchIcon} />
             <input
               type="text"
               placeholder="Search doctors..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="search-input"
+              className={styles.searchInput}
             />
           </div>
           
-          <div className="filter-container">
-            <MdFilterList className="filter-icon" />
+          <div className={styles.filterContainer}>
+            <MdFilterList className={styles.filterIcon} />
             <select
               value={selectedFilter}
               onChange={(e) => setSelectedFilter(e.target.value)}
-              className="filter-select"
+              className={styles.filterSelect}
             >
               <option value="all">All Status</option>
               <option value="active">Active</option>
@@ -69,8 +69,8 @@ const Doctors = () => {
         </div>
 
         {/* Doctors Table */}
-        <div className="doctors-table-container">
-          <table className="doctors-table">
+        <div className={styles.doctorsTableContainer}>
+          <table className={styles.doctorsTable}>
             <thead>
               <tr>
                 <th>Doctor</th>
@@ -86,8 +86,8 @@ const Doctors = () => {
               {filteredDoctors.map((doctor) => (
                 <tr key={doctor.id}>
                   <td>
-                    <div className="doctor-info">
-                      <div className="doctor-avatar">
+                    <div className={styles.doctorInfo}>
+                      <div className={styles.doctorAvatar}>
                         <MdPerson />
                       </div>
                       <span>{doctor.name}</span>
@@ -98,16 +98,16 @@ const Doctors = () => {
                   <td>{doctor.clinic}</td>
                   <td>{doctor.patients}</td>
                   <td>
-                    <span className={`status-badge ${doctor.status.toLowerCase()}`}>
+                    <span className={`${styles.statusBadge} ${styles[doctor.status.toLowerCase()]}`}>
                       {doctor.status}
                     </span>
                   </td>
                   <td>
-                    <div className="action-buttons">
-                      <button className="action-btn edit">
+                    <div className={styles.actionButtons}>
+                      <button className={`${styles.actionBtn} ${styles.edit}`}>
                         <MdEdit />
                       </button>
-                      <button className="action-btn delete">
+                      <button className={`${styles.actionBtn} ${styles.delete}`}>
                         <MdDelete />
                       </button>
                     </div>
@@ -119,14 +119,14 @@ const Doctors = () => {
         </div>
 
         {/* Pagination */}
-        <div className="pagination">
-          <button className="pagination-btn">Previous</button>
-          <div className="page-numbers">
-            <span className="page-number active">1</span>
-            <span className="page-number">2</span>
-            <span className="page-number">3</span>
+        <div className={styles.pagination}>
+          <button className={styles.paginationBtn}>Previous</button>
+          <div className={styles.pageNumbers}>
+            <span className={`${styles.pageNumber} ${styles.active}`}>1</span>
+            <span className={styles.pageNumber}>2</span>
+            <span className={styles.pageNumber}>3</span>
           </div>
-          <button className="pagination-btn">Next</button>
+          <button className={styles.paginationBtn}>Next</button>
         </div>
       </div>
     </AdminLayout>

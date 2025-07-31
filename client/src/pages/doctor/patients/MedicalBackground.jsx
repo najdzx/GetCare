@@ -1,13 +1,14 @@
 import React from 'react';
 import TextField from '@mui/material/TextField';
+import styles from './Patients.module.css';
 
 const MedicalBackground = ({ selectedPatient }) => {
   return (
     <>
-      <div className="medical-background">
+      <div className={styles.medicalBackground}>
         <h2>Medical Background</h2>
-        <div className="medical-fields">
-          <div className="medical-field-container">
+        <div className={styles.medicalFields}>
+          <div className={styles.medicalFieldContainer}>
             <TextField
               label="Known Medical Condition"
               value={selectedPatient.conditions || 'blank'}
@@ -18,7 +19,7 @@ const MedicalBackground = ({ selectedPatient }) => {
               variant="outlined"
             />
           </div>
-          <div className="medical-field-container">
+          <div className={styles.medicalFieldContainer}>
             <TextField
               label="Allergies"
               value={selectedPatient.allergies || 'blank'}
@@ -29,7 +30,7 @@ const MedicalBackground = ({ selectedPatient }) => {
               variant="outlined"
             />
           </div>
-          <div className="medical-field-container">
+          <div className={styles.medicalFieldContainer}>
             <TextField
               label="Previous Surgeries"
               value={selectedPatient.surgeries || 'blank'}
@@ -40,7 +41,7 @@ const MedicalBackground = ({ selectedPatient }) => {
               variant="outlined"
             />
           </div>
-          <div className="medical-field-container">
+          <div className={styles.medicalFieldContainer}>
             <TextField
               label="Family History"
               value={selectedPatient.familyHistory || 'blank'}
@@ -51,7 +52,7 @@ const MedicalBackground = ({ selectedPatient }) => {
               variant="outlined"
             />
           </div>
-          <div className="medical-field-container">
+          <div className={styles.medicalFieldContainer}>
             <TextField
               label="Medication"
               value={selectedPatient.medication || 'blank'}
@@ -62,7 +63,7 @@ const MedicalBackground = ({ selectedPatient }) => {
               variant="outlined"
             />
           </div>
-          <div className="medical-field-container">
+          <div className={styles.medicalFieldContainer}>
             <TextField
               label="Supplements"
               value={selectedPatient.supplements || 'blank'}

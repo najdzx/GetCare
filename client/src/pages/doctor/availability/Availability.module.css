@@ -1,5 +1,5 @@
 /* Availability page styles - separate from MyClinic */
-.availability-container {
+.availabilityContainer {
   max-width: 1300px;
   margin: 0 auto;
   padding: 8px 24px;
@@ -10,7 +10,7 @@
   position: relative;
 }
 
-.availability-container h2 {
+.availabilityContainer h2 {
   text-align: left;
   margin: 0 0 6px 0;
   font-size: 24px;
@@ -18,14 +18,14 @@
   font-weight: 600;
 }
 
-.availability-container h3 {
+.availabilityContainer h3 {
   text-align: left;
   margin: 12px 0 6px 0;
   font-size: 18px;
   color: #333;
 }
 
-.availability-stepper {
+.availabilityStepper {
   display: flex;
   align-items: center;
   margin-top: 36px;
@@ -33,7 +33,7 @@
   margin-left: 60px;
 }
 
-.availability-step-circle {
+.availabilityStepCircle {
   width: 44px;
   height: 44px;
   border-radius: 50%;
@@ -46,12 +46,12 @@
   font-weight: 500;
 }
 
-.availability-step-label {
+.availabilityStepLabel {
   font-size: 22px;
   font-weight: 400;
 }
 
-.availability-toggle-group {
+.availabilityToggleGroup {
   margin-left: 60px;
   display: flex;
   justify-content: space-between;
@@ -59,12 +59,12 @@
   margin-top: 32px;
 }
 
-.availability-toggle-left {
+.availabilityToggleLeft {
   display: flex;
   gap: 0;
 }
 
-.availability-toggle-left .toggle-btn {
+.availabilityToggleLeft .toggleBtn {
   background: #f5f5f5;
   border: none;
   color: #212121;
@@ -76,23 +76,23 @@
   transition: background 0.2s, color 0.2s;
 }
 
-.availability-toggle-left .toggle-btn.active {
+.availabilityToggleLeft .toggleBtn.active {
   background: #434bb8;
   color: #fff;
 }
 
-.availability-toggle-left .toggle-btn:disabled {
+.availabilityToggleLeft .toggleBtn:disabled {
   background: #f5f5f5;
   color: #ccc;
   cursor: not-allowed;
 }
 
-.availability-toggle-right {
+.availabilityToggleRight {
   display: flex;
   justify-content: flex-end;
 }
 
-.availability-toggle-settings-btn {
+.availabilityToggleSettingsBtn {
   background: #f8f9fa;
   border: 1px solid #e0e0e0;
   color: #333;
@@ -107,30 +107,30 @@
   gap: 6px;
 }
 
-.availability-toggle-settings-btn:hover:not(:disabled) {
+.availabilityToggleSettingsBtn:hover:not(:disabled) {
   background: #e9ecef;
   border-color: #434bb8;
   color: #434bb8;
 }
 
-.availability-toggle-settings-btn:disabled {
+.availabilityToggleSettingsBtn:disabled {
   background: #f5f5f5;
   color: #ccc;
   cursor: not-allowed;
 }
 
-.availability-toggle-settings-btn:focus {
+.availabilityToggleSettingsBtn:focus {
   outline: none;
   box-shadow: 0 0 0 2px rgba(67, 75, 184, 0.1);
 }
 
-.availability-schedule-section {
+.availabilityScheduleSection {
   margin-left: 60px;
   margin-top: 12px;
   padding-bottom: 80px; /* Space for bottom buttons */
 }
 
-.availability-booking-settings-section {
+.availabilityBookingSettingsSection {
   background: #f8f9fa;
   border: 1px solid #e0e0e0;
   border-radius: 6px;
@@ -150,34 +150,34 @@
   }
 }
 
-.availability-form {
+.availabilityForm {
   display: flex;
   gap: 32px;
   margin-top: 12px;
   margin-left: 0;
 }
 
-.availability-fields {
+.availabilityFields {
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.availability-row {
+.availabilityRow {
   display: flex;
   align-items: center;
   gap: 8px;
   margin-bottom: 10px;
 }
 
-.availability-label {
+.availabilityLabel {
   min-width: 120px;
   font-size: 14px;
   font-weight: 600;
 }
 
-.availability-input {
+.availabilityInput {
   flex: 1;
   max-width: 150px;
   padding: 8px 12px;
@@ -188,26 +188,26 @@
   transition: border-color 0.2s;
 }
 
-.availability-input:focus {
+.availabilityInput:focus {
   border-color: #1976d2;
   background: #fff;
   outline: none;
 }
 
-.availability-input:disabled {
+.availabilityInput:disabled {
   background: #f5f5f5;
   color: #ccc;
   cursor: not-allowed;
 }
 
-.availability-schedule-section .schedule-days {
+.availabilityScheduleSection .scheduleDays {
   display: flex;
   gap: 32px;
   margin-bottom: 18px;
   margin-top: 32px;
 }
 
-.availability-schedule-section .schedule-day-label {
+.availabilityScheduleSection .scheduleDayLabel {
   display: block;
   margin-bottom: 16px;
   font-weight: 500;
@@ -215,41 +215,42 @@
   font-size: 16px;
 }
 
-.availability-schedule-section .schedule-day-label span {
+.availabilityScheduleSection .scheduleDayLabel span {
   display: block;
   margin-bottom: 8px;
 }
 
-.availability-schedule-section .schedule-days input[type="checkbox"] {
+.availabilityScheduleSection .scheduleDays input[type="checkbox"] {
   width: 20px;
   height: 20px;
   accent-color: #434bb8;
   margin-top: 6px;
 }
 
-.availability-schedule-section .schedule-days input[type="checkbox"]:disabled {
+.availabilityScheduleSection .scheduleDays input[type="checkbox"]:disabled {
   accent-color: #ccc;
   cursor: not-allowed;
 }
 
-.availability-schedule-section .schedule-row {
+.availabilityScheduleSection .scheduleRow {
   display: flex;
   gap: 8px;
   align-items: center;
   margin-bottom: 32px;
+  
 }
 
-.availability-schedule-section .schedule-row-label {
+.availabilityScheduleSection .scheduleRowLabel {
   font-weight: 500;
   min-width: 90px;
   font-size: 16px;
 }
 
-.availability-schedule-section .schedule-cell {
+.availabilityScheduleSection .scheduleCell {
   flex: 0 0 auto;
 }
 
-.availability-schedule-section .schedule-time-input {
+.availabilityScheduleSection .scheduleTimeInput {
   width: 200px;
   padding: 8px 12px;
   border: 1px solid #ddd;
@@ -258,15 +259,15 @@
   background: white;
 }
 
-.availability-schedule-section .schedule-time-input:disabled {
+.availabilityScheduleSection .scheduleTimeInput:disabled {
   background: white;
   color: #333;
   border-color: #ddd;
   cursor: not-allowed;
 }
 
-.availability-schedule-section .schedule-row select,
-.availability-schedule-section .schedule-row input {
+.availabilityScheduleSection .scheduleRow select,
+.availabilityScheduleSection .scheduleRow input {
   width: 200px;
   padding: 8px 12px;
   border: 1px solid #ddd;
@@ -277,22 +278,22 @@
   box-sizing: border-box;
 }
 
-.availability-schedule-section .schedule-row select:focus,
-.availability-schedule-section .schedule-row input:focus {
+.availabilityScheduleSection .scheduleRow select:focus,
+.availabilityScheduleSection .scheduleRow input:focus {
   outline: none;
   border-color: #434bb8;
   box-shadow: 0 0 0 2px rgba(67, 75, 184, 0.1);
 }
 
-.availability-schedule-section .schedule-row select:disabled,
-.availability-schedule-section .schedule-row input:disabled {
+.availabilityScheduleSection .scheduleRow select:disabled,
+.availabilityScheduleSection .scheduleRow input:disabled {
   background: white;
   color: #333;
   border-color: #ddd;
   cursor: not-allowed;
 }
 
-.availability-schedule-section .schedule-row button {
+.availabilityScheduleSection .scheduleRow button {
   background: #434bb8;
   color: white;
   border: none;
@@ -307,18 +308,18 @@
   white-space: nowrap;
 }
 
-.availability-schedule-section .schedule-row button:hover {
+.availabilityScheduleSection .scheduleRow button:hover {
   background: #30368a;
 }
 
-.availability-schedule-section .schedule-row button:disabled {
+.availabilityScheduleSection .scheduleRow button:disabled {
   background: #434bb8;
   color: white;
   cursor: not-allowed;
   opacity: 0.6;
 }
 
-.availability-schedule-section .remove-slot-btn {
+.availabilityScheduleSection .removeSlotBtn {
   background: #e53935;
   color: white;
   border: none;
@@ -333,17 +334,17 @@
   white-space: nowrap;
 }
 
-.availability-schedule-section .remove-slot-btn:hover {
+.availabilityScheduleSection .removeSlotBtn:hover {
   background: #c62828;
 }
 
-.availability-schedule-section .schedule-buttons {
+.availabilityScheduleSection .scheduleButtons {
   display: flex;
   gap: 8px;
   align-items: center;
 }
 
-.availability-schedule-section .schedule-header-row {
+.availabilityScheduleSection .scheduleHeaderRow {
   display: flex;
   gap: 8px;
   align-items: center;
@@ -351,7 +352,7 @@
   margin-bottom: 16px;
 }
 
-.availability-schedule-section .schedule-label {
+.availabilityScheduleSection .scheduleLabel {
   font-weight: 600;
   color: #333;
   font-size: 14px;
@@ -361,12 +362,12 @@
   margin-right: 0;
 }
 
-.availability-schedule-section .schedule-header-row .schedule-label:first-child {
+.availabilityScheduleSection .scheduleHeaderRow .scheduleLabel:first-child {
   min-width: 90px;
 }
 
 /* Edit Button - Fixed at bottom right */
-.availability-edit-toggle {
+.availabilityEditToggle {
   position: absolute;
   bottom: 20px;
   right: 20px;
@@ -375,7 +376,7 @@
   z-index: 1000;
 }
 
-.availability-edit-btn {
+.availabilityEditBtn {
   background: #434bb8;
   border: none;
   color: #fff;
@@ -390,13 +391,13 @@
   transition: background 0.2s, color 0.2s;
 }
 
-.availability-edit-btn:hover {
+.availabilityEditBtn:hover {
   background: #30368a;
   color: #fff;
 }
 
 /* Save/Cancel Buttons - Fixed at bottom right */
-.availability-actions {
+.availabilityActions {
   position: absolute;
   bottom: 20px;
   right: 20px;
@@ -406,7 +407,7 @@
   z-index: 1000;
 }
 
-.availability-save-btn {
+.availabilitySaveBtn {
   background: #434bb8;
   border: none;
   color: #fff;
@@ -421,12 +422,12 @@
   transition: background 0.2s, color 0.2s;
 }
 
-.availability-save-btn:hover {
+.availabilitySaveBtn:hover {
   background: #30368a;
   color: #fff;
 }
 
-.availability-cancel-btn {
+.availabilityCancelBtn {
   background: #f5f5f5;
   border: none;
   color: #212121;
@@ -441,13 +442,13 @@
   transition: background 0.2s, color 0.2s;
 }
 
-.availability-cancel-btn:hover {
+.availabilityCancelBtn:hover {
   background: #434bb8;
   color: #fff;
 }
 
 /* Booking Settings Modal */
-.availability-modal-overlay {
+.availabilityModalOverlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -470,7 +471,7 @@
   }
 }
 
-.availability-modal {
+.availabilityModal {
   background: white;
   border-radius: 8px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
@@ -492,7 +493,7 @@
   }
 }
 
-.availability-modal-header {
+.availabilityModalHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -501,14 +502,14 @@
   background: #f8f9fa;
 }
 
-.availability-modal-header h3 {
+.availabilityModalHeader h3 {
   margin: 0;
   font-size: 18px;
   font-weight: 600;
   color: #333;
 }
 
-.availability-modal-close {
+.availabilityModalClose {
   background: none;
   border: none;
   font-size: 24px;
@@ -524,18 +525,18 @@
   transition: background 0.2s, color 0.2s;
 }
 
-.availability-modal-close:hover {
+.availabilityModalClose:hover {
   background: #e9ecef;
   color: #333;
 }
 
-.availability-modal-content {
+.availabilityModalContent {
   padding: 24px;
   max-height: 60vh;
   overflow-y: auto;
 }
 
-.availability-modal-footer {
+.availabilityModalFooter {
   display: flex;
   justify-content: flex-end;
   gap: 12px;
@@ -544,7 +545,7 @@
   background: #f8f9fa;
 }
 
-.availability-modal-btn {
+.availabilityModalBtn {
   padding: 8px 16px;
   border-radius: 4px;
   font-size: 14px;
@@ -554,94 +555,94 @@
   transition: all 0.2s;
 }
 
-.availability-modal-cancel {
+.availabilityModalCancel {
   background: #f5f5f5;
   border-color: #e0e0e0;
   color: #212121;
 }
 
-.availability-modal-cancel:hover {
+.availabilityModalCancel:hover {
   background: #e9ecef;
   border-color: #ccc;
 }
 
-.availability-modal-save {
+.availabilityModalSave {
   background: #434bb8;
   border-color: #434bb8;
   color: #fff;
 }
 
-.availability-modal-save:hover {
+.availabilityModalSave:hover {
   background: #30368a;
   border-color: #30368a;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .availability-container {
+  .availabilityContainer {
     padding: 12px;
     height: auto;
   }
   
-  .availability-container h2 {
+  .availabilityContainer h2 {
     font-size: 20px;
   }
   
-  .availability-stepper,
-  .availability-toggle-group,
-  .availability-schedule-section {
+  .availabilityStepper,
+  .availabilityToggleGroup,
+  .availabilityScheduleSection {
     margin-left: 0;
   }
   
-  .availability-toggle-group {
+  .availabilityToggleGroup {
     flex-direction: column;
     gap: 12px;
     align-items: flex-start;
   }
   
-  .availability-toggle-right {
+  .availabilityToggleRight {
     width: 100%;
   }
   
-  .availability-schedule-section {
+  .availabilityScheduleSection {
     padding-bottom: 100px;
   }
   
-  .availability-schedule-section .schedule-days {
+  .availabilityScheduleSection .scheduleDays {
     flex-wrap: wrap;
     gap: 16px;
   }
   
-  .availability-schedule-section .schedule-row {
+  .availabilityScheduleSection .scheduleRow {
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
   }
   
-  .availability-schedule-section .schedule-cell {
+  .availabilityScheduleSection .scheduleCell {
     width: 100%;
   }
   
-  .availability-row {
+  .availabilityRow {
     flex-direction: column;
     align-items: flex-start;
     gap: 6px;
   }
   
-  .availability-label {
+  .availabilityLabel {
     min-width: auto;
   }
   
-  .availability-input {
+  .availabilityInput {
     width: 100%;
     max-width: none;
   }
   
-  .availability-booking-settings-section {
+  .availabilityBookingSettingsSection {
     padding: 12px;
   }
   
-  .availability-edit-toggle {
+  .availabilityEditToggle {
     position: fixed;
     bottom: 10px;
     right: 10px;
@@ -649,7 +650,7 @@
     justify-content: center;
   }
   
-  .availability-actions {
+  .availabilityActions {
     position: fixed;
     bottom: 10px;
     right: 10px;
@@ -659,7 +660,7 @@
 } 
 
 /* Remove custom scrollbar styles and keep basic styling */
-.availability-schedule-section .schedule-details {
-  max-height: 300px;
+.availabilityScheduleSection .scheduleDetails {
+  max-height: 450px;
   overflow-y: auto;
 } 

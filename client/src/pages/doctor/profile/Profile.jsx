@@ -1,214 +1,276 @@
 import React, { useState } from 'react';
-import { Box, Button, TextField, Paper, Avatar, MenuItem, Grid, Divider, Typography, Chip, Fade } from '@mui/material';
-import PersonIcon from '@mui/icons-material/Person';
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
-import PhoneIcon from '@mui/icons-material/Phone';
-import EmailIcon from '@mui/icons-material/Email';
-import BadgeIcon from '@mui/icons-material/Badge';
-import LanguageIcon from '@mui/icons-material/Language';
-import SchoolIcon from '@mui/icons-material/School';
-import WorkIcon from '@mui/icons-material/Work';
-import ScheduleIcon from '@mui/icons-material/Schedule';
-import './Profile.css';
-import '../../../components/Layout/Scrollbar.css';
-
-const initialProfile = {
-  id: 'D-0001',
-  picture: '', // URL or base64
-  firstName: 'John',
-  middleName: 'A.',
-  lastName: 'Doe',
-  sex: 'Male',
-  dateOfBirth: '1980-01-01',
-  phone: '+63 912 345 6789',
-  email: 'dr.johndoe@email.com',
-  address: '123 Main St, City',
-  licenseNumber: 'PRC-123456',
-  specialization: 'General Medicine',
-  subSpecialization: 'Cardiology',
-  affiliatedHospital: 'City Hospital',
-  training: 'Residency at City Hospital',
-  bio: 'Passionate about patient care and cardiology.',
-  languages: 'English, Filipino',
-  yearsOfExperience: '15',
-  certifications: 'Board Certified Cardiologist',
-  clinicSchedule: 'Mon-Fri 9:00am-5:00pm',
-};
-
-const sexOptions = ['Male', 'Female', 'Other'];
-
-const getProfileCompletion = (profile) => {
-  const requiredFields = [
-    'firstName', 'lastName', 'sex', 'dateOfBirth', 'phone', 'email', 'address',
-    'licenseNumber', 'specialization', 'affiliatedHospital', 'training', 'bio', 'languages', 'yearsOfExperience', 'certifications', 'clinicSchedule'
-  ];
-  const filled = requiredFields.filter(f => profile[f] && String(profile[f]).trim() !== '').length;
-  return Math.round((filled / requiredFields.length) * 100);
-};
+import styles from './DoctorProfile.module.css';
 
 const Profile = () => {
-  const [profile, setProfile] = useState(initialProfile);
-  const [editProfile, setEditProfile] = useState(profile);
-  const [editing, setEditing] = useState(false);
-  const [picturePreview, setPicturePreview] = useState(profile.picture);
-  const [fadeKey, setFadeKey] = useState(0);
-  const handleEdit = () => { setEditing(true); setFadeKey(fadeKey + 1); };
-  const handleCancel = () => { setEditing(false); setFadeKey(fadeKey + 1); };
-  const handleSave = (e) => { e.preventDefault(); setProfile(editProfile); setEditing(false); setFadeKey(fadeKey + 1); };
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [profilePic, setProfilePic] = useState(null);
+  const [formData, setFormData] = useState({
+    doctorId: '',
+    firstName: '',
+    middleName: '',
+    lastName: '',
+    sex: '',
+    dateOfBirth: '',
+    phoneNumber: '',
+    email: '',
+    address: '',
+    licenseNumber: '',
+    specialization: '',
+    subSpecialization: '',
+    yearsOfExperience: '',
+    affiliatedHospital: '',
+    training: '',
+    certifications: ''
+  });
 
-  const handleChange = (field) => (e) => {
-    setEditProfile({ ...editProfile, [field]: e.target.value });
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    if (name === 'yearsOfExperience') {
+      // Only allow up to 2 digits and value <= 99
+      if (!/^\d{0,2}$/.test(value)) return;
+      if (value && parseInt(value, 10) > 99) return;
+    }
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handlePictureChange = (e) => {
+  const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
-      reader.onloadend = () => {
-        setPicturePreview(reader.result);
-        setEditProfile({ ...editProfile, picture: reader.result });
+      reader.onload = (event) => {
+        setProfilePic(event.target.result);
       };
       reader.readAsDataURL(file);
     }
   };
 
-  // Profile completion
-  const completion = getProfileCompletion(editing ? editProfile : profile);
+  const handleSave = (e) => {
+    e.preventDefault();
+    // Validate phone number (Philippines format: starts with +63 or 09, 11 digits for 09, 13 for +63)
+    const phone = formData.phoneNumber.trim();
+    const phPhoneRegex = /^(\+63|0)9\d{9}$/;
+    if (phone && !phPhoneRegex.test(phone)) {
+      alert('Please enter a valid Philippine phone number (e.g., 09171234567 or +639171234567).');
+      return;
+    }
 
-  // Language chips
-  const languageChips = (profile.languages || '').split(',').map(l => l.trim()).filter(Boolean);
+    // Validate years of experience (must be a number and not negative)
+    const years = formData.yearsOfExperience.trim();
+    if (years && (!/^\d{1,2}$/.test(years) || parseInt(years, 10) < 0 || parseInt(years, 10) > 99)) {
+      alert('Years of experience must be a non-negative number.');
+      return;
+    }
+
+    setIsEditMode(false);
+    alert('Profile updated successfully!');
+  };
+
+  const toggleEditMode = () => setIsEditMode(!isEditMode);
+  const cancelEdit = () => setIsEditMode(false);
+
+  const doctorName = formData.firstName || formData.lastName 
+    ? `Dr. ${formData.firstName} ${formData.middleName} ${formData.lastName}`.replace(/\s+/g, ' ')
+    : 'Dr. [Name]';
 
   return (
-    <Box className="profile-center-wrapper">
-      <Paper elevation={3} className="profile-page-card profile-scrollable-card custom-scrollbar">
-        <Fade in={true} key={fadeKey} timeout={400}>
-          <Box>
-            <h2 className="profile-page-title">My Profile</h2>
-            <Box display="flex" flexDirection="column" alignItems="center" mb={3}>
-              <Avatar
-                src={editing ? picturePreview : profile.picture}
-                alt="Profile"
-                className="profile-avatar"
-              />
-              {editing && (
-                <Button variant="outlined" component="label" size="small" className="profile-upload-btn">
-                  Upload Picture
-                  <input type="file" accept="image/*" hidden onChange={handlePictureChange} />
-                </Button>
+    <div className={styles['doctor-profile-container']}>
+      <div className={`${styles['doctor-profile-wrapper']} ${isEditMode ? styles['doctor-edit-mode'] : ''}`}>
+        {/* Header Section */}
+        <div className={styles['doctor-profile-header']}>
+          <div className={styles['doctor-profile-pic-container']}>
+            <div className={styles['doctor-profile-pic']}>
+              {profilePic ? (
+                <img 
+                  src={profilePic} 
+                  alt="Profile" 
+                  style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} 
+                />
+              ) : (
+                '👨‍⚕️'
               )}
-            </Box>
-            {editing ? (
-              <div className="profile-scrollable-card custom-scrollbar">
-                <form onSubmit={handleSave}>
-                  <Grid container spacing={3}>
-                    <Grid item xs={12} md={6}>
-                      <Typography className="profile-section-title"><PersonIcon fontSize="small" sx={{mr:1}}/>Personal Information</Typography>
-                      <TextField label="ID" fullWidth margin="normal" value={editProfile.id} disabled />
-                      <TextField label="First Name" fullWidth margin="normal" value={editProfile.firstName} onChange={handleChange('firstName')} />
-                      <TextField label="Middle Name" fullWidth margin="normal" value={editProfile.middleName} onChange={handleChange('middleName')} />
-                      <TextField label="Last Name" fullWidth margin="normal" value={editProfile.lastName} onChange={handleChange('lastName')} />
-                      <TextField label="Sex" select fullWidth margin="normal" value={editProfile.sex} onChange={handleChange('sex')}>
-                        {sexOptions.map((option) => (<MenuItem key={option} value={option}>{option}</MenuItem>))}
-                      </TextField>
-                      <TextField label="Date of Birth" type="date" fullWidth margin="normal" value={editProfile.dateOfBirth} onChange={handleChange('dateOfBirth')} InputLabelProps={{ shrink: true }} />
-                      <TextField label="Phone Number" fullWidth margin="normal" value={editProfile.phone} onChange={handleChange('phone')} />
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                      <Typography className="profile-section-title"><EmailIcon fontSize="small" sx={{mr:1}}/>Contact</Typography>
-                      <TextField label="Email" fullWidth margin="normal" value={editProfile.email} onChange={handleChange('email')} />
-                      <TextField label="Address" fullWidth margin="normal" value={editProfile.address} onChange={handleChange('address')} />
-                      <TextField label="Bio/About" fullWidth margin="normal" value={editProfile.bio} onChange={handleChange('bio')} multiline minRows={2} />
-                      <TextField label="Languages Spoken" fullWidth margin="normal" value={editProfile.languages} onChange={handleChange('languages')} helperText="Comma separated" />
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                      <Typography className="profile-section-title"><BadgeIcon fontSize="small" sx={{mr:1}}/>Professional Details</Typography>
-                      <TextField label="License Number" fullWidth margin="normal" value={editProfile.licenseNumber} onChange={handleChange('licenseNumber')} />
-                      <TextField label="Specialization" fullWidth margin="normal" value={editProfile.specialization} onChange={handleChange('specialization')} />
-                      <TextField label="Sub Specialization" fullWidth margin="normal" value={editProfile.subSpecialization} onChange={handleChange('subSpecialization')} />
-                      <TextField label="Years of Experience" fullWidth margin="normal" value={editProfile.yearsOfExperience} onChange={handleChange('yearsOfExperience')} type="number" inputProps={{ min: 0 }} />
-                      <TextField label="Affiliated Hospital" fullWidth margin="normal" value={editProfile.affiliatedHospital} onChange={handleChange('affiliatedHospital')} />
-                      <TextField label="Training" fullWidth margin="normal" value={editProfile.training} onChange={handleChange('training')} />
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                      <Typography className="profile-section-title"><SchoolIcon fontSize="small" sx={{mr:1}}/>Schedule & Certifications</Typography>
-                      <TextField label="Certifications" fullWidth margin="normal" value={editProfile.certifications} onChange={handleChange('certifications')} multiline minRows={2} />
-                      <TextField label="Clinic Schedule" fullWidth margin="normal" value={editProfile.clinicSchedule} onChange={handleChange('clinicSchedule')} multiline minRows={2} />
-                    </Grid>
-                  </Grid>
-                  <Box className="profile-action-bar">
-                    <Button onClick={handleCancel} sx={{ mr: 1 }} className="doctor-primary-btn">Cancel</Button>
-                    <Button type="submit" className="doctor-primary-btn">Save</Button>
-                  </Box>
-                </form>
+            </div>
+            <div 
+              className={styles['doctor-profile-pic-upload']} 
+              onClick={() => document.getElementById('doctorProfilePicInput').click()}
+            >
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+              </svg>
+            </div>
+            <input 
+              type="file" 
+              id="doctorProfilePicInput" 
+              className={styles['doctor-profile-pic-input']} 
+              accept="image/*" 
+              onChange={handleFileChange}
+            />
+          </div>
+          
+          <div className={styles['doctor-profile-basic-info']}>
+            <h1>{doctorName}</h1>
+            <p>{formData.specialization || '[Specialization]'}</p>
+            <p>{formData.affiliatedHospital?.split(',')[0] || '[Hospital]'}</p>
+            <p>
+              {formData.yearsOfExperience 
+                ? `${formData.yearsOfExperience} years of experience` 
+                : '[Experience]'
+              }
+            </p>
+          </div>
+
+          {!isEditMode && (
+            <button className={styles['doctor-profile-edit-btn']} onClick={toggleEditMode}>
+              Edit Profile
+            </button>
+          )}
+        </div>
+
+        {/* Content Section */}
+        <div className={styles['doctor-profile-content']}>
+          {/* Personal Information */}
+          <div className={styles['doctor-profile-section']}>
+            <h2 className={styles['doctor-profile-section-title']}>Personal Information</h2>
+            <div className={styles['doctor-profile-fields-grid']}>
+              <div className={`${styles['doctor-profile-field']} ${styles['doctor-profile-field-readonly']}`}>
+                <label className={styles['doctor-profile-field-label']}>Doctor ID</label>
+                <div className={styles['doctor-profile-field-value']}>
+                  {formData.doctorId || '[ID]'}
+                </div>
               </div>
-            ) : (
-              <Grid container spacing={3}>
-                <Grid item xs={12} md={6}>
-                  <Typography className="profile-section-title"><PersonIcon fontSize="small" sx={{mr:1}}/>Personal Information</Typography>
-                  <div className="profile-label">ID</div>
-                  <div className="profile-value">{profile.id}</div>
-                  <div className="profile-label">First Name</div>
-                  <div className="profile-value">{profile.firstName}</div>
-                  <div className="profile-label">Middle Name</div>
-                  <div className="profile-value">{profile.middleName}</div>
-                  <div className="profile-label">Last Name</div>
-                  <div className="profile-value">{profile.lastName}</div>
-                  <div className="profile-label">Sex</div>
-                  <div className="profile-value">{profile.sex}</div>
-                  <div className="profile-label">Date of Birth</div>
-                  <div className="profile-value">{profile.dateOfBirth}</div>
-                  <div className="profile-label">Phone Number</div>
-                  <div className="profile-value">{profile.phone}</div>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <Typography className="profile-section-title"><EmailIcon fontSize="small" sx={{mr:1}}/>Contact</Typography>
-                  <div className="profile-label">Email</div>
-                  <div className="profile-value">{profile.email}</div>
-                  <div className="profile-label">Address</div>
-                  <div className="profile-value">{profile.address}</div>
-                  <div className="profile-label">Bio/About</div>
-                  <div className="profile-value">{profile.bio}</div>
-                  <div className="profile-label"><LanguageIcon fontSize="small" style={{marginRight:4}}/>Languages Spoken</div>
-                  <div className="profile-value">
-                    {languageChips.length ? languageChips.map((lang, i) => (
-                      <Chip key={i} label={lang} size="small" sx={{mr:1, mb:0.5}} />
-                    )) : <span style={{color:'#aaa'}}>None</span>}
-                  </div>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <Typography className="profile-section-title"><BadgeIcon fontSize="small" sx={{mr:1}}/>Professional Details</Typography>
-                  <div className="profile-label">License Number</div>
-                  <div className="profile-value">{profile.licenseNumber}</div>
-                  <div className="profile-label">Specialization</div>
-                  <div className="profile-value">{profile.specialization}</div>
-                  <div className="profile-label">Sub Specialization</div>
-                  <div className="profile-value">{profile.subSpecialization}</div>
-                  <div className="profile-label">Years of Experience</div>
-                  <div className="profile-value">{profile.yearsOfExperience}</div>
-                  <div className="profile-label">Affiliated Hospital</div>
-                  <div className="profile-value">{profile.affiliatedHospital}</div>
-                  <div className="profile-label">Training</div>
-                  <div className="profile-value">{profile.training}</div>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <Typography className="profile-section-title"><SchoolIcon fontSize="small" sx={{mr:1}}/>Schedule & Certifications</Typography>
-                  <div className="profile-label">Certifications</div>
-                  <div className="profile-value">{profile.certifications}</div>
-                  <div className="profile-label">Clinic Schedule</div>
-                  <div className="profile-value">{profile.clinicSchedule}</div>
-                </Grid>
-                <Grid item xs={12}>
-                  <Box className="profile-action-bar">
-                    <Button className="doctor-primary-btn" onClick={handleEdit}>Edit</Button>
-                  </Box>
-                </Grid>
-              </Grid>
-            )}
-          </Box>
-        </Fade>
-      </Paper>
-    </Box>
+
+              {[
+                { label: 'First Name', name: 'firstName', type: 'text' },
+                { label: 'Middle Name', name: 'middleName', type: 'text' },
+                { label: 'Last Name', name: 'lastName', type: 'text' },
+                { 
+                  label: 'Sex', 
+                  name: 'sex', 
+                  type: 'select',
+                  options: ['', 'Male', 'Female', 'Other']
+                },
+                { label: 'Date of Birth', name: 'dateOfBirth', type: 'date' },
+                { label: 'Phone Number', name: 'phoneNumber', type: 'tel' },
+                { label: 'Email', name: 'email', type: 'email' },
+                { label: 'Address', name: 'address', type: 'textarea', fullWidth: true }
+              ].map((field) => (
+                <div 
+                  key={field.name} 
+                  className={`${styles['doctor-profile-field']} ${field.fullWidth ? styles['doctor-profile-field-full'] : ''}`}
+                >
+                  <label className={styles['doctor-profile-field-label']}>{field.label}</label>
+                  {!isEditMode ? (
+                    <div className={styles['doctor-profile-field-value']}>
+                      {formData[field.name]}
+                    </div>
+                  ) : field.type === 'select' ? (
+                    <select
+                      className={styles['doctor-profile-field-select']}
+                      name={field.name}
+                      value={formData[field.name]}
+                      onChange={handleInputChange}
+                    >
+                      {field.options.map(option => (
+                        <option key={option} value={option}>
+                          {option || 'Select...'}
+                        </option>
+                      ))}
+                    </select>
+                  ) : field.type === 'textarea' ? (
+                    <textarea
+                      className={styles['doctor-profile-field-textarea']}
+                      name={field.name}
+                      value={formData[field.name]}
+                      onChange={handleInputChange}
+                    />
+                  ) : (
+                    <input
+                      type={field.type}
+                      className={styles['doctor-profile-field-input']}
+                      name={field.name}
+                      value={formData[field.name]}
+                      onChange={handleInputChange}
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Professional Information */}
+          <div className={styles['doctor-profile-section']}>
+            <h2 className={styles['doctor-profile-section-title']}>Professional Information</h2>
+            <div className={styles['doctor-profile-fields-grid']}>
+              {[
+                { label: 'License Number', name: 'licenseNumber', type: 'text' },
+                { label: 'Specialization', name: 'specialization', type: 'text' },
+                { label: 'Sub Specialization', name: 'subSpecialization', type: 'text' },
+                { label: 'Years of Experience', name: 'yearsOfExperience', type: 'number' },
+                { label: 'Affiliated Hospital', name: 'affiliatedHospital', type: 'textarea', fullWidth: true },
+                { label: 'Training', name: 'training', type: 'textarea', fullWidth: true },
+                { label: 'Certifications', name: 'certifications', type: 'textarea', fullWidth: true }
+              ].map((field) => (
+                <div 
+                  key={field.name} 
+                  className={`${styles['doctor-profile-field']} ${field.fullWidth ? styles['doctor-profile-field-full'] : ''}`}
+                >
+                  <label className={styles['doctor-profile-field-label']}>{field.label}</label>
+                  {!isEditMode ? (
+                    <div className={styles['doctor-profile-field-value']}>
+                      {formData[field.name]}
+                    </div>
+                  ) : field.type === 'textarea' ? (
+                    <textarea
+                      className={styles['doctor-profile-field-textarea']}
+                      name={field.name}
+                      value={formData[field.name]}
+                      onChange={handleInputChange}
+                    />
+                  ) : field.type === 'number' ? (
+                    <input
+                      type="number"
+                      className={styles['doctor-profile-field-input']}
+                      name={field.name}
+                      value={formData[field.name]}
+                      onChange={handleInputChange}
+                      min="0"
+                      max="99"
+                      maxLength="2"
+                    />
+                  ) : (
+                    <input
+                      type={field.type}
+                      className={styles['doctor-profile-field-input']}
+                      name={field.name}
+                      value={formData[field.name]}
+                      onChange={handleInputChange}
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        {isEditMode && (
+          <div className={styles['doctor-profile-actions']}>
+            <button 
+              className={`${styles['doctor-profile-btn']} ${styles['doctor-profile-btn-save']}`} 
+              onClick={handleSave}
+            >
+              Save Changes
+            </button>
+            <button 
+              className={`${styles['doctor-profile-btn']} ${styles['doctor-profile-btn-cancel']}`} 
+              onClick={cancelEdit}
+            >
+              Cancel
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
   );
 };
 
-export default Profile; 
+export default Profile;

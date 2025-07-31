@@ -8,7 +8,7 @@ import WeekView from './WeekView';
 import TodayView from './TodayView';
 
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import './Appointments.css';
+import styles from './Appointments.module.css';
 import '../../../components/Layout/Scrollbar.css';
 import '../../../components/Layout/Button.css';
 
@@ -199,11 +199,11 @@ const Appointments = () => {
   const hasAppointmentsToday = todayAppointments.length > 0;
 
   return (
-    <div className="appointments-page">
-      <div className="calendar-card">
-        <div className="custom-header">
-          <div className="header-left">
-            <div className="label">
+    <div className={styles.appointmentsPage}>
+      <div className={styles.calendarCard}>
+        <div className={styles.customHeader}>
+          <div className={styles.headerLeft}>
+            <div className={styles.label}>
               <span>
                 {view === 'week'
                   ? (() => {
@@ -216,7 +216,7 @@ const Appointments = () => {
               </span>
             </div>
           </div>
-          <div className="nav-buttons">
+          <div className={styles.navButtons}>
             <button onClick={handlePrev} className="global-btn secondary">
               <MdChevronLeft />
             </button>
@@ -224,10 +224,10 @@ const Appointments = () => {
               <MdChevronRight />
             </button>
           </div>
-          <div className="calendar-view-switch">
-            <button className={`calendar-view-btn${view === 'today' ? ' active' : ''}`} onClick={() => handleViewSwitch('today')}>Today</button>
-            <button className={`calendar-view-btn${view === 'week' ? ' active' : ''}`} onClick={() => handleViewSwitch('week')}>Week</button>
-            <button className={`calendar-view-btn${view === 'month' ? ' active' : ''}`} onClick={() => handleViewSwitch('month')}>Month</button>
+          <div className={styles.calendarViewSwitch}>
+            <button className={`${styles.calendarViewBtn}${view === 'today' ? ` ${styles.active}` : ''}`} onClick={() => handleViewSwitch('today')}>Today</button>
+            <button className={`${styles.calendarViewBtn}${view === 'week' ? ` ${styles.active}` : ''}`} onClick={() => handleViewSwitch('week')}>Week</button>
+            <button className={`${styles.calendarViewBtn}${view === 'month' ? ` ${styles.active}` : ''}`} onClick={() => handleViewSwitch('month')}>Month</button>
             <button
               className="global-btn primary"
               onClick={() => setAddModalOpen(true)}
@@ -271,9 +271,9 @@ const Appointments = () => {
 
       {/* Add Appointment Modal */}
       <Modal open={addModalOpen} onClose={() => setAddModalOpen(false)}>
-        <Box className="appointments-modal">
+        <Box className={styles.appointmentsModal}>
           <h3>Add Appointment</h3>
-          <div className="form-group">
+          <div className={styles.formGroup}>
             <label>Patient</label>
             <input
               type="text"
@@ -283,12 +283,12 @@ const Appointments = () => {
               autoComplete="off"
             />
             {patientInput && filteredPatients.length > 0 && (
-              <ul className="autocomplete-list custom-scrollbar">
+              <ul className={`${styles.autocompleteList} custom-scrollbar`}>
                 {filteredPatients.map((name) => (
                   <li
                     key={name}
                     onClick={() => handleSelectPatient(name)}
-                    className="autocomplete-item"
+                    className={styles.autocompleteItem}
                   >
                     {name}
                   </li>
@@ -296,7 +296,7 @@ const Appointments = () => {
               </ul>
             )}
           </div>
-          <div className="form-group">
+          <div className={styles.formGroup}>
             <label>Date</label>
             <input
               type="date"
@@ -304,7 +304,7 @@ const Appointments = () => {
               onChange={(e) => setAppointmentDate(e.target.value)}
             />
           </div>
-          <div className="form-group">
+          <div className={styles.formGroup}>
             <label>Time</label>
             <input
               type="time"
@@ -312,7 +312,7 @@ const Appointments = () => {
               onChange={(e) => setAppointmentTime(e.target.value)}
             />
           </div>
-          <div className="form-group">
+          <div className={styles.formGroup}>
             <label>Mode</label>
             <select
               value={appointmentMode}

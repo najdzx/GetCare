@@ -83,7 +83,7 @@ function LoginPage() {
             <div className="loginFormGroup">
               <div className="loginPasswordRow">
                 <label className="loginFormLabel" htmlFor="password">Password</label>
-                <a href="#" className="loginForgotLink" onClick={handleForgotPassword}>Forgot password?</a>
+                
               </div>
               <div className="loginFormInputWrapper">
                 <div className="loginFormInputIcon">
@@ -118,6 +118,7 @@ function LoginPage() {
             <div className="loginCheckboxGroup">
               <input type="checkbox" id="remember" className="loginCheckboxInput" />
               <label htmlFor="remember" className="loginCheckboxLabel">Remember me for 30 days</label>
+              <a href="#" className="loginForgotLink" onClick={handleForgotPassword}>Forgot password?</a>
             </div>
 
             <button type="submit" className="loginButton">Sign in</button>
@@ -141,9 +142,9 @@ function LoginPage() {
 
           <p className="loginSignupText">
             Don't have an account?{' '}
-            <a href="#" className="loginSignupLink" onClick={handleCreateAccount}>
+            <Link to="/register" className="loginSignupLink">
               Create an account
-            </a>
+            </Link>
           </p>
         </div>
 

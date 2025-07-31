@@ -1,31 +1,31 @@
-.patient-appointments {
+.patientAppointments {
   padding: 24px;
   max-width: 1200px;
   margin: 0 auto;
   font-family: Arial, sans-serif;
 }
 
-.appointments-header {
+.appointmentsHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 32px;
 }
 
-.header-content h1 {
+.headerContent h1 {
   font-size: 28px;
   font-weight: 600;
   color: #333;
   margin: 0 0 8px 0;
 }
 
-.header-content p {
+.headerContent p {
   font-size: 16px;
   color: #666;
   margin: 0;
 }
 
-.book-appointment-btn {
+.bookAppointmentBtn {
   background: #434bb8;
   color: white;
   border: none;
@@ -40,23 +40,23 @@
   transition: background 0.2s;
 }
 
-.book-appointment-btn:hover {
+.bookAppointmentBtn:hover {
   background: #3a4199;
 }
 
-.book-appointment-btn svg {
+.bookAppointmentBtn svg {
   font-size: 18px;
 }
 
 /* Tabs */
-.appointments-tabs {
+.appointmentsTabs {
   display: flex;
   gap: 8px;
   margin-bottom: 24px;
   border-bottom: 1px solid #e0e0e0;
 }
 
-.tab-btn {
+.tabBtn {
   background: none;
   border: none;
   padding: 12px 20px;
@@ -68,23 +68,23 @@
   transition: all 0.2s;
 }
 
-.tab-btn:hover {
+.tabBtn:hover {
   color: #434bb8;
 }
 
-.tab-btn.active {
+.tabBtn.active {
   color: #434bb8;
   border-bottom-color: #434bb8;
 }
 
 /* Appointments List */
-.appointments-list {
+.appointmentsList {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.appointment-card {
+.appointmentCard {
   background: white;
   border-radius: 8px;
   padding: 20px;
@@ -92,27 +92,27 @@
   border: 1px solid #e0e0e0;
 }
 
-.appointment-header {
+.appointmentHeader {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 16px;
 }
 
-.doctor-info h3 {
+.doctorInfo h3 {
   font-size: 18px;
   font-weight: 600;
   color: #333;
   margin: 0 0 4px 0;
 }
 
-.doctor-info p {
+.doctorInfo p {
   font-size: 14px;
   color: #666;
   margin: 0;
 }
 
-.status-badge {
+.statusBadge {
   font-size: 12px;
   font-weight: 500;
   padding: 4px 12px;
@@ -121,17 +121,17 @@
   letter-spacing: 0.5px;
 }
 
-.appointment-details {
+.appointmentDetails {
   margin-bottom: 16px;
 }
 
-.detail-row {
+.detailRow {
   display: flex;
   gap: 24px;
   margin-bottom: 8px;
 }
 
-.detail-item {
+.detailItem {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -139,19 +139,19 @@
   color: #666;
 }
 
-.detail-item svg {
+.detailItem svg {
   font-size: 16px;
   color: #434bb8;
 }
 
-.appointment-actions {
+.appointmentActions {
   display: flex;
   gap: 12px;
   padding-top: 16px;
   border-top: 1px solid #e0e0e0;
 }
 
-.action-btn {
+.actionBtn {
   background: none;
   border: 1px solid #e0e0e0;
   border-radius: 4px;
@@ -165,67 +165,67 @@
   transition: all 0.2s;
 }
 
-.action-btn.edit {
+.actionBtn.edit {
   color: #434bb8;
   border-color: #434bb8;
 }
 
-.action-btn.edit:hover {
+.actionBtn.edit:hover {
   background: #434bb8;
   color: white;
 }
 
-.action-btn.delete {
+.actionBtn.delete {
   color: #dc3545;
   border-color: #dc3545;
 }
 
-.action-btn.delete:hover {
+.actionBtn.delete:hover {
   background: #dc3545;
   color: white;
 }
 
-.action-btn.view {
+.actionBtn.view {
   color: #28a745;
   border-color: #28a745;
 }
 
-.action-btn.view:hover {
+.actionBtn.view:hover {
   background: #28a745;
   color: white;
 }
 
-.action-btn svg {
+.actionBtn svg {
   font-size: 16px;
 }
 
 /* Empty State */
-.empty-state {
+.emptyState {
   text-align: center;
   padding: 60px 20px;
   color: #666;
 }
 
-.empty-state svg {
+.emptyState svg {
   font-size: 48px;
   color: #ccc;
   margin-bottom: 16px;
 }
 
-.empty-state h3 {
+.emptyState h3 {
   font-size: 20px;
   font-weight: 600;
   color: #333;
   margin: 0 0 8px 0;
 }
 
-.empty-state p {
+.emptyState p {
   font-size: 16px;
   margin: 0 0 24px 0;
 }
 
 /* Modal */
-.modal-overlay {
+.modalOverlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -238,7 +238,7 @@
   z-index: 1000;
 }
 
-.booking-modal {
+.bookingModal {
   background: white;
   border-radius: 8px;
   padding: 0;
@@ -249,7 +249,7 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
-.modal-header {
+.modalHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -257,14 +257,14 @@
   border-bottom: 1px solid #e0e0e0;
 }
 
-.modal-header h2 {
+.modalHeader h2 {
   font-size: 20px;
   font-weight: 600;
   color: #333;
   margin: 0;
 }
 
-.close-btn {
+.closeBtn {
   background: none;
   border: none;
   font-size: 24px;
@@ -280,26 +280,26 @@
   transition: background 0.2s;
 }
 
-.close-btn:hover {
+.closeBtn:hover {
   background: #f5f5f5;
 }
 
-.modal-content {
+.modalContent {
   padding: 24px;
 }
 
-.modal-content p {
+.modalContent p {
   font-size: 16px;
   color: #666;
   margin: 0 0 16px 0;
 }
 
-.modal-content ul {
+.modalContent ul {
   margin: 16px 0;
   padding-left: 20px;
 }
 
-.modal-content li {
+.modalContent li {
   font-size: 14px;
   color: #666;
   margin-bottom: 8px;
@@ -307,47 +307,47 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .patient-appointments {
+  .patientAppointments {
     padding: 16px;
   }
   
-  .appointments-header {
+  .appointmentsHeader {
     flex-direction: column;
     gap: 16px;
     align-items: flex-start;
   }
   
-  .appointments-tabs {
+  .appointmentsTabs {
     overflow-x: auto;
     white-space: nowrap;
   }
   
-  .tab-btn {
+  .tabBtn {
     white-space: nowrap;
   }
   
-  .detail-row {
+  .detailRow {
     flex-direction: column;
     gap: 8px;
   }
   
-  .appointment-actions {
+  .appointmentActions {
     flex-direction: column;
   }
   
-  .action-btn {
+  .actionBtn {
     justify-content: center;
   }
 }
 
 @media (max-width: 480px) {
-  .appointment-header {
+  .appointmentHeader {
     flex-direction: column;
     gap: 12px;
   }
   
-  .booking-modal {
+  .bookingModal {
     width: 95%;
     margin: 20px;
   }
-}
+} 

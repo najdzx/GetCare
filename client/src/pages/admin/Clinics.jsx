@@ -1,20 +1,20 @@
 import React from 'react';
 import AdminLayout from '../../components/admin/AdminLayout';
-import './Clinics.css';
+import styles from './Clinics.module.css';
 
 const Clinics = () => {
   return (
     <AdminLayout>
-      <div className="admin-clinics">
-        <div className="clinics-header">
-          <div className="header-left">
+      <div className={styles.adminClinics}>
+        <div className={styles.clinicsHeader}>
+          <div className={styles.headerLeft}>
             <h1>Clinics</h1>
             <p>Manage all clinics across GetCare platform</p>
           </div>
         </div>
         
-        <div className="clinics-content">
-          <div className="placeholder-message">
+        <div className={styles.clinicsContent}>
+          <div className={styles.placeholderMessage}>
             <h2>Clinics Management</h2>
             <p>This page will contain clinic management features for administrators.</p>
             <p>Features will include:</p>

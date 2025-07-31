@@ -16,7 +16,6 @@
     background-color: #fff;
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    width: 100%;
     max-width: 1000px;
     overflow: hidden;
 }
@@ -130,10 +129,10 @@
 
 .loginFormLabel {
     display: block;
-    font-size: 14px;
-    font-weight: 500;
-    color: #333;
-    margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 8px;
 }
 
 .loginFormInputWrapper {
@@ -142,10 +141,12 @@
 
 .loginFormInputIcon {
     position: absolute;
-    left: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #999;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            width: 16px;
+            height: 16px;
 }
 
 .loginFormInput {
@@ -168,7 +169,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 8px;
 }
 
 .loginForgotLink {
@@ -176,6 +176,7 @@
     color: #434bb8;
     text-decoration: none;
     font-weight: 500;
+    margin-left: auto;
 }
 
 .loginForgotLink:hover {

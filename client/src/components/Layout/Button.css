@@ -71,7 +71,16 @@
   border-color: #c62828;
 }
 
+.global-btn.success {
+  background: #28a745;
+  color: #fff;
+  border-color: #28a745;
+}
 
+.global-btn.success:hover {
+  background: #218838;
+  border-color: #218838;
+}
 
 /* Button Sizes */
 .global-btn.small {

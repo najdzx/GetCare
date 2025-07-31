@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { MdCalendarToday, MdLocalHospital, MdAccessTime, MdLocationOn, MdPerson, MdAdd, MdEdit, MdDelete } from 'react-icons/md';
-import './Appointments.css';
+import styles from './Appointments.module.css';
 
 const Appointments = () => {
   const [activeTab, setActiveTab] = useState('upcoming');
@@ -94,15 +94,15 @@ const Appointments = () => {
   };
 
   const renderAppointmentCard = (appointment) => (
-    <div key={appointment.id} className="appointment-card">
-      <div className="appointment-header">
-        <div className="doctor-info">
+    <div key={appointment.id} className={styles.appointmentCard}>
+      <div className={styles.appointmentHeader}>
+        <div className={styles.doctorInfo}>
           <h3>{appointment.doctor}</h3>
           <p>{appointment.specialty}</p>
         </div>
-        <div className="appointment-status">
+        <div className={styles.appointmentStatus}>
           <span 
-            className="status-badge"
+            className={styles.statusBadge}
             style={{ 
               backgroundColor: getStatusColor(appointment.status) + '20',
               color: getStatusColor(appointment.status)
@@ -113,43 +113,43 @@ const Appointments = () => {
         </div>
       </div>
       
-      <div className="appointment-details">
-        <div className="detail-row">
-          <div className="detail-item">
+      <div className={styles.appointmentDetails}>
+        <div className={styles.detailRow}>
+          <div className={styles.detailItem}>
             <MdCalendarToday />
             <span>{appointment.date}</span>
           </div>
-          <div className="detail-item">
+          <div className={styles.detailItem}>
             <MdAccessTime />
             <span>{appointment.time} ({appointment.duration})</span>
           </div>
         </div>
         
-        <div className="detail-row">
-          <div className="detail-item">
+        <div className={styles.detailRow}>
+          <div className={styles.detailItem}>
             <MdLocalHospital />
             <span>{appointment.type}</span>
           </div>
-          <div className="detail-item">
+          <div className={styles.detailItem}>
             <MdLocationOn />
             <span>{appointment.location}</span>
           </div>
         </div>
       </div>
       
-      <div className="appointment-actions">
+      <div className={styles.appointmentActions}>
         {appointment.status === 'confirmed' && (
           <>
-            <button className="action-btn edit">
+            <button className={`${styles.actionBtn} ${styles.edit}`}>
               <MdEdit /> Reschedule
             </button>
-            <button className="action-btn delete">
+            <button className={`${styles.actionBtn} ${styles.delete}`}>
               <MdDelete /> Cancel
             </button>
           </>
         )}
         {appointment.status === 'completed' && (
-          <button className="action-btn view">
+          <button className={`${styles.actionBtn} ${styles.view}`}>
             View Details
           </button>
         )}
@@ -158,53 +158,53 @@ const Appointments = () => {
   );
 
   return (
-    <div className="patient-appointments">
-      <div className="appointments-header">
-        <div className="header-content">
+    <div className={styles.patientAppointments}>
+      <div className={styles.appointmentsHeader}>
+        <div className={styles.headerContent}>
           <h1>My Appointments</h1>
           <p>Manage your medical appointments</p>
         </div>
         <button 
-          className="book-appointment-btn"
+          className={styles.bookAppointmentBtn}
           onClick={() => setShowBookingModal(true)}
         >
           <MdAdd /> Book Appointment
         </button>
       </div>
 
-      <div className="appointments-tabs">
+      <div className={styles.appointmentsTabs}>
         <button 
-          className={`tab-btn ${activeTab === 'upcoming' ? 'active' : ''}`}
+          className={`${styles.tabBtn} ${activeTab === 'upcoming' ? styles.active : ''}`}
           onClick={() => setActiveTab('upcoming')}
         >
           Upcoming ({upcomingAppointments.length})
         </button>
         <button 
-          className={`tab-btn ${activeTab === 'past' ? 'active' : ''}`}
+          className={`${styles.tabBtn} ${activeTab === 'past' ? styles.active : ''}`}
           onClick={() => setActiveTab('past')}
         >
           Past ({pastAppointments.length})
         </button>
         <button 
-          className={`tab-btn ${activeTab === 'all' ? 'active' : ''}`}
+          className={`${styles.tabBtn} ${activeTab === 'all' ? styles.active : ''}`}
           onClick={() => setActiveTab('all')}
         >
           All ({allAppointments.length})
         </button>
       </div>
 
-      <div className="appointments-content">
+      <div className={styles.appointmentsContent}>
         {activeTab === 'upcoming' && (
-          <div className="appointments-list">
+          <div className={styles.appointmentsList}>
             {upcomingAppointments.length > 0 ? (
               upcomingAppointments.map(renderAppointmentCard)
             ) : (
-              <div className="empty-state">
+              <div className={styles.emptyState}>
                 <MdCalendarToday />
                 <h3>No upcoming appointments</h3>
                 <p>You don't have any upcoming appointments scheduled.</p>
                 <button 
-                  className="book-appointment-btn"
+                  className={styles.bookAppointmentBtn}
                   onClick={() => setShowBookingModal(true)}
                 >
                   Book Your First Appointment
@@ -215,11 +215,11 @@ const Appointments = () => {
         )}
 
         {activeTab === 'past' && (
-          <div className="appointments-list">
+          <div className={styles.appointmentsList}>
             {pastAppointments.length > 0 ? (
               pastAppointments.map(renderAppointmentCard)
             ) : (
-              <div className="empty-state">
+              <div className={styles.emptyState}>
                 <MdCalendarToday />
                 <h3>No past appointments</h3>
                 <p>You don't have any past appointments yet.</p>
@@ -229,16 +229,16 @@ const Appointments = () => {
         )}
 
         {activeTab === 'all' && (
-          <div className="appointments-list">
+          <div className={styles.appointmentsList}>
             {allAppointments.length > 0 ? (
               allAppointments.map(renderAppointmentCard)
             ) : (
-              <div className="empty-state">
+              <div className={styles.emptyState}>
                 <MdCalendarToday />
                 <h3>No appointments found</h3>
                 <p>You don't have any appointments yet.</p>
                 <button 
-                  className="book-appointment-btn"
+                  className={styles.bookAppointmentBtn}
                   onClick={() => setShowBookingModal(true)}
                 >
                   Book Your First Appointment
@@ -251,18 +251,18 @@ const Appointments = () => {
 
       {/* Booking Modal Placeholder */}
       {showBookingModal && (
-        <div className="modal-overlay" onClick={() => setShowBookingModal(false)}>
-          <div className="booking-modal" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-header">
+        <div className={styles.modalOverlay} onClick={() => setShowBookingModal(false)}>
+          <div className={styles.bookingModal} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.modalHeader}>
               <h2>Book Appointment</h2>
               <button 
-                className="close-btn"
+                className={styles.closeBtn}
                 onClick={() => setShowBookingModal(false)}
               >
                 ×
               </button>
             </div>
-            <div className="modal-content">
+            <div className={styles.modalContent}>
               <p>Appointment booking functionality will be implemented here.</p>
               <p>This would include:</p>
               <ul>

@@ -1,7 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import format from 'date-fns/format';
-
-import './Appointments.css';
+import styles from './Appointments.module.css';
 
 const TodayView = ({ 
   date, 
@@ -63,8 +62,8 @@ const TodayView = ({
   }, [date]);
 
   return (
-    <div className="today-view">
-      <div className="today-grid custom-scrollbar" ref={todayGridRef}>
+    <div className={styles.todayView}>
+      <div className={`${styles.todayGrid} custom-scrollbar`} ref={todayGridRef}>
         {[...Array(18)].map((_, i) => {
           const hour = 4 + i;
           const timeString = hour < 12 ? `${hour}:00 AM` : hour === 12 ? '12:00 PM' : `${hour - 12}:00 PM`;
@@ -85,43 +84,43 @@ const TodayView = ({
           });
 
           return (
-            <div key={i} className="today-row">
-              <div className="today-time-cell">{timeString}</div>
-              <div className="today-appointments-cell">
-                <div className="today-appointment-half">
+            <div key={i} className={styles.todayRow}>
+              <div className={styles.todayTimeCell}>{timeString}</div>
+              <div className={styles.todayAppointmentsCell}>
+                <div className={styles.todayAppointmentHalf}>
                   {topHalfAppointments.length > 0 ? (
                     topHalfAppointments.map((appt, idx) => (
-                      <div key={idx} className="today-appointment-item">
-                        <div className="today-appointment-time">{format(appt.start, 'hh:mm a')} - {format(appt.end, 'hh:mm a')}</div>
-                        <div className="today-appointment-title">{appt.title}</div>
+                      <div key={idx} className={styles.todayAppointmentItem}>
+                        <div className={styles.todayAppointmentTime}>{format(appt.start, 'hh:mm a')} - {format(appt.end, 'hh:mm a')}</div>
+                        <div className={styles.todayAppointmentTitle}>{appt.title}</div>
                       </div>
                     ))
                   ) : (
-                    <div className="no-appointment-slot"></div>
+                    <div className={styles.noAppointmentSlot}></div>
                   )}
                 </div>
-                <div className="today-appointment-half">
+                <div className={styles.todayAppointmentHalf}>
                   {bottomHalfAppointments.length > 0 ? (
                     bottomHalfAppointments.map((appt, idx) => (
-                      <div key={idx} className="today-appointment-item">
-                        <div className="today-appointment-time">{format(appt.start, 'hh:mm a')} - {format(appt.end, 'hh:mm a')}</div>
-                        <div className="today-appointment-title">{appt.title}</div>
+                      <div key={idx} className={styles.todayAppointmentItem}>
+                        <div className={styles.todayAppointmentTime}>{format(appt.start, 'hh:mm a')} - {format(appt.end, 'hh:mm a')}</div>
+                        <div className={styles.todayAppointmentTitle}>{appt.title}</div>
                       </div>
                     ))
                   ) : (
-                    <div className="no-appointment-slot"></div>
+                    <div className={styles.noAppointmentSlot}></div>
                   )}
                 </div>
               </div>
             </div>
           );
         })}
-        {showNextBtn && (
-          <button className="next-appointment-btn" onClick={scrollToNextAppointment}>
-            ↓
-          </button>
-        )}
       </div>
+      {showNextBtn && (
+        <button className={styles.nextAppointmentBtn} onClick={scrollToNextAppointment}>
+          Next Appointment
+        </button>
+      )}
     </div>
   );
 };
