@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { MdSearch, MdFilterList, MdAdd, MdEdit, MdDelete } from 'react-icons/md';
 import AdminLayout from '../../components/admin/AdminLayout';
-import './Patients.css';
+import styles from './Patients.module.css';
 
 const Patients = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -28,37 +28,37 @@ const Patients = () => {
 
   return (
     <AdminLayout>
-      <div className="admin-patients">
-        <div className="patients-header">
-          <div className="header-left">
+      <div className={styles.adminPatients}>
+        <div className={styles.patientsHeader}>
+          <div className={styles.headerLeft}>
             <h1>Patients</h1>
             <p>Manage all patients across GetCare platform</p>
           </div>
-          <button className="add-patient-btn">
+          <button className={styles.addPatientBtn}>
             <MdAdd />
             <span>Add Patient</span>
           </button>
         </div>
 
         {/* Search and Filter */}
-        <div className="patients-controls">
-          <div className="search-container">
-            <MdSearch className="search-icon" />
+        <div className={styles.patientsControls}>
+          <div className={styles.searchContainer}>
+            <MdSearch className={styles.searchIcon} />
             <input
               type="text"
               placeholder="Search patients..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="search-input"
+              className={styles.searchInput}
             />
           </div>
           
-          <div className="filter-container">
-            <MdFilterList className="filter-icon" />
+          <div className={styles.filterContainer}>
+            <MdFilterList className={styles.filterIcon} />
             <select
               value={selectedFilter}
               onChange={(e) => setSelectedFilter(e.target.value)}
-              className="filter-select"
+              className={styles.filterSelect}
             >
               <option value="all">All Status</option>
               <option value="active">Active</option>
@@ -68,8 +68,8 @@ const Patients = () => {
         </div>
 
         {/* Patients Table */}
-        <div className="patients-table-container">
-          <table className="patients-table">
+        <div className={styles.patientsTableContainer}>
+          <table className={styles.patientsTable}>
             <thead>
               <tr>
                 <th>Name</th>
@@ -88,16 +88,16 @@ const Patients = () => {
                   <td>{patient.phone}</td>
                   <td>{patient.doctor}</td>
                   <td>
-                    <span className={`status-badge ${patient.status.toLowerCase()}`}>
+                    <span className={`${styles.statusBadge} ${styles[patient.status.toLowerCase()]}`}>
                       {patient.status}
                     </span>
                   </td>
                   <td>
-                    <div className="action-buttons">
-                      <button className="action-btn edit">
+                    <div className={styles.actionButtons}>
+                      <button className={`${styles.actionBtn} ${styles.edit}`}>
                         <MdEdit />
                       </button>
-                      <button className="action-btn delete">
+                      <button className={`${styles.actionBtn} ${styles.delete}`}>
                         <MdDelete />
                       </button>
                     </div>
@@ -109,14 +109,14 @@ const Patients = () => {
         </div>
 
         {/* Pagination */}
-        <div className="pagination">
-          <button className="pagination-btn">Previous</button>
-          <div className="page-numbers">
-            <span className="page-number active">1</span>
-            <span className="page-number">2</span>
-            <span className="page-number">3</span>
+        <div className={styles.pagination}>
+          <button className={styles.paginationBtn}>Previous</button>
+          <div className={styles.pageNumbers}>
+            <span className={`${styles.pageNumber} ${styles.active}`}>1</span>
+            <span className={styles.pageNumber}>2</span>
+            <span className={styles.pageNumber}>3</span>
           </div>
-          <button className="pagination-btn">Next</button>
+          <button className={styles.paginationBtn}>Next</button>
         </div>
       </div>
     </AdminLayout>

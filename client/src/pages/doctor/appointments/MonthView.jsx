@@ -7,8 +7,7 @@ import getDay from 'date-fns/getDay';
 import enUS from 'date-fns/locale/en-US';
 import { Modal, Box, Button } from '@mui/material';
 import { MdAdd } from 'react-icons/md';
-
-import './Appointments.css';
+import styles from './Appointments.module.css';
 
 const localizer = dateFnsLocalizer({
   format,
@@ -42,11 +41,11 @@ const MonthView = ({
 
   return (
     <>
-      <div className="custom-weekdays">
+      <div className={styles.customWeekdays}>
         {weekdays.map((day, index) => (
           <div
             key={day}
-            className={`custom-weekday ${index === todayIndex ? 'is-today' : ''}`}
+            className={`${styles.customWeekday} ${index === todayIndex ? styles.isToday : ''}`}
           >
             {day}
           </div>
@@ -72,15 +71,15 @@ const MonthView = ({
       />
       {/* Day Details Modal */}
       <Modal open={dayDetailsOpen} onClose={() => setDayDetailsOpen(false)}>
-        <Box className="appointments-modal">
+        <Box className={styles.appointmentsModal}>
           <h3>Appointments for {dayDetailsDate ? format(dayDetailsDate, 'MMMM d, yyyy') : ''}</h3>
           <div>
             {dayDetailsDate && getAppointmentsForDate(dayDetailsDate).length > 0 ? (
-              <ul className="day-appointments-list">
+              <ul className={styles.dayAppointmentsList}>
                 {getAppointmentsForDate(dayDetailsDate).map((appt, idx) => (
-                  <li key={idx} className="day-appointment-item">
-                    <span className="day-appointment-time">{format(appt.start, 'hh:mm a')} - {format(appt.end, 'hh:mm a')}</span>
-                    <span className="day-appointment-title">{appt.title}</span>
+                  <li key={idx} className={styles.dayAppointmentItem}>
+                    <span className={styles.dayAppointmentTime}>{format(appt.start, 'hh:mm a')} - {format(appt.end, 'hh:mm a')}</span>
+                    <span className={styles.dayAppointmentTitle}>{appt.title}</span>
                   </li>
                 ))}
               </ul>

@@ -1,4 +1,6 @@
-.myclinic-container {
+/* MyClinic.module.css - CSS module for MyClinic page */
+
+.myclinicContainer {
   max-width: 1300px;
   margin: 0 auto;
   padding: 8px 24px;
@@ -9,16 +11,18 @@
   position: relative;
 }
 
-.dashboard-grid.clinic-grid {
+.dashboardGrid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 32px;
   max-width: 1300px;
   margin: 0 auto;
   padding: 32px 24px;
 }
+.clinicGrid {
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+}
 
-.card.clinic-card {
+.card {
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 1px 4px rgba(0,0,0,0.08);
@@ -29,19 +33,33 @@
   min-height: 180px;
   position: relative;
 }
+.clinicCard {
+  position: relative;
+}
+.addClinicCard {
+  background: #f5f7ff;
+  border: 2px dashed #1976d2;
+  color: #1976d2;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 180px;
+  transition: background 0.2s;
+}
+.addClinicCard:hover {
+  background: #e3e8f0;
+}
 
-.card-header {
+.cardHeader {
   width: 100%;
   display: flex;
   align-items: center;
   margin-bottom: 12px;
 }
 
-.clinic-card {
-  position: relative;
-}
-
-.clinic-remove-btn {
+.clinicRemoveBtn {
   position: absolute;
   top: 12px;
   right: 12px;
@@ -61,11 +79,11 @@
   box-shadow: 0 1px 4px rgba(0,0,0,0.08);
   transition: background 0.2s;
 }
-.card.clinic-card:hover .clinic-remove-btn {
+.card:hover .clinicRemoveBtn {
   display: flex;
 }
 
-.clinic-delete-dialog {
+.clinicDeleteDialog {
   position: absolute;
   top: 16px;
   right: 16px;
@@ -82,16 +100,15 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  
 }
 
-.clinic-delete-actions {
+.clinicDeleteActions {
   display: flex;
   gap: 12px;
   justify-content: flex-end;
 }
 
-.delete-btn {
+.deleteBtn {
   background: #e53935;
   color: #fff;
   border: none;
@@ -102,7 +119,7 @@
   cursor: pointer;
 }
 
-.cancel-btn {
+.cancelBtn {
   background: #eee;
   color: #333;
   border: none;
@@ -113,65 +130,52 @@
   cursor: pointer;
 }
 
-.card-title {
+.cardTitle {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.clinic-card-icon {
+.clinicCardIcon {
   font-size: 32px;
   margin-right: 8px;
 }
 
-.clinic-card-details {
+.clinicCardDetails {
   margin-bottom: 12px;
 }
 
-.clinic-card-name,
-.dashboard-card-title {
+.clinicCardName {
+  font-size: 18px;
+  font-weight: 600;
+  color: #212121;
+}
+.dashboardCardTitle {
   font-size: 18px;
   font-weight: 600;
   color: #212121;
 }
 
-.clinic-card-address {
+.clinicCardAddress {
   font-size: 15px;
   color: #555;
   margin-bottom: 4px;
 }
 
-.clinic-card-type {
+.clinicCardType {
   font-size: 14px;
   color: #1976d2;
   font-weight: 500;
 }
 
-.clinic-card-img img {
+.clinicCardImg img {
   width: 74px;
   height: 74px;
   object-fit: cover;
   border-radius: 50%;
 }
 
-.card.add-clinic-card {
-  background: #f5f7ff;
-  border: 2px dashed #1976d2;
-  color: #1976d2;
-  border-radius: 12px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 180px;
-  transition: background 0.2s;
-}
-
-.card.add-clinic-card:hover {
-  background: #e3e8f0;
-}
-
-.add-clinic-content {
+.addClinicContent {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -180,15 +184,13 @@
   font-weight: 500;
 }
 
-.add-clinic-plus {
+.addClinicPlus {
   font-size: 38px;
   font-weight: bold;
   margin-bottom: 4px;
 }
 
-/* The rest of your .myclinic-container and form styles remain unchanged */
-
-.next-clinic-btn {
+.nextClinicBtn {
   background: #f5f5f5;
   border: none;
   color: #212121;
@@ -202,12 +204,12 @@
   border: 1px solid #e0e0e0;
   transition: background 0.2s, color 0.2s;
 }
-.next-clinic-btn:hover {
+.nextClinicBtn:hover {
   background: #434bb8;
   color: #fff;
 }
 
-.cancel-btn {
+.cancelBtn {
   background: #f5f5f5;
   border: none;
   color: #212121;
@@ -221,19 +223,18 @@
   border: 1px solid #e0e0e0;
   transition: background 0.2s, color 0.2s;
 }
-.cancel-btn:hover {
+.cancelBtn:hover {
   background: #434bb8;
   color: #fff;
 }
-.myclinic-stepper {
+.myclinicStepper {
   display: flex;
   align-items: center;
   margin-top: 36px;
   gap: 18px;
   margin-left: 100px;
-  
 }
-.myclinic-step-circle {
+.myclinicStepCircle {
   width: 44px;
   height: 44px;
   border-radius: 50%;
@@ -245,17 +246,17 @@
   font-size: 22px;
   font-weight: 500;
 }
-.myclinic-step-label {
+.myclinicStepLabel {
   font-size: 22px;
   font-weight: 400;
 }
-.myclinic-toggle-group {
+.myclinicToggleGroup {
   margin-left: 100px;
   display: flex;
   gap: 0;
   margin-top: 32px;
 }
-.toggle-btn {
+.toggleBtn {
   background: #f5f5f5;
   border: none;
   color: #212121;
@@ -268,34 +269,34 @@
   border: 1px solid #e0e0e0;
   transition: background 0.2s, color 0.2s;
 }
-.toggle-btn.active {
+.toggleBtnActive {
   background: #434bb8;
   color: #fff;
 }
-.myclinic-form {
+.myclinicForm {
   display: flex;
   gap: 48px;
   margin-top: 24px;
   margin-left: 100px;
 }
-.myclinic-fields {
+.myclinicFields {
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: 18px;
 }
-.myclinic-row {
+.myclinicRow {
   display: flex;
   align-items: center;
   gap: 12px;
   margin-bottom: 18px;
 }
-.myclinic-label {
+.myclinicLabel {
   min-width: 150px;
   font-size: 16px;
   font-weight: 600;
 }
-.myclinic-input {
+.myclinicInput {
   flex: 1;
   padding: 12px 16px;
   font-size: 17px;
@@ -304,7 +305,7 @@
   background: white;
   transition: border-color 0.2s;
 }
-.myclinic-input:focus {
+.myclinicInput:focus {
   border-color: #1976d2;
   background: #fff;
   outline: none;
@@ -313,14 +314,14 @@
   color: #e53935;
   margin-left: 2px;
 }
-.myclinic-image-section {
+.myclinicImageSection {
   min-width: 200px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 12px;
 }
-.myclinic-image-preview {
+.myclinicImagePreview {
   width: 110px;
   height: 110px;
   border-radius: 50%;
@@ -332,13 +333,13 @@
   overflow: hidden;
   border: 2px solid #bdbdbd;
 }
-.myclinic-img {
+.myclinicImg {
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 50%;
 }
-.myclinic-img-placeholder {
+.myclinicImgPlaceholder {
   width: 100%;
   height: 100%;
   display: flex;
@@ -347,22 +348,21 @@
   color: #888;
   font-size: 48px;
 }
-.myclinic-img-upload {
+.myclinicImgUpload {
   color: #1976d2;
   cursor: pointer;
   font-weight: 500;
   font-size: 15px;
 }
 
-
-.schedule-days {
+.scheduleDays {
   display: flex;
   gap: 32px;
   margin-bottom: 18px;
   margin-top: 32px;
 }
 
-.schedule-day-label {
+.scheduleDayLabel {
   display: block;
   margin-bottom: 16px;
   font-weight: 500;
@@ -370,63 +370,50 @@
   font-size: 16px;
 }
 
-.schedule-day-label span {
+.scheduleDayLabelSpan {
   display: block;
   margin-bottom: 8px;
 }
 
-.schedule-days input[type="checkbox"] {
+.scheduleDaysInputCheckbox {
   width: 20px;
   height: 20px;
   accent-color: #434bb8;
   margin-top: 6px;
 }
 
-.schedule-row {
+.scheduleRow {
   display: flex;
   gap: 12px;
   align-items: center;
   margin-bottom: 32px;
 }
 
-.schedule-row-label {
+.scheduleRowLabel {
   font-weight: 500;
   min-width: 90px;
 }
 
-.schedule-row select,
-.schedule-row input,
-.schedule-row button {
+.scheduleRowSelect,
+.scheduleRowInput {
   height: 40px;
   box-sizing: border-box;
   font-size: 16px;
-}
-
-.schedule-row select,
-.schedule-row input[type="time"] {
   width: 200px;
-}
-
-.schedule-row input {
-  width: 280px;
-}
-
-.schedule-row select,
-.schedule-row input {
   padding: 0 12px;
   border-radius: 4px;
   border: 1.5px solid #e0e0e0;
   background: white;
 }
 
-.schedule-row select:focus,
-.schedule-row input:focus {
+.scheduleRowSelect:focus,
+.scheduleRowInput:focus {
   border-color: #1976d2;
   background: #fff;
   outline: none;
 }
 
-.schedule-row button {
+.scheduleRowButton {
   background: #434bb8;
   color: white;
   border: none;
@@ -441,43 +428,43 @@
   white-space: nowrap;
 }
 
-.schedule-row button:hover {
+.scheduleRowButton:hover {
   background: #30368a;
 }
 
-.schedule-header-row {
+.scheduleHeaderRow {
   font-weight: 400;
   color: black;
   background: transparent;
   margin-bottom: 24px;
 }
-                             
-.schedule-label {
+
+.scheduleLabel {
   min-width: 190px;
   display: inline-block;
   font-size: 15px;
   margin-right: 12px;
 }
 
-.myclinic-schedule-section {
+.myclinicScheduleSection {
   position: relative;
   height: 750px;
   display: flex;
   flex-direction: column;
 }
 
-.myclinic-schedule-section h3 {
+.myclinicScheduleSection h3 {
   margin-bottom: 16px;
 }
 
-.schedule-details {
+.scheduleDetails {
   flex: 1;
   overflow-y: auto;
   padding-right: 4px;
-  min-height: 0;
+  height: 100%;
 }
 
-.myclinic-actions {
+.myclinicActions {
   position: absolute;
   right: 24px;
   bottom: 24px;
@@ -487,7 +474,7 @@
   z-index: 10;
 }
 
-.save-btn {
+.saveBtn {
   background: #f5f5f5;
   border: 1px solid #e0e0e0;
   color: #212121;
@@ -500,12 +487,12 @@
   margin-bottom: 0;
   transition: background 0.2s, color 0.2s;
 }
-.save-btn:hover {
+.saveBtn:hover {
   background: #434bb8;
   color: #fff;
 }
 
-.back-btn {
+.backBtn {
   background: #f5f5f5;
   border: 1px solid #e0e0e0;
   color: #212121;
@@ -518,24 +505,18 @@
   margin-bottom: 0;
   transition: background 0.2s, color 0.2s;
 }
-.back-btn:hover {
+.backBtn:hover {
   background: #434bb8;
   color: #fff;
 }
 
-/* Remove custom scrollbar styles and keep basic styling */
-.schedule-details {
-  max-height: 300px;
-  overflow-y: auto;
-}
-
-.schedule-buttons {
+.scheduleButtons {
   display: flex;
   gap: 8px;
   align-items: center;
 }
 
-.remove-slot-btn {
+.removeSlotBtn {
   background: #e53935;
   color: white;
   border: none;
@@ -550,6 +531,6 @@
   white-space: nowrap;
 }
 
-.remove-slot-btn:hover {
+.removeSlotBtn:hover {
   background: #c62828;
 }

@@ -1,11 +1,11 @@
-.notes-page {
+.notesPage {
   display: flex;
   height: calc(100vh - 140px);
   align-items: stretch;
   padding: 20px;
 }
 
-.notes-sidebar {
+.notesSidebar {
   width: 250px;
   border-right: 1px solid #eee;
   border-top: 1px solid #ccc;
@@ -20,25 +20,25 @@
   flex-direction: column;
 }
 
-.sidebar-section {
+.sidebarSection {
   flex: 1;
   display: flex;
   flex-direction: column;
   min-height: 0;
 }
 
-.sidebar-section:first-child {
+.sidebarSection:first-child {
   padding: 32px 28px 16px 28px;
   border-bottom: 1px solid #eee;
   flex: 1.15;
 }
 
-.sidebar-section:last-child {
+.sidebarSection:last-child {
   padding: 16px 28px 32px 28px;
   flex: 1;
 }
 
-.search-bar {
+.searchBar {
   position: relative;
   display: flex;
   align-items: center;
@@ -46,14 +46,14 @@
   margin-top: 0;
 }
 
-.search-bar svg {
+.searchBar svg {
   position: absolute;
   left: 10px;
   color: #666;
   z-index: 1;
 }
 
-.search-bar input {
+.searchBar input {
   width: 100%;
   padding: 8px 12px 8px 36px;
   border: 1px solid #ddd;
@@ -63,22 +63,22 @@
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.search-bar input:focus {
+.searchBar input:focus {
   outline: none;
   border-color: #434bb8;
   box-shadow: 0 0 0 2px rgba(67, 75, 184, 0.1);
 }
 
-.search-bar input::placeholder {
+.searchBar input::placeholder {
   color: #999;
 }
 
-.search-bar:hover input {
+.searchBar:hover input {
   border-color: #d1d5db;
   background: white;
 }
 
-.notes-sidebar h3 {
+.notesSidebar h3 {
   margin-bottom: 16px;
   font-size: 1.1rem;
   font-weight: 600;
@@ -88,12 +88,12 @@
 }
 
 /* Remove custom scrollbar styles and keep basic styling */
-.patient-list {
+.patientList {
   max-height: 300px;
   overflow-y: auto;
 }
 
-.patient-item {
+.patientItem {
   display: flex;
   align-items: center;
   padding: 8px;
@@ -104,48 +104,44 @@
   transition: background 0.2s, border 0.2s;
 }
 
-.patient-item.active {
+.patientItem.active {
   background: #f0f4ff;
   border: 1px solid #1976d2;
 }
 
-.patient-item:hover {
+.patientItem:hover {
   background: #f5faff;
   border: 1px solid #90caf9;
 }
 
-
-
-.patient-avatar {
+.patientAvatar {
   margin-right: 8px;
   color: #434bb8;
 }
 
-
-
-.patient-info {
+.patientInfo {
   display: flex;
   flex-direction: column;
   flex: 1;
 }
 
-.patient-name {
+.patientName {
   font-weight: 500;
 }
 
-.patient-case {
+.patientCase {
   font-size: 12px;
   color: #888;
 }
 
-.patient-access {
+.patientAccess {
   font-size: 11px;
   color: #666;
   font-weight: 500;
   margin-top: 2px;
 }
 
-.notes-content-container {
+.notesContentContainer {
   background: white;
   border-radius: 0;
   box-shadow: none;
@@ -165,14 +161,14 @@
   box-sizing: border-box;
 }
 
-.notes-header-row {
+.notesHeaderRow {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   margin-bottom: 1.5em;
 }
 
-.notes-case-title {
+.notesCaseTitle {
   color: #666;
   font-size: 1rem;
   margin-top: 4px;
@@ -181,7 +177,7 @@
   gap: 12px;
 }
 
-.consultation-badge {
+.consultationBadge {
   background: #fff3cd;
   color: #856404;
   padding: 4px 8px;
@@ -191,7 +187,7 @@
   border: 1px solid #ffeaa7;
 }
 
-.notes-actions {
+.notesActions {
   display: flex;
   gap: 12px;
 }
@@ -209,31 +205,31 @@
   transition: background 0.2s, color 0.2s;
 }
 
-.btn-primary {
+.btnPrimary {
   background: #434bb8;
   color: #fff;
 }
 
-.btn-primary:hover {
+.btnPrimary:hover {
   background: #30368a;
 }
 
-.btn-primary:disabled {
+.btnPrimary:disabled {
   background: #ccc;
   cursor: not-allowed;
 }
 
-.btn-secondary {
+.btnSecondary {
   background: #f0f4ff;
   color: #434bb8;
   border: 1px solid #b6c6f5;
 }
 
-.btn-secondary:hover {
+.btnSecondary:hover {
   background: #e3eaff;
 }
 
-.btn-icon {
+.btnIcon {
   background: none;
   border: none;
   color: #888;
@@ -246,11 +242,11 @@
   justify-content: center;
 }
 
-.btn-icon:hover {
+.btnIcon:hover {
   background: #f0f0f0;
 }
 
-.modal-overlay {
+.modalOverlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
   background: rgba(0,0,0,0.18);
@@ -277,7 +273,7 @@
   animation: modalIn 0.2s;
 }
 
-.modal-content {
+.modalContent {
   background: white;
   border-top-right-radius: 12px;
   border-bottom-right-radius: 12px;
@@ -297,7 +293,7 @@
   to { transform: none; opacity: 1; }
 }
 
-.modal-header {
+.modalHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -305,12 +301,12 @@
   border-bottom: 1px solid #f0f0f0;
 }
 
-.modal-header h3 {
+.modalHeader h3 {
   margin: 0;
   font-size: 1.2rem;
 }
 
-.modal-close {
+.modalClose {
   background: none;
   border: none;
   font-size: 1.5rem;
@@ -321,11 +317,11 @@
   transition: background 0.2s;
 }
 
-.modal-close:hover {
+.modalClose:hover {
   background: #f0f0f0;
 }
 
-.modal-body {
+.modalBody {
   padding: 18px 24px;
   display: flex;
   flex-direction: column;
@@ -335,29 +331,29 @@
   overflow-x: hidden;
 }
 
-.form-group {
+.formGroup {
   display: flex;
   flex-direction: column;
   gap: 6px;
   margin-bottom: 20px;
 }
 
-.form-row {
+.formRow {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
 }
 
-.form-group label {
+.formGroup label {
   font-size: 0.98rem;
   font-weight: 500;
   color: #434bb8;
 }
 
-.form-group input[type="text"],
-.form-group input[type="file"],
-.form-group select,
-.form-group textarea {
+.formGroup input[type="text"],
+.formGroup input[type="file"],
+.formGroup select,
+.formGroup textarea {
   font-size: 1rem;
   padding: 7px 10px;
   border: 1px solid #d1d5db;
@@ -369,20 +365,20 @@
   box-sizing: border-box;
 }
 
-.form-group input[type="text"]:focus,
-.form-group select:focus,
-.form-group textarea:focus {
+.formGroup input[type="text"]:focus,
+.formGroup select:focus,
+.formGroup textarea:focus {
   border: 1.5px solid #434bb8;
   box-shadow: 0 0 0 3px rgba(67, 75, 184, 0.1);
 }
 
-.form-group textarea {
+.formGroup textarea {
   resize: vertical;
   min-height: 100px;
   font-family: inherit;
 }
 
-.char-count {
+.charCount {
   text-align: right;
   font-size: 0.8rem;
   color: #888;
@@ -390,11 +386,11 @@
 }
 
 /* Enhanced Specialist Selection Styles */
-.specialist-search-container {
+.specialistSearchContainer {
   margin-top: 8px;
 }
 
-.specialist-search-input {
+.specialistSearchInput {
   width: 100%;
   padding: 12px 16px;
   border: 2px solid #e1e5e9;
@@ -405,13 +401,13 @@
   margin-bottom: 16px;
 }
 
-.specialist-search-input:focus {
+.specialistSearchInput:focus {
   border-color: #434bb8;
   box-shadow: 0 0 0 3px rgba(67, 75, 184, 0.1);
   outline: none;
 }
 
-.specialists-grid {
+.specialistsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 16px;
@@ -419,7 +415,7 @@
   overflow-y: auto;
 }
 
-.specialist-card {
+.specialistCard {
   position: relative;
   background: #fff;
   border: 2px solid #e1e5e9;
@@ -430,38 +426,38 @@
   overflow: hidden;
 }
 
-.specialist-card:hover {
+.specialistCard:hover {
   border-color: #434bb8;
   box-shadow: 0 4px 12px rgba(67, 75, 184, 0.15);
   transform: translateY(-2px);
 }
 
-.specialist-card.selected {
+.specialistCard.selected {
   border-color: #434bb8;
   background: #f0f4ff;
   box-shadow: 0 4px 16px rgba(67, 75, 184, 0.2);
 }
 
-.specialist-card.unavailable {
+.specialistCard.unavailable {
   opacity: 0.6;
   cursor: not-allowed;
   background: #f8f9fa;
 }
 
-.specialist-card.unavailable:hover {
+.specialistCard.unavailable:hover {
   border-color: #e1e5e9;
   box-shadow: none;
   transform: none;
 }
 
-.specialist-card-header {
+.specialistCardHeader {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 12px;
 }
 
-.specialist-avatar {
+.specialistAvatar {
   width: 48px;
   height: 48px;
   background: linear-gradient(135deg, #434bb8, #667eea);
@@ -475,44 +471,44 @@
   letter-spacing: 0.5px;
 }
 
-.specialist-status {
+.specialistStatus {
   font-size: 0.8rem;
   font-weight: 500;
 }
 
-.status-available {
+.statusAvailable {
   color: #28a745;
   background: #e8f5e8;
   padding: 4px 8px;
   border-radius: 12px;
 }
 
-.status-unavailable {
+.statusUnavailable {
   color: #dc3545;
   background: #ffe0e0;
   padding: 4px 8px;
   border-radius: 12px;
 }
 
-.specialist-card-body {
+.specialistCardBody {
   flex: 1;
 }
 
-.specialist-name {
+.specialistName {
   margin: 0 0 4px 0;
   font-size: 1.1rem;
   font-weight: 600;
   color: #333;
 }
 
-.specialist-specialty {
+.specialistSpecialty {
   margin: 0 0 12px 0;
   color: #666;
   font-size: 0.9rem;
   font-weight: 500;
 }
 
-.specialist-details {
+.specialistDetails {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -520,18 +516,18 @@
   color: #888;
 }
 
-.specialist-rating {
+.specialistRating {
   display: flex;
   align-items: center;
   gap: 4px;
   font-weight: 500;
 }
 
-.specialist-experience {
+.specialistExperience {
   font-weight: 500;
 }
 
-.specialist-selected {
+.specialistSelected {
   position: absolute;
   top: 12px;
   right: 12px;
@@ -552,14 +548,14 @@
   to { opacity: 1; transform: scale(1); }
 }
 
-.attachments-list {
+.attachmentsList {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   margin-top: 6px;
 }
 
-.attachment-chip {
+.attachmentChip {
   background: #f0f4ff;
   color: #434bb8;
   border-radius: 16px;
@@ -571,7 +567,7 @@
   border: 1px solid #b6c6f5;
 }
 
-.attachment-chip button {
+.attachmentChip button {
   background: none;
   border: none;
   color: #434bb8;
@@ -581,7 +577,7 @@
   align-items: center;
 }
 
-.modal-footer {
+.modalFooter {
   display: flex;
   justify-content: flex-end;
   gap: 12px;
@@ -589,7 +585,7 @@
   border-top: 1px solid #f0f0f0;
 }
 
-.notes-section-title {
+.notesSectionTitle {
   margin-top: 0;
   margin-bottom: 0.7em;
   font-size: 1.1rem;
@@ -597,14 +593,14 @@
   font-weight: 600;
 }
 
-.notes-empty {
+.notesEmpty {
   color: #888;
   font-style: italic;
   margin: 2em 0;
   text-align: center;
 }
 
-.note-item {
+.noteItem {
   background: #fff;
   border: 1px solid #eee;
   border-radius: 6px;
@@ -613,25 +609,25 @@
   box-shadow: 0 2px 8px rgba(67, 75, 184, 0.04);
 }
 
-.note-title {
+.noteTitle {
   font-weight: 500;
   font-size: 1.05em;
   color: #333;
 }
 
-.note-content {
+.noteContent {
   margin: 8px 0;
   color: #555;
   line-height: 1.5;
 }
 
-.note-meta {
+.noteMeta {
   font-size: 0.9em;
   color: #888;
   margin-top: 8px;
 }
 
-.no-selection {
+.noSelection {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -640,66 +636,66 @@
   color: #888;
 }
 
-.note-title-row {
+.noteTitleRow {
   display: flex;
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
 }
 
-.note-type-pill, .note-visibility-pill {
+.noteTypePill, .noteVisibilityPill {
   font-size: 0.8em;
   padding: 2px 8px;
   border-radius: 12px;
   font-weight: 500;
 }
 
-.note-type-pill {
+.noteTypePill {
   background: #e3f2fd;
   color: #1976d2;
 }
 
-.note-type-progress {
+.noteTypeProgress {
   background: #e8f5e8;
   color: #388e3c;
 }
 
-.note-type-lab-result {
+.noteTypeLabResult {
   background: #fff3e0;
   color: #f57c00;
 }
 
-.note-type-prescription {
+.noteTypePrescription {
   background: #f3e5f5;
   color: #7b1fa2;
 }
 
-.note-type-referral {
+.noteTypeReferral {
   background: #e0f2f1;
   color: #00695c;
 }
 
-.note-visibility-pill {
+.noteVisibilityPill {
   background: #f5f5f5;
   color: #666;
 }
 
-.note-visibility-patient-visible {
+.noteVisibilityPatientVisible {
   background: #e8f5e8;
   color: #388e3c;
 }
 
-.note-visibility-doctor-only {
+.noteVisibilityDoctorOnly {
   background: #fff3e0;
   color: #f57c00;
 }
 
-.note-visibility-collaborative-team-only {
+.noteVisibilityCollaborativeTeamOnly {
   background: #e3f2fd;
   color: #1976d2;
 }
 
-.specialists-list {
+.specialistsList {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -711,7 +707,7 @@
   background: #f9f9fb;
 }
 
-.specialist-item {
+.specialistItem {
   display: flex;
   align-items: center;
   padding: 8px;
@@ -720,53 +716,53 @@
   transition: background 0.2s;
 }
 
-.specialist-item.selected {
+.specialistItem.selected {
   background: #f0f4ff;
   border: 1px solid #434bb8;
 }
 
-.specialist-item.unavailable {
+.specialistItem.unavailable {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-.specialist-item input[type="checkbox"] {
+.specialistItem input[type="checkbox"] {
   margin-right: 8px;
 }
 
 @media (max-width: 700px) {
-  .notes-content-container {
+  .notesContentContainer {
     padding: 16px 6px;
     margin: 16px auto;
     border-radius: 10px;
     width: 95%;
   }
 
-  .modal-content {
+  .modalContent {
     margin: 10px;
     max-width: none;
   }
 
-  .form-row {
+  .formRow {
     grid-template-columns: 1fr;
   }
 
-  .notes-actions {
+  .notesActions {
     flex-wrap: wrap;
     gap: 8px;
   }
 
-  .specialists-grid {
+  .specialistsGrid {
     grid-template-columns: 1fr;
     max-height: 300px;
   }
 
-  .specialist-card {
+  .specialistCard {
     padding: 12px;
   }
 
-  .notes-sidebar {
+  .notesSidebar {
     width: 200px;
     padding: 16px 12px;
   }
-}
+} 

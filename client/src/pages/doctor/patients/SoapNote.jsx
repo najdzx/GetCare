@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
+import styles from './Patients.module.css';
 
 const SoapNote = ({ soapNote, setSoapNote, uploadedFiles, setUploadedFiles }) => {
   const [remarksTemplate, setRemarksTemplate] = useState('notes');
@@ -24,11 +25,11 @@ const SoapNote = ({ soapNote, setSoapNote, uploadedFiles, setUploadedFiles }) =>
   };
 
   return (
-    <div className="soap-note-form">
-      <div className="soap-note-header">
+    <div className={styles.soapNoteForm}>
+      <div className={styles.soapNoteHeader}>
         <h2>SOAP Note</h2>
       </div>
-      <div className="soap-note-scroll">
+      <div className={styles.soapNoteScroll}>
         <form>
           <TextField
             label="Chief Complaint"
@@ -48,7 +49,7 @@ const SoapNote = ({ soapNote, setSoapNote, uploadedFiles, setUploadedFiles }) =>
           />
 
           {/* Remarks Section with menu */}
-          <div className="remarks-section">
+          <div className={styles.remarksSection}>
             {remarksTemplate === 'file' ? (
               <div
                 style={{
@@ -76,7 +77,7 @@ const SoapNote = ({ soapNote, setSoapNote, uploadedFiles, setUploadedFiles }) =>
                 {/* 3-dots menu */}
                 <div style={{ position: 'absolute', top: 6, right: 8, zIndex: 2 }}>
                   <button
-                    className="remarks-menu-btn"
+                    className={styles.remarksMenuBtn}
                     title="Change template"
                     tabIndex={-1}
                     type="button"
@@ -96,28 +97,15 @@ const SoapNote = ({ soapNote, setSoapNote, uploadedFiles, setUploadedFiles }) =>
                     <MoreVertIcon fontSize="small" style={{ color: '#888' }} />
                   </button>
                   {showRemarksMenu && (
-                    <div className="remarks-menu-dropdown" style={{ right: 0, left: 'auto' }}>
+                    <div className={styles.remarksMenuDropdown} style={{ right: 0, left: 'auto' }}>
                       <button
-                        className={remarksTemplate === 'notes' ? 'remarks-menu-option-active' : 'remarks-menu-option'}
-                        onClick={() => { setRemarksTemplate('notes'); setShowRemarksMenu(false); }}
-                        type="button"
-                      >
-                        Notes
-                      </button>
+                        className={styles.remarksMenuOption}
+                        onClick={() => setRemarksTemplate('notes')}
+                      >Notes</button>
                       <button
-                        className={remarksTemplate === 'file' ? 'remarks-menu-option-active' : 'remarks-menu-option'}
-                        onClick={() => { setRemarksTemplate('file'); setShowRemarksMenu(false); }}
-                        type="button"
-                      >
-                        Lab Results / File(s)
-                      </button>
-                      <button
-                        className={remarksTemplate === 'vitals' ? 'remarks-menu-option-active' : 'remarks-menu-option'}
-                        onClick={() => { setRemarksTemplate('vitals'); setShowRemarksMenu(false); }}
-                        type="button"
-                      >
-                        Vitals
-                      </button>
+                        className={styles.remarksMenuOption}
+                        onClick={() => setRemarksTemplate('file')}
+                      >File</button>
                     </div>
                   )}
                 </div>
@@ -181,7 +169,7 @@ const SoapNote = ({ soapNote, setSoapNote, uploadedFiles, setUploadedFiles }) =>
                   alignItems: 'flex-start',
                   padding: '8px 12px 0 12px'
                 }}>
-                  <label className="upload-label" style={{ cursor: 'pointer', marginRight: 8, marginTop: 2 }}>
+                  <label className={styles.uploadLabel} style={{ cursor: 'pointer', marginRight: 8, marginTop: 2 }}>
                     <AttachFileIcon fontSize="small" />
                     <span style={{ fontSize: 13, marginLeft: 2 }}>Upload</span>
                     <input
@@ -243,7 +231,7 @@ const SoapNote = ({ soapNote, setSoapNote, uploadedFiles, setUploadedFiles }) =>
                   endAdornment: (
                     <div style={{ position: 'relative', display: 'inline-block' }}>
                       <button
-                        className="remarks-menu-btn"
+                        className={styles.remarksMenuBtn}
                         title="Change template"
                         tabIndex={-1}
                         type="button"
@@ -261,23 +249,23 @@ const SoapNote = ({ soapNote, setSoapNote, uploadedFiles, setUploadedFiles }) =>
                         <MoreVertIcon fontSize="small" style={{ color: '#888' }} />
                       </button>
                       {showRemarksMenu && (
-                        <div className="remarks-menu-dropdown">
+                        <div className={styles.remarksMenuDropdown}>
                           <button
-                            className={remarksTemplate === 'notes' ? 'remarks-menu-option-active' : 'remarks-menu-option'}
+                            className={styles.remarksMenuOption}
                             onClick={() => { setRemarksTemplate('notes'); setShowRemarksMenu(false); }}
                             type="button"
                           >
                             Notes
                           </button>
                           <button
-                            className={remarksTemplate === 'file' ? 'remarks-menu-option-active' : 'remarks-menu-option'}
+                            className={styles.remarksMenuOption}
                             onClick={() => { setRemarksTemplate('file'); setShowRemarksMenu(false); }}
                             type="button"
                           >
                             Lab Results / File(s)
                           </button>
                           <button
-                            className={remarksTemplate === 'vitals' ? 'remarks-menu-option-active' : 'remarks-menu-option'}
+                            className={styles.remarksMenuOption}
                             onClick={() => { setRemarksTemplate('vitals'); setShowRemarksMenu(false); }}
                             type="button"
                           >
@@ -318,13 +306,13 @@ const SoapNote = ({ soapNote, setSoapNote, uploadedFiles, setUploadedFiles }) =>
             value={soapNote.plan}
             onChange={e => setSoapNote({ ...soapNote, plan: e.target.value })}
           />
-          <div className="field-action-row">
+          <div className={styles.fieldActionRow}>
             <button
               type="button"
-              className="send-btn"
+              className={styles.sendBtn}
               onClick={() => {/* Send prescription logic */}}
             >
-              <span className="send-icon">&#10148;</span> Send to Patient
+              <span className={styles.sendIcon}>&#10148;</span> Send to Patient
             </button>
           </div>
           <TextField
@@ -335,13 +323,13 @@ const SoapNote = ({ soapNote, setSoapNote, uploadedFiles, setUploadedFiles }) =>
             value={soapNote.prescription}
             onChange={e => setSoapNote({ ...soapNote, prescription: e.target.value })}
           />
-          <div className="field-action-row">
+          <div className={styles.fieldActionRow}>
             <button
               type="button"
-              className="send-btn"
+              className={styles.sendBtn}
               onClick={() => {/* Send prescription logic */}}
             >
-              <span className="send-icon">&#10148;</span> Send to Patient
+              <span className={styles.sendIcon}>&#10148;</span> Send to Patient
             </button>
           </div>
           <TextField
@@ -353,14 +341,14 @@ const SoapNote = ({ soapNote, setSoapNote, uploadedFiles, setUploadedFiles }) =>
             onChange={e => setSoapNote({ ...soapNote, testRequest: e.target.value })}
           />
         </form>
-        <div className="followup-section">
-          <label className="followup-label">Follow up Check-up</label>
+        <div className={styles.followupSection}>
+          <label className={styles.followupLabel}>Follow up Check-up</label>
           <button
             type="button"
-            className="followup-btn"
+            className={styles.followupBtn}
             onClick={() => {/* Schedule follow up logic */}}
           >
-            <span className="plus-circle" aria-hidden="true">+</span> Schedule Follow Up
+            <span className={styles.plusCircle} aria-hidden="true">+</span> Schedule Follow Up
           </button>
         </div>
       </div>

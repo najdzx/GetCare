@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Profile.css';
+import styles from './Profile.module.css';
 
 const initialPatient = {
   firstName: '',
@@ -44,181 +44,183 @@ const Profile = () => {
   };
 
   return (
-    <div className="patient-profile-outer-container">
-      <div className="patient-profile-wrapper">
-        <div className="patient-profile-container">
-          <div className="patient-profile-info-container">
-            <div className="patient-profile-info-fields">
-              <div className="patient-profile-info-row">
-                <span className="patient-profile-info-label">FIRST NAME</span>
+    <div className={styles.patientProfileOuterContainer}>
+      <div className={styles.patientProfileWrapper}>
+        <div className={styles.patientProfileContainer}>
+          <div className={styles.patientProfileInfoContainer}>
+            <div className={styles.patientProfileFields}>
+              <div className={styles.patientProfileInfoFields}>
+              <div className={styles.patientProfileInfoRow}>
+                <span className={styles.patientProfileInfoLabel}>FIRST NAME</span>
                 {isEditing ? (
                   <input
                     type="text"
-                    className="patient-profile-info-input"
+                    className={styles.patientProfileInfoInput}
                     value={patientData.firstName}
                     onChange={(e) => handleInputChange('firstName', e.target.value)}
                   />
                 ) : (
-                  <span className="patient-profile-info-value">{patientData.firstName}</span>
+                  <span className={styles.patientProfileInfoValue}>{patientData.firstName}</span>
                 )}
               </div>
-              <div className="patient-profile-info-row">
-                <span className="patient-profile-info-label">LAST NAME</span>
+              <div className={styles.patientProfileInfoRow}>
+                <span className={styles.patientProfileInfoLabel}>LAST NAME</span>
                 {isEditing ? (
                   <input
                     type="text"
-                    className="patient-profile-info-input"
+                    className={styles.patientProfileInfoInput}
                     value={patientData.lastName}
                     onChange={(e) => handleInputChange('lastName', e.target.value)}
                   />
                 ) : (
-                  <span className="patient-profile-info-value">{patientData.lastName}</span>
+                  <span className={styles.patientProfileInfoValue}>{patientData.lastName}</span>
                 )}
               </div>
-              <div className="patient-profile-info-row">
-                <span className="patient-profile-info-label">MIDDLE NAME</span>
+              <div className={styles.patientProfileInfoRow}>
+                <span className={styles.patientProfileInfoLabel}>MIDDLE NAME</span>
                 {isEditing ? (
                   <input
                     type="text"
-                    className="patient-profile-info-input"
+                    className={styles.patientProfileInfoInput}
                     value={patientData.middleName}
                     onChange={(e) => handleInputChange('middleName', e.target.value)}
                   />
                 ) : (
-                  <span className="patient-profile-info-value">{patientData.middleName}</span>
+                  <span className={styles.patientProfileInfoValue}>{patientData.middleName}</span>
                 )}
               </div>
-              <div className="patient-profile-info-row">
-                <span className="patient-profile-info-label">SUFFIX</span>
+              <div className={styles.patientProfileInfoRow}>
+                <span className={styles.patientProfileInfoLabel}>SUFFIX</span>
                 {isEditing ? (
                   <input
                     type="text"
-                    className="patient-profile-info-input"
+                    className={styles.patientProfileInfoInput}
                     value={patientData.suffix}
                     onChange={(e) => handleInputChange('suffix', e.target.value)}
                   />
                 ) : (
-                  <span className="patient-profile-info-value">{patientData.suffix}</span>
+                  <span className={styles.patientProfileInfoValue}>{patientData.suffix}</span>
                 )}
               </div>
-              <div className="patient-profile-info-row">
-                <span className="patient-profile-info-label">NICKNAME</span>
+              <div className={styles.patientProfileInfoRow}>
+                <span className={styles.patientProfileInfoLabel}>NICKNAME</span>
                 {isEditing ? (
                   <input
                     type="text"
-                    className="patient-profile-info-input"
+                    className={styles.patientProfileInfoInput}
                     value={patientData.nickname}
                     onChange={(e) => handleInputChange('nickname', e.target.value)}
                   />
                 ) : (
-                  <span className="patient-profile-info-value">{patientData.nickname}</span>
+                  <span className={styles.patientProfileInfoValue}>{patientData.nickname}</span>
                 )}
               </div>
-              <div className="patient-profile-info-row">
-                <span className="patient-profile-info-label">DATE OF BIRTH</span>
+              <div className={styles.patientProfileInfoRow}>
+                <span className={styles.patientProfileInfoLabel}>DATE OF BIRTH</span>
                 {isEditing ? (
                   <input
                     type="date"
-                    className="patient-profile-info-input"
+                    className={styles.patientProfileInfoInput}
                     value={patientData.dob}
                     onChange={(e) => handleInputChange('dob', e.target.value)}
                   />
                 ) : (
-                  <span className="patient-profile-info-value">{patientData.dob}</span>
+                  <span className={styles.patientProfileInfoValue}>{patientData.dob}</span>
                 )}
               </div>
-              <div className="patient-profile-info-row">
-                <span className="patient-profile-info-label">SEX</span>
+              <div className={styles.patientProfileInfoRow}>
+                <span className={styles.patientProfileInfoLabel}>SEX</span>
                 {/* SEX TAGS */}
-                <div className="patient-profile-info-tags-group">
+                <div className={styles.patientProfileInfoTagsGroup}>
                   {['Male', 'Female'].map(sex => (
                     <span
                       key={sex}
-                      className={`patient-profile-info-tag ${patientData.sex === sex ? 'active' : 'inactive'}${isEditing ? ' clickable' : ''}`}
+                      className={`${styles.patientProfileInfoTag} ${patientData.sex === sex ? styles.active : styles.inactive}${isEditing ? ` ${styles.clickable}` : ''}`}
                       onClick={isEditing ? () => handleInputChange('sex', sex) : undefined}
                     >{sex}</span>
                   ))}
                 </div>
               </div>
-              <div className="patient-profile-info-row">
-                <span className="patient-profile-info-label">BLOOD TYPE</span>
+              <div className={styles.patientProfileInfoRow}>
+                <span className={styles.patientProfileInfoLabel}>BLOOD TYPE</span>
                 {/* BLOOD TYPE TAGS */}
-                <div className="patient-profile-info-tags-group blood-type">
+                <div className={`${styles.patientProfileInfoTagsGroup} ${styles.bloodType}`}>
                   {bloodTypes.map(type => (
                     <span
                       key={type}
-                      className={`patient-profile-info-tag ${patientData.bloodType === type ? 'active' : 'inactive'}${isEditing ? ' clickable' : ''}`}
+                      className={`${styles.patientProfileInfoTag} ${patientData.bloodType === type ? styles.active : styles.inactive}${isEditing ? ` ${styles.clickable}` : ''}`}
                       onClick={isEditing ? () => handleInputChange('bloodType', type) : undefined}
                     >{type}</span>
                   ))}
                 </div>
               </div>
-              <div className="patient-profile-info-row">
-                <span className="patient-profile-info-label">CIVIL STATUS</span>
+              <div className={styles.patientProfileInfoRow}>
+                <span className={styles.patientProfileInfoLabel}>CIVIL STATUS</span>
                 {/* CIVIL STATUS TAGS */}
-                <div className="patient-profile-info-tags-group">
+                <div className={styles.patientProfileInfoTagsGroup}>
                   {civilStatuses.map(status => (
                     <span
                       key={status}
-                      className={`patient-profile-info-tag ${patientData.civilStatus === status ? 'active' : 'inactive'}${isEditing ? ' clickable' : ''}`}
+                      className={`${styles.patientProfileInfoTag} ${patientData.civilStatus === status ? styles.active : styles.inactive}${isEditing ? ` ${styles.clickable}` : ''}`}
                       onClick={isEditing ? () => handleInputChange('civilStatus', status) : undefined}
                     >{status}</span>
                   ))}
                 </div>
               </div>
-              <div className="patient-profile-info-row">
-                <span className="patient-profile-info-label">PHIL HEALTH NO.</span>
+              <div className={styles.patientProfileInfoRow}>
+                <span className={styles.patientProfileInfoLabel}>PHIL HEALTH NO.</span>
                 {isEditing ? (
                   <input
                     type="text"
-                    className="patient-profile-info-input"
+                    className={styles.patientProfileInfoInput}
                     value={patientData.philhealth}
                     onChange={(e) => handleInputChange('philhealth', e.target.value)}
                   />
                 ) : (
-                  <span className="patient-profile-info-value">{patientData.philhealth}</span>
+                  <span className={styles.patientProfileInfoValue}>{patientData.philhealth}</span>
                 )}
               </div>
-              <div className="patient-profile-info-row">
-                <span className="patient-profile-info-label">EMAIL</span>
+              <div className={styles.patientProfileInfoRow}>
+                <span className={styles.patientProfileInfoLabel}>EMAIL</span>
                 {isEditing ? (
                   <input
                     type="email"
-                    className="patient-profile-info-input"
+                    className={styles.patientProfileInfoInput}
                     value={patientData.email}
                     onChange={(e) => handleInputChange('email', e.target.value)}
                   />
                 ) : (
-                  <span className="patient-profile-info-value">{patientData.email}</span>
+                  <span className={styles.patientProfileInfoValue}>{patientData.email}</span>
                 )}
               </div>
-              <div className="patient-profile-info-row">
-                <span className="patient-profile-info-label">PRIMARY MOBILE</span>
+              <div className={styles.patientProfileInfoRow}>
+                <span className={styles.patientProfileInfoLabel}>PRIMARY MOBILE</span>
                 {isEditing ? (
                   <input
                     type="tel"
-                    className="patient-profile-info-input"
+                    className={styles.patientProfileInfoInput}
                     value={patientData.mobile}
                     onChange={(e) => handleInputChange('mobile', e.target.value)}
                   />
                 ) : (
-                  <span className="patient-profile-info-value">{patientData.mobile}</span>
+                  <span className={styles.patientProfileInfoValue}>{patientData.mobile}</span>
                 )}
               </div>
+              </div>
             </div>
-            <div className="patient-profile-info-profile">
+            <div className={styles.patientProfileInfoProfile}>
               <img
                 src={
                   patientData.profilePic ||
                   `https://ui-avatars.com/api/?name=${patientData.firstName}+${patientData.lastName}&background=034172&color=fff&size=100`
                 }
                 alt="Profile"
-                className="patient-profile-info-pic"
+                className={styles.patientProfileInfoPic}
               />
               <p><strong>ID:</strong> {patientData.id}</p>
             </div>
           </div>
-          <div className="patient-profile-buttons patient-profile-edit-btn">
+          <div className={`${styles.patientProfileButtons} ${styles.patientProfileEditBtn}`}>
             {isEditing ? (
               <>
                 <button className="global-btn secondary" type="button" onClick={handleCancel}>

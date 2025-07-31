@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { MdPeople, MdCheck, MdClose, MdSend, MdAdd, MdNote, MdSearch } from 'react-icons/md';
-import './Invitations.css';
+import styles from './Invitations.module.css';
 import '../../components/Layout/Scrollbar.css';
 
 const mockInvitations = {
@@ -134,59 +134,59 @@ const Invitations = () => {
   };
 
   return (
-    <div className="invitations-page">
-      <div className="invitations-content-container">
-        <div className="invitations-header-row">
+    <div className={styles.invitationsPage}>
+      <div className={styles.invitationsContentContainer}>
+        <div className={styles.invitationsHeaderRow}>
           <h2><MdPeople style={{ verticalAlign: 'middle', marginRight: 8}} />Invitations</h2>
-          <div className="invitations-actions">
-            <button className={`invitations-tab-btn ${tab === 'incoming' ? 'active' : 'inactive'}`} onClick={() => setTab('incoming')}>Incoming</button>
-            <button className={`invitations-tab-btn ${tab === 'outgoing' ? 'active' : 'inactive'}`} onClick={() => setTab('outgoing')}>Outgoing</button>
-            <button className="invitation-btn primary" onClick={() => setShowSendModal(true)}>
+          <div className={styles.invitationsActions}>
+            <button className={`${styles.invitationsTabBtn} ${tab === 'incoming' ? styles.active : styles.inactive}`} onClick={() => setTab('incoming')}>Incoming</button>
+            <button className={`${styles.invitationsTabBtn} ${tab === 'outgoing' ? styles.active : styles.inactive}`} onClick={() => setTab('outgoing')}>Outgoing</button>
+            <button className={`${styles.invitationBtn} ${styles.primary}`} onClick={() => setShowSendModal(true)}>
               <MdAdd /> Send Invitation
             </button>
           </div>
         </div>
-        <div className="invitations-section-title">{tab === 'incoming' ? 'Invitations you have received' : 'Invitations you have sent'}</div>
+        <div className={styles.invitationsSectionTitle}>{tab === 'incoming' ? 'Invitations you have received' : 'Invitations you have sent'}</div>
         <div style={{ marginTop: 16}}>
           {tab === 'incoming' && invitations.incoming.length === 0 && (
-            <div className="invitations-empty">No incoming invitations.</div>
+            <div className={styles.invitationsEmpty}>No incoming invitations.</div>
           )}
           {tab === 'outgoing' && invitations.outgoing.length === 0 && (
-            <div className="invitations-empty">No outgoing invitations.</div>
+            <div className={styles.invitationsEmpty}>No outgoing invitations.</div>
           )}
           {tab === 'incoming' && invitations.incoming.map(inv => (
-            <div key={inv.id} className="invitation-item">
-              <div className="invitation-info">
-                <div className="invitation-patient">{inv.patient} <span style={{ color: '#888', fontWeight: 400 }}>({inv.case})</span></div>
-                <div className="invitation-meta">Invited by <b>{inv.inviter}</b> &middot; {new Date(inv.date).toLocaleString()} &middot; Access: {inv.access}</div>
+            <div key={inv.id} className={styles.invitationItem}>
+              <div className={styles.invitationInfo}>
+                <div className={styles.invitationPatient}>{inv.patient} <span style={{ color: '#888', fontWeight: 400 }}>({inv.case})</span></div>
+                <div className={styles.invitationMeta}>Invited by <b>{inv.inviter}</b> &middot; {new Date(inv.date).toLocaleString()} &middot; Access: {inv.access}</div>
                 {inv.note && (
-                  <div className="invitation-note">
+                  <div className={styles.invitationNote}>
                     <MdNote size={16} style={{ marginRight: 8, color: '#666' }} />
                     <span>{inv.note.length > 100 ? `${inv.note.substring(0, 100)}...` : inv.note}</span>
                     {inv.note.length > 100 && (
-                      <button className="read-more-btn" onClick={() => alert(inv.note)}>Read more</button>
+                      <button className={styles.readMoreBtn} onClick={() => alert(inv.note)}>Read more</button>
                     )}
                   </div>
                 )}
               </div>
-              <div className="invitation-actions">
+              <div className={styles.invitationActions}>
                 {inv.status === 'pending' && <>
-                  <button className="invitation-btn primary" onClick={() => handleAccept(inv.id)}><MdCheck /> Accept</button>
-                  <button className="invitation-btn secondary" onClick={() => handleDecline(inv.id)}><MdClose /> Decline</button>
+                  <button className={`${styles.invitationBtn} ${styles.primary}`} onClick={() => handleAccept(inv.id)}><MdCheck /> Accept</button>
+                  <button className={`${styles.invitationBtn} ${styles.secondary}`} onClick={() => handleDecline(inv.id)}><MdClose /> Decline</button>
                 </>}
-                {inv.status === 'accepted' && <span className="invitation-status accepted">Accepted</span>}
-                {inv.status === 'declined' && <span className="invitation-status declined">Declined</span>}
+                {inv.status === 'accepted' && <span className={`${styles.invitationStatus} ${styles.accepted}`}>Accepted</span>}
+                {inv.status === 'declined' && <span className={`${styles.invitationStatus} ${styles.declined}`}>Declined</span>}
               </div>
             </div>
           ))}
           {tab === 'outgoing' && invitations.outgoing.map(inv => (
-            <div key={inv.id} className="invitation-item">
-              <div className="invitation-info">
-                <div className="invitation-patient">
+            <div key={inv.id} className={styles.invitationItem}>
+              <div className={styles.invitationInfo}>
+                <div className={styles.invitationPatient}>
                   {inv.invitee} <span style={{ color: '#888', fontWeight: 400 }}>({inv.patient} - {inv.case})</span>
                   {inv.urgency && (
                     <span 
-                      className="urgency-badge" 
+                      className={styles.urgencyBadge} 
                       style={{ 
                         backgroundColor: urgencyColors[inv.urgency],
                         color: 'white',
@@ -201,22 +201,22 @@ const Invitations = () => {
                     </span>
                   )}
                 </div>
-                <div className="invitation-meta">Sent on {new Date(inv.date).toLocaleString()} &middot; Access: {inv.access}</div>
+                <div className={styles.invitationMeta}>Sent on {new Date(inv.date).toLocaleString()} &middot; Access: {inv.access}</div>
                 {inv.note && (
-                  <div className="invitation-note">
+                  <div className={styles.invitationNote}>
                     <MdNote size={16} style={{ marginRight: 8, color: '#666' }} />
                     <span>{inv.note.length > 100 ? `${inv.note.substring(0, 100)}...` : inv.note}</span>
                     {inv.note.length > 100 && (
-                      <button className="read-more-btn" onClick={() => alert(inv.note)}>Read more</button>
+                      <button className={styles.readMoreBtn} onClick={() => alert(inv.note)}>Read more</button>
                     )}
                   </div>
                 )}
               </div>
-              <div className="invitation-actions">
-                {inv.status === 'pending' && <button className="invitation-btn secondary" onClick={() => handleCancel(inv.id)}><MdClose /> Cancel</button>}
-                {inv.status === 'accepted' && <span className="invitation-status accepted">Accepted</span>}
-                {inv.status === 'declined' && <span className="invitation-status declined">Declined</span>}
-                {inv.status === 'cancelled' && <span className="invitation-status cancelled">Cancelled</span>}
+              <div className={styles.invitationActions}>
+                {inv.status === 'pending' && <button className={`${styles.invitationBtn} ${styles.secondary}`} onClick={() => handleCancel(inv.id)}><MdClose /> Cancel</button>}
+                {inv.status === 'accepted' && <span className={`${styles.invitationStatus} ${styles.accepted}`}>Accepted</span>}
+                {inv.status === 'declined' && <span className={`${styles.invitationStatus} ${styles.declined}`}>Declined</span>}
+                {inv.status === 'cancelled' && <span className={`${styles.invitationStatus} ${styles.cancelled}`}>Cancelled</span>}
               </div>
             </div>
           ))}
@@ -225,16 +225,16 @@ const Invitations = () => {
 
       {/* Send Invitation Modal */}
       {showSendModal && (
-        <div className="modal-overlay" onClick={() => setShowSendModal(false)}>
-          <div className="modal-content custom-scrollbar" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-header">
+        <div className={styles.modalOverlay} onClick={() => setShowSendModal(false)}>
+          <div className={`${styles.modalContent} custom-scrollbar`} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.modalHeader}>
               <h3>Send Specialist Invitation</h3>
-              <button className="modal-close" onClick={() => setShowSendModal(false)}>
+              <button className={styles.modalClose} onClick={() => setShowSendModal(false)}>
                 <MdClose />
               </button>
             </div>
-            <div className="modal-body">
-              <div className="form-group">
+            <div className={styles.modalBody}>
+              <div className={styles.formGroup}>
                 <label>Patient Name</label>
                 <input
                   type="text"
@@ -243,7 +243,7 @@ const Invitations = () => {
                   placeholder="Enter patient name"
                 />
               </div>
-              <div className="form-group">
+              <div className={styles.formGroup}>
                 <label>Case/Condition</label>
                 <input
                   type="text"
@@ -252,47 +252,47 @@ const Invitations = () => {
                   placeholder="e.g., Diabetes Management, Cardiac Assessment"
                 />
               </div>
-              <div className="form-group">
+              <div className={styles.formGroup}>
                 <label>Search & Select Specialist</label>
-                <div className="specialist-search-container">
+                <div className={styles.specialistSearchContainer}>
                   <input
                     type="text"
                     value={searchSpecialist}
                     onChange={(e) => setSearchSpecialist(e.target.value)}
                     placeholder="Search by name or specialty..."
-                    className="specialist-search-input"
+                    className={styles.specialistSearchInput}
                   />
-                  <div className="specialists-grid custom-scrollbar">
+                  <div className={`${styles.specialistsGrid} custom-scrollbar`}>
                     {filteredSpecialists.map(specialist => (
                       <div
                         key={specialist.id}
-                        className={`specialist-card ${newInvitation.invitee === specialist.name ? 'selected' : ''} ${!specialist.available ? 'unavailable' : ''}`}
+                        className={`${styles.specialistCard} ${newInvitation.invitee === specialist.name ? styles.selected : ''} ${!specialist.available ? styles.unavailable : ''}`}
                         onClick={() => {
                           if (specialist.available) {
                             setNewInvitation(prev => ({ ...prev, invitee: specialist.name }));
                           }
                         }}
                       >
-                        <div className="specialist-card-header">
-                          <div className="specialist-avatar">{specialist.avatar}</div>
-                          <div className="specialist-status">
+                        <div className={styles.specialistCardHeader}>
+                          <div className={styles.specialistAvatar}>{specialist.avatar}</div>
+                          <div className={styles.specialistStatus}>
                             {specialist.available ? (
-                              <span className="status-available">Available</span>
+                              <span className={styles.statusAvailable}>Available</span>
                             ) : (
-                              <span className="status-unavailable">Unavailable</span>
+                              <span className={styles.statusUnavailable}>Unavailable</span>
                             )}
                           </div>
                         </div>
-                        <div className="specialist-card-body">
-                          <h4 className="specialist-name">{specialist.name}</h4>
-                          <p className="specialist-specialty">{specialist.specialty}</p>
-                          <div className="specialist-details">
-                            <span className="specialist-rating">⭐ {specialist.rating}</span>
-                            <span className="specialist-experience">{specialist.experience}</span>
+                        <div className={styles.specialistCardBody}>
+                          <h4 className={styles.specialistName}>{specialist.name}</h4>
+                          <p className={styles.specialistSpecialty}>{specialist.specialty}</p>
+                          <div className={styles.specialistDetails}>
+                            <span className={styles.specialistRating}>⭐ {specialist.rating}</span>
+                            <span className={styles.specialistExperience}>{specialist.experience}</span>
                           </div>
                         </div>
                         {newInvitation.invitee === specialist.name && (
-                          <div className="specialist-selected">
+                          <div className={styles.specialistSelected}>
                             <MdCheck />
                           </div>
                         )}
@@ -301,8 +301,8 @@ const Invitations = () => {
                   </div>
                 </div>
               </div>
-              <div className="form-row">
-                <div className="form-group">
+              <div className={styles.formRow}>
+                <div className={styles.formGroup}>
                   <label>Access Level</label>
                   <select
                     value={newInvitation.access}
@@ -312,7 +312,7 @@ const Invitations = () => {
                     <option value="Read-only">Read-only</option>
                   </select>
                 </div>
-                <div className="form-group">
+                <div className={styles.formGroup}>
                   <label>Urgency</label>
                   <select
                     value={newInvitation.urgency}
@@ -324,7 +324,7 @@ const Invitations = () => {
                   </select>
                 </div>
               </div>
-              <div className="form-group">
+              <div className={styles.formGroup}>
                 <label>Note (Optional)</label>
                 <textarea
                   value={newInvitation.note}
@@ -333,15 +333,15 @@ const Invitations = () => {
                   rows={4}
                   maxLength={500}
                 />
-                <div className="char-count">{newInvitation.note.length}/500</div>
+                <div className={styles.charCount}>{newInvitation.note.length}/500</div>
               </div>
             </div>
-            <div className="modal-footer">
-              <button className="invitation-btn secondary" onClick={() => setShowSendModal(false)}>
+            <div className={styles.modalFooter}>
+              <button className={`${styles.invitationBtn} ${styles.secondary}`} onClick={() => setShowSendModal(false)}>
                 Cancel
               </button>
               <button 
-                className="invitation-btn primary" 
+                className={`${styles.invitationBtn} ${styles.primary}`} 
                 onClick={handleSendInvitation}
                 disabled={!newInvitation.patient || !newInvitation.case || !newInvitation.invitee}
               >

@@ -1,6 +1,6 @@
 import React from 'react';
 import { MdCalendarToday, MdLocalHospital, MdDescription, MdChat, MdFileCopy, MdTrendingUp } from 'react-icons/md';
-import './Dashboard.css';
+import styles from './Dashboard.module.css';
 
 const Dashboard = () => {
   // Sample data for patient dashboard
@@ -75,47 +75,47 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="patient-dashboard">
-      <div className="dashboard-header">
+    <div className={styles.patientDashboard}>
+      <div className={styles.dashboardHeader}>
       </div>
 
       {/* Health Stats */}
-      <div className="dashboard-section">
+      <div className={styles.dashboardSection}>
         <h2>Health Overview</h2>
-        <div className="stats-grid">
+        <div className={styles.statsGrid}>
           {healthStats.map((stat, index) => (
-            <div key={index} className="stat-card">
-              <div className="stat-header">
+            <div key={index} className={styles.statCard}>
+              <div className={styles.statHeader}>
                 <h3>{stat.title}</h3>
-                <span className="stat-status" style={{ color: stat.color }}>
+                <span className={styles.statStatus} style={{ color: stat.color }}>
                   {stat.status}
                 </span>
               </div>
-              <div className="stat-value">{stat.value}</div>
+              <div className={styles.statValue}>{stat.value}</div>
             </div>
           ))}
         </div>
       </div>
 
       {/* Upcoming Appointments */}
-      <div className="dashboard-section">
+      <div className={styles.dashboardSection}>
         <h2>Upcoming Appointments</h2>
-        <div className="appointments-list">
+        <div className={styles.appointmentsList}>
           {upcomingAppointments.map((appointment) => (
-            <div key={appointment.id} className="appointment-card">
-              <div className="appointment-header">
-                <div className="doctor-info">
+            <div key={appointment.id} className={styles.appointmentCard}>
+              <div className={styles.appointmentHeader}>
+                <div className={styles.doctorInfo}>
                   <h3>{appointment.doctor}</h3>
                   <p>{appointment.specialty}</p>
                 </div>
-                <span className="appointment-type">{appointment.type}</span>
+                <span className={styles.appointmentType}>{appointment.type}</span>
               </div>
-              <div className="appointment-details">
-                <div className="appointment-date">
+              <div className={styles.appointmentDetails}>
+                <div className={styles.appointmentDate}>
                   <MdCalendarToday />
                   <span>{appointment.date} at {appointment.time}</span>
                 </div>
-                <div className="appointment-mode">
+                <div className={styles.appointmentMode}>
                   <MdLocalHospital />
                   <span>{appointment.mode}</span>
                 </div>
@@ -126,12 +126,12 @@ const Dashboard = () => {
       </div>
 
       {/* Quick Actions */}
-      <div className="dashboard-section">
+      <div className={styles.dashboardSection}>
         <h2>Quick Actions</h2>
-        <div className="quick-actions-grid">
+        <div className={styles.quickActionsGrid}>
           {quickActions.map((action, index) => (
-            <div key={index} className="quick-action-card" style={{ borderLeftColor: action.color }}>
-              <div className="action-icon" style={{ color: action.color }}>
+            <div key={index} className={styles.quickActionCard} style={{ borderLeftColor: action.color }}>
+              <div className={styles.actionIcon} style={{ color: action.color }}>
                 {action.icon}
               </div>
               <h3>{action.title}</h3>
@@ -141,21 +141,21 @@ const Dashboard = () => {
       </div>
 
       {/* Recent Activities */}
-      <div className="dashboard-section">
+      <div className={styles.dashboardSection}>
         <h2>Recent Activities</h2>
-        <div className="activities-list">
+        <div className={styles.activitiesList}>
           {recentActivities.map((activity) => (
-            <div key={activity.id} className="activity-item">
-              <div className="activity-icon">
+            <div key={activity.id} className={styles.activityItem}>
+              <div className={styles.activityIcon}>
                 {activity.type === 'appointment' && <MdCalendarToday />}
                 {activity.type === 'prescription' && <MdDescription />}
                 {activity.type === 'test' && <MdFileCopy />}
                 {activity.type === 'message' && <MdChat />}
               </div>
-              <div className="activity-content">
+              <div className={styles.activityContent}>
                 <h4>{activity.title}</h4>
                 <p>{activity.description}</p>
-                <span className="activity-time">{activity.date} at {activity.time}</span>
+                <span className={styles.activityTime}>{activity.date} at {activity.time}</span>
               </div>
             </div>
           ))}
