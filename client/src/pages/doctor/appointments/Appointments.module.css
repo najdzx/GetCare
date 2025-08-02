@@ -1,0 +1,557 @@
+.container {
+  height: calc(100vh - 100px);
+  padding: 20px;
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.wrapper {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border: 1px solid #f0f0f0;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.calendar-header {
+  background-color: white;
+  color: #333;
+  padding: 24px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+  box-sizing: border-box;
+}
+
+.calendar-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  min-width: 0;
+  flex: 1;
+}
+
+.calendar-title {
+  font-size: 24px;
+  font-weight: 500;
+  min-width: 200px;
+  flex-shrink: 0;
+  color: #1a1a1a;
+  letter-spacing: -0.3px;
+}
+
+.calendar-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.add-appointment-header-btn {
+  background: #1a1a1a;
+  border: none;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.add-appointment-header-btn:hover {
+  background: #333;
+  transform: translateY(-1px);
+}
+
+.nav-btn {
+  background: white;
+  border: 1px solid #e8e8e8;
+  color: #666;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.nav-btn:hover {
+  background: #f8f8f8;
+  border-color: #ddd;
+}
+
+.calendar-content {
+  flex: 1;
+  padding: 20px;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  box-sizing: border-box;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: auto 1fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 1px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  height: 100%;
+  position: relative;
+  align-items: stretch;
+}
+
+.calendar-day-header {
+  background-color: white;
+  padding: 8px 6px;
+  text-align: center;
+  font-weight: 900;
+  color: #666;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  height: 32px;
+  line-height: 32px;
+}
+
+.calendar-day {
+  background-color: white;
+  padding: 14px 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.calendar-day:hover {
+  background-color: #fafafa;
+}
+
+.calendar-day.other-month {
+  background-color: #fafafa;
+  color: #ccc;
+}
+
+.calendar-day.today {
+  background-color: #f8f8f8;
+  border: 1px solid #1a1a1a;
+}
+
+.day-number {
+  font-weight: 600;
+  font-size: 17px;
+  margin-bottom: 8px;
+  color: #333;
+  line-height: 1.2;
+}
+
+.calendar-day.other-month .day-number {
+  color: #ccc;
+}
+
+.appointment {
+  background: #f5f5f5;
+  color: #333;
+  padding: 6px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  margin-bottom: 3px;
+  font-weight: 400;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1.4;
+  position: relative;
+  border-left: 2px solid #ddd;
+}
+
+.appointment.online {
+  border-left-color: #666;
+}
+
+.appointment.face-to-face {
+  border-left-color: #333;
+}
+
+.appointment-time {
+  font-weight: 500;
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+.appointment-patient {
+  font-weight: 400;
+  font-size: 11px;
+  margin-top: 1px;
+}
+
+.add-appointment-btn {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  width: 20px;
+  height: 20px;
+  background: #1a1a1a;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.2s;
+}
+
+.calendar-day:hover .add-appointment-btn {
+  opacity: 1;
+}
+
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 12px;
+  padding: 32px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.modal-body-scroll {
+  overflow-y: auto;
+  flex: 1;
+  margin: -5px;
+  padding: 5px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.modal-title {
+  font-size: 20px;
+  font-weight: 500;
+  color: #1a1a1a;
+  letter-spacing: -0.2px;
+  line-height: 1.3;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-btn:hover {
+  color: #333;
+}
+
+.appointment-list {
+  margin-bottom: 20px;
+}
+
+.appointment-item {
+  background: #fafafa;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  border-left: 2px solid #ddd;
+  transition: all 0.2s;
+}
+
+.appointment-item:hover {
+  background: #f5f5f5;
+}
+
+.appointment-item.online {
+  border-left-color: #666;
+}
+
+.appointment-item.face-to-face {
+  border-left-color: #333;
+}
+
+.appointment-item-time {
+  font-weight: 500;
+  color: #666;
+  font-size: 14px;
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.appointment-item-patient {
+  font-weight: 500;
+  margin: 6px 0;
+  color: #1a1a1a;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.appointment-item-type {
+  font-size: 12px;
+  color: #999;
+  text-transform: capitalize;
+  letter-spacing: 0;
+  font-weight: 400;
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+
+.appointment-item-location {
+  background: #f0f0f0;
+  color: #666;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 400;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.meet-link {
+  color: #1a1a1a;
+  text-decoration: none;
+  font-weight: 400;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.2s;
+}
+
+.meet-link:hover {
+  color: #666;
+  text-decoration: underline;
+}
+
+.appointment-form {
+  display: grid;
+  gap: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-label {
+  font-weight: 500;
+  color: #1a1a1a;
+  margin-bottom: 6px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  padding: 10px 12px;
+  font-size: 14px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 6px;
+  background: white;
+  transition: border-color 0.2s;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  width: 100%;
+  line-height: 1.5;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: #1a1a1a;
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex: 1;
+  line-height: 1.4;
+}
+
+.btn-primary {
+  background: #f5f5f5;
+  color: #212121;
+}
+
+.btn-primary:hover {
+  background: #434bb8;
+  color: white;
+}
+
+.btn-secondary {
+  background: #f5f5f5;
+  color: #666;
+  border: 1px solid #e8e8e8;
+}
+
+.btn-secondary:hover {
+  background: #eee;
+}
+
+.btn-danger {
+  background: #ff4444;
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #cc3333;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+    height: calc(100vh - 60px);
+  }
+
+  .calendar-header {
+    padding: 15px 20px;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .calendar-left {
+    justify-content: center;
+  }
+
+  .calendar-title {
+    font-size: 22px;
+  }
+
+  .add-appointment-header-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+
+  .calendar-content {
+    padding: 15px;
+  }
+
+  .calendar-day {
+    min-height: 80px;
+    padding: 8px 6px;
+  }
+
+  .day-number {
+    font-size: 14px;
+  }
+
+  .appointment {
+    font-size: 10px;
+    padding: 2px 6px;
+  }
+
+  .modal-content {
+    padding: 20px;
+    margin: 20px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .calendar-day-header {
+    padding: 10px 5px;
+    font-size: 12px;
+  }
+
+  .calendar-day {
+    min-height: 60px;
+    padding: 6px 4px;
+  }
+
+  .day-number {
+    font-size: 12px;
+  }
+
+  .appointment {
+    font-size: 9px;
+    padding: 1px 4px;
+  }
+
+  .add-appointment-btn {
+    width: 20px;
+    height: 20px;
+    font-size: 14px;
+  }
+}

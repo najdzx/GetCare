@@ -6,6 +6,8 @@ import DoctorLayout from './components/doctor/DoctorLayout';
 import Dashboard from './pages/doctor/dashboard/Dashboard';
 import ErrorBoundary from './components/ErrorBoundary';
 
+import './App.css';
+
 // 👇 Add these imports for the sub-pages
 import Appointments from './pages/doctor/appointments/Appointments';
 import Patients from './pages/doctor/patients/Patients';
@@ -16,7 +18,7 @@ import Analytics from './pages/doctor/Analytics';
 import Engagement from './pages/doctor/Engagement';
 import MyClinic from './pages/doctor/myclinic/MyClinic';
 import Invitations from './pages/doctor/Invitations';
-import Profile from './pages/doctor/profile/Profile';
+import Profile from './pages/doctor/profile/DoctorProfile';
 import Availability from './pages/doctor/availability/Availability';
 
 // Admin imports
@@ -39,7 +41,7 @@ import PatientFiles from './pages/patient/Files';
 import PatientDiagnostics from './pages/patient/Diagnostics';
 import PatientNotes from './pages/patient/Notes';
 import PatientChat from './pages/patient/Chat';
-import PatientProfile from './pages/patient/Profile';
+import PatientProfile from './pages/patient/PatientProfile';
 
 
 function App() {

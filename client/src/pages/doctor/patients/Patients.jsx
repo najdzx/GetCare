@@ -1,221 +1,1007 @@
-import React, { useEffect, useState } from 'react';
-import { MdPeople, MdPersonAdd } from 'react-icons/md';
-import PatientInfo from './PatientInfo';
+import React, { useState, useEffect, useCallback } from 'react';
+import styles from './Patients.module.css';
+import BasicInformation from './BasicInformation';
 import MedicalBackground from './MedicalBackground';
-import SoapNote from './SoapNote';
-import './Patients.css';
-import '../../../components/Layout/Scrollbar.css';
+import SoapNotes from './SoapNotes';
+import Notes from './Notes';
+import Doctors from './Doctors';
 
 const Patients = () => {
-  const [myPatients, setMyPatients] = useState([]);
-  const [sharedCases, setSharedCases] = useState([]);
-  const [selectedPatient, setSelectedPatient] = useState(null);
-  const [modalPage, setModalPage] = useState(1);
-  const [loading, setLoading] = useState(true);
-  
-  // Search state for each card
-  const [myPatientsSearch, setMyPatientsSearch] = useState('');
-  const [sharedCasesSearch, setSharedCasesSearch] = useState('');
+  // Patient data state
+  const [myPatients, setMyPatients] = useState([
+    {
+      id: 1,
+      userId: 'USR-2024-001',
+      firstName: 'John',
+      lastName: 'Smith',
+      middleName: 'Michael',
+      suffix: '',
+      nickname: 'Johnny',
+      dateOfBirth: '1985-03-15',
+      sex: 'male',
+      bloodType: 'A+',
+      civilStatus: 'married',
+      philhealthNo: '12-345678901-2',
+      email: 'john.smith@email.com',
+      primaryMobile: '+63 912 345 6789',
+      medicalBackground: {
+        knownConditions: 'Hypertension, Type 2 Diabetes',
+        allergies: 'Penicillin, Shellfish',
+        previousSurgeries: 'Appendectomy (2010)',
+        familyHistory: 'Father: Heart disease, Mother: Diabetes',
+        medications: 'Metformin 500mg, Lisinopril 10mg',
+        supplements: 'Vitamin D3, Omega-3'
+      },
+      soapNotes: [],
+      tag: 'ongoing'
+    },
+    {
+      id: 2,
+      userId: 'USR-2024-002',
+      firstName: 'Maria',
+      lastName: 'Garcia',
+      middleName: 'Santos',
+      suffix: '',
+      nickname: 'Mia',
+      dateOfBirth: '1990-07-22',
+      sex: 'female',
+      bloodType: 'O+',
+      civilStatus: 'single',
+      philhealthNo: '12-987654321-0',
+      email: 'maria.garcia@email.com',
+      primaryMobile: '+63 917 654 3210',
+      medicalBackground: {
+        knownConditions: 'Asthma',
+        allergies: 'Dust mites, Pollen',
+        previousSurgeries: 'None',
+        familyHistory: 'Mother: Asthma, Grandfather: Stroke',
+        medications: 'Salbutamol inhaler',
+        supplements: 'Vitamin C'
+      },
+      soapNotes: [],
+      tag: 'pending'
+    }
+  ]);
 
+  const [sharedCases, setSharedCases] = useState([
+    {
+      id: 3,
+      userId: 'USR-2024-003',
+      firstName: 'Robert',
+      lastName: 'Johnson',
+      middleName: 'Lee',
+      suffix: 'Jr.',
+      nickname: 'Rob',
+      dateOfBirth: '1978-11-08',
+      sex: 'male',
+      bloodType: 'B-',
+      civilStatus: 'married',
+      philhealthNo: '12-456789012-3',
+      email: 'robert.johnson@email.com',
+      primaryMobile: '+63 920 123 4567',
+      sharedBy: 'Dr. Sarah Wilson',
+      medicalBackground: {
+        knownConditions: 'Chronic kidney disease',
+        allergies: 'Iodine contrast',
+        previousSurgeries: 'Kidney stone removal (2020)',
+        familyHistory: 'Father: Kidney disease',
+        medications: 'ACE inhibitor, Phosphate binder',
+        supplements: 'Iron supplement'
+      },
+      soapNotes: [],
+      tag: 'completed'
+    }
+  ]);
 
-  // SOAP Note state
-  const [soapNote, setSoapNote] = useState({
-    chiefComplaint: '',
-    history: '',
-    objective: '',
-    diagnosis: '',
-    plan: '',
-    prescription: '',
-    remarks: '',
-    testRequest: '',
-  });
+  // UI state
+  const [selectedPatientId, setSelectedPatientId] = useState(null);
+  const [currentPatientTab, setCurrentPatientTab] = useState('my-patients');
+  const [currentContentTab, setCurrentContentTab] = useState('basic-info');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedVisitId, setSelectedVisitId] = useState(null);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [currentSOAPNote, setCurrentSOAPNote] = useState(null);
+  const [remarksTemplate, setRemarksTemplate] = useState('default');
 
-  // File upload state
-  const [uploadedFiles, setUploadedFiles] = useState([]);
+  // Sample visits data
+  const visits = [
+    {
+      id: 1,
+      date: '2024-01-15',
+      chiefComplaint: 'Headache and fever for 2 days',
+      diagnosis: 'Viral upper respiratory infection'
+    },
+    {
+      id: 2,
+      date: '2024-01-08',
+      chiefComplaint: 'Follow-up for hypertension',
+      diagnosis: 'Hypertension, controlled'
+    },
+    {
+      id: 3,
+      date: '2023-12-20',
+      chiefComplaint: 'Annual check-up',
+      diagnosis: 'Routine health maintenance'
+    }
+  ];
 
-  useEffect(() => {
-    // Sample data for UI testing
-    setMyPatients([
-          { id: 1, name: 'John Doe', concern: 'Headache' },
-          { id: 2, name: 'Maria Reyes', concern: 'Back Pain' },
-          { id: 3, name: 'Jane Smith', concern: 'Anxiety' },
-          { id: 4, name: 'Alex Johnson', concern: 'Migraine' },
-          { id: 5, name: 'Maria Reyes', concern: 'Back Pain' },
-          { id: 6, name: 'Jaria Reyes', concern: 'Back Pain' },
-          { id: 7, name: 'Jaria Reyes', concern: 'Back Pain' },
-          { id: 8, name: 'Jaria Reyes', concern: ' Pain' },
-        ]);
-    setSharedCases([
-          { id: 3, name: 'Jane Smith', doctor: 'Dr. Cruz', concern: 'Anxiety' },
-          { id: 4, name: 'Alex Johnson', doctor: 'Dr. Tan', concern: 'Migraine' },
-        ]);
-    setLoading(false);
+  // Calculate age from date of birth
+  const calculateAge = useCallback((dateOfBirth) => {
+    const today = new Date();
+    const birthDate = new Date(dateOfBirth);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    
+    return age;
   }, []);
 
-  const handleView = (patient) => {
-    setSelectedPatient(patient);
-    setModalPage(1);
+  // Filter patients based on search term
+  const filteredPatients = useCallback(() => {
+    const patients = currentPatientTab === 'my-patients' ? myPatients : sharedCases;
+    if (!searchTerm) return patients;
+    
+    return patients.filter(patient => {
+      const searchLower = searchTerm.toLowerCase();
+      return (
+        `${patient.firstName} ${patient.lastName}`.toLowerCase().includes(searchLower) ||
+        patient.email.toLowerCase().includes(searchLower) ||
+        patient.primaryMobile.includes(searchTerm)
+      );
+    });
+  }, [currentPatientTab, myPatients, sharedCases, searchTerm]);
+
+  // Get selected patient
+  const selectedPatient = useCallback(() => {
+    const allPatients = [...myPatients, ...sharedCases];
+    return allPatients.find(p => p.id === selectedPatientId);
+  }, [myPatients, sharedCases, selectedPatientId]);
+
+  // Switch between patient tabs
+  const switchPatientTab = (tab) => {
+    setCurrentPatientTab(tab);
+    setSelectedPatientId(null);
   };
 
-  const handleClose = () => {
-    setSelectedPatient(null);
+  // Select a patient to view details
+  const selectPatient = (patientId) => {
+    setSelectedPatientId(patientId);
+    setIsEditMode(false);
+    setSelectedVisitId(null);
+    setCurrentContentTab('basic-info');
   };
 
-  // Filter patients based on search term for each card
-  const filteredMyPatients = myPatients.filter(patient => {
-    return patient.name.toLowerCase().includes(myPatientsSearch.toLowerCase()) ||
-           patient.concern.toLowerCase().includes(myPatientsSearch.toLowerCase()) ||
-           patient.id.toString().includes(myPatientsSearch);
-  });
+  // Switch between content tabs
+  const switchContentTab = (tab) => {
+    setCurrentContentTab(tab);
+  };
 
-  const filteredSharedCases = sharedCases.filter(patient => {
-    return patient.name.toLowerCase().includes(sharedCasesSearch.toLowerCase()) ||
-           patient.concern.toLowerCase().includes(sharedCasesSearch.toLowerCase()) ||
-           patient.doctor.toLowerCase().includes(sharedCasesSearch.toLowerCase()) ||
-           patient.id.toString().includes(sharedCasesSearch);
-  });
+  // Auto-expand textareas
+  const autoExpandTextarea = (textarea) => {
+    textarea.style.height = 'auto';
+    textarea.style.height = `${Math.max(80, textarea.scrollHeight)}px`;
+  };
+
+  // Setup auto-expand for textareas
+  useEffect(() => {
+    const setupAutoExpand = () => {
+      document.querySelectorAll(`.${styles['form-textarea']}`).forEach(textarea => {
+        textarea.addEventListener('input', function() {
+          autoExpandTextarea(this);
+        });
+        autoExpandTextarea(textarea);
+      });
+    };
+
+    setupAutoExpand();
+  }, [currentContentTab, selectedVisitId, isEditMode]);
+
+  // Select a visit to view details
+  const selectVisit = (visitId) => {
+    setSelectedVisitId(visitId);
+    setIsEditMode(false);
+    
+    // Load visit data
+    const visitData = visits.find(v => v.id === visitId);
+    if (visitData) {
+      setCurrentSOAPNote({
+        ...visitData,
+        historyOfIllness: 'Patient reports onset of headache 2 days ago, accompanied by low-grade fever. No recent travel or sick contacts.',
+        remarksNote: 'Patient appears mildly ill but alert and oriented.',
+        objective: 'Temp 100.2°F, BP 120/80, HR 88, RR 16. HEENT: mild pharyngeal erythema. Lungs clear. Heart RRR.',
+        diagnosis: 'Viral upper respiratory infection',
+        plan: 'Supportive care, rest, fluids. Return if symptoms worsen or persist >7 days.',
+        prescription: 'Acetaminophen 650mg q6h PRN fever/pain',
+        testRequest: 'None at this time'
+      });
+    }
+  };
+
+  // Add new SOAP note
+  const addNewSOAPNote = () => {
+    setSelectedVisitId(null);
+    setIsEditMode(true);
+    setCurrentSOAPNote({
+      id: null,
+      date: new Date().toISOString().split('T')[0],
+      chiefComplaint: '',
+      historyOfIllness: '',
+      remarksNote: '',
+      objective: '',
+      diagnosis: '',
+      plan: '',
+      prescription: '',
+      testRequest: ''
+    });
+  };
+
+  // Edit SOAP note
+  const editSOAPNote = () => {
+    setIsEditMode(true);
+  };
+
+  // Save SOAP note
+  const saveSOAPNote = () => {
+    alert('SOAP note has been saved successfully!');
+    setIsEditMode(false);
+  };
+
+  // Schedule follow-up
+  const scheduleFollowUp = () => {
+    alert('Follow-up appointment has been scheduled successfully!');
+  };
+
+  // Send to patient
+  const sendToPatient = (type) => {
+    const typeName = type === 'prescription' ? 'Prescription' : 'Test Request';
+    alert(`${typeName} has been sent to the patient successfully!`);
+  };
+
+  // Change remarks template
+  const handleRemarksTemplateChange = (e) => {
+  const template = e.target.value;
+  setRemarksTemplate(template);
+  
+  // Set default content based on template selection
+  let newContent = '';
+  
+  switch(template) {
+    case 'lab-results':
+      newContent = 'Lab Results:\n- CBC: \n- Chemistry: \n- Urinalysis: ';
+      break;
+    case 'vitals':
+      newContent = 'Vital Signs:\n- BP: \n- HR: \n- RR: \n- Temp: ';
+      break;
+    default:
+      // Keep existing content for default template
+      newContent = currentSOAPNote?.remarksNote || '';
+  }
+  
+  // Update the current SOAP note with the new content
+  if (currentSOAPNote) {
+    setCurrentSOAPNote({
+      ...currentSOAPNote,
+      remarksNote: newContent
+    });
+  }
+};
+
+const [uploadedFiles, setUploadedFiles] = useState([]);
+const [vitals, setVitals] = useState({
+  weight: '',
+  height: '',
+  bloodPressure: '',
+  oxygenSat: '',
+  respiratoryRate: '',
+  heartRate: '',
+  temperature: '',
+  bloodGlucose: ''
+});
+
+  // Render patient list
+  const renderPatientList = () => {
+    return filteredPatients().map(patient => {
+      const age = calculateAge(patient.dateOfBirth);
+      const initials = `${patient.firstName.charAt(0)}${patient.lastName.charAt(0)}`;
+      
+      return (
+        <div 
+          key={patient.id}
+          className={`${styles['patient-item']} ${selectedPatientId === patient.id ? styles.active : ''} ${currentPatientTab === 'shared-cases' ? styles.shared : ''}`}
+          onClick={() => selectPatient(patient.id)}
+        >
+          <div className={styles['patient-avatar']}>{initials}</div>
+          <div className={styles['patient-details-text']}>
+            <div className={styles['patient-name']}>{patient.firstName} {patient.lastName}</div>
+            <div className={styles['patient-info']}>
+              <span>{age} years old</span>
+              <span>{patient.sex}</span>
+              <span>{patient.bloodType || 'N/A'}</span>
+            </div>
+            {patient.sharedBy && <div className={styles['shared-by']}>Shared by {patient.sharedBy}</div>}
+          </div>
+        </div>
+      );
+    });
+  };
+
+  // Render basic info tab
+  const renderBasicInfo = (patient) => {
+    const age = calculateAge(patient.dateOfBirth);
+    const [tag, setTag] = useState(patient.tag || 'ongoing');
+    const handleTagChange = (e) => {
+      setTag(e.target.value);
+      // Update tag in myPatients or sharedCases
+      setMyPatients(prev => prev.map(p => p.id === patient.id ? { ...p, tag: e.target.value } : p));
+      setSharedCases(prev => prev.map(p => p.id === patient.id ? { ...p, tag: e.target.value } : p));
+    };
+    return (
+      <div className={styles['info-grid']}>
+        <div className={styles['info-group']}>
+          <label className={styles['info-label']}>Patient Tag</label>
+          <select
+            className={styles['form-select']}
+            value={tag}
+            onChange={handleTagChange}
+            disabled={!!patient.sharedBy}
+          >
+            <option value="ongoing">Ongoing</option>
+            <option value="pending">Pending</option>
+            <option value="completed">Completed</option>
+          </select>
+        </div>
+        {/* ...existing code... */}
+        <div className={styles['info-group']}>
+          <label className={styles['info-label']}>ID</label>
+          <div className={styles['info-value']}>{patient.userId}</div>
+        </div>
+        <div className={styles['info-group']}>
+          <label className={styles['info-label']}>First Name</label>
+          <div className={styles['info-value']}>{patient.firstName}</div>
+        </div>
+        <div className={styles['info-group']}>
+          <label className={styles['info-label']}>Last Name</label>
+          <div className={styles['info-value']}>{patient.lastName}</div>
+        </div>
+        <div className={styles['info-group']}>
+          <label className={styles['info-label']}>Middle Name</label>
+          <div className={styles['info-value']}>{patient.middleName || 'N/A'}</div>
+        </div>
+        <div className={styles['info-group']}>
+          <label className={styles['info-label']}>Suffix</label>
+          <div className={styles['info-value']}>{patient.suffix || 'N/A'}</div>
+        </div>
+        <div className={styles['info-group']}>
+          <label className={styles['info-label']}>Nickname</label>
+          <div className={styles['info-value']}>{patient.nickname || 'N/A'}</div>
+        </div>
+        <div className={styles['info-group']}>
+          <label className={styles['info-label']}>Date of Birth</label>
+          <div className={styles['info-value']}>{new Date(patient.dateOfBirth).toLocaleDateString()}</div>
+        </div>
+        <div className={styles['info-group']}>
+          <label className={styles['info-label']}>Age</label>
+          <div className={styles['info-value']}>{age} years old</div>
+        </div>
+        <div className={styles['info-group']}>
+          <label className={styles['info-label']}>Sex</label>
+          <div className={styles['info-value']}>{patient.sex.charAt(0).toUpperCase() + patient.sex.slice(1)}</div>
+        </div>
+        <div className={styles['info-group']}>
+          <label className={styles['info-label']}>Blood Type</label>
+          <div className={styles['info-value']}>{patient.bloodType || 'Not Available'}</div>
+        </div>
+        <div className={styles['info-group']}>
+          <label className={styles['info-label']}>Civil Status</label>
+          <div className={styles['info-value']}>{patient.civilStatus.charAt(0).toUpperCase() + patient.civilStatus.slice(1)}</div>
+        </div>
+        <div className={styles['info-group']}>
+          <label className={styles['info-label']}>PhilHealth No.</label>
+          <div className={styles['info-value']}>{patient.philhealthNo || 'Not provided'}</div>
+        </div>
+        <div className={styles['info-group']}>
+          <label className={styles['info-label']}>Email</label>
+          <div className={styles['info-value']}>{patient.email || 'Not provided'}</div>
+        </div>
+        <div className={styles['info-group']}>
+          <label className={styles['info-label']}>Primary Mobile</label>
+          <div className={styles['info-value']}>{patient.primaryMobile}</div>
+        </div>
+      </div>
+    );
+  };
+
+  // Render medical background tab
+  const renderMedicalBackground = (patient) => {
+    return (
+      <div className={styles['medical-section']}>
+        <div className={styles['info-grid']}>
+          <div className={styles['info-group']}>
+            <label className={styles['info-label']}>Known Medical Conditions</label>
+            <div className={styles['info-value']}>{patient.medicalBackground.knownConditions || 'None reported'}</div>
+          </div>
+          <div className={styles['info-group']}>
+            <label className={styles['info-label']}>Allergies</label>
+            <div className={styles['info-value']}>{patient.medicalBackground.allergies || 'None reported'}</div>
+          </div>
+          <div className={styles['info-group']}>
+            <label className={styles['info-label']}>Previous Surgeries</label>
+            <div className={styles['info-value']}>{patient.medicalBackground.previousSurgeries || 'None reported'}</div>
+          </div>
+          <div className={styles['info-group']}>
+            <label className={styles['info-label']}>Family History</label>
+            <div className={styles['info-value']}>{patient.medicalBackground.familyHistory || 'None reported'}</div>
+          </div>
+          <div className={styles['info-group']}>
+            <label className={styles['info-label']}>Current Medications</label>
+            <div className={styles['info-value']}>{patient.medicalBackground.medications || 'None reported'}</div>
+          </div>
+          <div className={styles['info-group']}>
+            <label className={styles['info-label']}>Supplements</label>
+            <div className={styles['info-value']}>{patient.medicalBackground.supplements || 'None reported'}</div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // Render visits list
+  const renderVisitsList = () => {
+    if (visits.length === 0) {
+      return <div className={styles['empty-soap-state']}><p>No previous consults recorded.</p></div>;
+    }
+
+    return visits.map(visit => (
+      <div 
+        key={visit.id}
+        className={`${styles['visit-item']} ${selectedVisitId === visit.id ? styles.active : ''}`}
+        onClick={() => selectVisit(visit.id)}
+      >
+        <div className={styles['visit-date']}>
+          {new Date(visit.date).toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'short', 
+            day: 'numeric' 
+          })}
+        </div>
+        <div className={styles['visit-preview']}>
+          <strong>CC:</strong> {visit.chiefComplaint}<br />
+        </div>
+      </div>
+    ));
+  };
+
+  // Render SOAP form
+  const renderSOAPForm = () => {
+  if (!selectedVisitId && !isEditMode) {
+    return (
+      <div className={styles['empty-soap-state']}>
+        <p>Select a previous consult from the left panel to view details, or click "Add New Note" to create a new SOAP note.</p>
+      </div>
+    );
+  }
+
+  const formClass = isEditMode ? styles['edit-mode'] : styles['view-mode'];
+  const disabled = !isEditMode;
+
+  const renderRemarksContent = () => {
+    const handleFileUpload = (e) => {
+      const files = Array.from(e.target.files);
+      setUploadedFiles(prev => [...prev, ...files]);
+    };
+
+    const removeFile = (index) => {
+      setUploadedFiles(prev => prev.filter((_, i) => i !== index));
+    };
+
+    const updateVital = (field, value) => {
+      setVitals(prev => ({ ...prev, [field]: value }));
+    };
+
+    const calculateBMI = () => {
+      if (vitals.weight && vitals.height) {
+        return (vitals.weight / ((vitals.height/100) ** 2)).toFixed(1);
+      }
+      return '';
+    };
+
+    switch(remarksTemplate) {
+      case 'lab-results':
+        return (
+          <>
+            <div 
+              className={`${styles['file-upload-area']} ${isEditMode ? '' : styles['disabled']}`}
+              onClick={() => isEditMode && document.getElementById('fileInput')?.click()}
+              onDragOver={(e) => isEditMode && e.preventDefault()}
+              onDrop={(e) => {
+                if (isEditMode) {
+                  e.preventDefault();
+                  const files = Array.from(e.dataTransfer.files);
+                  setUploadedFiles(prev => [...prev, ...files]);
+                }
+              }}
+            >
+              <p>Click to upload lab results or drag files here</p>
+              <input 
+                type="file" 
+                id="fileInput" 
+                multiple 
+                style={{display: 'none'}} 
+                onChange={handleFileUpload}
+                disabled={!isEditMode}
+              />
+            </div>
+            {uploadedFiles.length > 0 && (
+              <div className={styles['uploaded-files']}>
+                {uploadedFiles.map((file, index) => (
+                  <div key={index} className={styles['file-item']}>
+                    <span className={styles['file-name']}>{file.name}</span>
+                    {isEditMode && (
+                      <button 
+                        className={styles['file-remove']}
+                        onClick={() => removeFile(index)}
+                      >
+                        Remove
+                      </button>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+            <textarea 
+              className={styles['form-textarea']} 
+              value={currentSOAPNote?.remarksNote || ''}
+              onChange={(e) => {
+                if (currentSOAPNote) {
+                  setCurrentSOAPNote({
+                    ...currentSOAPNote,
+                    remarksNote: e.target.value
+                  });
+                }
+              }}
+              disabled={disabled}
+              placeholder="Notes about lab results..."
+            />
+          </>
+        );
+
+      case 'vitals':
+        return (
+          <>
+            <div className={styles['vitals-grid']}>
+              {[
+                { id: 'weight', label: 'Weight (kg)', type: 'number', step: '0.1' },
+                { id: 'height', label: 'Height (cm)', type: 'number', step: '0.1' },
+                { id: 'bmi', label: 'BMI (kg/m²)', type: 'text', readOnly: true, value: calculateBMI() },
+                { id: 'bloodPressure', label: 'Blood Pressure (mmHg)', type: 'text', placeholder: '120/80' },
+                { id: 'oxygenSat', label: 'Oxygen Saturation (%)', type: 'number', min: '0', max: '100' },
+                { id: 'respiratoryRate', label: 'Respiratory Rate (breaths/min)', type: 'number' },
+                { id: 'heartRate', label: 'Heart Rate (bpm)', type: 'number' },
+                { id: 'temperature', label: 'Body Temperature (°C)', type: 'number', step: '0.1' },
+                { id: 'bloodGlucose', label: 'Capillary Blood Glucose (mg/dL)', type: 'number' }
+              ].map(field => (
+                <div key={field.id} className={styles['vital-group']}>
+                  <label className={styles['vital-label']}>{field.label}</label>
+                  <input
+                    className={styles['vital-input']}
+                    type={field.type}
+                    value={field.value || vitals[field.id] || ''}
+                    onChange={(e) => updateVital(field.id, e.target.value)}
+                    disabled={disabled || field.readOnly}
+                    placeholder={field.placeholder}
+                    min={field.min}
+                    max={field.max}
+                    step={field.step}
+                  />
+                </div>
+              ))}
+            </div>
+            <textarea 
+              className={styles['form-textarea']} 
+              value={currentSOAPNote?.remarksNote || ''}
+              onChange={(e) => {
+                if (currentSOAPNote) {
+                  setCurrentSOAPNote({
+                    ...currentSOAPNote,
+                    remarksNote: e.target.value
+                  });
+                }
+              }}
+              disabled={disabled}
+              placeholder="Additional notes about vitals..."
+            />
+          </>
+        );
+
+      default:
+        return (
+          <textarea 
+            className={styles['form-textarea']} 
+            value={currentSOAPNote?.remarksNote || ''}
+            onChange={(e) => {
+              if (currentSOAPNote) {
+                setCurrentSOAPNote({
+                  ...currentSOAPNote,
+                  remarksNote: e.target.value
+                });
+              }
+            }}
+            disabled={disabled}
+            placeholder="Enter remarks..."
+          />
+        );
+    }
+  };
 
   return (
-    <div className="patients-container">
-      {!selectedPatient ? (
-        // Show patient lists when no patient is selected
-    <div className="patients-grid">
-          {/* My Patients */}
-      <div className="patients-card">
-        <div className="patients-card-header">
-          <MdPeople className="patients-icon" />
-              <h3>My Patients</h3>
-            </div>
-
-            {/* Search for My Patients */}
-            <div className="card-search-section">
-              <input
-                type="text"
-                placeholder="Search my patients..."
-                value={myPatientsSearch}
-                onChange={(e) => setMyPatientsSearch(e.target.value)}
-                className="card-search-input"
-              />
-        </div>
-
-        <div className="patients-table">
-          <div className="patients-table-header">
-            <span>Name</span>
-            <span>Concern</span>
-            <span>Action</span>
-          </div>
-          <div className="patients-table-scroll custom-scrollbar">
-            {loading ? (
-              <div className="patients-empty">Loading...</div>
-                ) : filteredMyPatients.length === 0 ? (
-                  <div className="patients-empty">No patients found.</div>
-            ) : (
-                  filteredMyPatients.map((patient) => (
-                <div className="patients-table-row" key={patient.id}>
-                  <span>{patient.name}</span>
-                  <span>{patient.concern}</span>
-                  <button onClick={() => handleView(patient)}>View</button>
-                </div>
-              ))
-            )}
-          </div>
-        </div>
-      </div>
-
-          {/* Shared Cases */}
-      <div className="patients-card">
-        <div className="patients-card-header">
-          <MdPersonAdd className="patients-icon" />
-              <h3>Shared Cases</h3>
-            </div>
-
-            {/* Search for Shared Cases */}
-            <div className="card-search-section">
-              <input
-                type="text"
-                placeholder="Search shared cases..."
-                value={sharedCasesSearch}
-                onChange={(e) => setSharedCasesSearch(e.target.value)}
-                className="card-search-input"
-              />
-        </div>
-
-        <div className="patients-table referred">
-          <div className="patients-table-header">
-            <span>Name</span>
-            <span>Doctor</span>
-            <span>Concern</span>
-            <span>Action</span>
-          </div>
-
-          {loading ? (
-            <div className="patients-empty">Loading...</div>
-              ) : filteredSharedCases.length === 0 ? (
-                <div className="patients-empty">No shared cases found.</div>
-          ) : (
-                filteredSharedCases.map((patient) => (
-              <div className="patients-table-row" key={patient.id}>
-                <span>{patient.name}</span>
-                <span>{patient.doctor}</span>
-                <span>{patient.concern}</span>
-                <button onClick={() => handleView(patient)}>View</button>
-              </div>
-            ))
-          )}
-        </div>
-      </div>
-        </div>
-      ) : (
-        // Show patient details in main content area
-        <div className="patient-details-container">
-          {/* Navigation with back button */}
-          <div className="patient-nav">
-            <div className="nav-tabs">
-              <button
-                className={`nav-btn${modalPage === 1 ? ' active' : ''}`}
-                onClick={() => setModalPage(1)}
-              >
-                Patient Info
-              </button>
-              <button
-                className={`nav-btn${modalPage === 2 ? ' active' : ''}`}
-                onClick={() => setModalPage(2)}
-              >
-                Medical Background
-              </button>
-              <button
-                className={`nav-btn${modalPage === 3 ? ' active' : ''}`}
-                onClick={() => setModalPage(3)}
-              >
-                SOAP Note
-              </button>
-            </div>
-            <button className="back-btn" onClick={handleClose}>
-              ← Back to Patients
-              </button>
-            </div>
-
-          {/* Content */}
-          <div className="patient-content">
-            {modalPage === 1 && (
-              <PatientInfo selectedPatient={selectedPatient} />
-            )}
-
-            {modalPage === 2 && (
-              <MedicalBackground selectedPatient={selectedPatient} />
-            )}
-
-            {modalPage === 3 && (
-              <SoapNote 
-                soapNote={soapNote} 
-                setSoapNote={setSoapNote} 
-                uploadedFiles={uploadedFiles} 
-                setUploadedFiles={setUploadedFiles} 
-              />
-            )}
-          </div>
+    <div className={formClass}>
+      {isEditMode && !currentSOAPNote?.id && (
+        <div className={styles['soap-section']}>
+          <div className={styles['soap-title']}>Date</div>
+          <input 
+            type="date" 
+            className={styles['form-input']} 
+            value={currentSOAPNote?.date || ''}
+            onChange={(e) => {
+              if (currentSOAPNote) {
+                setCurrentSOAPNote({
+                  ...currentSOAPNote,
+                  date: e.target.value
+                });
+              }
+            }}
+            disabled={disabled}
+          />
         </div>
       )}
+      
+      <div className={styles['soap-section']}>
+        <div className={styles['soap-title']}>Chief Complaint</div>
+        <textarea 
+          className={styles['form-textarea']} 
+          value={currentSOAPNote?.chiefComplaint || ''}
+          onChange={(e) => {
+            if (currentSOAPNote) {
+              setCurrentSOAPNote({
+                ...currentSOAPNote,
+                chiefComplaint: e.target.value
+              });
+            }
+          }}
+          disabled={disabled}
+          placeholder="Enter chief complaint..."
+        />
+      </div>
+      
+      <div className={styles['soap-section']}>
+        <div className={styles['soap-title']}>History of Present Illness</div>
+        <textarea 
+          className={styles['form-textarea']} 
+          value={currentSOAPNote?.historyOfIllness || ''}
+          onChange={(e) => {
+            if (currentSOAPNote) {
+              setCurrentSOAPNote({
+                ...currentSOAPNote,
+                historyOfIllness: e.target.value
+              });
+            }
+          }}
+          disabled={disabled}
+          placeholder="Enter history of present illness..."
+        />
+      </div>
+      
+      <div className={styles['soap-section']}>
+        <div className={styles['soap-title']}>
+          Remarks
+          <select 
+            className={styles['template-selector']} 
+            value={remarksTemplate}
+            onChange={handleRemarksTemplateChange}
+            disabled={disabled}
+          >
+            <option value="default">Remarks</option>
+            <option value="lab-results">Lab Results/Files</option>
+            <option value="vitals">Vitals</option>
+          </select>
+        </div>
+        <div id="remarksContent">
+          {renderRemarksContent()}
+        </div>
+      </div>
+      
+      {/* Rest of the SOAP sections remain the same */}
+      <div className={styles['soap-section']}>
+        <div className={styles['soap-title']}>Objective</div>
+        <textarea 
+          className={styles['form-textarea']} 
+          value={currentSOAPNote?.objective || ''}
+          onChange={(e) => {
+            if (currentSOAPNote) {
+              setCurrentSOAPNote({
+                ...currentSOAPNote,
+                objective: e.target.value
+              });
+            }
+          }}
+          disabled={disabled}
+          placeholder="Enter objective findings..."
+        />
+      </div>
+      
+      <div className={styles['soap-section']}>
+        <div className={styles['soap-title']}>Diagnosis</div>
+        <textarea 
+          className={styles['form-textarea']} 
+          value={currentSOAPNote?.diagnosis || ''}
+          onChange={(e) => {
+            if (currentSOAPNote) {
+              setCurrentSOAPNote({
+                ...currentSOAPNote,
+                diagnosis: e.target.value
+              });
+            }
+          }}
+          disabled={disabled}
+          placeholder="Enter diagnosis..."
+        />
+      </div>
+      
+      <div className={styles['soap-section']}>
+        <div className={styles['soap-title']}>Plan</div>
+        <textarea 
+          className={styles['form-textarea']} 
+          value={currentSOAPNote?.plan || ''}
+          onChange={(e) => {
+            if (currentSOAPNote) {
+              setCurrentSOAPNote({
+                ...currentSOAPNote,
+                plan: e.target.value
+              });
+            }
+          }}
+          disabled={disabled}
+          placeholder="Enter treatment plan..."
+        />
+      </div>
+      
+      <div className={styles['soap-section']}>
+        <div className={styles['soap-title']}>
+          Prescription
+          {isEditMode && (
+            <button 
+              className={styles['send-btn']} 
+              onClick={() => sendToPatient('prescription')}
+            >
+              <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16" style={{marginRight: '6px'}}>
+                <path d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+              </svg>
+              Send to Patient
+            </button>
+          )}
+        </div>
+        <textarea 
+          className={styles['form-textarea']} 
+          value={currentSOAPNote?.prescription || ''}
+          onChange={(e) => {
+            if (currentSOAPNote) {
+              setCurrentSOAPNote({
+                ...currentSOAPNote,
+                prescription: e.target.value
+              });
+            }
+          }}
+          disabled={disabled}
+          placeholder="Enter prescription details..."
+        />
+      </div>
+      
+      <div className={styles['soap-section']}>
+        <div className={styles['soap-title']}>
+          Test Request
+          {isEditMode && (
+            <button 
+              className={styles['send-btn']} 
+              onClick={() => sendToPatient('test-request')}
+            >
+              <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16" style={{marginRight: '6px'}}>
+                <path d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+              </svg>
+              Send to Patient
+            </button>
+          )}
+        </div>
+        <textarea 
+          className={styles['form-textarea']} 
+          value={currentSOAPNote?.testRequest || ''}
+          onChange={(e) => {
+            if (currentSOAPNote) {
+              setCurrentSOAPNote({
+                ...currentSOAPNote,
+                testRequest: e.target.value
+              });
+            }
+          }}
+          disabled={disabled}
+          placeholder="Enter test requests..."
+        />
+      </div>
+      
+      <div className={styles['soap-form-actions']}>
+        <button 
+          className="global-btn2" 
+          onClick={scheduleFollowUp}
+          disabled={!isEditMode}
+        >
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style={{marginRight: '8px'}}>
+            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+          </svg>
+          Schedule Follow Up
+        </button>
+        {isEditMode ? (
+          <button className="global-btn2" onClick={saveSOAPNote}>Save</button>
+        ) : (
+          <button className="global-btn2" onClick={editSOAPNote}>Edit</button>
+        )}
+      </div>
+    </div>
+  );
+};
+
+
+
+  // Render patient details
+  const renderPatientDetails = (patient) => {
+    const age = calculateAge(patient.dateOfBirth);
+    const initials = `${patient.firstName.charAt(0)}${patient.lastName.charAt(0)}`;
+    
+    return (
+      <>
+        <div className={styles['sticky-header']}>
+          <div className={styles['patient-header']}>
+            <div className={styles['patient-avatar-large']}>{initials}</div>
+            <div className={styles['patient-title-section']}>
+              <h2 className={styles['patient-title']}>{patient.firstName} {patient.lastName} {patient.suffix || ''}</h2>
+              <div className={styles['patient-subtitle']}>
+                {age} years old • {patient.sex.charAt(0).toUpperCase() + patient.sex.slice(1)} • {patient.bloodType || 'Blood type not available'}
+              </div>
+            </div>
+          </div>
+          <div className={styles['content-tabs']}>
+            <button 
+              className={`${styles['content-tab']} ${currentContentTab === 'basic-info' ? styles.active : ''}`} 
+              onClick={() => switchContentTab('basic-info')}
+            >
+              Basic Information
+            </button>
+            <button 
+              className={`${styles['content-tab']} ${currentContentTab === 'medical-background' ? styles.active : ''}`} 
+              onClick={() => switchContentTab('medical-background')}
+            >
+              Medical Background
+            </button>
+            <button 
+              className={`${styles['content-tab']} ${currentContentTab === 'soap-notes' ? styles.active : ''}`} 
+              onClick={() => switchContentTab('soap-notes')}
+            >
+              SOAP Notes
+            </button>
+            <button 
+              className={`${styles['content-tab']} ${currentContentTab === 'notes' ? styles.active : ''}`} 
+              onClick={() => switchContentTab('notes')}
+            >
+              Notes
+            </button>
+            <button 
+              className={`${styles['content-tab']} ${currentContentTab === 'doctors' ? styles.active : ''}`} 
+              onClick={() => switchContentTab('doctors')}
+            >
+              Doctors
+            </button>
+          </div>
+        </div>
+        <div className={styles['scrollable-content']}>
+          {currentContentTab === 'basic-info' && (
+            <BasicInformation patient={patient} calculateAge={calculateAge} />
+          )}
+          {currentContentTab === 'medical-background' && (
+            <MedicalBackground patient={patient} />
+          )}
+          {currentContentTab === 'soap-notes' && (
+            <SoapNotes
+              visits={visits}
+              selectedVisitId={selectedVisitId}
+              isEditMode={isEditMode}
+              currentSOAPNote={currentSOAPNote}
+              remarksTemplate={remarksTemplate}
+              handleRemarksTemplateChange={handleRemarksTemplateChange}
+              selectVisit={selectVisit}
+              addNewSOAPNote={addNewSOAPNote}
+              editSOAPNote={editSOAPNote}
+              saveSOAPNote={saveSOAPNote}
+              scheduleFollowUp={scheduleFollowUp}
+              sendToPatient={sendToPatient}
+              renderVisitsList={renderVisitsList}
+              renderSOAPForm={renderSOAPForm}
+            />
+          )}
+          {currentContentTab === 'notes' && (
+            <Notes
+              notes={patient.notes || []}
+              addNote={() => {}}
+              editNote={() => {}}
+              deleteNote={() => {}}
+            />
+          )}
+          {currentContentTab === 'doctors' && (
+            <Doctors patient={patient} />
+          )}
+        </div>
+      </>
+    );
+  };
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.wrapper}>
+        {/* Header */}
+        <div className={styles.header}>
+          <div className={styles['header-left']}>
+            <h1 className={styles['page-title']}>Patients</h1>
+            <div className={styles['search-container']}>
+              <input 
+                type="text" 
+                className={styles['search-input']} 
+                placeholder="Search patients..." 
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <svg className={styles['search-icon']} width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className={styles.content}>
+          {/* Sidebar */}
+          <div className={styles.sidebar}>
+            <div className={styles['patient-tabs']}>
+              <button 
+                className={`${styles['tab-btn']} ${currentPatientTab === 'my-patients' ? styles.active : ''}`}
+                onClick={() => switchPatientTab('my-patients')}
+              >
+                My Patients
+              </button>
+              <button 
+                className={`${styles['tab-btn']} ${currentPatientTab === 'shared-cases' ? styles.active : ''}`}
+                onClick={() => switchPatientTab('shared-cases')}
+              >
+                Shared Cases
+              </button>
+            </div>
+            <div className={styles['patient-list']}>
+              {renderPatientList()}
+            </div>
+          </div>
+
+          {/* Main Content */}
+          <div className={styles['main-content']}>
+            {selectedPatientId ? (
+              renderPatientDetails(selectedPatient())
+            ) : (
+              <div className={styles['empty-state']}>
+                <h3>Select a Patient</h3>
+                <p>Choose a patient from the list to view their information and SOAP notes</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

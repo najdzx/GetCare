@@ -10,7 +10,7 @@ import {
   MdFolder,
   MdAnalytics,
   MdEmojiPeople,
-  MdMedicalServices,
+  MdBusiness,
 } from 'react-icons/md';
 import '../Layout/Sidebar.css';
 
@@ -21,7 +21,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
 
   const menuItems = [
     { name: 'Dashboard', path: '/doctor', icon: <MdDashboard size={24} /> },
-    { name: 'My Clinic', path: '/doctor/my-clinic', icon: <MdMedicalServices size={24} /> },
+    { name: 'My Clinic', path: '/doctor/my-clinic', icon: <MdBusiness size={24} /> },
     { name: 'Appointments', path: '/doctor/appointments', icon: <MdEventNote size={24} /> },
     { name: 'Patients', path: '/doctor/patients', icon: <MdPeople size={24} /> },
     { name: 'Notes', path: '/doctor/notes', icon: <MdNote size={24} /> },

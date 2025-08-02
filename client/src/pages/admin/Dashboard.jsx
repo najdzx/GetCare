@@ -1,7 +1,7 @@
 import React from 'react';
 import { MdPerson, MdEvent, MdMessage, MdTrendingUp, MdNotifications, MdSettings, MdAdd, MdSearch, MdFilterList } from 'react-icons/md';
 import AdminLayout from '../../components/admin/AdminLayout';
-import './Dashboard.css';
+import styles from './Dashboard.module.css';
 import '../../components/Layout/Scrollbar.css';
 
 const Dashboard = () => {
@@ -23,47 +23,47 @@ const Dashboard = () => {
 
   return (
     <AdminLayout>
-      <div className="admin-dashboard">
-        <div className="dashboard-header">
+      <div className={styles.adminDashboard}>
+        <div className={styles.dashboardHeader}>
           <h1>Admin Dashboard</h1>
         </div>
 
         {/* Stats Cards */}
-        <div className="stats-grid">
+        <div className={styles.statsGrid}>
           {stats.map((stat, index) => (
-            <div key={index} className="stat-card">
+            <div key={index} className={styles.statCard}>
               <div 
-                className="stat-icon"
+                className={styles.statIcon}
                 style={{ backgroundColor: stat.color }}
               >
                 <stat.icon />
               </div>
-              <div className="stat-content">
+              <div className={styles.statContent}>
                 <h3>{stat.title}</h3>
-                <div className="stat-value">{stat.value}</div>
-                <div className="stat-change">{stat.change}</div>
+                <div className={styles.statValue}>{stat.value}</div>
+                <div className={styles.statChange}>{stat.change}</div>
               </div>
             </div>
           ))}
         </div>
 
         {/* Quick Actions */}
-        <div className="dashboard-section">
+        <div className={styles.dashboardSection}>
           <h2>Quick Actions</h2>
-          <div className="quick-actions">
-            <button className="quick-action-btn">
+          <div className={styles.quickActions}>
+            <button className={styles.quickActionBtn}>
               <MdEvent />
               <span>Schedule Appointment</span>
             </button>
-            <button className="quick-action-btn">
+            <button className={styles.quickActionBtn}>
               <MdPerson />
               <span>Add New Patient</span>
             </button>
-            <button className="quick-action-btn">
+            <button className={styles.quickActionBtn}>
               <MdSettings />
               <span>Register Clinic</span>
             </button>
-            <button className="quick-action-btn">
+            <button className={styles.quickActionBtn}>
               <MdMessage />
               <span>Send Message</span>
             </button>
@@ -71,13 +71,13 @@ const Dashboard = () => {
         </div>
 
         {/* Recent Activities */}
-        <div className="dashboard-section">
+        <div className={styles.dashboardSection}>
           <h2>Recent Activities</h2>
-          <div className="activities-list custom-scrollbar">
+          <div className={`${styles.activitiesList} custom-scrollbar`}>
             {recentActivities.map((activity) => (
-              <div key={activity.id} className="activity-item">
+              <div key={activity.id} className={styles.activityItem}>
                 <div 
-                  className="activity-icon"
+                  className={styles.activityIcon}
                   style={{ color: activity.color }}
                 >
                   {activity.type === 'doctor' && <MdPerson />}
@@ -86,7 +86,7 @@ const Dashboard = () => {
                   {activity.type === 'clinic' && <MdSettings />}
                   {activity.type === 'system' && <MdNotifications />}
                 </div>
-                <div className="activity-content">
+                <div className={styles.activityContent}>
                   <p>{activity.title}</p>
                   <span>{activity.description}</span>
                 </div>

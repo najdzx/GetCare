@@ -1,6 +1,6 @@
 .sidebar {
   width: 240px;
-  background: #434bb8;
+  background: #1a1a1a;
   color: #fff;
   height: 100vh;
   position: fixed;
@@ -32,7 +32,7 @@
   align-items: left;
   gap: 12px; /* same spacing as nav icon margin */
   color: white;
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   font-weight: bold;
   padding-left: 0px;
   padding-top: 0px;
@@ -75,6 +75,7 @@
   position: relative;
   z-index: 2;
   background: none;
+  letter-spacing: 0.5px;
 }
 
 .sidebar nav ul li a:hover {
@@ -83,8 +84,8 @@
 }
 
 .sidebar nav ul li a.active {
-  background: #fff;
-  color: #434bb8; /* slightly deeper active color */
+  background: rgba(255,255,255,0.15);
+  color: white; /* slightly deeper active color */
 }
 
 .sidebar nav ul li a svg {

@@ -1,278 +1,235 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import {
-  MdEventNote,
-  MdPeople,
-  MdPersonAdd,
-  MdNote,
-  MdAdd,
-  MdSchedule,
-  MdPerson,
-  MdMessage,
-  MdNotifications,
-  MdTrendingUp,
-  MdAccessTime,
-  MdCheckCircle,
-  MdCancel,
-  MdPending,
-  MdArrowForward,
-  MdAssignmentInd,
-  MdGroupAdd,
-  MdShare,
-} from 'react-icons/md';
-import './Dashboard.css';
-import '../../../components/Layout/Scrollbar.css';
+import React, { useEffect } from 'react';
+import styles from './Dashboard.module.css';
 
-const mockPatients = [
-  { id: 1, name: 'John Doe', status: 'Active', avatar: 'JD' },
-  { id: 2, name: 'Jane Smith', status: 'Critical', avatar: 'JS' },
-  { id: 3, name: 'Michael Chen', status: 'Discharged', avatar: 'MC' },
-  { id: 4, name: 'Sarah Wilson', status: 'Active', avatar: 'SW' },
-];
+// SVG Icon Components
+const CaretUpIcon = () => (
+  <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
+  </svg>
+);
 
-const mockReferrals = [
-  { id: 1, patient: 'Alice Brown', specialist: 'Dr. Wilson', status: 'Pending' },
-  { id: 2, patient: 'John Doe', specialist: 'Dr. Davis', status: 'Accepted' },
-  { id: 3, patient: 'Maria Garcia', specialist: 'Dr. Lee', status: 'Declined' },
-];
+const ScheduleIcon = () => (
+  <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+  </svg>
+);
 
-const mockNotes = [
-  { id: 1, type: 'Consultation', title: 'Initial Consultation', content: 'Discussed lifestyle modifications.' },
-  { id: 2, type: 'Progress', title: 'Follow-up', content: 'Patient reports improvement.' },
-  { id: 3, type: 'Lab Result', title: 'Lab Results', content: 'Blood sugar levels improved.' },
-  { id: 4, type: 'Consultation', title: 'Specialist Review', content: 'Cardiology consult completed.' },
-];
+const ReportsIcon = () => (
+  <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V3zm5-1v12h4V2H6zm-4 0v12h3V2H2zm11 0h-3v12h3V2z"/>
+  </svg>
+);
 
+const MessagesIcon = () => (
+  <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
+  </svg>
+);
+
+const ConsultationsIcon = () => (
+  <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+    <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+  </svg>
+);
+
+const LabIcon = () => (
+  <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+    <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
+  </svg>
+);
+
+const CalendarIcon = () => (
+  <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+  </svg>
+);
+
+// Sub-components
+const StatCard = ({ number, label, change, isPositive }) => (
+  <div className={styles['stat-card']}>
+    <div className={styles['stat-number']}>{number}</div>
+    <div className={styles['stat-label']}>{label}</div>
+    <div className={`${styles['stat-change']} ${isPositive ? styles.positive : styles.negative}`}>
+      <CaretUpIcon />
+      {change}
+    </div>
+  </div>
+);
+
+const ActionButton = ({ icon, label, onClick }) => (
+  <button className={styles['action-btn']} onClick={onClick}>
+    {icon}
+    {label}
+  </button>
+);
+
+const AppointmentItem = ({ time, patient, type }) => (
+  <div className={styles['appointment-item']}>
+    <div className={styles['appointment-time']}>{time}</div>
+    <div className={styles['appointment-info']}>
+      <div className={styles['appointment-patient']}>{patient}</div>
+      <div className={styles['appointment-type']}>{type}</div>
+    </div>
+  </div>
+);
+
+const NotificationItem = ({ icon, title, message, time, isUnread }) => (
+  <div className={`${styles['notification-item']} ${isUnread ? styles.unread : ''}`}>
+    <div className={styles['notification-icon']}>{icon}</div>
+    <div className={styles['notification-content']}>
+      <div className={styles['notification-title']}>{title}</div>
+      <div className={styles['notification-message']}>{message}</div>
+      <div className={styles['notification-time']}>{time}</div>
+    </div>
+  </div>
+);
+
+const Card = ({ title, action, onActionClick, children }) => (
+  <div className={styles.card}>
+    <div className={styles['card-header']}>
+      <h3 className={styles['card-title']}>{title}</h3>
+      {action && (
+        <a href="#" className={styles['card-action']} onClick={onActionClick}>
+          {action}
+        </a>
+      )}
+    </div>
+    <div className={styles['card-content']}>{children}</div>
+  </div>
+);
+
+// Main Dashboard Component
 const Dashboard = () => {
-  const [filter, setFilter] = useState('Today');
-  const [metrics, setMetrics] = useState({
-    appointments: 12,
-    assignedPatients: 34,
-    referredPatients: 8,
-    sharedNotes: [
-      { doctor: 'Dr. Ramos', patient: 'John D.' },
-      { doctor: 'Dr. Lee', patient: 'Patient #1293' },
-      { doctor: 'Dr. Cruz', patient: 'Maria S.' },
-    ],
-  });
-
-  const navigate = useNavigate();
-
-  // Mock data for enhanced cards
-  const nextAppointment = {
-    patient: 'John Doe',
-    time: '2:00 PM',
-    type: 'Telehealth',
+  // Dashboard functionality
+  const viewAllPatients = () => alert('Navigating to Patients page...');
+  const viewPatient = (patientId) => alert(`Opening patient record for Patient ID: ${patientId}`);
+  const viewConsultations = () => alert('Opening consultations page...');
+  const scheduleAppointment = () => alert('Opening appointment scheduler...');
+  const viewReports = () => alert('Opening reports dashboard...');
+  const viewMessages = () => alert('Opening messages/communications...');
+  const viewSchedule = (e) => {
+    e.preventDefault();
+    alert('Opening full schedule view...');
   };
-  const appointmentStatus = { upcoming: 8, completed: 3, cancelled: 1 };
-  const patientStatus = { active: 2, discharged: 1, critical: 1 };
-  const referralStatus = { pending: 1, accepted: 1, declined: 1 };
-  const recentReferral = mockReferrals[0];
-  const noteTypeCounts = mockNotes.reduce((acc, note) => {
-    acc[note.type] = (acc[note.type] || 0) + 1;
-    return acc;
-  }, {});
-  const recentNote = mockNotes[0];
+  const viewAllNotifications = (e) => {
+    e.preventDefault();
+    alert('Opening all notifications...');
+  };
 
-  // Mock data for recent activities
-  const recentActivities = [
-    {
-      id: 1,
-      type: 'note',
-      title: 'Added note for John Doe',
-      description: 'Updated diabetes management plan',
-      timestamp: '2 hours ago',
-      icon: <MdNote />,
-      color: '#434bb8'
-    },
-    {
-      id: 2,
-      type: 'appointment',
-      title: 'Appointment scheduled',
-      description: 'Follow-up with Sarah Wilson at 2:00 PM',
-      timestamp: '3 hours ago',
-      icon: <MdSchedule />,
-      color: '#28a745'
-    },
-    {
-      id: 3,
-      type: 'invitation',
-      title: 'Specialist invited',
-      description: 'Dr. Johnson invited for cardiac consultation',
-      timestamp: '5 hours ago',
-      icon: <MdPersonAdd />,
-      color: '#ffc107'
-    },
-    {
-      id: 4,
-      type: 'message',
-      title: 'New message from patient',
-      description: 'Alice Brown sent a message about symptoms',
-      timestamp: '1 day ago',
-      icon: <MdMessage />,
-      color: '#17a2b8'
-    },
-    {
-      id: 5,
-      type: 'patient',
-      title: 'New patient assigned',
-      description: 'Michael Chen added to your patient list',
-      timestamp: '1 day ago',
-      icon: <MdPerson />,
-      color: '#6f42c1'
-    }
-  ];
+  // Simulate real-time updates
+  const updateStats = () => {
+    console.log('Updating dashboard stats...');
+  };
 
-  // Simulate fetching data from backend
   useEffect(() => {
-    // Replace this with real API call later
-    const fetchData = async () => {
-      const data = {
-        appointments: 12,
-        assignedPatients: 34,
-        referredPatients: 8,
-        sharedNotes: [
-          { doctor: 'Dr. Ramos', patient: 'John D.' },
-          { doctor: 'Dr. Lee', patient: 'Patient #1293' },
-          { doctor: 'Dr. Cruz', patient: 'Maria S.' },
-        ],
-      };
-      setMetrics(data);
-    };
-
-    fetchData();
-  }, [filter]); // You can use filter if you want dynamic appointment results
-
-  const handleQuickAction = (action) => {
-    switch (action) {
-      case 'addNote':
-        navigate('/doctor/notes');
-        break;
-      case 'scheduleAppointment':
-        navigate('/doctor/appointments');
-        break;
-      case 'inviteSpecialist':
-        navigate('/doctor/invitations');
-        break;
-      case 'viewSchedule':
-        navigate('/doctor/appointments', { state: { focus: 'today' } });
-        break;
-      case 'addPatient':
-        navigate('/doctor/patients');
-        break;
-      case 'referPatient':
-        navigate('/doctor/patients');
-        break;
-      case 'shareNote':
-        navigate('/doctor/notes');
-        break;
-      default:
-        break;
-    }
-  };
+    console.log('Dashboard loaded successfully');
+    updateStats();
+    const interval = setInterval(updateStats, 30000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <div className="dashboard-container">
-      {/* Main Dashboard Grid */}
-      <div className="dashboard-grid">
-        {/* Appointments */}
-        <div className="dashboard-card">
-          <div className="dashboard-card-header">
-            <div className="dashboard-card-title">
-              <MdEventNote className="dashboard-card-icon" />
-              <h3>Appointments</h3>
-            </div>
-            <select value={filter} onChange={(e) => setFilter(e.target.value)}>
-              <option>Today</option>
-              <option>This Week</option>
-              <option>Next 7 Days</option>
-              <option>This Month</option>
-            </select>
+    <div className={styles.container}>
+      <div className={styles.wrapper}>
+        <div className={styles.content}>
+          <div className={styles['welcome-section']}>
+            <h1 className={styles['welcome-title']}>Good morning, Dr. Anderson</h1>
+            <p className={styles['welcome-subtitle']}>Here's what's happening with your patients today</p>
           </div>
-          <p className="dashboard-card-number">{metrics.appointments}</p>
-          <div className="dashboard-card-preview">
-            <div className="next-appointment">
-              <MdAccessTime /> Next: <b>John Doe</b>, 2:00 PM
-            </div>
+
+          <div className={styles['stats-grid']}>
+            <StatCard number="24" label="Total Patients" change="+3 this week" isPositive />
+            <StatCard number="8" label="Today's Appointments" change="2 more than yesterday" isPositive />
+            <StatCard number="5" label="Case Reviews" change="+2 this week" isPositive />
+            <StatCard number="12" label="Shared Cases" change="+2 this month" isPositive />
           </div>
-          <button className="dashboard-view-btn" onClick={() => navigate('/doctor/appointments')}>
-            View
-          </button>
-        </div>
 
-        {/* My Patients */}
-        <div className="dashboard-card">
-          <div className="dashboard-card-header">
-            <div className="dashboard-card-title">
-              <MdPeople className="dashboard-card-icon" />
-              <h3>My Patients</h3>
-            </div>
-          </div>
-          <p className="dashboard-card-number">{metrics.assignedPatients}</p>
-          <button className="dashboard-view-btn" onClick={() => navigate('/doctor/patients')}>
-            View
-          </button>
-        </div>
-
-        {/* Shared Cases */}
-        <div className="dashboard-card">
-          <div className="dashboard-card-header">
-            <div className="dashboard-card-title">
-              <MdPersonAdd className="dashboard-card-icon" />
-              <h3>Shared Cases</h3>
-            </div>
-          </div>
-          <p className="dashboard-card-number">{metrics.referredPatients}</p>
-          <button className="dashboard-view-btn" onClick={() => navigate('/doctor/patients')}>
-            View
-          </button>
-        </div>
-
-        {/* Shared Notes */}
-        <div className="dashboard-card">
-          <div className="dashboard-card-header">
-            <div className="dashboard-card-title">
-              <MdNote className="dashboard-card-icon" />
-              <h3>Shared Notes</h3>
-            </div>
-          </div>
-          <p className="dashboard-card-number">{metrics.sharedNotes.length}</p>
-          <button className="dashboard-view-btn" onClick={() => navigate('/doctor/notes')}>
-            View
-          </button>
-        </div>
-      </div>
-
-      {/* Quick Actions Panel - Moved below cards */}
-      <div className="quick-actions-panel">
-        <h2>Quick Actions</h2>
-        <div className="quick-actions-grid">
-          <button className="quick-action-btn" onClick={() => handleQuickAction('addNote')}><MdAdd /><span>Add Note</span></button>
-          <button className="quick-action-btn" onClick={() => handleQuickAction('scheduleAppointment')}><MdSchedule /><span>Schedule Appointment</span></button>
-          <button className="quick-action-btn" onClick={() => handleQuickAction('inviteSpecialist')}><MdPersonAdd /><span>Invite Specialist</span></button>
-          <button className="quick-action-btn" onClick={() => handleQuickAction('viewSchedule')}><MdEventNote /><span>View Today's Schedule</span></button>
-        </div>
-      </div>
-
-      {/* Recent Activity Feed */}
-      <div className="recent-activity-panel">
-        <div className="activity-header">
-          <h2>Recent Activity</h2>
-          <button className="view-all-btn">View All</button>
-        </div>
-        <div className="activity-list custom-scrollbar">
-          {recentActivities.map((activity) => (
-            <div key={activity.id} className="activity-item">
-              <div className="activity-icon" style={{ color: activity.color }}>
-                {activity.icon}
+          <div className={styles['dashboard-grid']}>
+            <Card title="Quick Actions">
+              <div className={styles['quick-actions']}>
+                <ActionButton
+                  icon={<ScheduleIcon />}
+                  label="Schedule"
+                  onClick={scheduleAppointment}
+                />
+                <ActionButton
+                  icon={<ReportsIcon />}
+                  label="Reports"
+                  onClick={viewReports}
+                />
+                <ActionButton
+                  icon={<MessagesIcon />}
+                  label="Messages"
+                  onClick={viewMessages}
+                />
+                <ActionButton
+                  icon={<ConsultationsIcon />}
+                  label="Consultations"
+                  onClick={viewConsultations}
+                />
               </div>
-              <div className="activity-content">
-                <div className="activity-title">{activity.title}</div>
-                <div className="activity-description">{activity.description}</div>
-                <div className="activity-timestamp">{activity.timestamp}</div>
+            </Card>
+
+            <Card 
+              title="Today's Appointments" 
+              action="View Schedule" 
+              onActionClick={viewSchedule}
+            >
+              <div className={styles['appointments-list']}>
+                <AppointmentItem 
+                  time="9:00 AM" 
+                  patient="Sarah Johnson" 
+                  type="Regular Checkup" 
+                />
+                <AppointmentItem 
+                  time="10:30 AM" 
+                  patient="Michael Chen" 
+                  type="Follow-up Visit" 
+                />
+                <AppointmentItem 
+                  time="2:00 PM" 
+                  patient="Emily Davis" 
+                  type="Consultation" 
+                />
+                <AppointmentItem 
+                  time="3:30 PM" 
+                  patient="James Wilson" 
+                  type="Lab Results Review" 
+                />
               </div>
-            </div>
-          ))}
+            </Card>
+
+            <Card 
+              title="Recent Notifications" 
+              action="View All" 
+              onActionClick={viewAllNotifications}
+            >
+              <div className={styles['notifications-list']}>
+                <NotificationItem
+                  icon={<LabIcon />}
+                  title="Lab Results Available"
+                  message="New lab results for John Smith are ready for review"
+                  time="5 minutes ago"
+                  isUnread
+                />
+                <NotificationItem
+                  icon={<MessagesIcon />}
+                  title="New Message"
+                  message="Dr. Sarah Wilson shared a case with you"
+                  time="15 minutes ago"
+                  isUnread
+                />
+                <NotificationItem
+                  icon={<CalendarIcon />}
+                  title="Appointment Reminder"
+                  message="Maria Garcia has an appointment in 30 minutes"
+                  time="1 hour ago"
+                />
+              </div>
+            </Card>
+          </div>
         </div>
       </div>
     </div>

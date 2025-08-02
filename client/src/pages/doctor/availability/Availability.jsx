@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Availability.css';
+import styles from './Availability.module.css';
 import '../../../components/Layout/Scrollbar.css';
 
 const DAYS = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
@@ -150,35 +150,35 @@ const Availability = () => {
   };
 
   return (
-    <div className="availability-container">
+    <div className={styles.availabilityContainer}>
       <h2>Online Schedule</h2>
       
-      <div className="availability-stepper">
-        <div className="availability-step-circle">1</div>
-        <span className="availability-step-label">
+      <div className={styles.availabilityStepper}>
+        <div className={styles.availabilityStepCircle}>1</div>
+        <span className={styles.availabilityStepLabel}>
           {isEditMode ? 'Set your online appointment availability' : 'Your online appointment availability'}
         </span>
       </div>
 
-      <div className="availability-toggle-group">
-        <div className="availability-toggle-left">
+      <div className={styles.availabilityToggleGroup}>
+        <div className={styles.availabilityToggleLeft}>
           <button
-            className={`toggle-btn${onlineSchedule.enabled ? ' active' : ''}`}
+            className={`${styles.toggleBtn}${onlineSchedule.enabled ? ` ${styles.active}` : ''}`}
             onClick={() => setOnlineSchedule(prev => ({ ...prev, enabled: true }))}
             type="button"
           >ENABLED</button>
           <button
-            className={`toggle-btn${!onlineSchedule.enabled ? ' active' : ''}`}
+            className={`${styles.toggleBtn}${!onlineSchedule.enabled ? ` ${styles.active}` : ''}`}
             onClick={() => setOnlineSchedule(prev => ({ ...prev, enabled: false }))}
             type="button"
           >DISABLED</button>
         </div>
         
         {/* Booking Settings Toggle Button - Moved to same level, far right */}
-        <div className="availability-toggle-right">
+        <div className={styles.availabilityToggleRight}>
           <button
             type="button"
-            className="availability-toggle-settings-btn"
+            className={styles.availabilityToggleSettingsBtn}
             onClick={() => setShowBookingSettings(!showBookingSettings)}
           >
             {showBookingSettings ? '−' : '+'} BOOKING SETTINGS
@@ -186,11 +186,11 @@ const Availability = () => {
         </div>
       </div>
 
-      <div className="availability-schedule-section">
+      <div className={styles.availabilityScheduleSection}>
         {/* Days checkboxes */}
-        <div className="schedule-days">
+        <div className={styles.scheduleDays}>
           {DAYS.map(day => (
-            <label key={day} className="schedule-day-label">
+            <label key={day} className={styles.scheduleDayLabel}>
               <span>{day}</span>
               <input
                 type="checkbox"
@@ -203,13 +203,13 @@ const Availability = () => {
         </div>
 
         {/* Schedule details */}
-        <div className="schedule-details custom-scrollbar">
+        <div className={`${styles.scheduleDetails} custom-scrollbar`}>
           {/* Header labels */}
-          <div className="schedule-row schedule-header-row">
-            <div className="schedule-row-label"></div>
-            <label className="schedule-label">Start Time</label>
-            <label className="schedule-label">End Time</label>
-            <label className="schedule-label">Availability</label>
+          <div className={`${styles.scheduleRow} ${styles.scheduleHeaderRow}`}>
+            <div className={styles.scheduleRowLabel}></div>
+            <label className={styles.scheduleLabel}>Start Time</label>
+            <label className={styles.scheduleLabel}>End Time</label>
+            <label className={styles.scheduleLabel}>Availability</label>
             <div style={{ width: 120 }}></div>
           </div>
 
@@ -219,29 +219,29 @@ const Availability = () => {
             .map(day => (
               <div key={day}>
                 {onlineSchedule.schedule[day].slots.map((slot, slotIndex) => (
-                  <div className="schedule-row" key={`${day}-${slotIndex}`}>
-                    <div className="schedule-row-label">
+                  <div className={styles.scheduleRow} key={`${day}-${slotIndex}`}>
+                    <div className={styles.scheduleRowLabel}>
                       {slotIndex === 0 ? DAY_LABELS[day] : ''}
                     </div>
-                    <div className="schedule-cell">
+                    <div className={styles.scheduleCell}>
                       <input 
                         type="time" 
-                        className="schedule-time-input"
+                        className={styles.scheduleTimeInput}
                         value={slot.start}
                         onChange={(e) => handleTimeChange(day, slotIndex, 'start', e.target.value)}
                         disabled={!isEditMode}
                       />
                     </div>
-                    <div className="schedule-cell">
+                    <div className={styles.scheduleCell}>
                       <input 
                         type="time" 
-                        className="schedule-time-input"
+                        className={styles.scheduleTimeInput}
                         value={slot.end}
                         onChange={(e) => handleTimeChange(day, slotIndex, 'end', e.target.value)}
                         disabled={!isEditMode}
                       />
                     </div>
-                    <div className="schedule-cell">
+                    <div className={styles.scheduleCell}>
                       <select 
                         value={slot.availability}
                         onChange={(e) => handleTimeChange(day, slotIndex, 'availability', e.target.value)}
@@ -251,14 +251,14 @@ const Availability = () => {
                         <option value="follow-up">Follow up</option>
                       </select>
                     </div>
-                    <div className="schedule-cell">
+                    <div className={styles.scheduleCell}>
                       {isEditMode && (
-                        <div className="schedule-buttons">
+                        <div className={styles.scheduleButtons}>
                           {onlineSchedule.schedule[day].slots.length > 1 && (
                             <button 
                               type="button" 
                               onClick={() => handleRemoveSlot(day, slotIndex)}
-                              className="remove-slot-btn"
+                              className={styles.removeSlotBtn}
                             >
                               Remove
                             </button>
@@ -282,10 +282,10 @@ const Availability = () => {
 
         {/* Edit/View Mode Toggle */}
         {!isEditMode && (
-          <div className="availability-edit-toggle">
+          <div className={styles.availabilityEditToggle}>
             <button
               type="button"
-              className="availability-edit-btn"
+              className={styles.availabilityEditBtn}
               onClick={() => setIsEditMode(true)}
             >
               Edit Schedule
@@ -295,17 +295,17 @@ const Availability = () => {
 
         {/* Save/Cancel Buttons - Only show in edit mode */}
         {isEditMode && (
-          <div className="availability-actions">
+          <div className={styles.availabilityActions}>
             <button
               type="button"
-              className="availability-cancel-btn"
+              className={styles.availabilityCancelBtn}
               onClick={handleCancel}
             >
               Cancel
             </button>
             <button
               type="button"
-              className="availability-save-btn"
+              className={styles.availabilitySaveBtn}
               onClick={handleSave}
             >
               Save
@@ -316,28 +316,28 @@ const Availability = () => {
 
       {/* Booking Settings Modal */}
       {showBookingSettings && (
-        <div className="availability-modal-overlay" onClick={() => setShowBookingSettings(false)}>
-          <div className="availability-modal" onClick={(e) => e.stopPropagation()}>
-            <div className="availability-modal-header">
+        <div className={styles.availabilityModalOverlay} onClick={() => setShowBookingSettings(false)}>
+          <div className={styles.availabilityModal} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.availabilityModalHeader}>
               <h3>Booking Settings</h3>
               <button 
-                className="availability-modal-close"
+                className={styles.availabilityModalClose}
                 onClick={() => setShowBookingSettings(false)}
               >
                 ×
               </button>
             </div>
-            <div className="availability-modal-content">
-              <div className="availability-form">
-                <div className="availability-fields">
-                  <div className="availability-row">
-                    <label className="availability-label">
+            <div className={styles.availabilityModalContent}>
+              <div className={styles.availabilityForm}>
+                <div className={styles.availabilityFields}>
+                  <div className={styles.availabilityRow}>
+                    <label className={styles.availabilityLabel}>
                       Advance Notice Required
                     </label>
                     <select
                       value={advanceNotice}
                       onChange={(e) => setAdvanceNotice(Number(e.target.value))}
-                      className="availability-input"
+                      className={styles.availabilityInput}
                     >
                       <option value={1}>1 hour</option>
                       <option value={2}>2 hours</option>
@@ -348,14 +348,14 @@ const Availability = () => {
                     </select>
                   </div>
 
-                  <div className="availability-row">
-                    <label className="availability-label">
+                  <div className={styles.availabilityRow}>
+                    <label className={styles.availabilityLabel}>
                       Cancellation Policy
                     </label>
                     <select
                       value={cancellationPolicy}
                       onChange={(e) => setCancellationPolicy(Number(e.target.value))}
-                      className="availability-input"
+                      className={styles.availabilityInput}
                     >
                       <option value={1}>1 hour</option>
                       <option value={2}>2 hours</option>
@@ -367,17 +367,17 @@ const Availability = () => {
                 </div>
               </div>
             </div>
-            <div className="availability-modal-footer">
+            <div className={styles.availabilityModalFooter}>
               <button
                 type="button"
-                className="availability-modal-btn availability-modal-cancel"
+                className={`${styles.availabilityModalBtn} ${styles.availabilityModalCancel}`}
                 onClick={() => setShowBookingSettings(false)}
               >
                 Cancel
               </button>
               <button
                 type="button"
-                className="availability-modal-btn availability-modal-save"
+                className={`${styles.availabilityModalBtn} ${styles.availabilityModalSave}`}
                 onClick={() => setShowBookingSettings(false)}
               >
                 Save Settings

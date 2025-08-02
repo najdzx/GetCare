@@ -1,28 +1,28 @@
 import React from 'react';
 import AdminLayout from '../../components/admin/AdminLayout';
-import './Messages.css';
+import styles from './Messages.module.css';
 
 const Messages = () => {
   return (
     <AdminLayout>
-      <div className="admin-messages">
-        <div className="messages-header">
-          <div className="header-left">
+      <div className={styles.adminMessages}>
+        <div className={styles.messagesHeader}>
+          <div className={styles.headerLeft}>
             <h1>Messages</h1>
-            <p>Manage all messages across GetCare platform</p>
+            <p>Manage platform-wide messages and communications</p>
           </div>
         </div>
         
-        <div className="messages-content">
-          <div className="placeholder-message">
-            <h2>Messages Management</h2>
+        <div className={styles.messagesContent}>
+          <div className={styles.placeholderMessage}>
+            <h2>Message Management</h2>
             <p>This page will contain message management features for administrators.</p>
             <p>Features will include:</p>
             <ul>
-              <li>View all messages between doctors and patients</li>
-              <li>Monitor message activity</li>
-              <li>Manage message policies</li>
-              <li>Generate communication reports</li>
+              <li>System notifications</li>
+              <li>Broadcast messages</li>
+              <li>Message templates</li>
+              <li>Communication logs</li>
             </ul>
           </div>
         </div>
