@@ -6,16 +6,17 @@ const DoctorProfile = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [profilePic, setProfilePic] = useState(null);
   const [formData, setFormData] = useState({
-    doctorId: '',
-    firstName: '',
-    middleName: '',
-    lastName: '',
-    sex: '',
-    dateOfBirth: '',
+    doctorId: 'DOC001',
+    firstName: 'John',
+    middleName: 'Michael',
+    lastName: 'Doe',
+    sex: 'Male',
+    dateOfBirth: '1990-05-15',
     phoneNumber: '',
     email: '',
     address: '',
-    licenseNumber: '',
+    prcLicenseNumber: '',
+    ptrLicenseNumber: '',
     specialization: '',
     subSpecialization: '',
     yearsOfExperience: '',
@@ -69,6 +70,30 @@ const DoctorProfile = () => {
   const toggleEditMode = () => setIsEditMode(!isEditMode);
   const cancelEdit = () => setIsEditMode(false);
 
+  // Helper function to calculate age from date of birth
+  const getAge = (dob) => {
+    if (!dob) return '';
+    try {
+      const birthDate = new Date(dob);
+      const today = new Date();
+      
+      // Check if the date is valid
+      if (isNaN(birthDate.getTime())) return '';
+      
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      
+      return age >= 0 ? age : '';
+    } catch (error) {
+      console.error('Error calculating age:', error);
+      return '';
+    }
+  };
+
   const doctorName = formData.firstName || formData.lastName 
     ? `Dr. ${formData.firstName} ${formData.middleName} ${formData.lastName}`.replace(/\s+/g, ' ')
     : 'Dr. [Name]';
@@ -90,21 +115,25 @@ const DoctorProfile = () => {
                 '👨‍⚕️'
               )}
             </div>
-            <div 
-              className={styles['doctor-profile-pic-upload']} 
-              onClick={() => document.getElementById('doctorProfilePicInput').click()}
-            >
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-              </svg>
-            </div>
-            <input 
-              type="file" 
-              id="doctorProfilePicInput" 
-              className={styles['doctor-profile-pic-input']} 
-              accept="image/*" 
-              onChange={handleFileChange}
-            />
+            {isEditMode && (
+              <>
+                <div 
+                  className={styles['doctor-profile-pic-upload']} 
+                  onClick={() => document.getElementById('doctorProfilePicInput').click()}
+                >
+                  <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                  </svg>
+                </div>
+                <input 
+                  type="file" 
+                  id="doctorProfilePicInput" 
+                  className={styles['doctor-profile-pic-input']} 
+                  accept="image/*" 
+                  onChange={handleFileChange}
+                />
+              </>
+            )}
           </div>
           
           <div className={styles['doctor-profile-basic-info']}>
@@ -120,7 +149,7 @@ const DoctorProfile = () => {
           </div>
 
           {!isEditMode && (
-            <button className={`global-btn2 ${styles['doctor-profile-edit-btn']}`}
+            <button className={`global-btn secondary ${styles['doctor-profile-edit-btn']}`}
   onClick={toggleEditMode}
 >
               Edit Profile
@@ -152,6 +181,7 @@ const DoctorProfile = () => {
                   options: ['', 'Male', 'Female', 'Other']
                 },
                 { label: 'Date of Birth', name: 'dateOfBirth', type: 'date' },
+                { label: 'Age', name: 'age', type: 'calculated', readonly: true },
                 { label: 'Phone Number', name: 'phoneNumber', type: 'tel' },
                 { label: 'Email', name: 'email', type: 'email' },
                 { label: 'Address', name: 'address', type: 'textarea', fullWidth: true }
@@ -163,7 +193,10 @@ const DoctorProfile = () => {
                   <label className={styles['doctor-profile-field-label']}>{field.label}</label>
                   {!isEditMode ? (
                     <div className={styles['doctor-profile-field-value']}>
-                      {formData[field.name]}
+                      {field.name === 'age' ? 
+                        (formData.dateOfBirth ? `${getAge(formData.dateOfBirth)} years` : '[Age]') :
+                        formData[field.name]
+                      }
                     </div>
                   ) : field.type === 'select' ? (
                     <select
@@ -185,6 +218,10 @@ const DoctorProfile = () => {
                       value={formData[field.name]}
                       onChange={handleInputChange}
                     />
+                  ) : field.name === 'age' ? (
+                    <div className={styles['doctor-profile-field-value']}>
+                      {formData.dateOfBirth ? `${getAge(formData.dateOfBirth)} years` : '[Age]'}
+                    </div>
                   ) : (
                     <input
                       type={field.type}
@@ -204,7 +241,8 @@ const DoctorProfile = () => {
             <h2 className={styles['doctor-profile-section-title']}>Professional Information</h2>
             <div className={styles['doctor-profile-fields-grid']}>
               {[
-                { label: 'License Number', name: 'licenseNumber', type: 'text' },
+                { label: 'PRC License Number', name: 'prcLicenseNumber', type: 'text' },
+                { label: 'PTR License Number', name: 'ptrLicenseNumber', type: 'text' },
                 { label: 'Specialization', name: 'specialization', type: 'text' },
                 { label: 'Sub Specialization', name: 'subSpecialization', type: 'text' },
                 { label: 'Years of Experience', name: 'yearsOfExperience', type: 'number' },
@@ -258,14 +296,14 @@ const DoctorProfile = () => {
         {isEditMode && (
           <div className={styles['doctor-profile-actions']}>
             <button 
-              className="global-btn" 
+              className="global-btn secondary" 
               onClick={handleSave}
               type="button"
             >
               Save Changes
             </button>
             <button 
-              className="global-btn" 
+              className="global-btn secondary" 
               onClick={cancelEdit}
               type="button"
             >

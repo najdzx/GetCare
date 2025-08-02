@@ -41,7 +41,7 @@ import PatientFiles from './pages/patient/Files';
 import PatientDiagnostics from './pages/patient/Diagnostics';
 import PatientNotes from './pages/patient/Notes';
 import PatientChat from './pages/patient/Chat';
-import PatientProfile from './pages/patient/Profile';
+import PatientProfile from './pages/patient/PatientProfile';
 
 
 function App() {

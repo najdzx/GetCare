@@ -1,254 +1,737 @@
-.patientDashboard {
-  padding: 24px;
-  max-width: 1200px;
+.container {
+  height: calc(100vh - 100px);
+  padding: 20px;
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.wrapper {
+  width: 100%;
+  height: 100%;
   margin: 0 auto;
-  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border: 1px solid #f0f0f0;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
-.dashboardHeader {
-  margin-bottom: 32px;
+.content {
+  flex: 1;
+  overflow: hidden;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
-.dashboardHeader h1 {
+.welcomeSection {
+  margin-bottom: 20px;
+  flex-shrink: 0;
+}
+
+.welcomeTitle {
   font-size: 28px;
   font-weight: 600;
-  color: #333;
+  color: #1a1a1a;
   margin: 0 0 8px 0;
+  letter-spacing: -0.5px;
 }
 
-.dashboardHeader p {
+.welcomeSubtitle {
   font-size: 16px;
   color: #666;
   margin: 0;
 }
 
-.dashboardSection {
-  margin-bottom: 32px;
+.dashboardGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  flex: 1;
+  min-height: 0;
 }
 
-.dashboardSection h2 {
-  font-size: 20px;
-  font-weight: 600;
-  color: #333;
-  margin: 0 0 16px 0;
+.dashboardGrid .card {
+  flex: 1;
+  min-height: 300px;
+  max-height: 500px;
 }
 
-/* Health Stats */
 .statsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin-bottom: 20px;
+  flex-shrink: 0;
 }
 
 .statCard {
   background: white;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e0e0e0;
+  border: 1px solid #e8e8e8;
+  border-radius: 12px;
+  padding: 18px;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
 }
 
-.statHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.statCard:hover {
+  border-color: #ddd;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.statCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #1a1a1a;
+}
+
+.statNumber {
+  font-size: 32px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 8px;
+  line-height: 1;
+}
+
+.statLabel {
+  font-size: 14px;
+  color: #666;
   margin-bottom: 12px;
 }
 
-.statHeader h3 {
-  font-size: 14px;
+.statChange {
+  font-size: 12px;
   font-weight: 500;
-  color: #666;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.statChange.positive {
+  color: #22c55e;
+}
+
+.statChange.negative {
+  color: #ef4444;
+}
+
+.card {
+  background: white;
+  border: 1px solid #e8e8e8;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  border-color: #ddd;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.cardHeader {
+  padding: 20px 24px;
+  border-bottom: 1px solid #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cardTitle {
+  font-size: 16px;
+  font-weight: 500;
+  color: #1a1a1a;
   margin: 0;
 }
 
-.statStatus {
+.cardAction {
   font-size: 12px;
+  color: #666;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.cardAction:hover {
+  background: #f5f5f5;
+  color: #1a1a1a;
+}
+
+.cardContent {
+  padding: 20px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.quickActions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.actionBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px;
+  background: white;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
   font-weight: 500;
-  padding: 4px 8px;
-  border-radius: 12px;
-  background: rgba(40, 167, 69, 0.1);
+  color: #1a1a1a;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  border: none;
 }
 
-.statValue {
-  font-size: 24px;
-  font-weight: 600;
-  color: #333;
+.actionBtn:hover {
+  border-color: #1a1a1a;
+  background: #1a1a1a;
+  color: white;
+  transform: translateY(-1px);
 }
 
-/* Appointments List */
 .appointmentsList {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 
-.appointmentCard {
-  background: white;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e0e0e0;
-}
-
-.appointmentHeader {
+.appointmentItem {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 12px;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-left: 3px solid #1a1a1a;
+  background: #f8f9ff;
+  border-radius: 0 6px 6px 0;
 }
 
-.doctorInfo h3 {
-  font-size: 16px;
+.appointmentTime {
+  font-size: 12px;
   font-weight: 600;
-  color: #333;
-  margin: 0 0 4px 0;
+  color: #1a1a1a;
+  min-width: 60px;
 }
 
-.doctorInfo p {
+.appointmentInfo {
+  flex: 1;
+}
+
+.appointmentDoctor {
   font-size: 14px;
-  color: #666;
-  margin: 0;
+  font-weight: 500;
+  color: #1a1a1a;
+  margin-bottom: 2px;
 }
 
 .appointmentType {
   font-size: 12px;
-  font-weight: 500;
-  color: #434bb8;
-  background: rgba(67, 75, 184, 0.1);
-  padding: 4px 8px;
-  border-radius: 12px;
-}
-
-.appointmentDetails {
-  display: flex;
-  gap: 16px;
-  font-size: 14px;
   color: #666;
 }
 
-.appointmentDate,
-.appointmentMode {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.appointmentDate svg,
-.appointmentMode svg {
-  font-size: 16px;
-}
-
-/* Quick Actions */
-.quickActionsGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
-}
-
-.quickActionCard {
-  background: white;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e0e0e0;
-  border-left: 4px solid;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.quickActionCard:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.actionIcon {
-  font-size: 24px;
-  margin-bottom: 12px;
-}
-
-.quickActionCard h3 {
-  font-size: 16px;
-  font-weight: 600;
-  color: #333;
-  margin: 0;
-}
-
-/* Recent Activities */
-.activitiesList {
+.healthMetrics {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  max-height: 400px;
-  overflow-y: auto;
 }
 
-.activityItem {
+.metricItem {
   display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  background: white;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  background: #f8f9ff;
   border-radius: 8px;
-  padding: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e0e0e0;
+  border-left: 3px solid #1a1a1a;
 }
 
-.activityIcon {
-  font-size: 20px;
-  color: #434bb8;
-  margin-top: 2px;
-}
-
-.activityContent {
+.metricInfo {
   flex: 1;
 }
 
-.activityContent h4 {
+.metricName {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1a1a1a;
+  margin-bottom: 2px;
+}
+
+.metricDate {
+  font-size: 12px;
+  color: #666;
+}
+
+.metricValue {
   font-size: 16px;
   font-weight: 600;
-  color: #333;
-  margin: 0 0 4px 0;
+  color: #1a1a1a;
 }
 
-.activityContent p {
-  font-size: 14px;
-  color: #666;
-  margin: 0 0 8px 0;
+.metricStatus {
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-left: 8px;
 }
 
-.activityTime {
+.statusNormal {
+  background: #e8f5e8;
+  color: #2d5a2d;
+}
+
+.statusHigh {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.statusLow {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.messagesList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.messageItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  background: #f8f8f8;
+  transition: background 0.2s;
+  cursor: pointer;
+}
+
+.messageItem:hover {
+  background: #f0f0f0;
+}
+
+.messageItem.unread {
+  background: #e8f5ff;
+  border-left: 3px solid #1a4480;
+}
+
+.messageIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-shrink: 0;
+}
+
+.messageContent {
+  flex: 1;
+}
+
+.messageFrom {
+  font-size: 13px;
+  font-weight: 500;
+  color: #1a1a1a;
+  margin-bottom: 2px;
+}
+
+.messageText {
   font-size: 12px;
+  color: #666;
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+
+.messageTime {
+  font-size: 11px;
   color: #999;
 }
 
+.prescriptionList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.prescriptionItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: #f8f9ff;
+  border-radius: 8px;
+  border-left: 3px solid #1a1a1a;
+}
+
+.prescriptionInfo {
+  flex: 1;
+}
+
+.prescriptionName {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1a1a1a;
+  margin-bottom: 2px;
+}
+
+.prescriptionDosage {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 2px;
+}
+
+.prescriptionRefills {
+  font-size: 11px;
+  color: #999;
+}
+
+.prescriptionStatus {
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.statusActive {
+  background: #e8f5e8;
+  color: #2d5a2d;
+}
+
+.statusExpired {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.statusPending {
+  background: #fff3cd;
+  color: #856404;
+}
+
 /* Responsive Design */
-@media (max-width: 768px) {
-  .patientDashboard {
-    padding: 16px;
-  }
-  
+@media (max-width: 1400px) {
   .statsGrid {
-    grid-template-columns: 1fr;
-  }
-  
-  .quickActionsGrid {
     grid-template-columns: repeat(2, 1fr);
   }
-  
-  .appointmentHeader {
+}
+
+@media (max-width: 1200px) {
+  .dashboardGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .dashboardGrid .card {
+    min-height: 250px;
+    max-height: none;
+  }
+
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .container {
+    padding: 30px;
+  }
+
+  .content {
+    padding: 15px;
+  }
+
+  .welcomeTitle {
+    font-size: 24px;
+  }
+
+  .welcomeSubtitle {
+    font-size: 15px;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .statCard {
+    padding: 15px;
+  }
+
+  .statNumber {
+    font-size: 28px;
+  }
+
+  .cardHeader {
+    padding: 15px 20px;
+  }
+
+  .cardContent {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 20px;
+  }
+
+  .content {
+    padding: 15px;
+    overflow-y: auto;
+  }
+
+  .welcomeTitle {
+    font-size: 22px;
+  }
+
+  .welcomeSubtitle {
+    font-size: 14px;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 15px;
+  }
+
+  .statCard {
+    padding: 16px;
+  }
+
+  .statNumber {
+    font-size: 24px;
+  }
+
+  .statLabel {
+    font-size: 13px;
+  }
+
+  .dashboardGrid {
+    gap: 15px;
+    flex: none;
+    display: flex;
     flex-direction: column;
+  }
+
+  .dashboardGrid .card {
+    min-height: 280px;
+    max-height: none;
+    flex: none;
+  }
+
+  .quickActions {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .actionBtn {
+    padding: 14px;
+    font-size: 12px;
+  }
+
+  .cardHeader {
+    padding: 15px;
+    flex-direction: column;
+    align-items: flex-start;
     gap: 8px;
   }
-  
-  .appointmentDetails {
+
+  .cardTitle {
+    font-size: 15px;
+  }
+
+  .cardAction {
+    font-size: 11px;
+    align-self: flex-end;
+  }
+
+  .cardContent {
+    padding: 15px;
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .appointmentItem {
+    padding: 10px;
     flex-direction: column;
+    align-items: flex-start;
     gap: 8px;
+  }
+
+  .appointmentTime {
+    font-size: 11px;
+    font-weight: 700;
+    color: #1a1a1a;
+    background: #f0f0f0;
+    padding: 4px 8px;
+    border-radius: 4px;
+    min-width: auto;
+  }
+
+  .appointmentDoctor {
+    font-size: 13px;
+  }
+
+  .appointmentType {
+    font-size: 11px;
+  }
+
+  .messageItem {
+    padding: 10px;
+  }
+
+  .messageIcon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .messageFrom {
+    font-size: 12px;
+  }
+
+  .messageText {
+    font-size: 11px;
+  }
+
+  .messageTime {
+    font-size: 10px;
   }
 }
 
 @media (max-width: 480px) {
-  .quickActionsGrid {
-    grid-template-columns: 1fr;
+  .container {
+    padding: 15px;
   }
-} 
+
+  .content {
+    padding: 12px;
+    overflow-y: auto;
+  }
+
+  .welcomeSection {
+    margin-bottom: 15px;
+  }
+
+  .welcomeTitle {
+    font-size: 20px;
+    margin-bottom: 6px;
+  }
+
+  .welcomeSubtitle {
+    font-size: 13px;
+  }
+
+  .statsGrid {
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+  .statCard {
+    padding: 14px;
+  }
+
+  .statNumber {
+    font-size: 22px;
+    margin-bottom: 6px;
+  }
+
+  .statLabel {
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
+
+  .statChange {
+    font-size: 11px;
+  }
+
+  .dashboardGrid {
+    gap: 12px;
+    flex: none;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dashboardGrid .card {
+    min-height: 260px;
+    max-height: none;
+    flex: none;
+  }
+
+  .cardHeader {
+    padding: 12px;
+  }
+
+  .cardContent {
+    padding: 12px;
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .quickActions {
+    gap: 8px;
+    margin-bottom: 15px;
+  }
+
+  .actionBtn {
+    padding: 12px;
+    font-size: 11px;
+    gap: 6px;
+  }
+
+  .appointmentsList,
+  .messagesList,
+  .prescriptionList {
+    gap: 10px;
+  }
+}
+
+/* Landscape phone orientation */
+@media (max-width: 900px) and (orientation: landscape) {
+  .statsGrid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+
+  .dashboardGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Large screens optimization */
+@media (min-width: 1600px) {
+  .statsGrid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  .dashboardGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+}

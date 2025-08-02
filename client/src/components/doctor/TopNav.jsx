@@ -70,7 +70,7 @@ const TopNav = ({ collapsed }) => {
             alt="User Profile"
             className="profile-pic"
           />
-          <KeyboardArrowDownIcon className="dropdown-icon" fontSize="small" />
+          <KeyboardArrowDownIcon className="dropdown-icon"/>
           {profileOpen && (
             <div className="dropdown-menu">
               <ul>

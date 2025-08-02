@@ -403,10 +403,10 @@ const AppointmentsCalendar = () => {
               {currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
             </h1>
             <div className={styles['calendar-nav']}>
-              <button className={styles['nav-btn']} onClick={previousMonth} aria-label="Previous Month">
+              <button className="global-btn secondary" onClick={previousMonth} aria-label="Previous Month">
                 <MdChevronLeft size={24} />
               </button>
-              <button className={styles['nav-btn']} onClick={nextMonth} aria-label="Next Month">
+              <button className="global-btn secondary" onClick={nextMonth} aria-label="Next Month">
                 <MdChevronRight size={24} />
               </button>
             </div>
