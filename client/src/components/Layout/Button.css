@@ -55,9 +55,8 @@
 }
 
 .global-btn.secondary:hover {
-  background: #434bb8;
-  color: #fff;
-  border-color: #434bb8;
+  background: #1a1a1a;
+  color: white;
 }
 
 .global-btn.danger {
@@ -106,4 +105,50 @@
 
 .global-btn.large svg {
   font-size: 20px;
-} 
+}
+
+
+.global-btn2 {
+  background: #1a1a1a;
+  border: 1px solid #e0e0e0;
+  color: white;
+  border-radius: 4px;
+  padding: 0 28px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  height: 40px;
+  margin-bottom: 0;
+  margin-right: 16px;
+  transition: background 0.2s, color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  font-family: inherit;
+}
+
+.global-btn2:hover {
+  background: #333;
+}
+
+
+
+.toggleBtn {
+  background: #f5f5f5;
+  border: none;
+  color: #212121;
+  font-size: 18px;
+  padding: 10px 32px;
+  cursor: pointer;
+  border-radius: 0;
+  outline: none;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+  transition: background 0.2s, color 0.2s;
+}
+.toggleBtnActive {
+  background: #1a1a1a;
+  color: white;
+}

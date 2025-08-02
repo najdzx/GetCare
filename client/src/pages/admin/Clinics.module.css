@@ -1,0 +1,48 @@
+.adminClinics {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.clinicsHeader {
+  margin-bottom: 24px;
+}
+
+.headerLeft h1 {
+  margin: 0 0 4px 0;
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.headerLeft p {
+  margin: 0;
+  color: #7f8c8d;
+  font-size: 0.9rem;
+}
+
+.clinicsContent {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+}
+
+.placeholderMessage {
+  text-align: center;
+  color: #7f8c8d;
+}
+
+.placeholderMessage h2 {
+  color: #2c3e50;
+  margin-bottom: 16px;
+}
+
+.placeholderMessage ul {
+  text-align: left;
+  max-width: 400px;
+  margin: 20px auto;
+}
+
+.placeholderMessage li {
+  margin-bottom: 8px;
+} 

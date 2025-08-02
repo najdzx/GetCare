@@ -1,0 +1,537 @@
+/* MyClinic.module.css - CSS module for MyClinic page */
+
+.myclinicContainer {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 8px 24px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 830px;
+  position: relative;
+}
+
+.dashboardGrid {
+  display: grid;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+.clinicGrid {
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  padding: 22px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 180px;
+  position: relative;
+}
+.clinicCard {
+  position: relative;
+}
+.addClinicCard {
+  background: #f5f7ff;
+  border: 2px dashed #1a1a1a;
+  color: #1a1a1a;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 180px;
+  transition: background 0.2s;
+}
+.addClinicCard:hover {
+  background: #333;
+  color: white;
+}
+
+.cardHeader {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.clinicRemoveBtn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #fff;
+  border: none;
+  color: #e53935;
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 2;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  transition: background 0.2s;
+}
+.card:hover .clinicRemoveBtn {
+  display: flex;
+}
+
+.clinicDeleteDialog {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  left: 12px;
+  background: #fff;
+  border: 1.5px solid #e53935;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  padding: 18px 22px;
+  z-index: 10;
+  min-width: 220px;
+  font-size: 15px;
+  color: #212121;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.clinicDeleteActions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.deleteBtn {
+  background: #e53935;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 18px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.cancelBtn {
+  background: #eee;
+  color: #333;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 18px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.cardTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.clinicCardIcon {
+  font-size: 32px;
+  margin-right: 8px;
+}
+
+.clinicCardDetails {
+  margin-bottom: 12px;
+}
+
+.clinicCardName {
+  font-size: 18px;
+  font-weight: 600;
+  color: #212121;
+}
+.dashboardCardTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #212121;
+}
+
+.clinicCardAddress {
+  font-size: 15px;
+  color: #555;
+  margin-bottom: 4px;
+}
+
+.clinicCardType {
+  font-size: 14px;
+  color: #1976d2;
+  font-weight: 500;
+}
+
+.clinicCardImg img {
+  width: 74px;
+  height: 74px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.addClinicContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.addClinicPlus {
+  font-size: 38px;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.nextClinicBtn {
+  background: #f5f5f5;
+  border: none;
+  color: #212121;
+  border-radius: 4px;
+  padding: 0 28px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  height: 40px;
+  margin-bottom: 0;
+  border: 1px solid #e0e0e0;
+  transition: background 0.2s, color 0.2s;
+}
+.nextClinicBtn:hover {
+  background: #434bb8;
+  color: #fff;
+}
+
+.cancelBtn {
+  background: #f5f5f5;
+  border: none;
+  color: #212121;
+  border-radius: 4px;
+  padding: 0 20px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  height: 40px;
+  margin-bottom: 0;
+  border: 1px solid #e0e0e0;
+  transition: background 0.2s, color 0.2s;
+}
+.cancelBtn:hover {
+  background: #434bb8;
+  color: #fff;
+}
+.myclinicStepper {
+  display: flex;
+  align-items: center;
+  margin-top: 36px;
+  gap: 18px;
+  margin-left: 100px;
+}
+.myclinicStepCircle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #212121;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 500;
+}
+.myclinicStepLabel {
+  font-size: 22px;
+  font-weight: 400;
+}
+.myclinicToggleGroup {
+  margin-left: 100px;
+  display: flex;
+  gap: 0;
+  margin-top: 32px;
+}
+.toggleBtn {
+  background: #f5f5f5;
+  border: none;
+  color: #212121;
+  font-size: 18px;
+  padding: 10px 32px;
+  cursor: pointer;
+  border-radius: 0;
+  outline: none;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+  transition: background 0.2s, color 0.2s;
+}
+.toggleBtnActive {
+  background: #434bb8;
+  color: #fff;
+}
+.myclinicForm {
+  display: flex;
+  gap: 48px;
+  margin-top: 24px;
+  margin-left: 100px;
+}
+.myclinicFields {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.myclinicRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.myclinicLabel {
+  min-width: 150px;
+  font-size: 16px;
+  font-weight: 600;
+}
+.myclinicInput {
+  flex: 1;
+  padding: 12px 16px;
+  font-size: 17px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 4px;
+  background: white;
+  transition: border-color 0.2s;
+}
+.myclinicInput:focus {
+  border-color: #1a1a1a;
+  background: #fff;
+  outline: none;
+}
+.required {
+  color: #e53935;
+  margin-left: 2px;
+}
+.myclinicImageSection {
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.myclinicImagePreview {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  overflow: hidden;
+  border: 2px solid #bdbdbd;
+}
+.myclinicImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.myclinicImgPlaceholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  font-size: 48px;
+}
+.myclinicImgUpload {
+  color: #1a1a1a;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.scheduleDays {
+  display: flex;
+  gap: 32px;
+  margin-bottom: 18px;
+  margin-top: 32px;
+}
+
+.scheduleDayLabel {
+  display: block;
+  margin-bottom: 16px;
+  font-weight: 500;
+  min-width: 48px;
+  font-size: 16px;
+}
+
+.scheduleDayLabelSpan {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.scheduleDaysInputCheckbox {
+  width: 20px;
+  height: 20px;
+  accent-color: #434bb8;
+  margin-top: 6px;
+}
+
+.scheduleRow {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.scheduleRowLabel {
+  font-weight: 500;
+  min-width: 90px;
+}
+
+.scheduleRowSelect,
+.scheduleRowInput {
+  height: 40px;
+  box-sizing: border-box;
+  font-size: 16px;
+  width: 200px;
+  padding: 0 12px;
+  border-radius: 4px;
+  border: 1.5px solid #e0e0e0;
+  background: white;
+}
+
+.scheduleRowSelect:focus,
+.scheduleRowInput:focus {
+  border-color: #1976d2;
+  background: #fff;
+  outline: none;
+}
+
+.scheduleRowButton {
+  background: #434bb8;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.2s;
+  height: 40px;
+  width: 120px;
+  white-space: nowrap;
+}
+
+.scheduleRowButton:hover {
+  background: #30368a;
+}
+
+.scheduleHeaderRow {
+  font-weight: 400;
+  color: black;
+  background: transparent;
+  margin-bottom: 24px;
+}
+
+.scheduleLabel {
+  min-width: 190px;
+  display: inline-block;
+  font-size: 15px;
+  margin-right: 12px;
+}
+
+.myclinicScheduleSection {
+  position: relative;
+  height: 750px;
+  display: flex;
+  flex-direction: column;
+}
+
+.myclinicScheduleSection h3 {
+  margin-bottom: 16px;
+}
+
+.scheduleDetails {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 4px;
+  height: 100%;
+}
+
+.myclinicActions {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  z-index: 10;
+}
+
+.saveBtn {
+  background: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  color: #212121;
+  border-radius: 4px;
+  padding: 0 28px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  height: 40px;
+  margin-bottom: 0;
+  transition: background 0.2s, color 0.2s;
+}
+.saveBtn:hover {
+  background: #434bb8;
+  color: #fff;
+}
+
+.backBtn {
+  background: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  color: #212121;
+  border-radius: 4px;
+  padding: 0 28px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  height: 40px;
+  margin-bottom: 0;
+  transition: background 0.2s, color 0.2s;
+}
+.backBtn:hover {
+  background: #434bb8;
+  color: #fff;
+}
+
+.scheduleButtons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.removeSlotBtn {
+  background: #e53935;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.2s;
+  height: 40px;
+  width: 120px;
+  white-space: nowrap;
+}
+
+.removeSlotBtn:hover {
+  background: #c62828;
+}

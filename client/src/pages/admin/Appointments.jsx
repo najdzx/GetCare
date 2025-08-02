@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { MdSearch, MdFilterList, MdAdd, MdEdit, MdDelete, MdPerson, MdSchedule, MdEvent } from 'react-icons/md';
 import AdminLayout from '../../components/admin/AdminLayout';
-import './Appointments.css';
+import styles from './Appointments.module.css';
 
 const Appointments = () => {
   const [selectedDoctor, setSelectedDoctor] = useState('');
@@ -62,26 +62,26 @@ const Appointments = () => {
 
   return (
     <AdminLayout>
-      <div className="admin-appointments">
-        <div className="appointments-header">
-          <div className="header-left">
+      <div className={styles.adminAppointments}>
+        <div className={styles.appointmentsHeader}>
+          <div className={styles.headerLeft}>
             <h1>Appointments Management</h1>
             <p>Manage appointments for all doctors across GetCare platform</p>
           </div>
-          <button className="add-appointment-btn" onClick={handleAddAppointment}>
+          <button className={styles.addAppointmentBtn} onClick={handleAddAppointment}>
             <MdAdd />
             <span>Add Appointment</span>
           </button>
         </div>
 
         {/* Doctor Selection */}
-        <div className="doctor-selection">
+        <div className={styles.doctorSelection}>
           <label htmlFor="doctor-select">Select Doctor:</label>
           <select
             id="doctor-select"
             value={selectedDoctor}
             onChange={(e) => setSelectedDoctor(e.target.value)}
-            className="doctor-select"
+            className={styles.doctorSelect}
           >
             <option value="">All Doctors</option>
             {doctors.map((doctor) => (
@@ -93,24 +93,24 @@ const Appointments = () => {
         </div>
 
         {/* Search and Filter */}
-        <div className="appointments-controls">
-          <div className="search-container">
-            <MdSearch className="search-icon" />
+        <div className={styles.appointmentsControls}>
+          <div className={styles.searchContainer}>
+            <MdSearch className={styles.searchIcon} />
             <input
               type="text"
               placeholder="Search appointments..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="search-input"
+              className={styles.searchInput}
             />
           </div>
           
-          <div className="filter-container">
-            <MdFilterList className="filter-icon" />
+          <div className={styles.filterContainer}>
+            <MdFilterList className={styles.filterIcon} />
             <select
               value={selectedFilter}
               onChange={(e) => setSelectedFilter(e.target.value)}
-              className="filter-select"
+              className={styles.filterSelect}
             >
               <option value="all">All Status</option>
               <option value="confirmed">Confirmed</option>
@@ -121,8 +121,8 @@ const Appointments = () => {
         </div>
 
         {/* Appointments Table */}
-        <div className="appointments-table-container">
-          <table className="appointments-table">
+        <div className={styles.appointmentsTableContainer}>
+          <table className={styles.appointmentsTable}>
             <thead>
               <tr>
                 <th>Doctor</th>
@@ -139,8 +139,8 @@ const Appointments = () => {
               {filteredAppointments.map((appointment) => (
                 <tr key={appointment.id}>
                   <td>
-                    <div className="doctor-info">
-                      <MdPerson className="doctor-avatar" />
+                    <div className={styles.doctorInfo}>
+                      <MdPerson className={styles.doctorAvatar} />
                       <span>{getDoctorName(appointment.doctorId)}</span>
                     </div>
                   </td>
@@ -150,20 +150,20 @@ const Appointments = () => {
                   <td>{appointment.duration} min</td>
                   <td>{appointment.type}</td>
                   <td>
-                    <span className={`status-badge ${appointment.status.toLowerCase()}`}>
+                    <span className={`${styles.statusBadge} ${styles[appointment.status.toLowerCase()]}`}>
                       {appointment.status}
                     </span>
                   </td>
                   <td>
-                    <div className="action-buttons">
+                    <div className={styles.actionButtons}>
                       <button 
-                        className="action-btn edit"
+                        className={`${styles.actionBtn} ${styles.edit}`}
                         onClick={() => handleEditAppointment(appointment)}
                       >
                         <MdEdit />
                       </button>
                       <button 
-                        className="action-btn delete"
+                        className={`${styles.actionBtn} ${styles.delete}`}
                         onClick={() => handleDeleteAppointment(appointment.id)}
                       >
                         <MdDelete />
@@ -178,16 +178,16 @@ const Appointments = () => {
 
         {/* Add Appointment Modal */}
         {showAddModal && (
-          <div className="modal-overlay" onClick={() => setShowAddModal(false)}>
-            <div className="modal" onClick={(e) => e.stopPropagation()}>
-              <div className="modal-header">
+          <div className={styles.modalOverlay} onClick={() => setShowAddModal(false)}>
+            <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+              <div className={styles.modalHeader}>
                 <h2>Add New Appointment</h2>
-                <button className="modal-close" onClick={() => setShowAddModal(false)}>×</button>
+                <button className={styles.modalClose} onClick={() => setShowAddModal(false)}>×</button>
               </div>
-              <div className="modal-content">
-                <div className="form-group">
+              <div className={styles.modalContent}>
+                <div className={styles.formGroup}>
                   <label>Doctor</label>
-                  <select className="form-input">
+                  <select className={styles.formInput}>
                     <option value="">Select Doctor</option>
                     {doctors.map((doctor) => (
                       <option key={doctor.id} value={doctor.id}>
@@ -196,28 +196,28 @@ const Appointments = () => {
                     ))}
                   </select>
                 </div>
-                <div className="form-group">
+                <div className={styles.formGroup}>
                   <label>Patient Name</label>
-                  <input type="text" className="form-input" placeholder="Enter patient name" />
+                  <input type="text" className={styles.formInput} placeholder="Enter patient name" />
                 </div>
-                <div className="form-row">
-                  <div className="form-group">
+                <div className={styles.formRow}>
+                  <div className={styles.formGroup}>
                     <label>Date</label>
-                    <input type="date" className="form-input" />
+                    <input type="date" className={styles.formInput} />
                   </div>
-                  <div className="form-group">
+                  <div className={styles.formGroup}>
                     <label>Time</label>
-                    <input type="time" className="form-input" />
+                    <input type="time" className={styles.formInput} />
                   </div>
                 </div>
-                <div className="form-row">
-                  <div className="form-group">
+                <div className={styles.formRow}>
+                  <div className={styles.formGroup}>
                     <label>Duration (minutes)</label>
-                    <input type="number" className="form-input" placeholder="30" />
+                    <input type="number" className={styles.formInput} placeholder="30" />
                   </div>
-                  <div className="form-group">
+                  <div className={styles.formGroup}>
                     <label>Type</label>
-                    <select className="form-input">
+                    <select className={styles.formInput}>
                       <option value="consultation">Consultation</option>
                       <option value="follow-up">Follow-up</option>
                       <option value="procedure">Procedure</option>
@@ -225,20 +225,20 @@ const Appointments = () => {
                     </select>
                   </div>
                 </div>
-                <div className="form-group">
+                <div className={styles.formGroup}>
                   <label>Status</label>
-                  <select className="form-input">
+                  <select className={styles.formInput}>
                     <option value="confirmed">Confirmed</option>
                     <option value="pending">Pending</option>
                     <option value="cancelled">Cancelled</option>
                   </select>
                 </div>
               </div>
-              <div className="modal-footer">
-                <button className="modal-btn cancel" onClick={() => setShowAddModal(false)}>
+              <div className={styles.modalFooter}>
+                <button className={`${styles.modalBtn} ${styles.cancel}`} onClick={() => setShowAddModal(false)}>
                   Cancel
                 </button>
-                <button className="modal-btn save">
+                <button className={`${styles.modalBtn} ${styles.save}`}>
                   Add Appointment
                 </button>
               </div>
@@ -248,16 +248,16 @@ const Appointments = () => {
 
         {/* Edit Appointment Modal */}
         {showEditModal && selectedAppointment && (
-          <div className="modal-overlay" onClick={() => setShowEditModal(false)}>
-            <div className="modal" onClick={(e) => e.stopPropagation()}>
-              <div className="modal-header">
+          <div className={styles.modalOverlay} onClick={() => setShowEditModal(false)}>
+            <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+              <div className={styles.modalHeader}>
                 <h2>Edit Appointment</h2>
-                <button className="modal-close" onClick={() => setShowEditModal(false)}>×</button>
+                <button className={styles.modalClose} onClick={() => setShowEditModal(false)}>×</button>
               </div>
-              <div className="modal-content">
-                <div className="form-group">
+              <div className={styles.modalContent}>
+                <div className={styles.formGroup}>
                   <label>Doctor</label>
-                  <select className="form-input" defaultValue={selectedAppointment.doctorId}>
+                  <select className={styles.formInput} defaultValue={selectedAppointment.doctorId}>
                     {doctors.map((doctor) => (
                       <option key={doctor.id} value={doctor.id}>
                         {doctor.name} - {doctor.specialization}
@@ -265,32 +265,32 @@ const Appointments = () => {
                     ))}
                   </select>
                 </div>
-                <div className="form-group">
+                <div className={styles.formGroup}>
                   <label>Patient Name</label>
                   <input 
                     type="text" 
-                    className="form-input" 
+                    className={styles.formInput} 
                     defaultValue={selectedAppointment.patientName}
                   />
                 </div>
-                <div className="form-row">
-                  <div className="form-group">
+                <div className={styles.formRow}>
+                  <div className={styles.formGroup}>
                     <label>Date</label>
-                    <input type="date" className="form-input" defaultValue={selectedAppointment.date} />
+                    <input type="date" className={styles.formInput} defaultValue={selectedAppointment.date} />
                   </div>
-                  <div className="form-group">
+                  <div className={styles.formGroup}>
                     <label>Time</label>
-                    <input type="time" className="form-input" defaultValue={selectedAppointment.time} />
+                    <input type="time" className={styles.formInput} defaultValue={selectedAppointment.time} />
                   </div>
                 </div>
-                <div className="form-row">
-                  <div className="form-group">
+                <div className={styles.formRow}>
+                  <div className={styles.formGroup}>
                     <label>Duration (minutes)</label>
-                    <input type="number" className="form-input" defaultValue={selectedAppointment.duration} />
+                    <input type="number" className={styles.formInput} defaultValue={selectedAppointment.duration} />
                   </div>
-                  <div className="form-group">
+                  <div className={styles.formGroup}>
                     <label>Type</label>
-                    <select className="form-input" defaultValue={selectedAppointment.type.toLowerCase()}>
+                    <select className={styles.formInput} defaultValue={selectedAppointment.type.toLowerCase()}>
                       <option value="consultation">Consultation</option>
                       <option value="follow-up">Follow-up</option>
                       <option value="procedure">Procedure</option>
@@ -298,20 +298,20 @@ const Appointments = () => {
                     </select>
                   </div>
                 </div>
-                <div className="form-group">
+                <div className={styles.formGroup}>
                   <label>Status</label>
-                  <select className="form-input" defaultValue={selectedAppointment.status.toLowerCase()}>
+                  <select className={styles.formInput} defaultValue={selectedAppointment.status.toLowerCase()}>
                     <option value="confirmed">Confirmed</option>
                     <option value="pending">Pending</option>
                     <option value="cancelled">Cancelled</option>
                   </select>
                 </div>
               </div>
-              <div className="modal-footer">
-                <button className="modal-btn cancel" onClick={() => setShowEditModal(false)}>
+              <div className={styles.modalFooter}>
+                <button className={`${styles.modalBtn} ${styles.cancel}`} onClick={() => setShowEditModal(false)}>
                   Cancel
                 </button>
-                <button className="modal-btn save">
+                <button className={`${styles.modalBtn} ${styles.save}`}>
                   Save Changes
                 </button>
               </div>

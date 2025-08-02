@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { MdPerson, MdAdd, MdPeople, MdAttachFile, MdClose, MdSend, MdNote, MdCheck, MdSchedule, MdSearch } from 'react-icons/md';
-import './Notes.css';
+import styles from './Notes.module.css';
 import '../../components/Layout/Scrollbar.css';
 
 const mockMyPatients = [
@@ -148,10 +148,10 @@ const Notes = () => {
   };
 
   return (
-    <div className="notes-page">
-      <div className="notes-sidebar">
-        <div className="sidebar-section">
-          <div className="search-bar">
+    <div className={styles.notesPage}>
+      <div className={styles.notesSidebar}>
+        <div className={styles.sidebarSection}>
+          <div className={styles.searchBar}>
             <MdSearch size={20} />
             <input
               type="text"
@@ -161,83 +161,79 @@ const Notes = () => {
             />
           </div>
           <h3>My Patients</h3>
-          <div className="patient-list custom-scrollbar">
+          <div className={`${styles.patientList} custom-scrollbar`}>
             {filteredMyPatients.map(patient => (
               <div
                 key={patient.id}
-                className={
-                  'patient-item' + (selectedPatient?.id === patient.id ? ' active' : '')
-                }
+                className={`${styles.patientItem} ${selectedPatient?.id === patient.id ? styles.active : ''}`}
                 onClick={() => setSelectedPatient(patient)}
               >
-                <span className="patient-avatar">
+                <span className={styles.patientAvatar}>
                   <MdPerson size={24} />
                 </span>
-                <div className="patient-info">
-                  <div className="patient-name">{patient.name}</div>
-                  <div className="patient-case">{patient.case}</div>
+                <div className={styles.patientInfo}>
+                  <div className={styles.patientName}>{patient.name}</div>
+                  <div className={styles.patientCase}>{patient.case}</div>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="sidebar-section">
+        <div className={styles.sidebarSection}>
           <h3>Shared Cases</h3>
-          <div className="patient-list custom-scrollbar">
+          <div className={`${styles.patientList} custom-scrollbar`}>
             {filteredConsultations.map(patient => (
               <div
                 key={patient.id}
-                className={
-                  'patient-item' + (selectedPatient?.id === patient.id ? ' active' : '')
-                }
+                className={`${styles.patientItem} ${selectedPatient?.id === patient.id ? styles.active : ''}`}
                 onClick={() => setSelectedPatient(patient)}
               >
-                <span className="patient-avatar">
+                <span className={styles.patientAvatar}>
                   <MdPerson size={24} />
                 </span>
-                <div className="patient-info">
-                  <div className="patient-name">{patient.name}</div>
-                  <div className="patient-case">{patient.case}</div>
+                <div className={styles.patientInfo}>
+                  <div className={styles.patientName}>{patient.name}</div>
+                  <div className={styles.patientCase}>{patient.case}</div>
                 </div>
               </div>
             ))}
           </div>
         </div>
       </div>
-      <div className="notes-content-container">
+      <div className={styles.notesContentContainer}>
           {selectedPatient ? (
             <>
-              <div className="notes-header-row">
+              <div className={styles.notesHeaderRow}>
                 <div>
                   <h2>{selectedPatient.name}</h2>
-                  <div className="notes-case-title">
+                  <div className={styles.notesCaseTitle}>
                     {selectedPatient.case}
                                          {selectedPatient.type === 'consultation' && (
-                       <span className="consultation-badge">
+                       <span className={styles.consultationBadge}>
                          Shared Case • {selectedPatient.access} Access
                        </span>
                      )}
                   </div>
                 </div>
-                <div className="notes-actions">
+                <div className={styles.notesActions}>
                   {selectedPatient.type === 'primary' && (
-                    <button className="btn btn-secondary" onClick={handleOpenInviteModal}><MdPeople /> Invite Specialist</button>
+                    <button className={`${styles.btn} ${styles.btnSecondary}`} onClick={handleOpenInviteModal}><MdPeople /> Invite Specialist</button>
                   )}
-                  <button className="btn btn-primary" onClick={() => setShowAddModal(true)}><MdAdd /> Add Note</button>
+                  <button className={`${styles.btn} ${styles.btnPrimary}`} onClick={() => setShowAddModal(true)}><MdAdd /> Add Note</button>
                 </div>
               </div>
-              <h4 className="notes-section-title">Notes Timeline</h4>
-              {filteredNotes.length === 0 && <div className="notes-empty">No notes for this patient.</div>}
+              <h4 className={styles.notesSectionTitle}>Notes Timeline</h4>
+              {filteredNotes.length === 0 && <div className={styles.notesEmpty}>No notes for this patient.</div>}
               {filteredNotes.map(note => (
-                <div key={note.id} className="note-item">
-                  <div className="note-title-row">
-                    <div className="note-title">{note.title}</div>
-                    <span className={`note-type-pill note-type-${note.type.toLowerCase().replace(/ /g, '-')}`}>{note.type}</span>
-                    <span className={`note-visibility-pill note-visibility-${note.visibility.toLowerCase().replace(/ /g, '-')}`}>{note.visibility}</span>
+                <div key={note.id} className={styles.noteItem}>
+                  <div className={styles.noteTitleRow}>
+                    <div className={styles.noteTitle}>{note.title}</div>
+                    <span className={`${styles.noteTypePill} ${styles[`noteType${note.type.replace(/ /g, '')}`]}`}>{note.type}</span>
+                    <span className={`${styles.noteVisibilityPill} ${styles[`noteVisibility${note.visibility.replace(/ /g, '')}`]}`}>{note.visibility}</span>
                   </div>
-                  <div className="note-content">{note.content}</div>
-                  <div className="note-meta">By {note.author} on {new Date(note.timestamp).toLocaleString()}</div>
+                  <div className={styles.noteContent}>{note.content}</div>
+                  <div className={styles.noteMeta}>By {note.author} on {new Date(note.timestamp).toLocaleString()}</div>
                   {note.attachments && note.attachments.length > 0 && (
                     <div className="note-attachments">
                       <MdAttachFile /> {note.attachments.join(', ')}
@@ -247,7 +243,7 @@ const Notes = () => {
               ))}
             </>
           ) : (
-            <div className="no-selection">
+            <div className={styles.noSelection}>
               <MdPerson size={48} />
               <div style={{ marginTop: 16 }}>Select a patient to view notes</div>
             </div>
@@ -256,46 +252,46 @@ const Notes = () => {
 
       {/* Add Note Modal */}
       {showAddModal && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <div className="modal-header">
+        <div className={styles.modalOverlay}>
+          <div className={styles.modal}>
+            <div className={styles.modalHeader}>
               <h3>Add Note</h3>
-              <button className="btn-icon" onClick={() => setShowAddModal(false)}><MdClose /></button>
+              <button className={styles.btnIcon} onClick={() => setShowAddModal(false)}><MdClose /></button>
             </div>
-            <div className="modal-body custom-scrollbar">
-              <div className="form-group">
+            <div className={`${styles.modalBody} custom-scrollbar`}>
+              <div className={styles.formGroup}>
                 <label>Title</label>
                 <input type="text" value={newNote.title} onChange={e => setNewNote({ ...newNote, title: e.target.value })} />
               </div>
-              <div className="form-group">
+              <div className={styles.formGroup}>
                 <label>Type</label>
                 <select value={newNote.type} onChange={e => setNewNote({ ...newNote, type: e.target.value })}>
                   {noteTypes.map(type => <option key={type} value={type}>{type}</option>)}
                 </select>
               </div>
-              <div className="form-group">
+              <div className={styles.formGroup}>
                 <label>Content</label>
                 <textarea value={newNote.content} onChange={e => setNewNote({ ...newNote, content: e.target.value })} rows={4} />
               </div>
-              <div className="form-group">
+              <div className={styles.formGroup}>
                 <label>Visibility</label>
                 <select value={newNote.visibility} onChange={e => setNewNote({ ...newNote, visibility: e.target.value })}>
                   {visibilities.map(v => <option key={v} value={v}>{v}</option>)}
                 </select>
               </div>
-              <div className="form-group">
+              <div className={styles.formGroup}>
                 <label>Attachments</label>
                 <input type="file" multiple onChange={handleFileChange} />
-                <div className="attachments-list">
+                <div className={styles.attachmentsList}>
                   {newNote.attachments.map(file => (
-                    <span key={file} className="attachment-chip">{file} <button onClick={() => handleRemoveAttachment(file)}><MdClose size={14} /></button></span>
+                    <span key={file} className={styles.attachmentChip}>{file} <button onClick={() => handleRemoveAttachment(file)}><MdClose size={14} /></button></span>
                   ))}
                 </div>
               </div>
             </div>
-            <div className="modal-footer">
-              <button className="btn btn-secondary" onClick={() => setShowAddModal(false)}>Cancel</button>
-              <button className="btn btn-primary" onClick={handleAddNote} disabled={!newNote.title || !newNote.content}><MdSend /> Save Note</button>
+            <div className={styles.modalFooter}>
+              <button className={`${styles.btn} ${styles.btnSecondary}`} onClick={() => setShowAddModal(false)}>Cancel</button>
+              <button className={`${styles.btn} ${styles.btnPrimary}`} onClick={handleAddNote} disabled={!newNote.title || !newNote.content}><MdSend /> Save Note</button>
             </div>
           </div>
         </div>
@@ -303,16 +299,16 @@ const Notes = () => {
 
       {/* Enhanced Invite Specialist Modal */}
       {showInviteModal && (
-        <div className="modal-overlay" onClick={() => setShowInviteModal(false)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-header">
+        <div className={styles.modalOverlay} onClick={() => setShowInviteModal(false)}>
+          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.modalHeader}>
               <h3>Invite Specialist</h3>
-              <button className="modal-close" onClick={() => setShowInviteModal(false)}>
+              <button className={styles.modalClose} onClick={() => setShowInviteModal(false)}>
                 <MdClose />
               </button>
             </div>
-            <div className="modal-body custom-scrollbar">
-              <div className="form-group">
+            <div className={`${styles.modalBody} custom-scrollbar`}>
+              <div className={styles.formGroup}>
                 <label>Patient Name</label>
                 <input
                   type="text"
@@ -321,7 +317,7 @@ const Notes = () => {
                   placeholder="Enter patient name"
                 />
               </div>
-              <div className="form-group">
+              <div className={styles.formGroup}>
                 <label>Case/Condition</label>
                 <input
                   type="text"
@@ -330,47 +326,47 @@ const Notes = () => {
                   placeholder="e.g., Diabetes Management, Cardiac Assessment"
                 />
               </div>
-              <div className="form-group">
+              <div className={styles.formGroup}>
                 <label>Search & Select Specialist</label>
-                <div className="specialist-search-container">
+                <div className={styles.specialistSearchContainer}>
                   <input
                     type="text"
                     value={searchSpecialist}
                     onChange={(e) => setSearchSpecialist(e.target.value)}
                     placeholder="Search by name or specialty..."
-                    className="specialist-search-input"
+                    className={styles.specialistSearchInput}
                   />
-                  <div className="specialists-grid custom-scrollbar">
+                  <div className={`${styles.specialistsGrid} custom-scrollbar`}>
                     {filteredSpecialists.map(specialist => (
                       <div
                         key={specialist.id}
-                        className={`specialist-card ${newInvitation.invitee === specialist.name ? 'selected' : ''} ${!specialist.available ? 'unavailable' : ''}`}
+                        className={`${styles.specialistCard} ${newInvitation.invitee === specialist.name ? styles.selected : ''} ${!specialist.available ? styles.unavailable : ''}`}
                         onClick={() => {
                           if (specialist.available) {
                             setNewInvitation(prev => ({ ...prev, invitee: specialist.name }));
                           }
                         }}
                       >
-                        <div className="specialist-card-header">
-                          <div className="specialist-avatar">{specialist.avatar}</div>
-                          <div className="specialist-status">
+                        <div className={styles.specialistCardHeader}>
+                          <div className={styles.specialistAvatar}>{specialist.avatar}</div>
+                          <div className={styles.specialistStatus}>
                             {specialist.available ? (
-                              <span className="status-available">Available</span>
+                              <span className={styles.statusAvailable}>Available</span>
                             ) : (
-                              <span className="status-unavailable">Unavailable</span>
+                              <span className={styles.statusUnavailable}>Unavailable</span>
                             )}
                           </div>
                         </div>
-                        <div className="specialist-card-body">
-                          <h4 className="specialist-name">{specialist.name}</h4>
-                          <p className="specialist-specialty">{specialist.specialty}</p>
-                          <div className="specialist-details">
-                            <span className="specialist-rating">⭐ {specialist.rating}</span>
-                            <span className="specialist-experience">{specialist.experience}</span>
+                        <div className={styles.specialistCardBody}>
+                          <h4 className={styles.specialistName}>{specialist.name}</h4>
+                          <p className={styles.specialistSpecialty}>{specialist.specialty}</p>
+                          <div className={styles.specialistDetails}>
+                            <span className={styles.specialistRating}>⭐ {specialist.rating}</span>
+                            <span className={styles.specialistExperience}>{specialist.experience}</span>
                           </div>
                         </div>
                         {newInvitation.invitee === specialist.name && (
-                          <div className="specialist-selected">
+                          <div className={styles.specialistSelected}>
                             <MdCheck />
                           </div>
                         )}
@@ -379,8 +375,8 @@ const Notes = () => {
                   </div>
                 </div>
               </div>
-              <div className="form-row">
-                <div className="form-group">
+              <div className={styles.formRow}>
+                <div className={styles.formGroup}>
                   <label>Access Level</label>
                   <select
                     value={newInvitation.access}
@@ -390,7 +386,7 @@ const Notes = () => {
                     <option value="Read-only">Read-only</option>
                   </select>
                 </div>
-                <div className="form-group">
+                <div className={styles.formGroup}>
                   <label>Urgency</label>
                   <select
                     value={newInvitation.urgency}
@@ -402,7 +398,7 @@ const Notes = () => {
                   </select>
                 </div>
               </div>
-              <div className="form-group">
+              <div className={styles.formGroup}>
                 <label>Note (Optional)</label>
                 <textarea
                   value={newInvitation.note}
@@ -411,15 +407,15 @@ const Notes = () => {
                   rows={4}
                   maxLength={500}
                 />
-                <div className="char-count">{newInvitation.note.length}/500</div>
+                <div className={styles.charCount}>{newInvitation.note.length}/500</div>
               </div>
             </div>
-            <div className="modal-footer">
-              <button className="btn btn-secondary" onClick={() => setShowInviteModal(false)}>
+            <div className={styles.modalFooter}>
+              <button className={`${styles.btn} ${styles.btnSecondary}`} onClick={() => setShowInviteModal(false)}>
                 Cancel
               </button>
               <button 
-                className="btn btn-primary" 
+                className={`${styles.btn} ${styles.btnPrimary}`} 
                 onClick={handleSendInvitation}
                 disabled={!newInvitation.patient || !newInvitation.case || !newInvitation.invitee}
               >

@@ -1,0 +1,614 @@
+.container {
+    height: calc(100vh - 100px);
+    padding: 20px;
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.wrapper {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 30px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.headerSection {
+    margin-bottom: 30px;
+    flex-shrink: 0;
+}
+
+.profileTitle {
+    font-size: 28px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0 0 8px 0;
+    letter-spacing: -0.5px;
+}
+
+.profileSubtitle {
+    font-size: 16px;
+    color: #666;
+    margin: 0;
+}
+
+.profileForm {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.formSection {
+    background: white;
+    overflow: hidden;
+    transition: all 0.2s;
+}
+
+
+
+.sectionContent {
+    
+    background: white;
+}
+
+.formGrid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.formGroup.fullWidth {
+    grid-column: 1 / -1;
+}
+
+.formLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a1a1a;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.formInput {
+    padding: 12px 16px;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    color: #1a1a1a;
+    transition: all 0.2s;
+    background: white;
+}
+
+.formInput:focus {
+    outline: none;
+    border-color: #1a1a1a;
+    background: white;
+}
+
+.formSelect {
+    padding: 12px 16px;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    color: #1a1a1a;
+    transition: all 0.2s;
+    background: white;
+    cursor: pointer;
+}
+
+.formSelect:focus {
+    outline: none;
+    border-color: #1a1a1a;
+    background: white;
+}
+
+.formActions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btnPrimary {
+    background: #1a1a1a;
+    color: white;
+}
+
+.btnPrimary:hover {
+    background: #333;
+    transform: translateY(-1px);
+}
+
+.btnSecondary {
+    background: white;
+    color: #666;
+    border: 1px solid #e8e8e8;
+}
+
+.btnSecondary:hover {
+    background: #f5f5f5;
+    color: #1a1a1a;
+    border-color: #ddd;
+}
+
+.profileAvatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.avatarSection {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+    justify-content: space-between;
+}
+
+.avatarLeft {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.avatarRight {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatarInfo {
+    flex: 1;
+}
+
+.avatarName {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 4px;
+}
+
+.avatarId {
+    font-size: 14px;
+    color: #666;
+}
+
+.inlineSectionTitle {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #1a1a1a;
+}
+
+.uploadBtn {
+    padding: 8px 16px;
+    background: white;
+    border: 1px solid #e8e8e8;
+    border-radius: 6px;
+    font-size: 12px;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.uploadBtn:hover {
+    background: #f5f5f5;
+    border-color: #ddd;
+}
+
+/* Doctor profile pic styles reused for patient profile */
+.doctorProfilePicContainer {
+    position: relative;
+}
+
+.doctorProfilePic {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid white;
+    object-fit: cover;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    color: #666;
+    margin-bottom: 0;
+}
+
+.doctorProfilePicUpload {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: white;
+    border: 2px solid #1a1a1a;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #434bb8;
+    transition: background-color 0.2s;
+}
+
+.doctorProfilePicUpload:hover {
+    background-color: #f0f0f0;
+}
+
+.doctorProfilePicInput {
+    display: none;
+}
+
+.editBtn {
+    padding: 8px 16px;
+    background: #1a1a1a;
+    border: 1px solid #1a1a1a;
+    border-radius: 6px;
+    font-size: 12px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 500;
+}
+
+.editBtn:hover {
+    background: #333;
+    border-color: #333;
+}
+
+.toggleModeBtn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background: white;
+    border: 1px solid #e8e8e8;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.toggleModeBtn:hover {
+    background: #f5f5f5;
+    border-color: #ddd;
+    color: #1a1a1a;
+}
+
+.medicalGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.medicalItem {
+    padding: 16px;
+    background: #f8f9ff;
+    border-radius: 8px;
+    border-left: 3px solid #1a1a1a;
+}
+
+.medicalLabel {
+    font-size: 14px;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+}
+
+.medicalValue {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.conditionTag, .allergyTag {
+    padding: 4px 8px;
+    background: #e8f5e8;
+    color: #2d5a2d;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.allergyTag {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.surgeryItem, .familyItem, .medicationItem, .supplementItem {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 8px 12px;
+    background: white;
+    border-radius: 6px;
+    border: 1px solid #e8e8e8;
+    min-width: 200px;
+}
+
+.surgeryName, .medicationName, .supplementName {
+    font-size: 13px;
+    font-weight: 500;
+    color: #1a1a1a;
+}
+
+.surgeryDate, .medicationFrequency, .supplementFrequency {
+    font-size: 11px;
+    color: #666;
+}
+
+.familyRelation {
+    font-size: 12px;
+    font-weight: 500;
+    color: #1a1a1a;
+}
+
+.familyCondition {
+    font-size: 12px;
+    color: #666;
+}
+
+.formTextarea {
+    padding: 12px 16px;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    color: #1a1a1a;
+    transition: all 0.2s;
+    background: white;
+    resize: vertical;
+    min-height: 80px;
+}
+
+.formTextarea:focus {
+    outline: none;
+    border-color: #1a1a1a;
+    background: white;
+}
+
+.infoText {
+    font-size: 14px;
+    color: #1a1a1a;
+    font-weight: 400;
+}
+
+.viewField {
+    padding: 12px 0;
+    border: none;
+    border-bottom: 1px solid #e8e8e8;
+    border-radius: 0;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    color: #1a1a1a;
+    background: transparent;
+    min-height: 20px;
+    display: flex;
+    align-items: center;
+    min-height: 46px;
+}
+
+.viewGrid {
+    display: grid;
+    grid-template-columns: repeat(5, 2fr);
+    gap: 20px;
+    
+}
+
+.viewGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.viewGroup.fullWidth {
+    grid-column: 1 / -1;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .formGrid, .viewGrid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+}
+
+@media (max-width: 900px) {
+    .container {
+        padding: 15px;
+    }
+
+    .content {
+        padding: 15px;
+    }
+
+    .profileTitle {
+        font-size: 24px;
+    }
+
+    .profileSubtitle {
+        font-size: 15px;
+    }
+
+    .sectionContent {
+        padding: 20px;
+    }
+
+    .formActions {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 640px) {
+    .container {
+        padding: 15px;
+    }
+
+    .content {
+        padding: 15px;
+    }
+
+    .profileTitle {
+        font-size: 22px;
+    }
+
+    .profileSubtitle {
+        font-size: 14px;
+    }
+
+    .avatarSection {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+    }
+
+    .avatarLeft {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .avatarRight {
+        justify-content: center;
+    }
+
+    .profileAvatar {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+    }
+
+    .avatarName {
+        font-size: 18px;
+    }
+
+    .sectionContent {
+        padding: 15px;
+    }
+
+    .formGrid {
+        gap: 12px;
+    }
+
+    .formActions {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .btn {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+
+    .content {
+        padding: 12px;
+    }
+
+    .headerSection {
+        margin-bottom: 20px;
+    }
+
+    .profileTitle {
+        font-size: 20px;
+        margin-bottom: 6px;
+    }
+
+    .profileSubtitle {
+        font-size: 13px;
+    }
+
+    .profileAvatar {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+
+    .avatarName {
+        font-size: 16px;
+    }
+
+    .avatarId {
+        font-size: 12px;
+    }
+
+    .sectionContent {
+        padding: 12px;
+    }
+
+    .formInput,
+    .formSelect {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+
+    .formLabel {
+        font-size: 13px;
+    }
+
+    .btn {
+        padding: 8px 16px;
+        font-size: 12px;
+        justify-content: center;
+    }
+
+    .formActions {
+        gap: 6px;
+    }
+}

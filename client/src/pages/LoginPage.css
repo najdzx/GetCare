@@ -1,215 +1,341 @@
-/* Full height layout */
-body, html, #root {
-  margin: 0;
-  height: 100%;
-  font-family: system-ui, sans-serif;
-  background-color: #d9eff6;
+/* Login Page Styles */
+
+.loginPage {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f5f7;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    margin: 0;
 }
 
-/* Page container */
-.login-page {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
+.loginContainer {
+    display: flex;
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    max-width: 1000px;
+    overflow: hidden;
 }
 
-/* Card container */
-.login-container {
-  display: flex;
-  width: 800px;
-  height: 500px;
-  background-color: white;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+.loginWelcomeSection {
+    background-color: #434bb8;
+    color: #fff;
+    padding: 40px;
+    width: 45%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-/* Left half */
-.login-left {
-  flex: 1;
-  background-color: #034172;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 40px;
-  text-align: center;
-  border-top-right-radius: 100px;
-  border-bottom-right-radius: 100px;
+.loginWelcomeOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(67, 75, 184, 0.9) 0%, rgba(54, 60, 150, 1) 100%);
+    z-index: 1;
 }
 
-.login-left h2 {
-  font-size: 3.4rem;
-  margin-bottom: 10px;
-  font-weight: 800;
+.loginWelcomeContent {
+    position: relative;
+    z-index: 2;
 }
 
-.login-left p {
-  font-size: 1.7rem;
-  color: #e0f7f0; /* lighter but still readable against green */
-  font-weight: 600;
+.loginWelcomeLogo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
 }
 
-/* Right half */
-.login-right {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 40px;
+.loginLogoText {
+    color: #fff;
+    font-size: 22px;
+    font-weight: 600;
 }
 
-
-/* Login form */
-.login-form {
-  width: 100%;
-  max-width: 320px;
+.loginWelcomeHeading {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 16px;
 }
 
-.login-form h2 {
-  color: #034172;
-  font-size: 4.0rem;
-  margin-top: 0;
-  margin-bottom: 20px;
-  text-align: center;
+.loginWelcomeSubtext {
+    font-size: 16px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 40px;
 }
 
-/* Floating label input group */
-.input-group {
-  position: relative;
-  margin-bottom: 30px;
-  width: 100%;
+.loginCircleDecoration {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    z-index: 1;
 }
 
-.input-group input {
-  width: 100%;
-  padding: 14px 0 6px 0;
-  font-size: 1rem;
-  border: none;
-  border-bottom: 2px solid #034172;
-  background: transparent;
-  color: #333;
-  outline: none;
-  transition: all 0.2s ease;
+.loginCircle1 {
+    width: 180px;
+    height: 180px;
+    top: -60px;
+    left: -60px;
 }
 
-/* Hide the placeholder but still use it for :placeholder-shown */
-.input-group input::placeholder {
-  color: transparent;
+.loginCircle2 {
+    width: 120px;
+    height: 120px;
+    bottom: 40px;
+    right: -40px;
 }
 
-.input-group input:focus {
-  border-bottom: 2px solid #2c6d52;
-  transform: translateY(1px);
+.loginCircle3 {
+    width: 250px;
+    height: 250px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.05;
 }
 
-.input-group label {
-  position: absolute;
-  top: 14px;
-  left: 0;
-  font-size: 1rem;
-  color: #777;
-  pointer-events: none;
-  transition: all 0.2s ease;
+.loginSection {
+    padding: 40px;
+    width: 55%;
 }
 
-/* Float label up when focused or filled */
-.input-group input:focus + label,
-.input-group input:not(:placeholder-shown) + label {
-  top: -8px;
-  font-size: 0.8rem;
-  color: #2c6d52;
+.loginHeader {
+    margin-bottom: 30px;
 }
 
-/* Forgot password */
-.forgot-password {
-  text-align: right;
-  font-size: 0.9rem;
-  margin-bottom: 20px;
+.loginTitle {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+    margin: 0 0 8px 0;
 }
 
-.forgot-password a {
-  color: #034172;
-  text-decoration: none;
+.loginSubtitle {
+    font-size: 16px;
+    color: #666;
+    margin: 0;
 }
 
-.forgot-password a:hover {
-  text-decoration: underline;
+.loginFormGroup {
+    margin-bottom: 24px;
 }
 
-/* Submit button */
-.primary-btn {
-  width: 100%;
-  padding: 14px;
-  background-color: #034172;
-  color: white;
-  font-weight: 700;
-  font-size: 1.1rem;
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
+.loginFormLabel {
+    display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 8px;
 }
 
-.primary-btn:hover {
-  background-color: #24603f;
+.loginFormInputWrapper {
+    position: relative;
 }
 
-/* Signup link */
-.signup-link {
-  margin-top: 20px;
-  text-align: center;
-  font-size: 0.9rem;
-  color: #555;
+.loginFormInputIcon {
+    position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            width: 16px;
+            height: 16px;
 }
 
-.signup-link a {
-  color: #034172;
-  font-weight: 700;
-  text-decoration: none;
+.loginFormInput {
+    width: 100%;
+    padding: 14px 14px 14px 42px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    box-sizing: border-box;
 }
 
-.signup-link a:hover {
-  text-decoration: underline;
+.loginFormInput:focus {
+    outline: none;
+    border-color: #434bb8;
+    box-shadow: 0 0 0 2px rgba(67, 75, 184, 0.2);
 }
 
-
-.input-group label {
-  display: flex;
-  align-items: center;
-  gap: 8px; /* spacing between icon and text */
+.loginPasswordRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.input-group label .icon {
-  font-size: 1.2rem;
-  color: #034172;
+.loginForgotLink {
+    font-size: 14px;
+    color: #434bb8;
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: auto;
 }
 
-.password-group {
-  position: relative;
+.loginForgotLink:hover {
+    color: #363c96;
+    text-decoration: underline;
 }
 
-.toggle-password {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
-  font-size: 1.1rem;
-  color: #034172;
-  padding-right: 5px;
+.loginPasswordToggle {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: #999;
 }
 
-.input-group label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.loginCheckboxGroup {
+    display: flex;
+    align-items: center;
+    margin-bottom: 24px;
 }
 
-.input-group label .icon {
-  font-size: 1.2rem;
-  color:  #034172;
+.loginCheckboxInput {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    accent-color: #434bb8;
+}
+
+.loginCheckboxLabel {
+    font-size: 14px;
+    color: #666;
+}
+
+.loginButton {
+    width: 100%;
+    background-color: #434bb8;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 15px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.loginButton:hover {
+    background-color: #363c96;
+}
+
+.loginSeparator {
+    display: flex;
+    align-items: center;
+    margin: 24px 0;
+}
+
+.loginSeparatorLine {
+    flex: 1;
+    height: 1px;
+    background-color: #ddd;
+}
+
+.loginSeparatorText {
+    padding: 0 16px;
+    color: #777;
+    font-size: 14px;
+}
+
+.loginGoogleButton {
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.loginGoogleButton:hover {
+    background-color: #f5f5f5;
+}
+
+.loginSignupText {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 15px;
+    color: #666;
+}
+
+.loginSignupLink {
+    color: #434bb8;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.loginSignupLink:hover {
+    text-decoration: underline;
+}
+
+.loginHelpFloatingButton {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #434bb8;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.loginHelpFloatingButton:hover {
+    background-color: #e8eaff;
+}
+
+@media (max-width: 768px) {
+    .loginContainer {
+        flex-direction: column;
+        max-width: 500px;
+    }
+
+    .loginWelcomeSection {
+        width: 100%;
+        padding: 30px;
+    }
+
+    .loginSection {
+        width: 100%;
+        padding: 30px;
+    }
+
+    .loginFeatureList {
+        display: none;
+    }
+
+    .loginWelcomeHeading {
+        font-size: 24px;
+    }
+
+    .loginWelcomeSubtext {
+        margin-bottom: 0;
+    }
 }
