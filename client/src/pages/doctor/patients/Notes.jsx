@@ -229,6 +229,7 @@ const Notes = () => {
                     <option value="followup">Follow-up</option>
                     <option value="lab">Lab Result</option>
                     <option value="consultation">Consultation</option>
+                    <option value="case review">Case Review</option>
                     <option value="other">Other</option>
                   </select>
                 </div>

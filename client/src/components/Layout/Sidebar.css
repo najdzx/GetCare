@@ -1,6 +1,6 @@
 .sidebar {
   width: 240px;
-  background: #434bb8;
+  background: #1a1a1a;
   color: #fff;
   height: 100vh;
   position: fixed;
@@ -84,8 +84,8 @@
 }
 
 .sidebar nav ul li a.active {
-  background: #fff;
-  color: #434bb8; /* slightly deeper active color */
+  background: rgba(255,255,255,0.15);
+  color: white; /* slightly deeper active color */
 }
 
 .sidebar nav ul li a svg {

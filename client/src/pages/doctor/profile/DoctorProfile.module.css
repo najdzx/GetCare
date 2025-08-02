@@ -8,6 +8,8 @@
   height: calc(100vh - 100px);
   padding: 20px;
   font-family: "Poppins", sans-serif;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 .doctor-profile-wrapper {
@@ -20,7 +22,7 @@
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border: 1px solid #e0e0e0;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .doctor-edit-mode {
@@ -28,8 +30,8 @@
 }
 
 .doctor-profile-header {
-  background: linear-gradient(135deg, #434bb8 0%, #363c96 100%);
-  color: white;
+  background: white;
+  color: #1a1a1a;
   padding: 20px 30px;
   display: flex;
   align-items: center;
@@ -60,7 +62,7 @@
   bottom: 0;
   right: 0;
   background-color: white;
-  border: 2px solid #434bb8;
+  border: 2px solid #1a1a1a;
   border-radius: 50%;
   width: 36px;
   height: 36px;
@@ -123,7 +125,7 @@
   color: #333;
   margin-bottom: 15px;
   padding-bottom: 8px;
-  border-bottom: 2px solid #434bb8;
+  border-bottom: 2px solid #1a1a1a;
 }
 
 .doctor-profile-wrapper:not(.doctor-edit-mode) .doctor-profile-section-title {
@@ -150,7 +152,7 @@
 .doctor-profile-field-label {
   font-size: 13px;
   font-weight: 600;
-  color: #434bb8;
+  color: #1a1a1a;
   margin-bottom: 6px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -192,7 +194,7 @@
 
 .doctor-profile-field-input:focus {
   outline: none;
-  border-color: #434bb8;
+  border-color: #1a1a1a;
 }
 
 .doctor-profile-field-textarea {

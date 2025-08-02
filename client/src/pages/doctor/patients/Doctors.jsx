@@ -9,6 +9,7 @@ const Doctors = ({ patient }) => {
   const currentDoctorName = 'You (Dr. Daniel)';
 
   // Build doctors list with roles
+  const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [doctors, setDoctors] = useState(() => {
     let docList = [];
     // Primary doctor always first
@@ -91,7 +92,12 @@ const Doctors = ({ patient }) => {
               .toUpperCase()
               .slice(0, 2);
             return (
-              <li key={idx} className={styles['doctor-card']}>
+              <li
+                key={idx}
+                className={styles['doctor-card']}
+                onClick={() => setSelectedDoctor(doc)}
+                style={{ cursor: 'pointer' }}
+              >
                 <div className={styles['doctor-avatar']}>{initials}</div>
                 <div className={styles['doctor-info']}>
                   <div className={styles['doctor-name']}>{doc.name}</div>
@@ -107,7 +113,7 @@ const Doctors = ({ patient }) => {
                   <button
                     className={styles['doctor-remove-btn']}
                     title="Remove doctor"
-                    onClick={() => handleRemoveDoctor(idx)}
+                    onClick={e => { e.stopPropagation(); handleRemoveDoctor(idx); }}
                   >
                     Remove
                   </button>
@@ -117,6 +123,35 @@ const Doctors = ({ patient }) => {
           })}
         </ul>
       </div>
+      {/* Doctor Profile Modal */}
+      {selectedDoctor && (
+        <div className={styles['doctor-modal-overlay']} onClick={() => setSelectedDoctor(null)}>
+          <div className={styles['doctor-modal']} onClick={e => e.stopPropagation()}>
+            <div className={styles['doctor-modal-header']}>
+              <div className={styles['doctor-avatar']} style={{ width: 56, height: 56, fontSize: 24 }}>
+                {selectedDoctor.name.replace(/\(.*\)/, '').split(' ').filter(Boolean).map(word => word[0]).join('').toUpperCase().slice(0, 2)}
+              </div>
+              <div>
+                <div className={styles['doctor-name']} style={{ fontSize: 18 }}>{selectedDoctor.name}</div>
+                <div className={styles['doctor-role']} style={{ fontSize: 13 }}>{selectedDoctor.role}</div>
+              </div>
+            </div>
+            <div className={styles['doctor-modal-body']}>
+              {selectedDoctor.specialization && (
+                <div><b>Specialization:</b> {selectedDoctor.specialization}</div>
+              )}
+              {selectedDoctor.email && (
+                <div><b>Email:</b> {selectedDoctor.email}</div>
+              )}
+              {/* Add more fields as needed */}
+            </div>
+            <div className={styles['doctor-modal-footer']}>
+              <button className="global-btn2" onClick={() => setSelectedDoctor(null)}>Close</button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* end doctors-cards-area and modal */}
       {isPrimaryDoctor && (
         <div className={styles['doctors-add-row']}>
           <button
