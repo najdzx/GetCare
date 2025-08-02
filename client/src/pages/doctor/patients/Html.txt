@@ -4,7 +4,6 @@ import BasicInformation from './BasicInformation';
 import MedicalBackground from './MedicalBackground';
 import SoapNotes from './SoapNotes';
 import Notes from './Notes';
-import Doctors from './Doctors';
 
 const Patients = () => {
   // Patient data state
@@ -32,8 +31,7 @@ const Patients = () => {
         medications: 'Metformin 500mg, Lisinopril 10mg',
         supplements: 'Vitamin D3, Omega-3'
       },
-      soapNotes: [],
-      tag: 'ongoing'
+      soapNotes: []
     },
     {
       id: 2,
@@ -58,8 +56,7 @@ const Patients = () => {
         medications: 'Salbutamol inhaler',
         supplements: 'Vitamin C'
       },
-      soapNotes: [],
-      tag: 'pending'
+      soapNotes: []
     }
   ]);
 
@@ -88,8 +85,7 @@ const Patients = () => {
         medications: 'ACE inhibitor, Phosphate binder',
         supplements: 'Iron supplement'
       },
-      soapNotes: [],
-      tag: 'completed'
+      soapNotes: []
     }
   ]);
 
@@ -331,29 +327,9 @@ const [vitals, setVitals] = useState({
   // Render basic info tab
   const renderBasicInfo = (patient) => {
     const age = calculateAge(patient.dateOfBirth);
-    const [tag, setTag] = useState(patient.tag || 'ongoing');
-    const handleTagChange = (e) => {
-      setTag(e.target.value);
-      // Update tag in myPatients or sharedCases
-      setMyPatients(prev => prev.map(p => p.id === patient.id ? { ...p, tag: e.target.value } : p));
-      setSharedCases(prev => prev.map(p => p.id === patient.id ? { ...p, tag: e.target.value } : p));
-    };
+    
     return (
       <div className={styles['info-grid']}>
-        <div className={styles['info-group']}>
-          <label className={styles['info-label']}>Patient Tag</label>
-          <select
-            className={styles['form-select']}
-            value={tag}
-            onChange={handleTagChange}
-            disabled={!!patient.sharedBy}
-          >
-            <option value="ongoing">Ongoing</option>
-            <option value="pending">Pending</option>
-            <option value="completed">Completed</option>
-          </select>
-        </div>
-        {/* ...existing code... */}
         <div className={styles['info-group']}>
           <label className={styles['info-label']}>ID</label>
           <div className={styles['info-value']}>{patient.userId}</div>
@@ -851,8 +827,6 @@ const [vitals, setVitals] = useState({
   );
 };
 
-
-
   // Render patient details
   const renderPatientDetails = (patient) => {
     const age = calculateAge(patient.dateOfBirth);
@@ -870,6 +844,7 @@ const [vitals, setVitals] = useState({
               </div>
             </div>
           </div>
+          
           <div className={styles['content-tabs']}>
             <button 
               className={`${styles['content-tab']} ${currentContentTab === 'basic-info' ? styles.active : ''}`} 
@@ -895,14 +870,9 @@ const [vitals, setVitals] = useState({
             >
               Notes
             </button>
-            <button 
-              className={`${styles['content-tab']} ${currentContentTab === 'doctors' ? styles.active : ''}`} 
-              onClick={() => switchContentTab('doctors')}
-            >
-              Doctors
-            </button>
           </div>
         </div>
+        
         <div className={styles['scrollable-content']}>
           {currentContentTab === 'basic-info' && (
             <BasicInformation patient={patient} calculateAge={calculateAge} />
@@ -935,9 +905,6 @@ const [vitals, setVitals] = useState({
               editNote={() => {}}
               deleteNote={() => {}}
             />
-          )}
-          {currentContentTab === 'doctors' && (
-            <Doctors patient={patient} />
           )}
         </div>
       </>

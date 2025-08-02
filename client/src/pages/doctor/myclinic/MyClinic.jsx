@@ -180,12 +180,12 @@ function MyClinic() {
               </div>
               <div className={styles.myclinicToggleGroup}>
                 <button
-                  className={`${styles.toggleBtn}${clinic.isHospital ? ' ' + styles.toggleBtnActive : ''}`}
+                  className={`toggleBtn${clinic.isHospital ? ' toggleBtnActive' : ''}`}
                   onClick={() => setClinic({ ...clinic, isHospital: true })}
                   type="button"
                 >YES</button>
                 <button
-                  className={`${styles.toggleBtn}${!clinic.isHospital ? ' ' + styles.toggleBtnActive : ''}`}
+                  className={`toggleBtn${!clinic.isHospital ? ' toggleBtnActive' : ''}`}
                   onClick={() => setClinic({ ...clinic, isHospital: false })}
                   type="button"
                 >NO</button>
@@ -314,7 +314,7 @@ function MyClinic() {
                     >
                       Cancel
                     </button>
-                    <button type="submit" className="global-btn primary">
+                    <button type="submit" className="global-btn secondary">
                       Next
                     </button>
                   </div>
