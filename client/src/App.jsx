@@ -18,7 +18,7 @@ import Analytics from './pages/doctor/Analytics';
 import Engagement from './pages/doctor/Engagement';
 import MyClinic from './pages/doctor/myclinic/MyClinic';
 import Invitations from './pages/doctor/Invitations';
-import Profile from './pages/doctor/profile/Profile';
+import Profile from './pages/doctor/profile/DoctorProfile';
 import Availability from './pages/doctor/availability/Availability';
 
 // Admin imports

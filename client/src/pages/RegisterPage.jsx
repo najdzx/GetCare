@@ -62,7 +62,7 @@ const RegisterPage = () => {
           <div className="signup-welcome-content">
             {/* Logo */}
             <div className="signup-welcome-logo">
-              <div className="signup-logo-text">YourApp</div>
+              <div className="signup-logo-text">GetCare</div>
             </div>
             
             {/* Main Content */}

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import styles from './DoctorProfile.module.css';
+import '../../../components/Layout/Button.css';
 
-const Profile = () => {
+const DoctorProfile = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [profilePic, setProfilePic] = useState(null);
   const [formData, setFormData] = useState({
@@ -119,7 +120,9 @@ const Profile = () => {
           </div>
 
           {!isEditMode && (
-            <button className={styles['doctor-profile-edit-btn']} onClick={toggleEditMode}>
+            <button className={`global-btn2 ${styles['doctor-profile-edit-btn']}`}
+  onClick={toggleEditMode}
+>
               Edit Profile
             </button>
           )}
@@ -255,14 +258,16 @@ const Profile = () => {
         {isEditMode && (
           <div className={styles['doctor-profile-actions']}>
             <button 
-              className={`${styles['doctor-profile-btn']} ${styles['doctor-profile-btn-save']}`} 
+              className="global-btn" 
               onClick={handleSave}
+              type="button"
             >
               Save Changes
             </button>
             <button 
-              className={`${styles['doctor-profile-btn']} ${styles['doctor-profile-btn-cancel']}`} 
+              className="global-btn" 
               onClick={cancelEdit}
+              type="button"
             >
               Cancel
             </button>
@@ -273,4 +278,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default DoctorProfile;

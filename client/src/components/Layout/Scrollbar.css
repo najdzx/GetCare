@@ -20,7 +20,7 @@
 }
 
 .custom-scrollbar:hover::-webkit-scrollbar-thumb {
-  background: #434bb8;
+  background: #1a1a1a;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
@@ -34,5 +34,5 @@
 }
 
 .custom-scrollbar:hover {
-  scrollbar-color: #434bb8 transparent;
+  scrollbar-color: #1a1a1a transparent;
 } 
