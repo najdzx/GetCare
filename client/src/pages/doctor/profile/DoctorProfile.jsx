@@ -219,9 +219,14 @@ const DoctorProfile = () => {
                       onChange={handleInputChange}
                     />
                   ) : field.name === 'age' ? (
-                    <div className={styles['doctor-profile-field-value']}>
-                      {formData.dateOfBirth ? `${getAge(formData.dateOfBirth)} years` : '[Age]'}
-                    </div>
+                    <input
+                      type="text"
+                      className={styles['doctor-profile-field-input']}
+                      name="age"
+                      value={formData.dateOfBirth ? `${getAge(formData.dateOfBirth)} years` : '[Age]'}
+                      disabled
+                      readOnly
+                    />
                   ) : (
                     <input
                       type={field.type}

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import { Outlet } from 'react-router-dom';
 import AdminSidebar from './AdminSidebar';
 import AdminTopNav from './AdminTopNav';
 import styles from '../maincontent.module.css';
 
-const AdminLayout = ({ children }) => {
+const AdminLayoutRoute = () => {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
@@ -12,14 +13,14 @@ const AdminLayout = ({ children }) => {
       <AdminTopNav collapsed={collapsed} />
       <main
         className={styles['main-content']}
-                style={{
-                  marginLeft: collapsed ? '80px' : '240px',
-                }}
+        style={{
+          marginLeft: collapsed ? '80px' : '240px',
+        }}
       >
-        {children}
+        <Outlet />
       </main>
     </>
   );
 };
 
-export default AdminLayout; 
+export default AdminLayoutRoute;

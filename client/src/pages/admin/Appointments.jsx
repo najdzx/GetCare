@@ -61,8 +61,7 @@ const Appointments = () => {
   };
 
   return (
-    <AdminLayout>
-      <div className={styles.adminAppointments}>
+    <div className={styles.adminAppointments}>
         <div className={styles.appointmentsHeader}>
           <div className={styles.headerLeft}>
             <h1>Appointments Management</h1>
@@ -318,8 +317,7 @@ const Appointments = () => {
             </div>
           </div>
         )}
-      </div>
-    </AdminLayout>
+    </div>
   );
 };
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
   MdDashboard,
@@ -8,12 +8,22 @@ import {
   MdSettings,
   MdAnalytics,
   MdBusiness,
-  MdPerson
+  MdPerson,
+  MdKeyboardDoubleArrowLeft,
 } from 'react-icons/md';
 import '../Layout/Sidebar.css';
 
 const AdminSidebar = ({ collapsed, setCollapsed }) => {
-  const sidebarRef = useRef(null);
+  // Collapse sidebar on ESC key
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === 'Escape' && !collapsed) {
+        setCollapsed(true);
+      }
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, [collapsed, setCollapsed]);
   const location = useLocation();
 
   const menuItems = [
@@ -27,41 +37,42 @@ const AdminSidebar = ({ collapsed, setCollapsed }) => {
     { path: '/admin/settings', icon: <MdSettings size={24} />, label: 'Settings' },
   ];
 
-  const handleClickOutside = (e) => {
-    if (sidebarRef.current && !sidebarRef.current.contains(e.target)) {
-      setCollapsed(true);
-    }
+  // Toggle sidebar collapse/expand
+  const handleToggle = (e) => {
+    e.stopPropagation();
+    setCollapsed((prev) => !prev);
   };
-
-  const handleClickInside = () => {
-    if (collapsed) {
-      setCollapsed(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
 
   return (
-    <aside
-      className={`sidebar ${collapsed ? 'collapsed' : ''}`}
-      onClick={handleClickInside}
-      ref={sidebarRef}
-    >
-      <div className="top-section">
-        <div className="logo">
-          <img src="/heartbeat.svg" alt="GetCare" className="logo-img" />
-          {!collapsed && <span className="logo-text">GetCare</span>}
-        </div>
+    <aside className={`sidebar ${collapsed ? 'collapsed' : ''}`}> 
+      <div className="top-section" style={{ display: 'flex', alignItems: 'center', justifyContent: collapsed ? 'flex-start' : 'space-between', padding: '12px 20px' }}>
+        {collapsed ? (
+          <button 
+            className="sidebar-toggle-btn" 
+            onClick={handleToggle}
+            aria-label="Expand sidebar"
+            style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.5rem', color: '#fff' }}
+          >
+            <span>&#9776;</span>
+          </button>
+        ) : (
+          <>
+            <span className="logo-text" style={{ fontWeight: 'bold', fontSize: '1.7rem', color: '#fff' }}>GetCare</span>
+            <button 
+              className="sidebar-toggle-btn" 
+              onClick={handleToggle}
+              aria-label="Collapse sidebar"
+              style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.5rem', color: '#fff', marginLeft: 'auto' }}
+            >
+              <MdKeyboardDoubleArrowLeft size={28} />
+            </button>
+          </>
+        )}
       </div>
-
       <nav>
         <ul>
           {menuItems.map((item) => {
             const isActive = location.pathname === item.path;
-
             return (
               <li key={item.path} className={isActive ? 'active-wrapper' : ''}>
                 <Link
@@ -80,4 +91,4 @@ const AdminSidebar = ({ collapsed, setCollapsed }) => {
   );
 };
 
-export default AdminSidebar; 
+export default AdminSidebar;
