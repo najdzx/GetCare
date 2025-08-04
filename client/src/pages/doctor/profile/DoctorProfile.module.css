@@ -213,7 +213,7 @@
 
 .doctor-profile-field-textarea:focus {
   outline: none;
-  border-color: #434bb8;
+  border-color: #1a1a1a;
 }
 
 .doctor-profile-field-select {
@@ -230,7 +230,7 @@
 
 .doctor-profile-field-select:focus {
   outline: none;
-  border-color: #434bb8;
+  border-color: #1a1a1a;
 }
 
 .doctor-profile-actions {

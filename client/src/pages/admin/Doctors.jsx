@@ -28,8 +28,7 @@ const Doctors = () => {
   });
 
   return (
-    <AdminLayout>
-      <div className={styles.adminDoctors}>
+    <div className={styles.adminDoctors}>
         <div className={styles.doctorsHeader}>
           <div className={styles.headerLeft}>
             <h1>Doctors</h1>
@@ -128,8 +127,7 @@ const Doctors = () => {
           </div>
           <button className={styles.paginationBtn}>Next</button>
         </div>
-      </div>
-    </AdminLayout>
+    </div>
   );
 };
 
