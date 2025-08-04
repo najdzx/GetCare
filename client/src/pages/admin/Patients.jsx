@@ -27,8 +27,7 @@ const Patients = () => {
   });
 
   return (
-    <AdminLayout>
-      <div className={styles.adminPatients}>
+    <div className={styles.adminPatients}>
         <div className={styles.patientsHeader}>
           <div className={styles.headerLeft}>
             <h1>Patients</h1>
@@ -118,8 +117,7 @@ const Patients = () => {
           </div>
           <button className={styles.paginationBtn}>Next</button>
         </div>
-      </div>
-    </AdminLayout>
+    </div>
   );
 };
 

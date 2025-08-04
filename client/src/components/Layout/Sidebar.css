@@ -25,6 +25,8 @@
   font-weight: 800;
   cursor: default;
   justify-content: flex-start; /* force left alignment */
+  min-height: 56px;
+  height: 56px;
 }
 
 .logo {
