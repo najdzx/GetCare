@@ -14,7 +14,6 @@ const DoctorProfile = () => {
     dateOfBirth: '1990-05-15',
     phoneNumber: '',
     email: '',
-    address: '',
     prcLicenseNumber: '',
     ptrLicenseNumber: '',
     specialization: '',
@@ -70,28 +69,18 @@ const DoctorProfile = () => {
   const toggleEditMode = () => setIsEditMode(!isEditMode);
   const cancelEdit = () => setIsEditMode(false);
 
+
   // Helper function to calculate age from date of birth
   const getAge = (dob) => {
     if (!dob) return '';
-    try {
-      const birthDate = new Date(dob);
-      const today = new Date();
-      
-      // Check if the date is valid
-      if (isNaN(birthDate.getTime())) return '';
-      
-      let age = today.getFullYear() - birthDate.getFullYear();
-      const monthDiff = today.getMonth() - birthDate.getMonth();
-      
-      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-      }
-      
-      return age >= 0 ? age : '';
-    } catch (error) {
-      console.error('Error calculating age:', error);
-      return '';
+    const today = new Date();
+    const birthDate = new Date(dob);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
     }
+    return age;
   };
 
   const doctorName = formData.firstName || formData.lastName 
@@ -183,8 +172,7 @@ const DoctorProfile = () => {
                 { label: 'Date of Birth', name: 'dateOfBirth', type: 'date' },
                 { label: 'Age', name: 'age', type: 'calculated', readonly: true },
                 { label: 'Phone Number', name: 'phoneNumber', type: 'tel' },
-                { label: 'Email', name: 'email', type: 'email' },
-                { label: 'Address', name: 'address', type: 'textarea', fullWidth: true }
+                { label: 'Email', name: 'email', type: 'email' }
               ].map((field) => (
                 <div 
                   key={field.name} 
