@@ -1,293 +1,1947 @@
-.adminDoctors {
-  max-width: 1200px;
-  margin: 0 auto;
+/* AllDoctors.module.css */
+.container {
+  height: calc(100vh - 100px);
+  padding: 20px;
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  box-sizing: border-box;
 }
 
-.doctorsHeader {
+.wrapper {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border: 1px solid #f0f0f0;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.adminContent {
+  flex: 1;
+  padding: 24px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.pageHeader {
+  margin-bottom: 24px;
+  flex-shrink: 0;
+}
+
+.pageTitle {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 4px 0;
+}
+
+.pageSubtitle {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+}
+
+.filtersSection {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 24px;
-}
-
-.headerLeft h1 {
-  margin: 0 0 4px 0;
-  font-size: 1.75rem;
-  font-weight: 600;
-  color: #2c3e50;
-}
-
-.headerLeft p {
-  margin: 0;
-  color: #7f8c8d;
-  font-size: 0.9rem;
-}
-
-.addDoctorBtn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 20px;
-  background-color: #3498db;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  font-weight: 500;
-  transition: background-color 0.2s ease;
-}
-
-.addDoctorBtn:hover {
-  background-color: #2980b9;
-}
-
-/* Controls */
-.doctorsControls {
-  display: flex;
+  flex-shrink: 0;
   gap: 16px;
-  margin-bottom: 24px;
-  align-items: center;
 }
 
-.searchContainer {
+.searchBox {
   position: relative;
   flex: 1;
   max-width: 400px;
 }
 
-.searchIcon {
+.searchBox svg {
   position: absolute;
   left: 12px;
   top: 50%;
   transform: translateY(-50%);
-  color: #7f8c8d;
-  font-size: 1.1rem;
+  color: #666;
 }
 
-.searchInput {
+.searchBox input {
   width: 100%;
-  padding: 12px 12px 12px 40px;
-  border: 1px solid #e0e0e0;
+  padding: 10px 12px 10px 40px;
+  border: 1px solid #e8e8e8;
   border-radius: 8px;
-  font-size: 0.9rem;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  background: white;
+  box-sizing: border-box;
+}
+
+.searchBox input:focus {
   outline: none;
-  transition: border-color 0.2s ease;
+  border-color: #1a1a1a;
 }
 
-.searchInput:focus {
-  border-color: #3498db;
-}
-
-.filterContainer {
-  position: relative;
+.filterControls {
   display: flex;
-  align-items: center;
-}
-
-.filterIcon {
-  position: absolute;
-  left: 12px;
-  color: #7f8c8d;
-  font-size: 1.1rem;
-  z-index: 1;
+  gap: 12px;
 }
 
 .filterSelect {
-  padding: 12px 12px 12px 40px;
-  border: 1px solid #e0e0e0;
+  padding: 10px 12px;
+  border: 1px solid #e8e8e8;
   border-radius: 8px;
-  font-size: 0.9rem;
-  outline: none;
-  background-color: white;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  background: white;
   cursor: pointer;
   min-width: 150px;
-  transition: border-color 0.2s ease;
 }
 
 .filterSelect:focus {
-  border-color: #3498db;
-}
-
-/* Table */
-.doctorsTableContainer {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  margin-bottom: 24px;
+  outline: none;
+  border-color: #1a1a1a;
 }
 
 .doctorsTable {
-  width: 100%;
-  border-collapse: collapse;
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e8e8e8;
+  border-radius: 12px;
+  background: white;
 }
 
-.doctorsTable th {
-  background-color: #f8f9fa;
-  padding: 16px 12px;
-  text-align: left;
+.tableHeader {
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e8e8e8;
   font-weight: 600;
-  color: #2c3e50;
-  border-bottom: 1px solid #e0e0e0;
-  font-size: 0.9rem;
+  color: #1a1a1a;
+  font-size: 14px;
+  flex-shrink: 0;
 }
 
-.doctorsTable td {
-  padding: 16px 12px;
+.tableBody {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.colDoctor {
+  flex: 2.5;
+  min-width: 300px;
+}
+
+.colSpecialization {
+  flex: 1.2;
+  min-width: 140px;
+  text-align: center;
+}
+
+.colPatients {
+  flex: 0.8;
+  min-width: 80px;
+  text-align: center;
+}
+
+.colStatus {
+  flex: 1;
+  min-width: 100px;
+  text-align: center;
+}
+
+.colActions {
+  flex: 1.2;
+  min-width: 140px;
+  text-align: center;
+}
+
+.doctorRow {
+  display: flex;
+  align-items: center;
+  padding: 20px;
   border-bottom: 1px solid #f0f0f0;
-  font-size: 0.9rem;
+  transition: all 0.2s;
 }
 
-.doctorsTable tr:hover {
-  background-color: #f8f9fa;
+.doctorRow:hover {
+  background: #f8f9fa;
 }
 
-.doctorInfo {
+.doctorRow:last-child {
+  border-bottom: none;
+}
+
+.doctorRow .colDoctor {
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+.doctorRow .colSpecialization,
+.doctorRow .colPatients,
+.doctorRow .colStatus {
+  display: flex;
+  justify-content: center;
+}
+
+.doctorRow .colActions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
 }
 
 .doctorAvatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: #3498db;
+  background: #f0f0f0;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
   font-weight: 600;
-  font-size: 0.9rem;
+  color: #666;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.doctorInfo {
+  flex: 1;
+}
+
+.doctorName {
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 2px;
+  font-size: 14px;
+}
+
+.doctorEmail {
+  font-size: 12px;
+  color: #666;
+}
+
+.patientCount {
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+
+.specializationTag {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.specializationTag.cardiology {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.specializationTag.neurology {
+  background: #e0e7ff;
+  color: #3730a3;
+}
+
+.specializationTag.pediatrics {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.specializationTag.orthopedics {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.specializationTag.dermatology {
+  background: #f3e8ff;
+  color: #7c2d12;
+}
+
+.specializationTag.psychiatry {
+  background: #fce7f3;
+  color: #be185d;
 }
 
 .statusBadge {
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 0.8rem;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 11px;
   font-weight: 500;
+}
+
+.statusBadge.active {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.statusBadge.inactive {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.statusBadge.onLeave {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.statusBadge.pending {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.actionBtn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #e8e8e8;
+  border-radius: 6px;
+  background: white;
+  color: #666;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.actionBtn:hover {
+  background: #f5f5f5;
+  border-color: #ddd;
+  color: #1a1a1a;
+}
+
+.actionBtn.view:hover {
+  background: #e0f2fe;
+  border-color: #0891b2;
+  color: #0891b2;
+}
+
+.actionBtn.edit:hover {
+  background: #fef3c7;
+  border-color: #f59e0b;
+  color: #f59e0b;
+}
+
+.actionBtn.delete:hover {
+  background: #fee2e2;
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+.actionBtn.approve:hover {
+  background: #dcfce7;
+  border-color: #22c55e;
+  color: #22c55e;
+}
+
+.actionBtn.reject:hover {
+  background: #fee2e2;
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+.addDoctorBtn {
+  padding: 10px 16px;
+  background: #1a1a1a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+
+.addDoctorBtn:hover {
+  background: #333;
+}
+
+/* Modal Styles */
+.modal {
+  display: block;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+.modalContent {
+  background-color: white;
+  margin: 5% auto;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 800px;
+  height: 85vh;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+}
+
+.modalBody {
+  padding: 0 24px 24px 24px;
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 24px 24px 24px;
+  border-bottom: 1px solid #f0f0f0;
+  flex-shrink: 0;
+  height: 80px;
+  box-sizing: border-box;
+}
+
+.modalHeader h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.closeBtn:hover {
+  background: #f5f5f5;
+  color: #1a1a1a;
+}
+
+.formRow {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.formGroup {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.formGroup label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 6px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-.statusBadge.active {
-  background-color: #d4edda;
-  color: #155724;
+.formGroup label .required {
+  color: #ef4444;
 }
 
-.statusBadge.inactive {
-  background-color: #f8d7da;
-  color: #721c24;
-}
-
-.actionButtons {
-  display: flex;
-  gap: 8px;
-}
-
-.actionBtn {
-  padding: 6px 12px;
-  border: none;
+.formGroup input,
+.formGroup select {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 14px;
+  border: 1.5px solid #e0e0e0;
   border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.8rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
+  background: white;
+  font-family: "Poppins", sans-serif;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
 }
 
-.actionBtn.edit {
-  background-color: #3498db;
-  color: white;
+.formGroup input:focus,
+.formGroup select:focus {
+  outline: none;
+  border-color: #1a1a1a;
 }
 
-.actionBtn.edit:hover {
-  background-color: #2980b9;
-}
-
-.actionBtn.delete {
-  background-color: #e74c3c;
-  color: white;
-}
-
-.actionBtn.delete:hover {
-  background-color: #c0392b;
-}
-
-/* Pagination */
-.pagination {
+.formActions {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 32px;
+  padding: 24px 0;
+  border-top: 1px solid #f0f0f0;
+  flex-shrink: 0;
+  height: 80px;
+  box-sizing: border-box;
+  align-items: center;
+}
+
+.cancelBtn {
+  padding: 10px 20px;
+  background: white;
+  color: #666;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cancelBtn:hover {
+  background: #f5f5f5;
+  border-color: #ddd;
+  color: #1a1a1a;
+}
+
+.submitBtn {
+  padding: 10px 20px;
+  background: #1a1a1a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.submitBtn:hover {
+  background: #333;
+}
+
+.doctorDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.readonlyInput {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 14px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 4px;
+  background: white;
+  font-family: "Poppins", sans-serif;
+  transition: border-color 0.2s;
+  color: #1a1a1a;
+  cursor: default;
+  min-height: 20px;
+  box-sizing: border-box;
+}
+
+.detailsSection {
+  margin-bottom: 32px;
+  padding: 20px;
+}
+
+.sectionTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 20px 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #eee;
+}
+
+.trainingList,
+.certificationsList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.trainingItem,
+.certificationItem {
+  background: white;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #e8e8e8;
+}
+
+/* Availability Modal Styles */
+.largeModal {
+  max-width: 1000px;
+  width: 95%;
+  height: 90vh;
+}
+
+.availabilityTabs {
+  display: flex;
+  border-bottom: 2px solid #f0f0f0;
+  margin-bottom: 24px;
+}
+
+.tabBtn {
+  padding: 12px 24px;
+  background: none;
+  border: none;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.tabBtn.active {
+  color: #1a1a1a;
+  border-bottom-color: #1a1a1a;
+}
+
+.tabBtn:hover {
+  color: #1a1a1a;
+}
+
+.tabContent {
+  display: none;
+}
+
+.tabContent.active {
+  display: block;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.sectionHeader h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.clinicCard {
+  background: white;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.clinicHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 16px 20px;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.clinicInfo h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 4px 0;
+}
+
+.clinicInfo p {
+  font-size: 13px;
+  color: #666;
+  margin: 0;
+}
+
+.scheduleGrid {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.daySchedule {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.dayLabel {
+  min-width: 120px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1a1a1a;
+  display: flex;
   align-items: center;
   gap: 8px;
+  cursor: pointer;
+}
+
+.dayLabel input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.timeSlots {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.timeSlots.disabled {
+  opacity: 0.5;
+}
+
+.timeSlots input[type="time"] {
+  padding: 6px 8px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  background: white;
+  box-sizing: border-box;
+}
+
+.timeSlots input[type="time"]:focus {
+  outline: none;
+  border-color: #1a1a1a;
+}
+
+.timeSlots span {
+  font-size: 13px;
+  color: #666;
+  font-weight: 500;
+}
+
+.onlineStatus {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.toggleSwitch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+
+.toggleSwitch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.3s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.3s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #1a1a1a;
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+.onlineSchedule {
   margin-top: 24px;
 }
 
-.paginationBtn {
-  padding: 8px 12px;
-  border: 1px solid #e0e0e0;
-  background-color: white;
-  color: #2c3e50;
-  cursor: pointer;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
+.consultationSettings {
+  margin-top: 32px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
 }
 
-.paginationBtn:hover {
-  background-color: #f8f9fa;
+.consultationSettings h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 16px 0;
 }
 
-.pageNumbers {
+/* New Schedule Layout Styles */
+.scheduleTable {
+  background: white;
+}
+
+.weekdaysHeader {
   display: flex;
-  gap: 4px;
+  justify-content: space-around;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e8e8e8;
+  gap: 16px;
 }
 
-.pageNumber {
-  padding: 8px 12px;
-  border: 1px solid #e0e0e0;
-  background-color: white;
-  color: #2c3e50;
+.weekdayCheckbox {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.weekdayLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   cursor: pointer;
+  justify-content: center;
+}
+
+.weekdayLabel input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.scheduleContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.dayScheduleSection {
+  transition: all 0.3s ease;
+}
+
+.dayScheduleSection.hidden {
+  display: none;
+}
+
+.scheduleHeaders {
+  display: flex;
+  border-bottom: 1px solid #e8e8e8;
+  padding: 12px 20px;
+}
+
+.headerCell {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+.scheduleRows {
+  padding: 0 20px;
+}
+
+.scheduleRow {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+}
+
+.scheduleRow:last-child {
+  border-bottom: none;
+}
+
+.cell {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+}
+
+.cell input[type="time"] {
+  padding: 6px 8px;
+  border: 1px solid #e0e0e0;
   border-radius: 4px;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  background: white;
+  width: 100px;
+  text-align: center;
 }
 
-.pageNumber:hover {
-  background-color: #f8f9fa;
+.cell input[type="time"]:focus {
+  outline: none;
+  border-color: #1a1a1a;
 }
 
-.pageNumber.active {
-  background-color: #3498db;
-  color: white;
-  border-color: #3498db;
+.cell input[type="text"] {
+  padding: 6px 8px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  background: white;
+  width: 120px;
+}
+
+.cell input[type="text"]:focus {
+  outline: none;
+  border-color: #1a1a1a;
+}
+
+.dayCell {
+  font-weight: 600;
+  color: #1a1a1a;
+  font-size: 13px;
+  min-width: 80px;
+  max-width: 80px;
+}
+
+.dayHeader {
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  min-width: 80px;
+  max-width: 80px;
+}
+
+.cell select {
+  padding: 6px 8px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  background: white;
+  cursor: pointer;
+  width: 140px;
+}
+
+.cell select:focus {
+  outline: none;
+  border-color: #1a1a1a;
+}
+
+.addNewBtn {
+  padding: 6px 12px;
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+  background: white;
+  color: #666;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s;
+  font-family: "Poppins", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  margin: 0 2px;
+}
+
+.addNewBtn:hover {
+  background: #dcfce7;
+  border-color: #22c55e;
+  color: #22c55e;
+}
+
+.removeScheduleBtn {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+  background: white;
+  color: #666;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  margin: 0 2px;
+}
+
+.removeScheduleBtn:hover {
+  background: #fee2e2;
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+.addNewBtn:disabled,
+.removeScheduleBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.addNewBtn:disabled:hover,
+.removeScheduleBtn:disabled:hover {
+  background: white;
+  border-color: #e8e8e8;
+  color: #666;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .doctorsHeader {
-    flex-direction: column;
-    gap: 16px;
-    align-items: flex-start;
+  .adminContent {
+    padding: 16px;
   }
-  
-  .doctorsControls {
+
+  .pageTitle {
+    font-size: 24px;
+  }
+
+  .filtersSection {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .searchBox {
+    max-width: none;
+  }
+
+  .filterControls {
+    justify-content: stretch;
+  }
+
+  .filterSelect {
+    flex: 1;
+    min-width: auto;
+  }
+
+  .tableHeader,
+  .doctorRow {
+    padding: 12px 16px;
+  }
+
+  .colDoctor {
+    min-width: 200px;
+  }
+
+  .colSpecialization,
+  .colPatients,
+  .colStatus,
+  .colActions {
+    min-width: 80px;
+  }
+
+  .doctorAvatar {
+    width: 36px;
+    height: 36px;
+    font-size: 12px;
+  }
+
+  .doctorName {
+    font-size: 13px;
+  }
+
+  .doctorEmail {
+    font-size: 11px;
+  }
+
+  .actionBtn {
+    width: 28px;
+    height: 28px;
+  }
+
+  .actionBtn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .addDoctorBtn {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .addDoctorBtn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .modalContent {
+    width: 95%;
+    margin: 2% auto;
+  }
+
+  .modalHeader {
+    padding: 16px 16px 0 16px;
+  }
+
+  .modalHeader h2 {
+    font-size: 20px;
+  }
+
+  .modalBody {
+    padding: 0 16px 16px 16px;
+  }
+
+  .formRow {
     flex-direction: column;
     gap: 12px;
   }
-  
-  .searchContainer,
-  .filterContainer {
-    max-width: none;
+
+  .formActions {
+    flex-direction: column;
+    gap: 8px;
   }
-  
-  .doctorsTable {
-    font-size: 0.8rem;
+
+  .cancelBtn,
+  .submitBtn {
+    width: 100%;
+    justify-content: center;
   }
-  
-  .doctorsTable th,
-  .doctorsTable td {
-    padding: 12px 8px;
+
+  .viewModal {
+    max-width: 95%;
   }
-} 
+
+  .detailsGrid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .detailsSection {
+    padding: 16px;
+  }
+
+  .sectionTitle {
+    font-size: 16px;
+  }
+}
+
+/* Doctor Details View Styles */
+.doctorDetailsContainer {
+  height: calc(100vh - 100px);
+  padding: 20px;
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.doctorDetailsWrapper {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  overflow: auto;
+}
+
+.doctorDetailsHeader {
+  background: white;
+  color: #1a1a1a;
+  padding: 20px 30px;
+  border-bottom: 1px solid #e0e0e0;
+  flex-shrink: 0;
+}
+
+.backButton {
+  background: #f8f9fa;
+  border: 1px solid #e0e0e0;
+  color: #333;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  font-family: "Poppins", sans-serif;
+}
+
+.backButton:hover {
+  background: #e9ecef;
+  border-color: #434bb8;
+  color: #434bb8;
+}
+
+.doctorDetailsProfileHeader {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.doctorDetailsProfilePicContainer {
+  position: relative;
+}
+
+.doctorDetailsProfilePic {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 3px solid white;
+  object-fit: cover;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  color: #666;
+}
+
+.doctorDetailsBasicInfo h1 {
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0;
+  margin-bottom: 6px;
+}
+
+.doctorDetailsBasicInfo p {
+  font-size: 14px;
+  opacity: 0.9;
+  margin-bottom: 3px;
+}
+
+.doctorDetailsContent {
+  flex: 1;
+  padding: 0 30px 20px 30px;
+  overflow-y: auto;
+}
+
+.doctorDetailsSection {
+  margin-bottom: 25px;
+}
+
+.doctorDetailsSectionTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 15px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #1a1a1a;
+}
+
+.doctorDetailsFieldsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+}
+
+.doctorDetailsField {
+  display: flex;
+  flex-direction: column;
+}
+
+.doctorDetailsFieldLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.doctorDetailsFieldValue {
+  font-size: 15px;
+  color: #333;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+}
+
+.doctorDetailsFieldFull {
+  grid-column: 1 / -1;
+}
+
+/* Doctor Availability View Styles */
+.doctorAvailabilityContainer {
+  height: calc(100vh - 100px);
+  padding: 20px;
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.doctorAvailabilityWrapper {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  
+}
+
+.doctorAvailabilityHeader {
+  background: white;
+  color: #1a1a1a;
+  padding: 20px 30px 0 30px;
+  border-bottom: 1px solid #e0e0e0;
+  flex-shrink: 0;
+}
+
+.doctorAvailabilityTitle {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.doctorAvailabilityContent {
+  flex: 1;
+  padding: 0px 30px;
+
+}
+
+.availabilityTabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e0e0e0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #fff;
+  padding-top: 0;
+  padding-bottom: 8px;
+  margin-top: 0;
+}
+
+.availabilityTabBtn {
+  background: transparent;
+  border: none;
+  padding: 12px 24px;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.availabilityTabBtn.active {
+  color: #434bb8;
+  border-bottom-color: #434bb8;
+}
+
+.availabilityTabBtn:hover {
+  color: #434bb8;
+}
+
+.availabilityTabContent {
+  margin-top: 20px;
+}
+
+.availabilitySectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.availabilitySectionHeader h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.availabilityOnlineStatus {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.availabilityToggleSwitch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.availabilityToggleSwitch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.availabilitySlider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 24px;
+}
+
+.availabilitySlider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .availabilitySlider {
+  background-color: #434bb8;
+}
+
+input:checked + .availabilitySlider:before {
+  transform: translateX(26px);
+}
+
+.availabilityClinicCard {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.availabilityClinicHeader {
+  margin-bottom: 20px;
+}
+
+.availabilityClinicInfo h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 4px 0;
+}
+
+.availabilityClinicInfo p {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+}
+
+.availabilityScheduleTable {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.availabilityWeekdaysHeader {
+  display: flex;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 12px 16px;
+  gap: 20px;
+}
+
+.availabilityWeekdayCheckbox {
+  display: flex;
+  align-items: center;
+}
+
+.availabilityWeekdayLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  cursor: pointer;
+}
+
+.availabilityScheduleContent {
+  padding: 16px;
+}
+
+.availabilityScheduleHeaders {
+  display: flex;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 12px 0;
+  margin-bottom: 12px;
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+}
+
+.availabilityHeaderCell {
+  flex: 1;
+  text-align: center;
+  padding: 0 8px;
+}
+
+.availabilityScheduleRow {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.availabilityScheduleRow:last-child {
+  border-bottom: none;
+}
+
+.availabilityCell {
+  flex: 1;
+  text-align: center;
+  padding: 0 8px;
+}
+
+.availabilityTimeInput {
+  width: 100%;
+  max-width: 120px;
+  padding: 8px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+}
+
+.availabilitySelect {
+  width: 100%;
+  max-width: 150px;
+  padding: 8px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  background: white;
+}
+
+.availabilityAddBtn {
+  background: #434bb8;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.2s;
+  font-family: "Poppins", sans-serif;
+}
+
+.availabilityAddBtn:hover {
+  background: #30368a;
+}
+
+.availabilityOnlineSchedule {
+  margin-top: 20px;
+}
+
+.availabilityScheduleGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.availabilityDaySchedule {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.availabilityDayLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+
+.availabilityTimeSlots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.availabilityTimeSlots.disabled {
+  opacity: 0.5;
+}
+
+.availabilityTimeSlots input[type="time"] {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+}
+
+.availabilityTimeSlots span {
+  font-size: 14px;
+  color: #666;
+}
+
+.availabilityConsultationSettings {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.availabilityConsultationSettings h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 16px 0;
+}
+
+.availabilityFormRow {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 16px;
+}
+
+.availabilityFormGroup {
+  flex: 1;
+}
+
+.availabilityFormGroup label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+.availabilityFormGroup input,
+.availabilityFormGroup select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+}
+
+.availabilityActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 20px 0;
+  border-top: 1px solid #e0e0e0;
+  margin-top: 20px;
+}
+
+.availabilityCancelBtn {
+  background: #f8f9fa;
+  color: #333;
+  border: 1px solid #e0e0e0;
+  padding: 10px 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s;
+  font-family: "Poppins", sans-serif;
+}
+
+.availabilityCancelBtn:hover {
+  background: #e9ecef;
+}
+
+.availabilitySaveBtn {
+  background: #434bb8;
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.2s;
+  font-family: "Poppins", sans-serif;
+}
+
+.availabilitySaveBtn:hover {
+  background: #30368a;
+}
+
+/* Availability Stepper */
+.availabilityStepper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding: 16px;
+  background-color: #f8fafc;
+  border-radius: 8px;
+}
+
+.availabilityStepCircle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #3b82f6;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.availabilityStepLabel {
+  font-size: 16px;
+  font-weight: 500;
+  color: #374151;
+}
+
+/* Availability Toggle Group */
+.availabilityToggleGroup {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  padding: 20px;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.availabilityToggleLeft {
+  display: flex;
+  gap: 2px;
+  background-color: #f3f4f6;
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.toggleBtn {
+  padding: 8px 20px;
+  background-color: transparent;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.toggleBtn.active {
+  background-color: #10b981;
+  color: white;
+}
+
+.toggleBtn:not(.active) {
+  color: #6b7280;
+}
+
+.toggleBtn:not(.active):hover {
+  background-color: #e5e7eb;
+}
+
+.availabilityToggleRight {
+  display: flex;
+  gap: 12px;
+}
+
+.availabilityToggleSettingsBtn {
+  padding: 8px 16px;
+  background-color: #f3f4f6;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.availabilityToggleSettingsBtn:hover {
+  background-color: #e5e7eb;
+}
+
+/* Schedule Section */
+.availabilityScheduleSection {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  min-height: 575px;
+  max-height: 575px;
+}
+
+/* Days checkboxes */
+.scheduleDays {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.scheduleDayLabel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.scheduleDayLabel span {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.scheduleDayLabel input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #3b82f6;
+  cursor: pointer;
+}
+
+/* Schedule Details */
+.scheduleDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.scheduleRow {
+  display: grid;
+  grid-template-columns: 120px 1fr 1fr 1fr 120px;
+  gap: 16px;
+  align-items: center;
+  padding: 12px 0;
+}
+
+.scheduleRowsWrapper {
+  overflow: auto;
+  min-height: 370px;
+  max-height: 370px;
+}
+
+
+
+.scheduleRowLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.scheduleLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.scheduleCell {
+  display: flex;
+  align-items: center;
+}
+
+.scheduleTimeInput {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #374151;
+  background-color: #ffffff;
+}
+
+.scheduleTimeInput:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.scheduleCell select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #374151;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.scheduleCell select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.scheduleButtons {
+  display: flex;
+  gap: 8px;
+}
+
+.addNewSlotBtn {
+  padding: 6px 12px;
+  background-color: #f3f4f6;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.addNewSlotBtn:hover {
+  background-color: #e5e7eb;
+}
+
+/* Edit Toggle */
+.availabilityEditToggle {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.availabilityEditBtn {
+  padding: 12px 24px;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.availabilityEditBtn:hover {
+  background-color: #2563eb;
+}
