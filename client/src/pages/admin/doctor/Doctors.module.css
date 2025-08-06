@@ -387,7 +387,7 @@
   border-radius: 12px;
   width: 90%;
   max-width: 800px;
-  height: 85vh;
+  height: 50vh;
   overflow: hidden;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
   display: flex;
@@ -399,7 +399,7 @@
   flex: 1;
   overflow-y: auto;
   min-height: 0;
-  background: red;
+  
 }
 
 .modalHeader {
@@ -484,9 +484,8 @@
   gap: 12px;
   margin-top: 32px;
   padding: 24px 0;
-  border-top: 1px solid #f0f0f0;
   flex-shrink: 0;
-  height: 80px;
+  height: 50px;
   box-sizing: border-box;
 }
 
@@ -1425,6 +1424,35 @@ input:checked + .availabilitySlider:before {
   transform: translateX(26px);
 }
 
+.onlineAvailabilityHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.onlineAvailabilityHeader h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.onlineScheduleGrid {
+  display: grid;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.onlineSection {
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
 .availabilityClinicCard {
   border: 1px solid #e0e0e0;
   border-radius: 8px;
@@ -1653,7 +1681,6 @@ input:checked + .availabilitySlider:before {
   gap: 12px;
   padding: 20px 0;
   border-top: 1px solid #e0e0e0;
-  margin-top: 20px;
 }
 
 .availabilityCancelBtn {
@@ -1852,7 +1879,7 @@ input:checked + .availabilitySlider:before {
 .scheduleDetails {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  
   flex: 1;
   overflow: hidden;
 }
@@ -1867,8 +1894,9 @@ input:checked + .availabilitySlider:before {
 
 .scheduleRowsWrapper {
   overflow: auto;
-  min-height: 500px;
-  max-height: 500px;
+  min-height: 450px;
+  max-height: 450px;
+
 }
 
 
@@ -2007,7 +2035,7 @@ input:checked + .availabilitySlider:before {
   display: flex;
   flex-direction: column;
   gap: 24px;
-  margin-bottom: 20px;
+  margin-top: 20px;
 }
 
 .clinicCard {
