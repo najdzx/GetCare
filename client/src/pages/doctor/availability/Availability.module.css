@@ -1,3 +1,10 @@
+.scheduleActionBtn {
+  min-width: 120px;
+  max-width: 180px;
+  width: 120px;
+  text-align: center;
+  justify-content: center;
+}
 /* Availability page styles - separate from MyClinic */
 .availabilityContainer {
   max-width: 1300px;
@@ -293,50 +300,7 @@
   cursor: not-allowed;
 }
 
-.availabilityScheduleSection .scheduleRow button {
-  background: #434bb8;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  transition: background 0.2s;
-  height: 40px;
-  width: 120px;
-  white-space: nowrap;
-}
 
-.availabilityScheduleSection .scheduleRow button:hover {
-  background: #30368a;
-}
-
-.availabilityScheduleSection .scheduleRow button:disabled {
-  background: #434bb8;
-  color: white;
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
-.availabilityScheduleSection .removeSlotBtn {
-  background: #e53935;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  transition: background 0.2s;
-  height: 40px;
-  width: 120px;
-  white-space: nowrap;
-}
-
-.availabilityScheduleSection .removeSlotBtn:hover {
-  background: #c62828;
-}
 
 .availabilityScheduleSection .scheduleButtons {
   display: flex;
