@@ -427,7 +427,7 @@ function MyClinic() {
                                   <button 
                                     type="button" 
                                     onClick={() => handleRemoveSlot(day, slotIndex)}
-                                    className="global-btn danger small"
+                                    className="global-btn secondary"
                                   >
                                     Remove
                                   </button>
@@ -436,9 +436,9 @@ function MyClinic() {
                                   <button 
                                     type="button" 
                                     onClick={() => handleAddNewSlot(day)}
-                                    className="global-btn secondary small"
+                                    className="global-btn secondary"
                                   >
-                                    ADD NEW
+                                    Add New
                                   </button>
                                 )}
                               </div>
