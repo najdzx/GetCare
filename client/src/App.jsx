@@ -26,7 +26,7 @@ import Availability from './pages/doctor/availability/Availability';
 import AdminLayoutRoute from './components/admin/AdminLayoutRoute';
 import AdminDashboard from './pages/admin/Dashboard';
 import AdminPatients from './pages/admin/Patients';
-import AdminDoctors from './pages/admin/Doctors';
+import AdminDoctors from './pages/admin/doctor/Doctors';
 import AdminAppointments from './pages/admin/Appointments';
 import AdminMessages from './pages/admin/Messages';
 import AdminClinics from './pages/admin/Clinics';
