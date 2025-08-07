@@ -960,187 +960,186 @@ const AppointmentsSection = ({ doctor }) => {
       {/* Patient Details Modal */}
       {showPatientDetailsModal && selectedPatientForDetails && (
         <div className={styles.patientModalOverlay} onClick={closePatientDetailsModal}>
-          <div className={styles.patientModal} onClick={(e) => e.stopPropagation()}>
+          <div className={styles.patientModalContent} onClick={(e) => e.stopPropagation()}>
             <div className={styles.patientModalHeader}>
-              <h3>Patient Details</h3>
-              <button className={styles.patientCloseModal} onClick={closePatientDetailsModal}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <h2>{selectedPatientForDetails.firstName || selectedPatientForDetails.patientName.split(' ')[0]} {selectedPatientForDetails.lastName || selectedPatientForDetails.patientName.split(' ')[1]}</h2>
+              <button className={styles.patientCloseBtn} onClick={closePatientDetailsModal}>
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                 </svg>
               </button>
             </div>
             
-            <div className={styles.patientModalContent}>
-              {/* Patient Avatar and Basic Info */}
-              <div className={styles.patientAvatarSection}>
-                <div className={styles.patientAvatar}>
-                  <div className={styles.patientProfilePic}>
-                    👤
+            <div className={styles.patientModalBody}>
+              <div className={styles.patientDetailsContainer}>
+                {/* Basic Information Section */}
+                <div className={styles.patientDetailsSection}>
+                  <h3 className={styles.patientSectionTitle}>Basic Information</h3>
+                  
+                  <div className={styles.patientFormRow}>
+                    <div className={styles.patientFormGroup}>
+                      <label>Patient ID</label>
+                      <div className={styles.patientReadonlyInput}>{selectedPatientForDetails.patientId}</div>
+                    </div>
                   </div>
-                  <div className={styles.patientAvatarInfo}>
-                    <div className={styles.patientAvatarName}>{selectedPatientForDetails.patientName}</div>
-                    <div className={styles.patientAvatarId}>Patient ID: {selectedPatientForDetails.patientId}</div>
-                  </div>
-                </div>
-              </div>
-
-              <div className={styles.patientDetailsGrid}>
-                {/* Personal Information Section */}
-                <div className={styles.patientInfoSection}>
-                  <h4>Personal Information</h4>
-                  <div className={styles.patientViewGrid}>
-                    <div className={styles.patientViewGroup}>
+                  
+                  <div className={styles.patientFormRow}>
+                    <div className={styles.patientFormGroup}>
                       <label>First Name</label>
-                      <span>{selectedPatientForDetails.firstName || selectedPatientForDetails.patientName.split(' ')[0]}</span>
+                      <div className={styles.patientReadonlyInput}>{selectedPatientForDetails.firstName || selectedPatientForDetails.patientName.split(' ')[0]}</div>
                     </div>
-                    <div className={styles.patientViewGroup}>
+                    <div className={styles.patientFormGroup}>
+                      <label>Middle Name</label>
+                      <div className={styles.patientReadonlyInput}>-</div>
+                    </div>
+                    <div className={styles.patientFormGroup}>
                       <label>Last Name</label>
-                      <span>{selectedPatientForDetails.lastName || selectedPatientForDetails.patientName.split(' ')[1]}</span>
+                      <div className={styles.patientReadonlyInput}>{selectedPatientForDetails.lastName || selectedPatientForDetails.patientName.split(' ')[1]}</div>
                     </div>
-                    <div className={styles.patientViewGroup}>
-                      <label>Suffix</label>
-                      <span>{selectedPatientForDetails.suffix || "N/A"}</span>
+                  </div>
+                  
+                  <div className={styles.patientFormRow}>
+                    <div className={styles.patientFormGroup}>
+                      <label>Sex</label>
+                      <div className={styles.patientReadonlyInput}>{selectedPatientForDetails.sex || '-'}</div>
                     </div>
-                    <div className={styles.patientViewGroup}>
-                      <label>Nickname</label>
-                      <span>{selectedPatientForDetails.nickName || "N/A"}</span>
-                    </div>
-                    <div className={styles.patientViewGroup}>
+                    <div className={styles.patientFormGroup}>
                       <label>Date of Birth</label>
-                      <span>
+                      <div className={styles.patientReadonlyInput}>
                         {selectedPatientForDetails.dateOfBirth 
                           ? new Date(selectedPatientForDetails.dateOfBirth).toLocaleDateString('en-US', { 
                               year: 'numeric', 
                               month: 'long', 
                               day: 'numeric' 
                             })
-                          : "N/A"
+                          : '-'
                         }
-                      </span>
+                      </div>
                     </div>
-                    <div className={styles.patientViewGroup}>
+                    <div className={styles.patientFormGroup}>
                       <label>Age</label>
-                      <span>{selectedPatientForDetails.age || "N/A"}</span>
-                    </div>
-                    <div className={styles.patientViewGroup}>
-                      <label>Sex</label>
-                      <span>{selectedPatientForDetails.sex || "N/A"}</span>
-                    </div>
-                    <div className={styles.patientViewGroup}>
-                      <label>Blood Type</label>
-                      <span>{selectedPatientForDetails.bloodType || "N/A"}</span>
-                    </div>
-                    <div className={styles.patientViewGroup}>
-                      <label>Civil Status</label>
-                      <span>{selectedPatientForDetails.civilStatus || "N/A"}</span>
-                    </div>
-                    <div className={styles.patientViewGroup}>
-                      <label>PhilHealth No.</label>
-                      <span>{selectedPatientForDetails.philHealthNo || "N/A"}</span>
-                    </div>
-                    <div className={styles.patientViewGroup}>
-                      <label>Email Address</label>
-                      <span>{selectedPatientForDetails.patientEmail}</span>
-                    </div>
-                    <div className={styles.patientViewGroup}>
-                      <label>Primary Mobile</label>
-                      <span>{selectedPatientForDetails.primaryMobile || selectedPatientForDetails.phone || "N/A"}</span>
+                      <div className={styles.patientReadonlyInput}>{selectedPatientForDetails.age || '-'}</div>
                     </div>
                   </div>
+                  
+                  <div className={styles.patientFormRow}>
+                    <div className={styles.patientFormGroup}>
+                      <label>Blood Type</label>
+                      <div className={styles.patientReadonlyInput}>{selectedPatientForDetails.bloodType || '-'}</div>
+                    </div>
+                    <div className={styles.patientFormGroup}>
+                      <label>Phone Number</label>
+                      <div className={styles.patientReadonlyInput}>{selectedPatientForDetails.primaryMobile || selectedPatientForDetails.phone || '-'}</div>
+                    </div>
+                    <div className={styles.patientFormGroup}>
+                      <label>Email Address</label>
+                      <div className={styles.patientReadonlyInput}>{selectedPatientForDetails.patientEmail}</div>
+                    </div>
+                  </div>
+                  
                 </div>
 
-                {/* Medical Background Section */}
-                <div className={styles.patientInfoSection}>
-                  <h4>Medical Background</h4>
-                  <div className={styles.patientViewGrid}>
-                    <div className={`${styles.patientViewGroup} ${styles.fullWidth}`}>
+                {/* Medical Background */}
+                <div className={styles.patientDetailsSection}>
+                  <h3 className={styles.patientSectionTitle}>Medical Background</h3>
+                  
+                  <div className={styles.patientFormRow}>
+                    <div className={styles.patientFormGroup}>
                       <label>Known Medical Conditions</label>
-                      <div className={styles.patientViewField}>
+                      <div className={styles.patientReadonlyInput}>
                         {selectedPatientForDetails.medicalConditions ? 
                           selectedPatientForDetails.medicalConditions.split('\n').map((condition, index) => (
                             <div key={index}>{condition}</div>
                           )) : 
-                          <div>No known medical conditions</div>
+                          '-'
                         }
                       </div>
                     </div>
-                    <div className={`${styles.patientViewGroup} ${styles.fullWidth}`}>
+                  </div>
+                  
+                  <div className={styles.patientFormRow}>
+                    <div className={styles.patientFormGroup}>
                       <label>Allergies</label>
-                      <div className={styles.patientViewField}>
-                        {selectedPatientForDetails.allergies ? 
+                      <div className={styles.patientReadonlyInput}>
+                        {selectedPatientForDetails.allergies && selectedPatientForDetails.allergies !== 'None Known' ? 
                           selectedPatientForDetails.allergies.split('\n').map((allergy, index) => (
                             <div key={index}>{allergy}</div>
                           )) : 
-                          <div>No known allergies</div>
+                          'None recorded'
                         }
                       </div>
                     </div>
-                    <div className={`${styles.patientViewGroup} ${styles.fullWidth}`}>
+                  </div>
+                  
+                  <div className={styles.patientFormRow}>
+                    <div className={styles.patientFormGroup}>
                       <label>Previous Surgeries</label>
-                      <div className={styles.patientViewField}>
-                        {selectedPatientForDetails.previousSurgeries ? 
+                      <div className={styles.patientReadonlyInput}>
+                        {selectedPatientForDetails.previousSurgeries && selectedPatientForDetails.previousSurgeries !== 'None' ? 
                           selectedPatientForDetails.previousSurgeries.split('\n').map((surgery, index) => (
                             <div key={index}>{surgery}</div>
                           )) : 
-                          <div>No previous surgeries</div>
+                          '-'
                         }
                       </div>
                     </div>
-                    <div className={`${styles.patientViewGroup} ${styles.fullWidth}`}>
+                  </div>
+                  
+                  <div className={styles.patientFormRow}>
+                    <div className={styles.patientFormGroup}>
                       <label>Family History</label>
-                      <div className={styles.patientViewField}>
+                      <div className={styles.patientReadonlyInput}>
                         {selectedPatientForDetails.familyHistory ? 
                           selectedPatientForDetails.familyHistory.split('\n').map((history, index) => (
                             <div key={index}>{history}</div>
                           )) : 
-                          <div>No significant family history</div>
+                          '-'
                         }
                       </div>
                     </div>
-                    <div className={`${styles.patientViewGroup} ${styles.fullWidth}`}>
+                  </div>
+                  
+                  <div className={styles.patientFormRow}>
+                    <div className={styles.patientFormGroup}>
                       <label>Current Medications</label>
-                      <div className={styles.patientViewField}>
+                      <div className={styles.patientReadonlyInput}>
                         {selectedPatientForDetails.currentMedications ? 
                           selectedPatientForDetails.currentMedications.split('\n').map((med, index) => (
                             <div key={index}>{med}</div>
                           )) : 
-                          <div>No current medications</div>
+                          'None recorded'
                         }
                       </div>
                     </div>
-                    <div className={`${styles.patientViewGroup} ${styles.fullWidth}`}>
+                  </div>
+                  
+                  <div className={styles.patientFormRow}>
+                    <div className={styles.patientFormGroup}>
                       <label>Supplements</label>
-                      <div className={styles.patientViewField}>
+                      <div className={styles.patientReadonlyInput}>
                         {selectedPatientForDetails.supplements ? 
                           selectedPatientForDetails.supplements.split('\n').map((supplement, index) => (
                             <div key={index}>{supplement}</div>
                           )) : 
-                          <div>No supplements</div>
+                          '-'
                         }
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Concern Section */}
-                <div className={styles.patientInfoSection}>
-                  <h4>Concern</h4>
-                  <div className={styles.patientViewGrid}>
-                    <div className={`${styles.patientViewGroup} ${styles.fullWidth}`}>
-                      <div className={styles.patientViewField}>
-                        {/* Intentionally left blank */}
-                      </div>
+                {/* Concern */}
+                <div className={styles.patientDetailsSection}>
+                  <h3 className={styles.patientSectionTitle}>Concern</h3>
+                  
+                  <div className={styles.patientFormRow}>
+                    <div className={styles.patientFormGroup}>
+                      <label>Current Concern</label>
+                      <div className={styles.patientReadonlyInput}>{selectedPatientForDetails.notes || '-'}</div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-
-            <div className={styles.patientModalFooter}>
-              <button className="global-btn secondary" onClick={closePatientDetailsModal}>
-                Close
-              </button>
             </div>
           </div>
         </div>
