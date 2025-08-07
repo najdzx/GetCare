@@ -69,7 +69,6 @@ const AdminTopNav = ({ collapsed }) => {
             alt="Admin"
             className="profile-pic"
           />
-          <span>Admin User</span>
           {showProfileDropdown && (
             <div className="dropdown-menu">
               <ul>

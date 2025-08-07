@@ -38,7 +38,11 @@ const Patients = () => {
       emergencyPhone: '+1 (555) 987-6543',
       emergencyRelation: 'Spouse',
       allergies: 'Penicillin, Shellfish',
-      medications: 'Lisinopril 10mg daily, Metformin 500mg twice daily'
+      medications: 'Lisinopril 10mg daily, Metformin 500mg twice daily',
+      referralDoctors: [
+        { name: 'Dr. Emily Wilson', specialty: 'Endocrinology', date: 'Nov 15, 2024' },
+        { name: 'Dr. James Brown', specialty: 'Ophthalmology', date: 'Oct 8, 2024' }
+      ]
     },
     2: {
       id: 2,
@@ -65,7 +69,8 @@ const Patients = () => {
       emergencyPhone: '+1 (555) 876-5432',
       emergencyRelation: 'Father',
       allergies: 'None known',
-      medications: 'Birth control pills'
+      medications: 'Birth control pills',
+      referralDoctors: []
     },
     // ... other patient data (3-6) would be here
   };
@@ -437,83 +442,96 @@ const Patients = () => {
                     </div>
                   </div>
                   
+                </div>
+
+                {/* Medical Background */}
+                <div className={styles.detailsSection}>
+                  <h3 className={styles.sectionTitle}>Medical Background</h3>
+                  
                   <div className={styles.formRow}>
                     <div className={styles.formGroup}>
-                      <label>Address</label>
-                      <div className={styles.readonlyInput}>{selectedPatient.address}</div>
+                      <label>Known Medical Conditions</label>
+                      <div className={styles.readonlyInput}>-</div>
+                    </div>
+                  </div>
+                  
+                  <div className={styles.formRow}>
+                    <div className={styles.formGroup}>
+                      <label>Allergies</label>
+                      <div className={styles.readonlyInput}>{selectedPatient.allergies || 'None recorded'}</div>
+                    </div>
+                  </div>
+                  
+                  <div className={styles.formRow}>
+                    <div className={styles.formGroup}>
+                      <label>Previous Surgeries</label>
+                      <div className={styles.readonlyInput}>-</div>
+                    </div>
+                  </div>
+                  
+                  <div className={styles.formRow}>
+                    <div className={styles.formGroup}>
+                      <label>Family History</label>
+                      <div className={styles.readonlyInput}>-</div>
+                    </div>
+                  </div>
+                  
+                  <div className={styles.formRow}>
+                    <div className={styles.formGroup}>
+                      <label>Current Medications</label>
+                      <div className={styles.readonlyInput}>{selectedPatient.medications || 'None recorded'}</div>
+                    </div>
+                  </div>
+                  
+                  <div className={styles.formRow}>
+                    <div className={styles.formGroup}>
+                      <label>Supplements</label>
+                      <div className={styles.readonlyInput}>-</div>
                     </div>
                   </div>
                 </div>
 
-                {/* Medical Information Section */}
+                {/* Concern */}
                 <div className={styles.detailsSection}>
-                  <h3 className={styles.sectionTitle}>Medical Information</h3>
+                  <h3 className={styles.sectionTitle}>Concern</h3>
+                  
+                  <div className={styles.formRow}>
+                    <div className={styles.formGroup}>
+                      <label>Current Concern</label>
+                      <div className={styles.readonlyInput}>-</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Doctor Assignment */}
+                <div className={styles.detailsSection}>
+                  <h3 className={styles.sectionTitle}>Doctor Assignment</h3>
                   
                   <div className={styles.formRow}>
                     <div className={styles.formGroup}>
                       <label>Assigned Doctor</label>
                       <div className={styles.readonlyInput}>{selectedPatient.assignedDoctor} ({selectedPatient.doctorSpecialty})</div>
                     </div>
-                    <div className={styles.formGroup}>
-                      <label>Registration Date</label>
-                      <div className={styles.readonlyInput}>{selectedPatient.registrationDate}</div>
-                    </div>
                   </div>
                   
                   <div className={styles.formRow}>
                     <div className={styles.formGroup}>
-                      <label>Last Visit</label>
-                      <div className={styles.readonlyInput}>{selectedPatient.lastVisit}</div>
-                    </div>
-                    <div className={styles.formGroup}>
-                      <label>Total Visits</label>
-                      <div className={styles.readonlyInput}>{selectedPatient.totalVisits}</div>
-                    </div>
-                    <div className={styles.formGroup}>
-                      <label>Status</label>
-                      <div className={styles.readonlyInput}>{selectedPatient.statusText}</div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Emergency Contact Section */}
-                <div className={styles.detailsSection}>
-                  <h3 className={styles.sectionTitle}>Emergency Contact</h3>
-                  
-                  <div className={styles.formRow}>
-                    <div className={styles.formGroup}>
-                      <label>Contact Name</label>
-                      <div className={styles.readonlyInput}>{selectedPatient.emergencyName || '-'}</div>
-                    </div>
-                    <div className={styles.formGroup}>
-                      <label>Contact Phone</label>
-                      <div className={styles.readonlyInput}>{selectedPatient.emergencyPhone || '-'}</div>
-                    </div>
-                    <div className={styles.formGroup}>
-                      <label>Relationship</label>
-                      <div className={styles.readonlyInput}>{selectedPatient.emergencyRelation || '-'}</div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Allergies Section */}
-                <div className={styles.detailsSection}>
-                  <h3 className={styles.sectionTitle}>Known Allergies</h3>
-                  <div className={styles.allergiesList}>
-                    <div className={styles.formGroup}>
-                      <label>Allergies</label>
-                      <div className={styles.readonlyInput}>{selectedPatient.allergies || 'None recorded'}</div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Current Medications Section */}
-                <div className={styles.detailsSection}>
-                  <h3 className={styles.sectionTitle}>Current Medications</h3>
-                  <div className={styles.medicationsList}>
-                    <div className={styles.formGroup}>
-                      <label>Medications</label>
-                      <div className={styles.readonlyInput}>{selectedPatient.medications || 'None recorded'}</div>
+                      <label>Referral Doctors</label>
+                      <div className={styles.readonlyInput}>
+                        <div className={styles.referralList}>
+                          {selectedPatient.referralDoctors && selectedPatient.referralDoctors.length > 0 ? (
+                            selectedPatient.referralDoctors.map((referral, index) => (
+                              <div key={index} className={styles.referralItem}>
+                                <div className={styles.referralDoctor}>{referral.name}</div>
+                                <div className={styles.referralSpecialty}>{referral.specialty}</div>
+                                <div className={styles.referralDate}>Referred: {referral.date}</div>
+                              </div>
+                            ))
+                          ) : (
+                            <div className={styles.referralItem}>No referrals on record</div>
+                          )}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
