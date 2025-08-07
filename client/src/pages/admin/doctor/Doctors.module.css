@@ -1,3 +1,307 @@
+/* Edit button container for online tab, bottom right of availabilityScheduleSection */
+.onlineEditBtnContainer {
+  position: absolute;
+  bottom: 32px;
+  display: flex;
+  justify-content: flex-end;
+  pointer-events: none;
+}
+
+.onlineEditBtnContainer button {
+  pointer-events: auto;
+}
+
+/* History Section Styles */
+.historySection {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.historySectionHeader {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.historySectionHeader h3 {
+  margin: 0 0 4px 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.historySectionHeader p {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.historyFilters {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  align-items: end;
+  padding-top: 10px;
+}
+
+.historyFilters .filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 180px;
+}
+
+.historyFilters .filterGroup label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.historyFilters .filterInput,
+.historyFilters .filterSelect {
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  background: white;
+  transition: border-color 0.2s ease;
+}
+
+.historyFilters .filterInput:focus,
+.historyFilters .filterSelect:focus {
+  outline: none;
+  border-color: #0052cc;
+  box-shadow: 0 0 0 3px rgba(0, 82, 204, 0.1);
+}
+
+.historySummary {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.historySummary .summaryCard {
+  flex: 1;
+  min-width: 120px;
+  padding: 16px;
+  background: #ffffff;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.historySummary .summaryNumber {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.historySummary .summaryLabel {
+  font-size: 12px;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.historyList {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 10px;
+}
+
+.historyDateGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.historyDateHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.historyDateHeader h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.historyCount {
+  font-size: 12px;
+  color: #64748b;
+  background: #f8f9fa;
+  padding: 4px 8px;
+  border-radius: 12px;
+}
+
+.historyEntries {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.historyEntry {
+  display: flex;
+  gap: 16px;
+  padding: 20px;
+  background: #ffffff;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.historyEntry:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.historyIcon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+}
+
+.historyContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.historyEntryHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  gap: 16px;
+}
+
+.historyEntryHeader h5 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e293b;
+  line-height: 1.4;
+}
+
+.historyTimestamp {
+  font-size: 12px;
+  color: #64748b;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.historyDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.historyDetailRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.historyDetailRow strong {
+  color: #374151;
+  font-weight: 500;
+  min-width: 80px;
+  flex-shrink: 0;
+}
+
+/* Action Badges */
+.actionBadge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.actionEDIT_APPOINTMENT {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.actionDELETE_APPOINTMENT {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+.actionMESSAGE_SENT {
+  background-color: #dcfce7;
+  color: #16a34a;
+}
+
+/* Priority Badges */
+.priorityBadge {
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.priorityLow {
+  background-color: #f0f9ff;
+  color: #0369a1;
+}
+
+.priorityNormal {
+  background-color: #f8fafc;
+  color: #475569;
+}
+
+.priorityHigh {
+  background-color: #fff7ed;
+  color: #c2410c;
+}
+
+.priorityUrgent {
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+.notificationSent {
+  color: #16a34a;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.noHistory {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+  color: #64748b;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 2px dashed #e2e8f0;
+}
+
 /* AllDoctors.module.css */
 .container {
   height: calc(100vh - 100px);
@@ -1158,6 +1462,15 @@ input:checked + .slider:before {
   flex-shrink: 0;
 }
 
+.doctorDetailsHeaderRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 32px;
+  padding: 16px 32px;
+}
+
 .backButton {
   background: #f8f9fa;
   border: 1px solid #e0e0e0;
@@ -1183,7 +1496,7 @@ input:checked + .slider:before {
 .doctorDetailsProfileHeader {
   display: flex;
   align-items: center;
-  gap: 25px;
+  gap: 24px;
 }
 
 .doctorDetailsProfilePicContainer {
@@ -1254,6 +1567,10 @@ input:checked + .slider:before {
   margin-bottom: 6px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+}
+
+.doctorDetailsFieldLabel .required {
+  color: #ef4444;
 }
 
 .doctorDetailsFieldValue {
@@ -1358,6 +1675,7 @@ input:checked + .slider:before {
   overflow: auto;
   display: flex;
   flex-direction: column;
+  
 }
 
 .availabilitySectionHeader {
@@ -2298,4 +2616,1168 @@ input:checked + .availabilitySlider:before {
 
 .clinicAddNewSlotBtn:hover {
   background-color: #30368a;
+}
+
+/* Patients Section Styles */
+.patientsSection {
+  background-color: #ffffff;
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.patientsTabNav {
+  display: flex;
+  margin-bottom: 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.patientTabBtn {
+  padding: 12px 24px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.patientTabBtn:hover {
+  color: #374151;
+}
+
+.patientTabBtn.active {
+  color: #434bb8;
+  border-bottom-color: #434bb8;
+}
+
+.patientsTabContent {
+  padding: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.patientsSectionHeader {
+  margin-bottom: 24px;
+}
+
+.patientsSectionHeader h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 8px 0;
+}
+
+.patientsSectionHeader p {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.patientsList {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+
+.patientCard {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 20px;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.patientCard:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border-color: #d1d5db;
+}
+
+.patientCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.patientInfo h4 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 8px 0;
+}
+
+.patientContact {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.patientContact span {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.patientActions {
+  display: flex;
+  gap: 8px;
+}
+
+.patientDetails {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.patientDetailRow {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.patientDetailRow label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.patientDetailRow span {
+  font-size: 14px;
+  color: #374151;
+}
+
+.statusBadge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+  max-width: fit-content;
+}
+
+.statusActive {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.statusFollowUp {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.statusComplete {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.statusOngoing {
+  background-color: #e0e7ff;
+  color: #3730a3;
+}
+
+.statusPending {
+  background-color: #fde2e8;
+  color: #be185d;
+}
+
+.statusDefault {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+/* Appointments Section Styles */
+.appointmentsSection {
+  background-color: #ffffff;
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.appointmentsSectionHeader {
+  margin-bottom: 24px;
+}
+
+.appointmentsSectionHeader h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 8px 0;
+}
+
+.appointmentsSectionHeader p {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.appointmentsFilters {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  align-items: end;
+  padding-top: 10px;
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 150px;
+}
+
+.filterGroup label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.filterInput, .filterSelect {
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #374151;
+  background-color: #ffffff;
+  height: 38px;
+  box-sizing: border-box;
+}
+
+.filterInput:focus, .filterSelect:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.appointmentsSummary {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.summaryCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  background-color: #f9fafb;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  min-width: 120px;
+}
+
+.summaryNumber {
+  font-size: 24px;
+  font-weight: 700;
+  color: #434bb8;
+  margin-bottom: 4px;
+}
+
+.summaryLabel {
+  font-size: 12px;
+  font-weight: 500;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.appointmentsList {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 10px;
+}
+
+.noAppointments {
+  text-align: center;
+  padding: 40px;
+  color: #6b7280;
+}
+
+.appointmentDateGroup {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.appointmentDateHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background-color: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.appointmentDateHeader h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.appointmentCount {
+  font-size: 12px;
+  color: #6b7280;
+  background-color: #e5e7eb;
+  padding: 4px 8px;
+  border-radius: 12px;
+}
+
+.appointmentCards {
+  padding: 0;
+}
+
+.appointmentCard {
+  padding: 20px;
+  border-bottom: 1px solid #f3f4f6;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.appointmentCard:last-child {
+  border-bottom: none;
+}
+
+.appointmentCard:hover {
+  background-color: #f9fafb;
+}
+
+.appointmentCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.appointmentTime {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.appointmentTime .time {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.appointmentTime .duration {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.appointmentBadges {
+  display: flex;
+  gap: 8px;
+}
+
+.typeBadge, .statusBadge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.typeConsultation {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.typeFollowUp {
+  background-color: #f3e8ff;
+  color: #7c3aed;
+}
+
+.typeOnline {
+  background-color: #ecfdf5;
+  color: #059669;
+}
+
+.typeDefault {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.statusConfirmed {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.statusPending {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.statusCompleted {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.statusCancelled {
+  background-color: #fde2e8;
+  color: #be185d;
+}
+
+.appointmentContent {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 20px;
+  margin-bottom: 16px;
+}
+
+.patientInfo h5 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 4px 0;
+}
+
+.patientEmail {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.appointmentDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.appointmentDetailRow {
+  display: flex;
+  gap: 8px;
+}
+
+.appointmentDetailRow label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  min-width: 60px;
+}
+
+.appointmentDetailRow span {
+  font-size: 14px;
+  color: #374151;
+}
+
+.appointmentActions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.meetLinkContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.meetLink {
+  color: #434bb8;
+  text-decoration: none;
+  font-size: 14px;
+  word-break: break-all;
+  max-width: 300px;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.meetLink:hover {
+  text-decoration: underline;
+}
+
+.copyLinkBtn {
+  padding: 4px;
+  background: none;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.copyLinkBtn:hover {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+/* Appointment Edit/Message Modal Styles */
+.appointmentModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.appointmentModal {
+  background: white;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  position: relative;
+}
+
+.appointmentModalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+  border-bottom: 1px solid #e5e7eb;
+  flex-shrink: 0;
+}
+
+.appointmentModalHeader h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+.appointmentCloseModal {
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.appointmentCloseModal:hover {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.appointmentModalContent {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+}
+
+.appointmentModalFooter {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 24px;
+  border-top: 1px solid #e5e7eb;
+  flex-shrink: 0;
+}
+
+/* Appointment Form Styles */
+.appointmentModalForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  /* Clean form without container styling */
+}
+
+.appointmentFormRow {
+  display: flex;
+  gap: 16px;
+}
+
+.appointmentFormRow .appointmentFormGroup {
+  flex: 1;
+}
+
+.appointmentFormGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.appointmentFormGroup label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.appointmentFormInput,
+.appointmentFormSelect,
+.appointmentFormTextarea {
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: inherit;
+}
+
+.appointmentFormInput:focus,
+.appointmentFormSelect:focus,
+.appointmentFormTextarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.appointmentFormTextarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.appointmentFormCheckbox {
+  margin-right: 8px;
+  accent-color: #3b82f6;
+}
+
+.appointmentCheckboxLabel {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.appointmentDisabledInput {
+  background-color: #f9fafb !important;
+  cursor: default !important;
+  color: #6b7280;
+}
+
+.appointmentFormHint {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+.appointmentPreviousNotes {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 12px;
+  font-size: 14px;
+  color: #374151;
+  white-space: pre-wrap;
+  max-height: 100px;
+  overflow-y: auto;
+}
+
+/* Appointment Message Modal Specific Styles */
+.appointmentMessageInfo {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.appointmentMessageInfoRow {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.appointmentMessageInfoRow:last-child {
+  margin-bottom: 0;
+}
+
+.appointmentMessageInfoRow strong {
+  color: #374151;
+  min-width: 100px;
+}
+
+/* Appointment Modal Responsive Design */
+@media (max-width: 768px) {
+  .appointmentModalOverlay {
+    padding: 10px;
+  }
+  
+  .appointmentModal {
+    max-width: 100%;
+    max-height: 95vh;
+  }
+  
+  .appointmentModalHeader,
+  .appointmentModalContent,
+  .appointmentModalFooter {
+    padding: 16px;
+  }
+  
+  .appointmentFormRow {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .appointmentModalFooter {
+    flex-direction: column;
+  }
+  
+  .appointmentModalFooter button {
+    width: 100%;
+  }
+}
+
+/* Message Modal Styles */
+.messageModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.messageModal {
+  background: white;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.messageModalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.messageModalHeader h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.messageCloseModal {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.messageCloseModal:hover {
+  color: #333;
+}
+
+.messageModalContent {
+  padding: 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.messageModalForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.messageFormRow {
+  display: flex;
+  gap: 20px;
+}
+
+.messageFormGroup {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.messageFormGroup label {
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #333;
+}
+
+.messageFormInput,
+.messageFormSelect,
+.messageFormTextarea {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.messageFormInput:focus,
+.messageFormSelect:focus,
+.messageFormTextarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.messageFormTextarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.messageModalFooter {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 20px;
+  border-top: 1px solid #eee;
+}
+
+.messageInfo {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.messageInfoRow {
+  margin-bottom: 8px;
+}
+
+.messageInfoRow:last-child {
+  margin-bottom: 0;
+}
+
+.messageInfoRow strong {
+  color: #333;
+  margin-right: 8px;
+}
+
+/* Responsive styles for message modal */
+@media (max-width: 768px) {
+  .messageModal {
+    width: 95%;
+    margin: 20px;
+  }
+  
+  .messageFormRow {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .messageModalFooter {
+    flex-direction: column;
+  }
+  
+  .messageModalFooter button {
+    width: 100%;
+  }
+}
+
+/* Patient Details Modal Styles */
+.patientModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.patientModal {
+  background: white;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 1000px;
+  max-height: 80vh;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.patientModalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+  background: #f8f9fa;
+}
+
+.patientModalHeader h3 {
+  margin: 0;
+  font-size: 20px;
+  color: #333;
+  font-weight: 600;
+}
+
+.patientCloseModal {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.patientCloseModal:hover {
+  color: #333;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.patientModalContent {
+  padding: 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* Patient Avatar Section */
+.patientAvatarSection {
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.patientAvatar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.patientProfilePic {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #f8f9fa;
+  border: 2px solid #e9ecef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  color: #6c757d;
+}
+
+.patientAvatarInfo {
+  flex: 1;
+}
+
+.patientAvatarName {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.patientAvatarId {
+  font-size: 14px;
+  color: #6c757d;
+}
+
+/* Patient Details Grid */
+.patientDetailsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 24px;
+}
+
+.patientInfoSection {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.patientInfoSection h4 {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 8px;
+}
+
+/* Patient View Grid - matches PatientProfile structure */
+.patientViewGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.patientViewGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.patientViewGroup.fullWidth {
+  grid-column: 1 / -1;
+}
+
+.patientViewGroup label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #6c757d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.patientViewGroup span {
+  font-size: 14px;
+  color: #333;
+  background: white;
+  padding: 8px 12px;
+  border: 1px solid #e9ecef;
+  border-radius: 4px;
+  min-height: 20px;
+}
+
+.patientViewField {
+  background: white;
+  padding: 8px 12px;
+  border: 1px solid #e9ecef;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #333;
+  min-height: 20px;
+}
+
+.patientViewField div {
+  margin-bottom: 4px;
+}
+
+.patientViewField div:last-child {
+  margin-bottom: 0;
+}
+
+.patientDetailRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.patientDetailRow:last-child {
+  margin-bottom: 0;
+  border-bottom: none;
+}
+
+.patientDetailRow label {
+  font-weight: 500;
+  color: #555;
+  flex: 1;
+}
+
+.patientDetailRow span {
+  flex: 1;
+  text-align: right;
+  color: #333;
+}
+
+.patientModalFooter {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 20px;
+  border-top: 1px solid #eee;
+  background: #f8f9fa;
+}
+
+/* Responsive styles for patient modal */
+@media (max-width: 768px) {
+  .patientModal {
+    width: 95%;
+    margin: 20px;
+    max-height: 90vh;
+  }
+  
+  .patientDetailsGrid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .patientViewGrid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .patientInfoSection {
+    padding: 16px;
+  }
+  
+  .patientDetailRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  
+  .patientDetailRow span {
+    text-align: left;
+  }
+  
+  .patientModalFooter {
+    flex-direction: column;
+  }
+  
+  .patientModalFooter button {
+    width: 100%;
+  }
+  
+  .patientAvatar {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .patientAvatarInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }

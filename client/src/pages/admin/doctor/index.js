@@ -6,3 +6,4 @@ export { default as ViewDoctorModal } from './ViewDoctorModal';
 export { default as AvailabilityModal } from './AvailabilityModal';
 export { default as DoctorDetailsView } from './DoctorDetailsView';
 export { default as DoctorAvailabilityView } from './DoctorAvailabilityView';
+export { default as HistorySection } from './HistorySection';
