@@ -432,9 +432,13 @@ const AppointmentsCalendar = () => {
   const getFilteredAppointments = () => {
     let filtered = getAllAppointments();
 
-    // Exact date filter
+    // Exact date filter (MM/DD/YYYY)
     if (listFilters.date) {
-      filtered = filtered.filter(apt => apt.date === listFilters.date);
+      filtered = filtered.filter(apt => {
+        const aptDate = new Date(apt.date);
+        const formatted = `${String(aptDate.getMonth()+1).padStart(2,'0')}/${String(aptDate.getDate()).padStart(2,'0')}/${aptDate.getFullYear()}`;
+        return formatted === listFilters.date;
+      });
     }
     
     // Type filter
