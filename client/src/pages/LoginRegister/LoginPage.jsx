@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './LoginPage.css';
 
 function LoginPage() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -25,8 +26,8 @@ function LoginPage() {
   };
 
   const handleForgotPassword = (e) => {
-    e.preventDefault();
-    alert('Password reset functionality would be implemented here.');
+  e.preventDefault();
+  navigate('/forgot-password');
   };
 
   const handleCreateAccount = (e) => {

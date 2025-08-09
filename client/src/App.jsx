@@ -1,7 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import LandingPage from './pages/LandingPage';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
+import LandingPage from './pages/LandingPage/LandingPage';
+import LoginPage from './pages/LoginRegister/LoginPage';
+import ForgotPassword from "./pages/forgotpassEmalVerify/ForgotPassword";
+import EmailVerification from './pages/forgotpassEmalVerify/EmailVerification';
+import RegisterPage from './pages/LoginRegister/RegisterPage';
 import DoctorLayout from './components/doctor/DoctorLayout';
 import Dashboard from './pages/doctor/dashboard/Dashboard';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -53,9 +55,11 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+  <Route path="/forgot-password" element={<ForgotPassword />} />
+  <Route path="/email-verification" element={<EmailVerification />} />
 
         {/* Nested route under Doctor layout */}
-        <Route path="/doctor" element={<DoctorLayout />}>
+        <Route path="/doctor" element={<DoctorLayout />}> 
           <Route index element={<Dashboard />} /> {/* 👈 shows at /doctor */}
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="my-clinic" element={<MyClinic />} />
