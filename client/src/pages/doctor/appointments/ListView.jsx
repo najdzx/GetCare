@@ -16,11 +16,22 @@ const ListView = ({
       {/* Filters */}
       <div className={styles['list-filters']}>
         <div className={styles['filter-group']}>
-          <label>Date:</label>
+          <label>Date (MM/DD/YYYY):</label>
           <input
             type="date"
-            value={listFilters.date || ''}
-            onChange={(e) => setListFilters({ ...listFilters, date: e.target.value })}
+            value={listFilters.date ? (() => {
+              const [month, day, year] = listFilters.date.split('/');
+              return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+            })() : ''}
+            onChange={(e) => {
+              const val = e.target.value;
+              if (val) {
+                const [year, month, day] = val.split('-');
+                setListFilters({ ...listFilters, date: `${month}/${day}/${year}` });
+              } else {
+                setListFilters({ ...listFilters, date: '' });
+              }
+            }}
             className={styles['filter-select']}
           />
         </div>
