@@ -1,14 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { supabase } from '../../lib/supabase';
 import './RegisterPage.css';
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState('');
   const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
   const toggleConfirmPasswordVisibility = () => setShowConfirmPassword((prev) => !prev);
-  const handleSubmit = (e) => {
+  
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError('');
     
     const firstName = e.target.firstName.value.trim();
     const lastName = e.target.lastName.value.trim();
@@ -18,29 +25,82 @@ const RegisterPage = () => {
     
     // Validation
     if (!firstName || !lastName || !email || !password || !confirmPassword) {
-      alert('Please fill in all fields.');
+      setError('Please fill in all fields.');
+      setLoading(false);
       return;
     }
     
     if (password.length < 6) {
-      alert('Password must be at least 6 characters long.');
+      setError('Password must be at least 6 characters long.');
+      setLoading(false);
       return;
     }
     
     if (password !== confirmPassword) {
-      alert('Passwords do not match.');
+      setError('Passwords do not match.');
+      setLoading(false);
       return;
     }
     
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      alert('Please enter a valid email address.');
+      setError('Please enter a valid email address.');
+      setLoading(false);
       return;
     }
-    
-    // Success
-    alert('Account created successfully! Welcome aboard! 🎉');
-    e.target.reset();
+
+    try {
+      // Step 1: Sign up with Supabase Auth
+      const { data, error: signUpError } = await supabase.auth.signUp({
+        email: email,
+        password: password,
+        options: {
+          data: {
+            first_name: firstName,
+            last_name: lastName,
+            full_name: `${firstName} ${lastName}`,
+            role: 'patient' // Default role
+          }
+        }
+      });
+
+      if (signUpError) {
+        setError(signUpError.message);
+        return;
+      }
+
+      // Step 2: Save additional user data to our custom users table
+      if (data.user) {
+        const { error: dbError } = await supabase
+          .from('users')
+          .insert([
+            {
+              id: data.user.id,
+              email: email,
+              first_name: firstName,
+              last_name: lastName,
+              full_name: `${firstName} ${lastName}`,
+              role: 'patient',
+              created_at: new Date().toISOString(),
+              updated_at: new Date().toISOString()
+            }
+          ]);
+
+        if (dbError) {
+          console.error('Database error:', dbError);
+          // Even if database insert fails, auth user was created successfully
+          setError('Account created but there was an issue saving additional data. You can still log in.');
+        }
+      }
+
+      // Success
+      alert('Account created successfully! You can now log in.');
+      navigate('/login');
+    } catch (err) {
+      setError('An unexpected error occurred');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleHelp = () => {
@@ -71,9 +131,9 @@ const RegisterPage = () => {
             
             {/* Main Content */}
             <div>
-              <h1 className="signup-welcome-heading">Join Us Today!</h1>
+              <h1 className="signup-welcome-heading">Join GetCare as a Patient</h1>
               <p className="signup-welcome-subtext">
-                Create your account and unlock access to amazing features and a vibrant community.
+                Create your patient account to access healthcare services, book appointments, and manage your medical records.
               </p>
             </div>
           </div>
@@ -83,12 +143,25 @@ const RegisterPage = () => {
         <div className="signup-section">
           {/* Header */}
           <div className="signup-header">
-            <h2 className="signup-title">Create Account</h2>
-            <p className="signup-subtitle">Fill in your details to get started</p>
+            <h2 className="signup-title">Create Patient Account</h2>
+            <p className="signup-subtitle">Fill in your details to join GetCare as a patient</p>
           </div>
           
           {/* Form */}
           <form id="signupForm" onSubmit={handleSubmit}>
+            {error && (
+              <div style={{
+                background: '#fef2f2',
+                border: '1px solid #fecaca',
+                color: '#dc2626',
+                padding: '12px',
+                borderRadius: '6px',
+                marginBottom: '16px',
+                fontSize: '14px'
+              }}>
+                {error}
+              </div>
+            )}
             {/* Name Fields Row */}
             <div className="signup-form-group">
               <div className="signup-name-row">
@@ -224,8 +297,8 @@ const RegisterPage = () => {
             </div>
 
             {/* Submit Button */}
-            <button type="submit" className="signup-button">
-              Create Account
+            <button type="submit" className="signup-button" disabled={loading}>
+              {loading ? 'Creating Account...' : 'Create Account'}
             </button>
           </form>
 
