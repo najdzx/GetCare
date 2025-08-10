@@ -1,39 +1,127 @@
 import React, { useState, useEffect } from 'react';
+import { useAuth } from '../../contexts/AuthContext';
+import { supabase } from '../../supabaseClient';
 import styles from './PatientProfile.module.css';
 
 const PatientProfile = () => {
+  const { user } = useAuth();
   // State for profile picture
   const [profilePic, setProfilePic] = useState(null);
+  const [loading, setLoading] = useState(true);
   
   // State for personal information
   const [personalData, setPersonalData] = useState({
-    firstName: 'Sarah',
-    lastName: 'Johnson',
+    firstName: '',
+    lastName: '',
     suffix: '',
-    nickName: 'Sarah',
-    dateOfBirth: '1990-05-15',
-    age: '34 years old',
-    sex: 'Female',
-    bloodType: 'A+',
-    civilStatus: 'Married',
-    philHealthNo: '12-345678901-2',
-    email: 'sarah.johnson@email.com',
-    primaryMobile: '+63 917 123 4567'
+    nickName: '',
+    dateOfBirth: '',
+    age: '',
+    sex: '',
+    bloodType: '',
+    civilStatus: '',
+    philHealthNo: '',
+    email: '',
+    primaryMobile: ''
   });
 
   // State for medical background
   const [medicalData, setMedicalData] = useState({
-    medicalConditions: 'Hypertension\nType 2 Diabetes',
-    allergies: 'Penicillin\nShellfish',
-    previousSurgeries: 'Appendectomy - March 2018\nGallbladder Removal - June 2020',
-    familyHistory: 'Mother: Heart Disease, Diabetes\nFather: Hypertension',
-    currentMedications: 'Lisinopril 10mg - Once daily\nMetformin 500mg - Twice daily',
-    supplements: 'Vitamin D3 1000 IU - Daily\nOmega-3 Fish Oil - Twice daily'
+    medicalConditions: '',
+    allergies: '',
+    previousSurgeries: '',
+    familyHistory: '',
+    currentMedications: '',
+    supplements: ''
   });
 
   // Edit mode states
   const [isPersonalEditMode, setIsPersonalEditMode] = useState(false);
   const [isMedicalEditMode, setIsMedicalEditMode] = useState(false);
+
+  // Generate patient ID from user ID and account creation date
+  const generatePatientId = (userId, createdAt) => {
+    if (!userId || !createdAt) return 'PXXXXXXXXXXXX';
+    const date = new Date(createdAt);
+    const MM = String(date.getMonth() + 1).padStart(2, '0');
+    const DD = String(date.getDate()).padStart(2, '0');
+    const YYYY = date.getFullYear();
+    const shortId = userId.substring(0, 8).toUpperCase();
+    return `P${MM}${DD}${YYYY}${shortId}`;
+  };
+
+  // Get full name for avatar
+  const getFullName = () => {
+    const firstName = personalData.firstName || '';
+    const lastName = personalData.lastName || '';
+    return `${firstName} ${lastName}`.trim() || 'Patient';
+  };
+
+  // Fetch profile data from database
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      if (!user) return;
+
+      try {
+        // Fetch profile data from database
+        const { data: profile, error } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('user_id', user.id)
+          .single();
+
+        if (error && error.code !== 'PGRST116') { // PGRST116 = no rows found
+          console.error('Error fetching profile:', error);
+          setLoading(false);
+          return;
+        }
+
+        if (profile) {
+          // Update personal data
+          setPersonalData({
+            firstName: profile.first_name || user.user_metadata?.firstName || '',
+            lastName: profile.last_name || user.user_metadata?.lastName || '',
+            suffix: profile.suffix || '',
+            nickName: profile.nickname || user.user_metadata?.nickname || '',
+            dateOfBirth: profile.date_of_birth || '',
+            age: profile.age ? `${profile.age} years old` : '',
+            sex: profile.sex || '',
+            bloodType: profile.blood_type || '',
+            civilStatus: profile.civil_status || '',
+            philHealthNo: profile.philhealth_no || '',
+            email: profile.email || user.email || '',
+            primaryMobile: profile.primary_mobile || ''
+          });
+
+          // Update medical data
+          setMedicalData({
+            medicalConditions: profile.medical_conditions || '',
+            allergies: profile.allergies || '',
+            previousSurgeries: profile.surgeries || '',
+            familyHistory: profile.family_history || '',
+            currentMedications: profile.medications || '',
+            supplements: profile.supplements || ''
+          });
+        } else {
+          // If no profile found, use auth metadata as fallback
+          setPersonalData(prev => ({
+            ...prev,
+            firstName: user.user_metadata?.firstName || '',
+            lastName: user.user_metadata?.lastName || '',
+            email: user.email || '',
+            nickName: user.user_metadata?.nickname || ''
+          }));
+        }
+
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching profile data:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchProfileData();
+  }, [user]);
 
   // Handle photo upload
   const handleFileChange = (e) => {
@@ -92,11 +180,39 @@ const PatientProfile = () => {
     togglePersonalEditMode();
   };
 
-  const savePersonalChanges = () => {
-    console.log('Saving personal data:', personalData);
-    console.log('Saving medical data:', medicalData);
-    alert('Profile information saved successfully!');
-    togglePersonalEditMode();
+  const savePersonalChanges = async () => {
+    if (!user) return;
+    try {
+      const profileData = {
+        user_id: user.id,
+        first_name: personalData.firstName,
+        last_name: personalData.lastName,
+        suffix: personalData.suffix,
+        nickname: personalData.nickName,
+        date_of_birth: personalData.dateOfBirth,
+        age: personalData.age ? parseInt(personalData.age) : null,
+        sex: personalData.sex,
+        blood_type: personalData.bloodType,
+        civil_status: personalData.civilStatus,
+        philhealth_no: personalData.philHealthNo,
+        email: personalData.email,
+        primary_mobile: personalData.primaryMobile,
+        updated_at: new Date().toISOString()
+      };
+      const { error } = await supabase
+        .from('profiles')
+        .upsert(profileData, { onConflict: 'user_id', ignoreDuplicates: false });
+      if (error) {
+        alert('Error saving personal info!');
+        console.error(error);
+      } else {
+        alert('Personal information saved successfully!');
+        setIsPersonalEditMode(false);
+      }
+    } catch (err) {
+      alert('Unexpected error saving personal info!');
+      console.error(err);
+    }
   };
 
   // Medical background handlers
@@ -116,10 +232,33 @@ const PatientProfile = () => {
     toggleMedicalEditMode();
   };
 
-  const saveMedicalChanges = () => {
-    console.log('Saving medical data:', medicalData);
-    alert('Medical background saved successfully!');
-    toggleMedicalEditMode();
+  const saveMedicalChanges = async () => {
+    if (!user) return;
+    try {
+      const profileData = {
+        user_id: user.id,
+        medical_conditions: medicalData.medicalConditions,
+        allergies: medicalData.allergies,
+        surgeries: medicalData.previousSurgeries,
+        family_history: medicalData.familyHistory,
+        medications: medicalData.currentMedications,
+        supplements: medicalData.supplements,
+        updated_at: new Date().toISOString()
+      };
+      const { error } = await supabase
+        .from('profiles')
+        .upsert(profileData, { onConflict: 'user_id', ignoreDuplicates: false });
+      if (error) {
+        alert('Error saving medical background!');
+        console.error(error);
+      } else {
+        alert('Medical background saved successfully!');
+        setIsMedicalEditMode(false);
+      }
+    } catch (err) {
+      alert('Unexpected error saving medical background!');
+      console.error(err);
+    }
   };
 
   // Handle input changes
@@ -132,6 +271,21 @@ const PatientProfile = () => {
     const { id, value } = e.target;
     setMedicalData(prev => ({ ...prev, [id]: value }));
   };
+
+  // Show loading state
+  if (loading) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.wrapper}>
+          <div className={styles.content}>
+            <div style={{ textAlign: 'center', padding: '50px' }}>
+              <p>Loading profile...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.container}>
@@ -164,8 +318,8 @@ const PatientProfile = () => {
                         </div>
                       </div>
                       <div className={styles.avatarInfo}>
-                        <div className={styles.avatarName}>Sarah Johnson</div>
-                        <div className={styles.avatarId}>Patient ID: PT-2024-001</div>
+                        <div className={styles.avatarName}>{getFullName()}</div>
+                        <div className={styles.avatarId}>Patient ID: {generatePatientId(user?.id, user?.created_at)}</div>
                       </div>
                     </div>
                     <div className={styles.avatarRight}>
@@ -273,8 +427,8 @@ const PatientProfile = () => {
                         />
                       </div>
                       <div className={styles.avatarInfo}>
-                        <div className={styles.avatarName}>Sarah Johnson</div>
-                        <div className={styles.avatarId}>Patient ID: PT-2024-001</div>
+                        <div className={styles.avatarName}>{getFullName()}</div>
+                        <div className={styles.avatarId}>Patient ID: {generatePatientId(user?.id, user?.created_at)}</div>
                       </div>
                     </div>
                     <div className={styles.avatarRight}>
@@ -293,7 +447,7 @@ const PatientProfile = () => {
                         <button 
                           id="personalEditSaveBtn" 
                           className="global-btn2" 
-                          onClick={handlePersonalEditSave}
+                          onClick={savePersonalChanges}
                         >
                           <span id="personalEditModeText">Save</span>
                           <svg id="personalSaveIcon" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">

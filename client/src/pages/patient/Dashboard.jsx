@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 import styles from './Dashboard.module.css';
 
 // SVG Icon Components
@@ -108,6 +110,25 @@ const Card = ({ title, action, onActionClick, children }) => (
 
 // Main Component
 const Dashboard = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  // Check if user has completed profile on component mount
+  useEffect(() => {
+    if (user) {
+      console.log('Dashboard - User:', user);
+      console.log('Dashboard - User metadata:', user.user_metadata);
+      
+      const hasCompletedProfile = user.user_metadata?.profile_completed === true;
+      console.log('Dashboard - Has completed profile:', hasCompletedProfile);
+      
+      if (!hasCompletedProfile) {
+        console.log('Dashboard - Redirecting to complete profile');
+        navigate('/setup-profile/complete');
+      }
+    }
+  }, [user, navigate]);
+
   // Handler functions
   const bookAppointment = () => alert('Opening appointment booking...');
   const viewTestResults = () => alert('Opening test results...');
