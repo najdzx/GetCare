@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { AuthService } from '../../services/authService';
 import './LoginPage.css';
 
 function LoginPage() {
@@ -7,10 +8,40 @@ function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert(`Login attempt with:\nEmail: ${email}\nPassword: ${'*'.repeat(password.length)}`);
+    setLoading(true);
+    setError('');
+
+    try {
+      const result = await AuthService.signIn({
+        email: email,
+        password: password,
+      });
+
+      if (result.success) {
+        const user = result.data.user;
+        const role = user.user_metadata?.role;
+
+        // Navigate based on role
+        if (role === 'admin') {
+          navigate('/admin/dashboard');
+        } else if (role === 'doctor') {
+          navigate('/doctor/dashboard');
+        } else {
+          navigate('/patient/dashboard');
+        }
+      } else {
+        setError(result.error);
+      }
+    } catch (err) {
+      setError('An unexpected error occurred');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const togglePasswordVisibility = () => {
@@ -61,6 +92,19 @@ function LoginPage() {
           </div>
 
           <form onSubmit={handleSubmit}>
+            {error && (
+              <div style={{
+                background: '#fef2f2',
+                border: '1px solid #fecaca',
+                color: '#dc2626',
+                padding: '12px',
+                borderRadius: '6px',
+                marginBottom: '16px',
+                fontSize: '14px'
+              }}>
+                {error}
+              </div>
+            )}
             <div className="loginFormGroup">
               <label className="loginFormLabel" htmlFor="email">Email Address</label>
               <div className="loginFormInputWrapper">
@@ -122,7 +166,9 @@ function LoginPage() {
               <a href="#" className="loginForgotLink" onClick={handleForgotPassword}>Forgot password?</a>
             </div>
 
-            <button type="submit" className="loginButton">Sign in</button>
+            <button type="submit" className="loginButton" disabled={loading}>
+              {loading ? 'Signing in...' : 'Sign in'}
+            </button>
           </form>
 
           <div className="loginSeparator">
