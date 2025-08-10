@@ -163,10 +163,35 @@
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
+.signup-form-input.password-input {
+  padding-right: 42px;
+}
+
 .signup-form-input:focus {
   outline: none;
   border-color: #434bb8;
   box-shadow: 0 0 0 2px rgba(67, 75, 184, 0.2);
+}
+
+.signup-password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: #999;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signup-password-toggle:hover {
+  color: #434bb8;
 }
 
 .signup-button {

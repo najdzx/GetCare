@@ -2,12 +2,12 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import LandingPage from './pages/LandingPage/LandingPage';
 import LoginPage from './pages/LoginRegister/LoginPage';
-import RegisterPage from './pages/LoginRegister/RegisterPage';
+import RegisterPage from './pages/LoginRegister/RegisterPageTest';
 import AuthTest from './components/AuthTest';
 import DoctorLayout from './components/doctor/DoctorLayout';
 import Dashboard from './pages/doctor/dashboard/Dashboard';
 import ErrorBoundary from './components/ErrorBoundary';
-
+import CompleteProfile from './pages/SetupProfile/CompleteProfile';
 import './App.css';
 
 // 👇 Add these imports for the sub-pages
@@ -57,6 +57,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/auth-test" element={<AuthTest />} />
+          <Route path="/setup-profile/complete" element={<CompleteProfile />} />
 
         {/* Nested route under Doctor layout */}
         <Route path="/doctor" element={<DoctorLayout />}> 

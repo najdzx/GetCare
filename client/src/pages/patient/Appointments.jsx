@@ -1,7 +1,99 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Appointments.module.css';
+import '../../components/Layout/Button.css';
 
 const Appointments = () => {
+  // State for view mode
+  const [viewMode, setViewMode] = useState('list'); // 'list' or 'booking'
+  const [appointmentFilter, setAppointmentFilter] = useState('all'); // 'all', 'upcoming', 'past'
+  
+  // Sample appointments data
+  const appointmentsData = [
+    {
+      id: 1,
+      appointmentId: 'APT1234',
+      doctor: {
+        name: 'Dr. Sarah Johnson',
+        specialty: 'Cardiology',
+        avatar: 'SJ'
+      },
+      date: '2025-08-15',
+      time: '10:00 AM',
+      type: 'face-to-face',
+      status: 'confirmed',
+      clinic: {
+        name: 'Heart Care Center - Main',
+        address: '123 Medical Plaza, Building A, Floor 3'
+      },
+      notes: 'Regular checkup and blood pressure monitoring'
+    },
+    {
+      id: 2,
+      appointmentId: 'APT1235',
+      doctor: {
+        name: 'Dr. Michael Chen',
+        specialty: 'Neurology',
+        avatar: 'MC'
+      },
+      date: '2025-08-18',
+      time: '2:30 PM',
+      type: 'online',
+      status: 'confirmed',
+      meetingLink: 'meet.google.com/abc-defg-hij',
+      notes: 'Follow-up on headache symptoms'
+    },
+    {
+      id: 3,
+      appointmentId: 'APT1236',
+      doctor: {
+        name: 'Dr. Emily Rodriguez',
+        specialty: 'Dermatology',
+        avatar: 'ER'
+      },
+      date: '2025-08-12',
+      time: '11:30 AM',
+      type: 'face-to-face',
+      status: 'completed',
+      clinic: {
+        name: 'Skin Health Clinic',
+        address: '456 Wellness Blvd, Suite 300'
+      },
+      notes: 'Skin examination and mole check'
+    },
+    {
+      id: 4,
+      appointmentId: 'APT1237',
+      doctor: {
+        name: 'Dr. David Kim',
+        specialty: 'Orthopedics',
+        avatar: 'DK'
+      },
+      date: '2025-08-22',
+      time: '9:00 AM',
+      type: 'face-to-face',
+      status: 'confirmed',
+      clinic: {
+        name: 'Bone & Joint Clinic',
+        address: '789 Medical Center Dr, Floor 2'
+      },
+      notes: 'Knee injury consultation'
+    },
+    {
+      id: 5,
+      appointmentId: 'APT1238',
+      doctor: {
+        name: 'Dr. Lisa Wong',
+        specialty: 'Pediatrics',
+        avatar: 'LW'
+      },
+      date: '2025-08-10',
+      time: '3:00 PM',
+      type: 'online',
+      status: 'cancelled',
+      meetingLink: 'meet.google.com/xyz-abcd-efg',
+      notes: 'Child vaccination consultation'
+    }
+  ];
   // Sample data
   const doctorsData = [
     {
@@ -151,6 +243,114 @@ const Appointments = () => {
   useEffect(() => {
     updateCalendar();
   }, [currentMonth, currentYear]);
+
+  // Appointments list functions
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'confirmed':
+        return '#10b981'; // green
+      case 'completed':
+        return '#6b7280'; // gray
+      case 'cancelled':
+        return '#ef4444'; // red
+      default:
+        return '#f59e0b'; // yellow
+    }
+  };
+
+  const getStatusIcon = (status) => {
+    switch (status) {
+      case 'confirmed':
+        return (
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+            <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.061L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+          </svg>
+        );
+      case 'completed':
+        return (
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.061L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+          </svg>
+        );
+      case 'cancelled':
+        return (
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+          </svg>
+        );
+      default:
+        return (
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+          </svg>
+        );
+    }
+  };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
+    
+    if (date.toDateString() === today.toDateString()) {
+      return 'Today';
+    } else if (date.toDateString() === tomorrow.toDateString()) {
+      return 'Tomorrow';
+    } else {
+      return date.toLocaleDateString('en-US', { 
+        weekday: 'short', 
+        month: 'short', 
+        day: 'numeric' 
+      });
+    }
+  };
+
+  const isUpcoming = (dateString) => {
+    const appointmentDate = new Date(dateString);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return appointmentDate >= today;
+  };
+
+  const sortAppointments = (appointments) => {
+    return appointments.sort((a, b) => {
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+      return dateB - dateA; // Most recent first
+    });
+  };
+
+  const cancelAppointment = (appointmentId) => {
+    if (window.confirm('Are you sure you want to cancel this appointment?')) {
+      alert(`Appointment ${appointmentId} has been cancelled.`);
+      // Here you would update the appointment status in your state or backend
+    }
+  };
+
+  const rescheduleAppointment = (appointmentId) => {
+    alert(`Redirecting to reschedule appointment ${appointmentId}...`);
+    // Here you would redirect to the booking page with pre-filled data
+    setViewMode('booking');
+  };
+
+  const joinMeeting = (meetingLink) => {
+    window.open(`https://${meetingLink}`, '_blank');
+  };
+
+  const getFilteredAppointments = () => {
+    switch (appointmentFilter) {
+      case 'upcoming':
+        return appointmentsData.filter(apt => isUpcoming(apt.date) && apt.status !== 'cancelled');
+      case 'past':
+        return appointmentsData.filter(apt => !isUpcoming(apt.date));
+      case 'all':
+      default:
+        return appointmentsData;
+    }
+  };
 
   // Doctor selection functions
   const renderDoctors = () => {
@@ -627,9 +827,207 @@ const Appointments = () => {
     <div className={styles.container}>
       <div className={styles.wrapper}>
         <main className={styles.mainContent}>
-          <div className={styles.bookingContainer}>
-            {/* Step Indicator */}
-            <div className={styles.stepIndicator}>
+          {/* Header with view toggle */}
+          <div className={styles.pageHeader}>
+            <h2>My Appointments</h2>
+            <p>Manage your healthcare appointments</p>
+            <div className={styles.viewToggle}>
+              <button 
+                className={`toggleBtn ${viewMode === 'list' ? 'toggleBtnActive' : ''}`}
+                onClick={() => setViewMode('list')}
+              >
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                  <path fillRule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                </svg>
+                My Appointments
+              </button>
+              <button 
+                className={`toggleBtn ${viewMode === 'booking' ? 'toggleBtnActive' : ''}`}
+                onClick={() => setViewMode('booking')}
+              >
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg>
+                Book New Appointment
+              </button>
+            </div>
+          </div>
+
+          {/* Appointments List View */}
+          {viewMode === 'list' && (
+            <div className={styles.appointmentsList}>
+              {/* Filter tabs */}
+              <div className={styles.filterTabs}>
+                <button 
+                  className={`${styles.filterTab} ${appointmentFilter === 'all' ? styles.active : ''}`}
+                  onClick={() => setAppointmentFilter('all')}
+                >
+                  All Appointments ({appointmentsData.length})
+                </button>
+                <button 
+                  className={`${styles.filterTab} ${appointmentFilter === 'upcoming' ? styles.active : ''}`}
+                  onClick={() => setAppointmentFilter('upcoming')}
+                >
+                  Upcoming ({appointmentsData.filter(apt => isUpcoming(apt.date) && apt.status !== 'cancelled').length})
+                </button>
+                <button 
+                  className={`${styles.filterTab} ${appointmentFilter === 'past' ? styles.active : ''}`}
+                  onClick={() => setAppointmentFilter('past')}
+                >
+                  Past ({appointmentsData.filter(apt => !isUpcoming(apt.date)).length})
+                </button>
+              </div>
+
+              {/* Appointments grid */}
+              <div className={styles.appointmentsGrid}>
+                {sortAppointments(getFilteredAppointments()).map(appointment => (
+                  <div key={appointment.id} className={`${styles.appointmentCard} ${styles[appointment.status]}`}>
+                    <div className={styles.appointmentHeader}>
+                      <div className={styles.appointmentInfo}>
+                        <div className={styles.appointmentId}>#{appointment.appointmentId}</div>
+                        <div 
+                          className={styles.appointmentStatus}
+                          style={{ color: getStatusColor(appointment.status) }}
+                        >
+                          {getStatusIcon(appointment.status)}
+                          <span>{appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}</span>
+                        </div>
+                      </div>
+                      <div className={styles.appointmentActions}>
+                        {appointment.status === 'confirmed' && isUpcoming(appointment.date) && (
+                          <>
+                            {appointment.type === 'online' && (
+                              <button 
+                                className="global-btn success small"
+                                onClick={() => joinMeeting(appointment.meetingLink)}
+                              >
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                  <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383-4.708 2.825L15 11.105V5.383zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
+                                </svg>
+                                Join Meeting
+                              </button>
+                            )}
+                            <button 
+                              className="global-btn secondary small"
+                              onClick={() => rescheduleAppointment(appointment.appointmentId)}
+                            >
+                              <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+                                <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+                              </svg>
+                              Reschedule
+                            </button>
+                            <button 
+                              className="global-btn danger small"
+                              onClick={() => cancelAppointment(appointment.appointmentId)}
+                            >
+                              <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                              </svg>
+                              Cancel
+                            </button>
+                          </>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className={styles.appointmentBody}>
+                      <div className={styles.doctorSection}>
+                        <div className={styles.doctorAvatar}>{appointment.doctor.avatar}</div>
+                        <div className={styles.doctorDetails}>
+                          <h4>{appointment.doctor.name}</h4>
+                          <p>{appointment.doctor.specialty}</p>
+                        </div>
+                      </div>
+
+                      <div className={styles.appointmentDetails}>
+                        <div className={styles.detailItem}>
+                          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M6 .5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1H9v1.07a7.001 7.001 0 0 1 3.274 12.474l-.601.602a.5.5 0 0 1-.707-.708l.6-.6a6.001 6.001 0 1 0-8.132 0l.6.6a.5.5 0 1 1-.707.708l-.601-.602A7.001 7.001 0 0 1 7 2.07V1h-.5A.5.5 0 0 1 6 .5zm2.5 5a.5.5 0 0 0-1 0v3.362l-1.429 2.38a.5.5 0 1 0 .858.515l1.5-2.5A.5.5 0 0 0 8.5 9V5.5z"/>
+                          </svg>
+                          <span>
+                            {formatDate(appointment.date)} at {appointment.time}
+                          </span>
+                        </div>
+
+                        <div className={styles.detailItem}>
+                          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            {appointment.type === 'online' ? (
+                              <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383-4.708 2.825L15 11.105V5.383zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
+                            ) : (
+                              <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/>
+                            )}
+                          </svg>
+                          <span>
+                            {appointment.type === 'online' ? 'Online Consultation' : appointment.clinic.name}
+                          </span>
+                        </div>
+
+                        {appointment.type === 'face-to-face' && appointment.clinic && (
+                          <div className={styles.detailItem}>
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                              <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                              <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                            </svg>
+                            <span>{appointment.clinic.address}</span>
+                          </div>
+                        )}
+
+                        {appointment.type === 'online' && appointment.meetingLink && (
+                          <div className={styles.detailItem}>
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                              <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383-4.708 2.825L15 11.105V5.383zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
+                            </svg>
+                            <span>{appointment.meetingLink}</span>
+                          </div>
+                        )}
+
+                        {appointment.notes && (
+                          <div className={styles.notesSection}>
+                            <h5>Notes:</h5>
+                            <p>{appointment.notes}</p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+
+                {getFilteredAppointments().length === 0 && (
+                  <div className={styles.emptyState}>
+                    <svg width="64" height="64" fill="currentColor" viewBox="0 0 16 16">
+                      <path d="M6 .5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1H9v1.07a7.001 7.001 0 0 1 3.274 12.474l-.601.602a.5.5 0 0 1-.707-.708l.6-.6a6.001 6.001 0 1 0-8.132 0l.6.6a.5.5 0 1 1-.707.708l-.601-.602A7.001 7.001 0 0 1 7 2.07V1h-.5A.5.5 0 0 1 6 .5zm2.5 5a.5.5 0 0 0-1 0v3.362l-1.429 2.38a.5.5 0 1 0 .858.515l1.5-2.5A.5.5 0 0 0 8.5 9V5.5z"/>
+                    </svg>
+                    <h3>
+                      {appointmentFilter === 'upcoming' && 'No upcoming appointments'}
+                      {appointmentFilter === 'past' && 'No past appointments'}
+                      {appointmentFilter === 'all' && 'No appointments yet'}
+                    </h3>
+                    <p>
+                      {appointmentFilter === 'upcoming' && 'You don\'t have any upcoming appointments'}
+                      {appointmentFilter === 'past' && 'You don\'t have any past appointments'}
+                      {appointmentFilter === 'all' && 'Book your first appointment to get started'}
+                    </p>
+                    {appointmentFilter !== 'past' && (
+                      <button 
+                        className="global-btn primary"
+                        onClick={() => setViewMode('booking')}
+                      >
+                        Book New Appointment
+                      </button>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Booking View */}
+          {viewMode === 'booking' && (
+            <div className={styles.bookingContainer}>
+              {/* Step Indicator */}
+              <div className={styles.stepIndicator}>
               {[1, 2, 3, 4].map(step => {
                 let stepClass = styles.step;
                 if (step === currentStep) stepClass += ` ${styles.active}`;
@@ -902,7 +1300,8 @@ const Appointments = () => {
                 </button>
               )}
             </div>
-          </div>
+            </div>
+          )}
         </main>
       </div>
 
