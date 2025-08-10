@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from './Availability.module.css';
 import '../../../components/Layout/Scrollbar.css';
+import '../../../components/Layout/Button.css';
 
 const DAYS = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
 const DAY_LABELS = {
@@ -258,7 +259,7 @@ const Availability = () => {
                             <button 
                               type="button" 
                               onClick={() => handleRemoveSlot(day, slotIndex)}
-                              className={styles.removeSlotBtn}
+                              className={`global-btn secondary ${styles.scheduleActionBtn}`}
                             >
                               Remove
                             </button>
@@ -267,8 +268,9 @@ const Availability = () => {
                             <button 
                               type="button" 
                               onClick={() => handleAddNewSlot(day)}
+                              className={`global-btn secondary ${styles.scheduleActionBtn}`}
                             >
-                              + ADD NEW
+                              Add New
                             </button>
                           )}
                         </div>

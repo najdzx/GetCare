@@ -9,7 +9,7 @@
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-org/GETCARE.git
+   [git clone https://github.com/your-org/GETCARE.git](https://github.com/najdzx/GetCare.git)](https://github.com/najdzx/GetCare.git)
    cd GETCARE
    ```
 
@@ -37,3 +37,4 @@
 - Make your changes in the code.
 - Use `git add .`, `git commit -m "your message"`, and `git push` to update the repository.
 - If you are not familiar with these git commands, please research how to use them so your changes will reflect on the GitHub repo and be visible to the others.
+

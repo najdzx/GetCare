@@ -1,11 +1,13 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import LandingPage from './pages/LandingPage';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
+import { AuthProvider } from './contexts/AuthContext';
+import LandingPage from './pages/LandingPage/LandingPage';
+import LoginPage from './pages/LoginRegister/LoginPage';
+import RegisterPage from './pages/LoginRegister/RegisterPageTest';
+import AuthTest from './components/AuthTest';
 import DoctorLayout from './components/doctor/DoctorLayout';
 import Dashboard from './pages/doctor/dashboard/Dashboard';
 import ErrorBoundary from './components/ErrorBoundary';
-
+import CompleteProfile from './pages/SetupProfile/CompleteProfile';
 import './App.css';
 
 // 👇 Add these imports for the sub-pages
@@ -26,7 +28,7 @@ import Availability from './pages/doctor/availability/Availability';
 import AdminLayoutRoute from './components/admin/AdminLayoutRoute';
 import AdminDashboard from './pages/admin/Dashboard';
 import AdminPatients from './pages/admin/Patients';
-import AdminDoctors from './pages/admin/Doctors';
+import AdminDoctors from './pages/admin/doctor/Doctors';
 import AdminAppointments from './pages/admin/Appointments';
 import AdminMessages from './pages/admin/Messages';
 import AdminClinics from './pages/admin/Clinics';
@@ -48,14 +50,17 @@ import PatientProfile from './pages/patient/PatientProfile';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/auth-test" element={<AuthTest />} />
+          <Route path="/setup-profile/complete" element={<CompleteProfile />} />
 
         {/* Nested route under Doctor layout */}
-        <Route path="/doctor" element={<DoctorLayout />}>
+        <Route path="/doctor" element={<DoctorLayout />}> 
           <Route index element={<Dashboard />} /> {/* 👈 shows at /doctor */}
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="my-clinic" element={<MyClinic />} />
@@ -99,6 +104,7 @@ function App() {
         </Route>
       </Routes>
     </BrowserRouter>
+    </AuthProvider>
   );
 }
 

@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 import styles from './Appointments.module.css';
 import '../../../components/Layout/Button.css';
+import CalendarView from './CalendarView';
+import ListView from './ListView';
 
 const AppointmentsCalendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date(2025, 6, 1)); // July 2024
@@ -34,6 +36,12 @@ const AppointmentsCalendar = () => {
   const [meetingType, setMeetingType] = useState('face-to-face');
   const [reschedIndex, setReschedIndex] = useState(null);
   const [showReschedModal, setShowReschedModal] = useState(false);
+  const [viewMode, setViewMode] = useState('calendar'); // 'calendar' or 'list'
+  const [listFilters, setListFilters] = useState({
+    date: '',  // exact date filter
+    type: 'all',
+    meetingType: 'all'
+  });
 
   const generateCalendar = () => {
     const year = currentDate.getFullYear();
@@ -215,6 +223,9 @@ const AppointmentsCalendar = () => {
       // Only add location for face-to-face; meet link will be generated after creation
       if (newAppointment.meetingType === 'face-to-face') {
         newAppointment.location = formData.get('location');
+      } else {
+        // Generate a meet link for online appointments
+        newAppointment.meetLink = `https://meet.google.com/${Math.random().toString(36).substr(2, 9)}-${Math.random().toString(36).substr(2, 9)}-${Math.random().toString(36).substr(2, 9)}`;
       }
       const updatedAppointments = { ...appointments };
       if (!updatedAppointments[appointmentDate]) {
@@ -309,12 +320,12 @@ const AppointmentsCalendar = () => {
           ></textarea>
         </div>
         <div className={styles['form-actions']}>
-          <button type="submit" className="global-btn2"> 
+          <button type="submit" className="global-btn secondary"> 
             Add Appointment
           </button>
           <button 
             type="button" 
-            className="global-btn2" 
+            className="global-btn secondary" 
             onClick={() => {
               setShowAppointmentForm(false);
               if (isNew) setShowModal(false);
@@ -393,38 +404,127 @@ const AppointmentsCalendar = () => {
     setShowAppointmentForm(false);
   };
 
+  // Get all appointments as a flat list for list view
+  const getAllAppointments = () => {
+    const allAppointments = [];
+    Object.entries(appointments).forEach(([date, dayAppointments]) => {
+      dayAppointments.forEach(appointment => {
+        allAppointments.push({
+          ...appointment,
+          date,
+          dateObj: new Date(date)
+        });
+      });
+    });
+    
+    // Sort by date and time
+    allAppointments.sort((a, b) => {
+      if (a.date === b.date) {
+        return a.time.localeCompare(b.time);
+      }
+      return a.dateObj - b.dateObj;
+    });
+    
+    return allAppointments;
+  };
+
+  // Filter appointments based on list filters
+  const getFilteredAppointments = () => {
+    let filtered = getAllAppointments();
+
+    // Exact date filter (MM/DD/YYYY)
+    if (listFilters.date) {
+      filtered = filtered.filter(apt => {
+        const aptDate = new Date(apt.date);
+        const formatted = `${String(aptDate.getMonth()+1).padStart(2,'0')}/${String(aptDate.getDate()).padStart(2,'0')}/${aptDate.getFullYear()}`;
+        return formatted === listFilters.date;
+      });
+    }
+    
+    // Type filter
+    if (listFilters.type !== 'all') {
+      filtered = filtered.filter(apt => apt.type === listFilters.type);
+    }
+    
+    // Meeting type filter
+    if (listFilters.meetingType !== 'all') {
+      filtered = filtered.filter(apt => apt.meetingType === listFilters.meetingType);
+    }
+    
+    return filtered;
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
         {/* Calendar Header */}
         <div className={styles['calendar-header']}>
-          <div className={styles['calendar-left']}>
-            <h1 className={styles['calendar-title']}>
-              {currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
-            </h1>
-            <div className={styles['calendar-nav']}>
-              <button className="global-btn secondary" onClick={previousMonth} aria-label="Previous Month">
-                <MdChevronLeft size={24} />
-              </button>
-              <button className="global-btn secondary" onClick={nextMonth} aria-label="Next Month">
-                <MdChevronRight size={24} />
-              </button>
+          {viewMode === 'calendar' && (
+            <div className={styles['calendar-left']}>
+              <h1 className={styles['calendar-title']}>
+                {currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+              </h1>
+              <div className={styles['calendar-nav']}>
+                <button className="global-btn secondary" onClick={previousMonth} aria-label="Previous Month">
+                  <MdChevronLeft size={24} />
+                </button>
+                <button className="global-btn secondary" onClick={nextMonth} aria-label="Next Month">
+                  <MdChevronRight size={24} />
+                </button>
+              </div>
             </div>
+          )}
+          {viewMode === 'list' && (
+            <div className={styles['calendar-left']}>
+              <h1 className={styles['calendar-title']}>
+                All Appointments
+              </h1>
+            </div>
+          )}
+          <div style={{ display: 'flex', gap: '12px' }}>
+            <button className="global-btn secondary" onClick={openAddAppointmentModal}>
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+              </svg>
+              Add Appointment
+            </button>
+            <button 
+              className={viewMode === 'list' ? "global-btn secondary" : "global-btn secondary"} 
+              onClick={() => setViewMode(viewMode === 'calendar' ? 'list' : 'calendar')}
+            >
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style={{ marginRight: '8px' }}>
+                {viewMode === 'calendar' ? (
+                  <path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V2zm1 0v12h14V2H1zm1 3v1h12V5H2zm0 2v1h12V7H2zm0 2v1h12V9H2z"/>
+                ) : (
+                  <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                )}
+              </svg>
+              {viewMode === 'calendar' ? 'View All' : 'Calendar View'}
+            </button>
           </div>
-          <button className="global-btn2" onClick={openAddAppointmentModal}>
-            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-              <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-            </svg>
-            Add Appointment
-          </button>
         </div>
 
-        {/* Calendar Content */}
-        <div className={styles['calendar-content']}>
-          <div className={styles['calendar-grid']}>
-            {generateCalendar()}
-          </div>
-        </div>
+        {/* Content - Calendar or List View */}
+        {viewMode === 'calendar' ? (
+          <CalendarView 
+            currentDate={currentDate}
+            appointments={appointments}
+            openModal={openModal}
+            generateCalendar={generateCalendar}
+            createDayElement={createDayElement}
+          />
+        ) : (
+          <ListView 
+            listFilters={listFilters}
+            setListFilters={setListFilters}
+            getFilteredAppointments={getFilteredAppointments}
+            appointments={appointments}
+            setAppointments={setAppointments}
+            setSelectedDate={setSelectedDate}
+            setReschedIndex={setReschedIndex}
+            setShowReschedModal={setShowReschedModal}
+          />
+        )}
       </div>
 
       {/* Modal */}
@@ -472,18 +572,12 @@ const AppointmentsCalendar = () => {
                           </div>
                           {appointment.meetingType === 'online' ? (
                             <div className={styles['appointment-item-location']}>
-                              <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"/>
-                              </svg>
                               <a href={appointment.meetLink} target="_blank" rel="noopener noreferrer" className={styles['meet-link']}>
-                                Join Google Meet
+                                {appointment.meetLink}
                               </a>
                             </div>
                           ) : (
                             <div className={styles['appointment-item-location']}>
-                              <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
-                              </svg>
                               {appointment.location}
                             </div>
                           )}
@@ -494,14 +588,14 @@ const AppointmentsCalendar = () => {
                           )}
                           <div style={{ marginTop: '15px', display: 'flex', gap: '10px' }}>
                             <button 
-                              className={`${styles.btn} ${styles['btn-danger']}`} 
+                              className="global-btn secondary" 
                               onClick={() => deleteAppointment(index)}
                               style={{ padding: '8px 16px', fontSize: '13px' }}
                             >
                               Delete Appointment
                             </button>
                             <button
-                              className={`${styles.btn} ${styles['btn-primary']}`}
+                              className="global-btn secondary"
                               onClick={() => openReschedModal(index)}
                               style={{ padding: '8px 16px', fontSize: '13px' }}
                             >
@@ -515,7 +609,7 @@ const AppointmentsCalendar = () => {
                   {/* Always show Add Appointment button in modal */}
                   {!showAppointmentForm && (
                     <button 
-                      className="global-btn2" 
+                      className="global-btn secondary" 
                       style={{ width: 'auto', minWidth: '180px', margin: '10px auto 0 auto', display: 'block' }}
                       onClick={() => setShowAppointmentForm(true)}
                     >
@@ -526,40 +620,39 @@ const AppointmentsCalendar = () => {
                     </button>
                   )}
                   {showAppointmentForm && renderAppointmentForm(selectedDate, false, meetingType, setMeetingType)}
-                  {showReschedModal && reschedIndex !== null && (() => {
-                    const appointment = appointments[selectedDate][reschedIndex];
-                    return (
-                      <div className={styles.modal} style={{ display: 'flex', position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.6)', zIndex: 10000, alignItems: 'center', justifyContent: 'center' }}>
-                        <div className={styles['modal-content']}>
-                          <div className={styles['modal-header']}>
-                            <h2 className={styles['modal-title']}>Reschedule Appointment</h2>
-                            <button className={styles['close-btn']} onClick={() => setShowReschedModal(false)}>&times;</button>
-                          </div>
-                          <form className={styles['appointment-form']} onSubmit={handleReschedSubmit}>
-                            <div className={styles['form-group']}>
-                              <label className={styles['form-label']}>New Date</label>
-                              <input type="date" className={styles['form-input']} name="date" defaultValue={selectedDate} required />
-                            </div>
-                            <div className={styles['form-group']}>
-                              <label className={styles['form-label']}>New Time</label>
-                              <input type="time" className={styles['form-input']} name="time" defaultValue={appointment.time} required />
-                            </div>
-                            <div className={styles['form-group']}>
-                              <label className={styles['form-label']}>Note (Reason for reschedule)</label>
-                              <textarea className={styles['form-textarea']} name="note" placeholder="Enter reason or note..." defaultValue={appointment.reschedNote || ''}></textarea>
-                            </div>
-                            <div className={styles['form-actions']}>
-                              <button type="submit" className="global-btn">Save</button>
-                              <button type="button" className="global-btn" onClick={() => setShowReschedModal(false)}>Cancel</button>
-                            </div>
-                          </form>
-                        </div>
-                      </div>
-                    );
-                  })()}
                 </>;
               })()}
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Reschedule Modal - Top Level */}
+      {showReschedModal && reschedIndex !== null && selectedDate && (
+        <div className={styles.modal} style={{display:'flex', position:'fixed', top:0, left:0, width:'100vw', height:'100vh', background:'rgba(0,0,0,0.6)', zIndex:10000, alignItems:'center', justifyContent:'center'}} onClick={(e)=>(e.target.classList.contains(styles.modal) && setShowReschedModal(false))}>
+          <div className={styles['modal-content']}>
+            <div className={styles['modal-header']}>
+              <h2 className={styles['modal-title']}>Reschedule Appointment</h2>
+              <button className={styles['close-btn']} onClick={()=>setShowReschedModal(false)}>&times;</button>
+            </div>
+            <form className={styles['appointment-form']} onSubmit={handleReschedSubmit}>
+              <div className={styles['form-group']}>
+                <label className={styles['form-label']}>New Date</label>
+                <input type="date" className={styles['form-input']} name="date" defaultValue={selectedDate} required />
+              </div>
+              <div className={styles['form-group']}>
+                <label className={styles['form-label']}>New Time</label>
+                <input type="time" className={styles['form-input']} name="time" defaultValue={appointments[selectedDate][reschedIndex]?.time} required />
+              </div>
+              <div className={styles['form-group']}>
+                <label className={styles['form-label']}>Note (Reason for reschedule)</label>
+                <textarea className={styles['form-textarea']} name="note" placeholder="Enter reason or note..." defaultValue={appointments[selectedDate][reschedIndex]?.reschedNote || ''}></textarea>
+              </div>
+              <div className={styles['form-actions']}>
+                <button type="submit" className="global-btn secondary">Save</button>
+                <button type="button" className="global-btn secondary" onClick={()=>setShowReschedModal(false)}>Cancel</button>
+              </div>
+            </form>
           </div>
         </div>
       )}
