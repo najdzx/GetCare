@@ -1,99 +1,155 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Appointments.module.css';
 import '../../components/Layout/Button.css';
+import { showToast } from '../../components/Layout/toast';
 
 const Appointments = () => {
   // State for view mode
   const [viewMode, setViewMode] = useState('list'); // 'list' or 'booking'
   const [appointmentFilter, setAppointmentFilter] = useState('all'); // 'all', 'upcoming', 'past'
   
-  // Sample appointments data
-  const appointmentsData = [
-    {
-      id: 1,
-      appointmentId: 'APT1234',
-      doctor: {
-        name: 'Dr. Sarah Johnson',
-        specialty: 'Cardiology',
-        avatar: 'SJ'
-      },
-      date: '2025-08-15',
-      time: '10:00 AM',
-      type: 'face-to-face',
-      status: 'confirmed',
-      clinic: {
-        name: 'Heart Care Center - Main',
-        address: '123 Medical Plaza, Building A, Floor 3'
-      },
-      notes: 'Regular checkup and blood pressure monitoring'
-    },
-    {
-      id: 2,
-      appointmentId: 'APT1235',
-      doctor: {
-        name: 'Dr. Michael Chen',
-        specialty: 'Neurology',
-        avatar: 'MC'
-      },
-      date: '2025-08-18',
-      time: '2:30 PM',
-      type: 'online',
-      status: 'confirmed',
-      meetingLink: 'meet.google.com/abc-defg-hij',
-      notes: 'Follow-up on headache symptoms'
-    },
-    {
-      id: 3,
-      appointmentId: 'APT1236',
-      doctor: {
-        name: 'Dr. Emily Rodriguez',
-        specialty: 'Dermatology',
-        avatar: 'ER'
-      },
-      date: '2025-08-12',
-      time: '11:30 AM',
-      type: 'face-to-face',
-      status: 'completed',
-      clinic: {
-        name: 'Skin Health Clinic',
-        address: '456 Wellness Blvd, Suite 300'
-      },
-      notes: 'Skin examination and mole check'
-    },
-    {
-      id: 4,
-      appointmentId: 'APT1237',
-      doctor: {
-        name: 'Dr. David Kim',
-        specialty: 'Orthopedics',
-        avatar: 'DK'
-      },
-      date: '2025-08-22',
-      time: '9:00 AM',
-      type: 'face-to-face',
-      status: 'confirmed',
-      clinic: {
-        name: 'Bone & Joint Clinic',
-        address: '789 Medical Center Dr, Floor 2'
-      },
-      notes: 'Knee injury consultation'
-    },
-    {
-      id: 5,
-      appointmentId: 'APT1238',
-      doctor: {
-        name: 'Dr. Lisa Wong',
-        specialty: 'Pediatrics',
-        avatar: 'LW'
-      },
-      date: '2025-08-10',
-      time: '3:00 PM',
-      type: 'online',
-      status: 'cancelled',
-      meetingLink: 'meet.google.com/xyz-abcd-efg',
-      notes: 'Child vaccination consultation'
+  // Google Meet integration state
+  const [isGoogleAuthenticated, setIsGoogleAuthenticated] = useState(false);
+  const [creatingMeetLink, setCreatingMeetLink] = useState(false);
+  const [meetLinkError, setMeetLinkError] = useState('');
+  const [googleMeetLink, setGoogleMeetLink] = useState(null);
+  const [isCreatingMeetLink, setIsCreatingMeetLink] = useState(false);
+  const [googleEventId, setGoogleEventId] = useState(null);
+  const [rescheduleTarget, setRescheduleTarget] = useState(null);
+  const [googleEmail, setGoogleEmail] = useState(null);
+  
+  // Check Google authentication status on component mount
+  useEffect(() => {
+    checkGoogleAuthStatus();
+  }, []);
+
+  const checkGoogleAuthStatus = async (notify = false) => {
+    try {
+      const response = await fetch('http://localhost:5000/auth/status', {
+        credentials: 'include'
+      });
+      const data = await response.json();
+      setIsGoogleAuthenticated(data.authenticated || false);
+      setGoogleEmail(data.email || null);
+      if (notify) {
+        if (data.authenticated) {
+          showToast('Google account connected', 'success');
+        } else {
+          showToast('Google not connected', 'warning');
+        }
+      }
+    } catch (err) {
+      console.error('Error checking Google auth status:', err);
+      setIsGoogleAuthenticated(false);
+      setGoogleEmail(null);
+      if (notify) showToast('Failed to check Google auth status', 'error');
     }
-  ];
+  };
+
+  const handleGoogleAuth = () => {
+    // Open Google auth in a new window to avoid React Router interference
+    const authWindow = window.open(
+      'http://localhost:5000/auth/google', 
+      'googleAuth', 
+      'width=500,height=600,scrollbars=yes,resizable=yes'
+    );
+    
+    // Fallback if popup is blocked
+    if (!authWindow || authWindow.closed || typeof authWindow.closed === 'undefined') {
+      showToast('Popup blocked, redirecting to Google sign-in…', 'info');
+      window.location.href = 'http://localhost:5000/auth/google';
+      return;
+    }
+    
+    // Listen for messages from the auth popup
+    const handleMessage = (event) => {
+      if (event.origin !== 'http://localhost:5000') return;
+      
+      if (event.data.type === 'GOOGLE_AUTH_SUCCESS') {
+        // Authentication successful
+        setIsGoogleAuthenticated(true);
+        showToast('Connected to Google successfully', 'success');
+        window.removeEventListener('message', handleMessage);
+      }
+    };
+    
+    window.addEventListener('message', handleMessage);
+    
+    // Listen for the auth window to close and check auth status
+    const checkClosed = setInterval(() => {
+      if (authWindow.closed) {
+        clearInterval(checkClosed);
+        window.removeEventListener('message', handleMessage);
+        // Check auth status after window closes
+        setTimeout(() => {
+          checkGoogleAuthStatus();
+        }, 1000);
+      }
+    }, 1000);
+  };
+
+  const createGoogleMeetLink = async () => {
+    setIsCreatingMeetLink(true);
+    setMeetLinkError('');
+
+    try {
+      // Prepare appointment data using current selected values
+  const startDateTime = new Date(selectedDate);
+  const { hours, minutes } = parseTime12h(selectedTime);
+  startDateTime.setHours(hours, minutes, 0, 0);
+      
+      const endDateTime = new Date(startDateTime);
+      endDateTime.setHours(startDateTime.getHours() + 1); // 1 hour appointment
+
+    const title = buildEventTitle(selectedDoctor?.name, startDateTime, selectedTime);
+    console.log('Creating appointment with title:', title);
+
+    const response = await fetch('http://localhost:5000/api/create-meet-link', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+      title,
+          startTime: startDateTime.toISOString(),
+          endTime: endDateTime.toISOString(),
+          description: `Medical appointment scheduled via GetCare platform`,
+      attendees: googleEmail ? [{ email: googleEmail }] : [],
+          timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC'
+        })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        const preferredLink = data.meetLink || data.eventLink;
+        setGoogleMeetLink(preferredLink);
+        setGoogleEventId(data.eventId);
+        showToast('Google Meet link created', 'success');
+        // Return both link and event id for immediate use
+        return { link: preferredLink, eventId: data.eventId, meetLink: data.meetLink, eventLink: data.eventLink };
+      } else {
+        setMeetLinkError(data.error || 'Failed to create Google Meet link');
+        showToast('Failed to create Google Meet link', 'error');
+        return null;
+      }
+    } catch (err) {
+      setMeetLinkError('Error creating Google Meet link: ' + err.message);
+      showToast('Error creating Google Meet link', 'error');
+  return null;
+    } finally {
+      setIsCreatingMeetLink(false);
+    }
+  };
+  
+  // Appointments state (so new bookings appear in the list)
+  const [appointments, setAppointments] = useState([]);
+  // Additional filters
+  const [typeFilter, setTypeFilter] = useState('all'); // all | online | face-to-face
+  const [statusFilter, setStatusFilter] = useState('all'); // all | confirmed | completed | cancelled
+  const [doctorQuery, setDoctorQuery] = useState('');
+  const [dateFilter, setDateFilter] = useState(''); // YYYY-MM-DD
   // Sample data
   const doctorsData = [
     {
@@ -245,6 +301,54 @@ const Appointments = () => {
   }, [currentMonth, currentYear]);
 
   // Appointments list functions
+  // Date/time helpers (use local timezone to avoid off-by-one issues)
+  const toLocalISODate = (date) => {
+    if (!(date instanceof Date)) return '';
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, '0');
+    const d = String(date.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
+  };
+
+  const parseLocalDate = (dateString) => {
+    if (!dateString) return null;
+    const [y, m, d] = dateString.split('-').map(Number);
+    return new Date(y, (m || 1) - 1, d || 1);
+  };
+
+  const parseTime12h = (timeStr) => {
+    if (!timeStr) return { hours: 0, minutes: 0 };
+    const [time, meridianRaw] = timeStr.trim().split(' ');
+    const [hStr, mStr] = (time || '').split(':');
+    let hours = parseInt(hStr, 10) || 0;
+    const minutes = parseInt(mStr, 10) || 0;
+    const meridian = (meridianRaw || '').toUpperCase();
+    if (meridian === 'PM' && hours !== 12) hours += 12;
+    if (meridian === 'AM' && hours === 12) hours = 0;
+    return { hours, minutes };
+  };
+
+  const toLocalDateTimeString = (date) => {
+    if (!(date instanceof Date)) return '';
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, '0');
+    const d = String(date.getDate()).padStart(2, '0');
+    const hh = String(date.getHours()).padStart(2, '0');
+    const mm = String(date.getMinutes()).padStart(2, '0');
+    const ss = String(date.getSeconds()).padStart(2, '0');
+    return `${y}-${m}-${d}T${hh}:${mm}:${ss}`; // no timezone suffix
+  };
+
+  // Build a clear Calendar/Meet event title including doctor and local date/time
+  const buildEventTitle = (doctorName, dateObj, timeStr) => {
+    if (!doctorName || !(dateObj instanceof Date) || !timeStr) return 'Medical Appointment';
+    const dateStr = dateObj.toLocaleDateString('en-US', {
+      weekday: 'short', month: 'short', day: 'numeric', year: 'numeric'
+    });
+    const timeLabel = timeStr.replace(/\s+/g, ' ').trim().toUpperCase();
+    return `Appointment with ${doctorName} — ${dateStr} at ${timeLabel}`;
+  };
+
   const getStatusColor = (status) => {
     switch (status) {
       case 'confirmed':
@@ -290,17 +394,18 @@ const Appointments = () => {
   };
 
   const formatDate = (dateString) => {
-    const date = new Date(dateString);
+    const date = parseLocalDate(dateString);
     const today = new Date();
+    today.setHours(0, 0, 0, 0);
     const tomorrow = new Date(today);
     tomorrow.setDate(today.getDate() + 1);
-    
-    if (date.toDateString() === today.toDateString()) {
+
+    if (date && date.toDateString() === today.toDateString()) {
       return 'Today';
-    } else if (date.toDateString() === tomorrow.toDateString()) {
+    } else if (date && date.toDateString() === tomorrow.toDateString()) {
       return 'Tomorrow';
     } else {
-      return date.toLocaleDateString('en-US', { 
+      return (date || new Date(dateString)).toLocaleDateString('en-US', { 
         weekday: 'short', 
         month: 'short', 
         day: 'numeric' 
@@ -309,7 +414,7 @@ const Appointments = () => {
   };
 
   const isUpcoming = (dateString) => {
-    const appointmentDate = new Date(dateString);
+    const appointmentDate = parseLocalDate(dateString);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     return appointmentDate >= today;
@@ -317,39 +422,81 @@ const Appointments = () => {
 
   const sortAppointments = (appointments) => {
     return appointments.sort((a, b) => {
-      const dateA = new Date(a.date);
-      const dateB = new Date(b.date);
+  const dateA = parseLocalDate(a.date);
+  const dateB = parseLocalDate(b.date);
       return dateB - dateA; // Most recent first
     });
   };
 
   const cancelAppointment = (appointmentId) => {
     if (window.confirm('Are you sure you want to cancel this appointment?')) {
-      alert(`Appointment ${appointmentId} has been cancelled.`);
-      // Here you would update the appointment status in your state or backend
+  setAppointments(prev => prev.map(a => a.appointmentId === appointmentId ? { ...a, status: 'cancelled' } : a));
+  showToast('Appointment cancelled', 'info');
     }
   };
 
   const rescheduleAppointment = (appointmentId) => {
-    alert(`Redirecting to reschedule appointment ${appointmentId}...`);
-    // Here you would redirect to the booking page with pre-filled data
-    setViewMode('booking');
+    const apt = appointments.find(a => a.appointmentId === appointmentId);
+    if (!apt) return setViewMode('booking');
+    setRescheduleTarget(apt);
+    // Pre-fill doctor (best effort by name), date/time
+    const doctorFromList = doctorsData.find(d => d.name === apt.doctor.name);
+    if (doctorFromList) {
+      setSelectedDoctor(doctorFromList);
+    } else {
+      const initials = (apt.doctor?.name || 'Dr').split(' ').map(s => s[0]).join('').slice(0,2).toUpperCase();
+      setSelectedDoctor({
+        id: -1,
+        name: apt.doctor?.name || 'Doctor',
+        specialty: apt.doctor?.specialty || '',
+        avatar: apt.doctor?.avatar || initials,
+        clinics: apt.clinic ? [apt.clinic] : []
+      });
+    }
+    setSelectedAppointmentType(apt.type);
+    if (apt.type === 'face-to-face' && apt.clinic) setSelectedClinic(apt.clinic);
+    // parse date 'YYYY-MM-DD'
+    const preDate = parseLocalDate(apt.date);
+    setSelectedDate(preDate);
+    setSelectedTime((apt.time || '').replace(/\s+/g, ' ').trim().toUpperCase());
+  setViewMode('booking');
+  setCurrentStep(3);
   };
 
   const joinMeeting = (meetingLink) => {
-    window.open(`https://${meetingLink}`, '_blank');
+  if (!meetingLink) return;
+  const url = meetingLink.startsWith('http') ? meetingLink : `https://${meetingLink}`;
+  // Force Google account chooser so the user can pick the invited account
+  const chooserUrl = `https://accounts.google.com/AccountChooser?continue=${encodeURIComponent(url)}`;
+  window.open(chooserUrl, '_blank');
   };
 
   const getFilteredAppointments = () => {
-    switch (appointmentFilter) {
-      case 'upcoming':
-        return appointmentsData.filter(apt => isUpcoming(apt.date) && apt.status !== 'cancelled');
-      case 'past':
-        return appointmentsData.filter(apt => !isUpcoming(apt.date));
-      case 'all':
-      default:
-        return appointmentsData;
+    let list = appointments;
+    // time filter (tabs)
+    if (appointmentFilter === 'upcoming') {
+      list = list.filter(apt => isUpcoming(apt.date) && apt.status !== 'cancelled');
+    } else if (appointmentFilter === 'past') {
+      list = list.filter(apt => !isUpcoming(apt.date));
     }
+    // type filter
+    if (typeFilter !== 'all') {
+      list = list.filter(apt => apt.type === typeFilter);
+    }
+    // status filter
+    if (statusFilter !== 'all') {
+      list = list.filter(apt => apt.status === statusFilter);
+    }
+    // doctor text search
+    if (doctorQuery.trim()) {
+      const q = doctorQuery.toLowerCase();
+      list = list.filter(apt => apt.doctor.name.toLowerCase().includes(q) || apt.doctor.specialty.toLowerCase().includes(q));
+    }
+    // date filter
+    if (dateFilter) {
+      list = list.filter(apt => apt.date === dateFilter);
+    }
+    return list;
   };
 
   // Doctor selection functions
@@ -494,12 +641,18 @@ const Appointments = () => {
   };
 
   const selectTime = (time) => {
-    setSelectedTime(time);
+    const normalized = time.replace(/\s+/g, ' ').trim().toUpperCase();
+    setSelectedTime(normalized);
     updateStepNavigation();
   };
 
   // Step navigation
   const nextStep = () => {
+    // When rescheduling, user should only change date/time and confirm
+    if (rescheduleTarget) {
+      if (currentStep === 3) setCurrentStep(4);
+      return;
+    }
     if (currentStep < 4) {
       setCurrentStep(currentStep + 1);
       updateStepNavigation();
@@ -507,13 +660,20 @@ const Appointments = () => {
   };
 
   const previousStep = () => {
-    if (currentStep > 1) {
+  // Disable going back to previous steps during reschedule
+  if (rescheduleTarget) return;
+  if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
       updateStepNavigation();
     }
   };
 
   const goToStep = (step) => {
+    // During reschedule, only allow steps 3 and 4
+    if (rescheduleTarget) {
+      if (step < 3) return;
+      if (step > 4) return;
+    }
     setCurrentStep(step);
     updateStepNavigation();
   };
@@ -621,8 +781,122 @@ const Appointments = () => {
     );
   };
 
-  const confirmAppointment = () => {
-    setShowModal(true);
+  const confirmAppointment = async () => {
+    // If rescheduling an existing appointment
+    if (rescheduleTarget) {
+      // compute new start/end
+  const startDateTime = new Date(selectedDate);
+  const { hours: resH, minutes: resM } = parseTime12h(selectedTime);
+  startDateTime.setHours(resH, resM, 0, 0);
+  const endDateTime = new Date(startDateTime);
+  endDateTime.setHours(startDateTime.getHours() + 1);
+
+  if (rescheduleTarget.type === 'online' && rescheduleTarget.eventId && isGoogleAuthenticated) {
+        try {
+      const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
+    // Use RFC3339 timestamps for Calendar API
+    const startISO = startDateTime.toISOString();
+    const endISO = endDateTime.toISOString();
+      const title = buildEventTitle(rescheduleTarget.doctor?.name, startDateTime, selectedTime);
+          const resp = await fetch('http://localhost:5000/api/update-meet-event', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({
+              eventId: rescheduleTarget.eventId,
+        startTime: startISO,
+        endTime: endISO,
+              timeZone,
+        title
+            })
+          });
+          const data = await resp.json();
+          if (!resp.ok || !data.success) throw new Error(data.error || 'Update failed');
+          // Update local appointment (date/time, keep meetingLink, update if API returns)
+          setAppointments(prev => prev.map(a => a.appointmentId === rescheduleTarget.appointmentId ? {
+            ...a,
+            date: toLocalISODate(selectedDate),
+            time: selectedTime,
+            meetingLink: (data.meetLink || data.eventLink) ? (data.meetLink || data.eventLink).replace('https://', '') : a.meetingLink
+          } : a));
+          setRescheduleTarget(null);
+          setShowModal(true);
+          showToast('Appointment rescheduled', 'success');
+          return;
+        } catch (e) {
+          console.error('Failed to update Google Calendar event:', e);
+          // Fallback: just update local date/time
+          setAppointments(prev => prev.map(a => a.appointmentId === rescheduleTarget.appointmentId ? {
+            ...a,
+            date: toLocalISODate(selectedDate),
+            time: selectedTime,
+          } : a));
+          setRescheduleTarget(null);
+          setShowModal(true);
+          showToast('Rescheduled locally (calendar update failed)', 'warning');
+          return;
+        }
+      } else {
+        // Face-to-face or missing event id: update locally
+        setAppointments(prev => prev.map(a => a.appointmentId === rescheduleTarget.appointmentId ? {
+          ...a,
+          date: toLocalISODate(selectedDate),
+          time: selectedTime,
+        } : a));
+        setRescheduleTarget(null);
+        setShowModal(true);
+        showToast('Appointment rescheduled', 'success');
+        return;
+      }
+    }
+    // If it's an online appointment, create Google Meet link first
+    if (selectedAppointmentType === 'online' && isGoogleAuthenticated) {
+      setIsCreatingMeetLink(true);
+      try {
+        const creation = await createGoogleMeetLink();
+        const link = creation?.link || null;
+        const eventId = creation?.eventId || null;
+        // proceed to show modal and add to list
+        const newApt = {
+          id: Date.now(),
+          appointmentId: `APT${Math.floor(Math.random() * 9000 + 1000)}`,
+          doctor: { name: selectedDoctor.name, specialty: selectedDoctor.specialty ? selectedDoctor.specialty : '', avatar: selectedDoctor.name.split(' ').map(s=>s[0]).join('').slice(0,2).toUpperCase() },
+          date: toLocalISODate(selectedDate),
+          time: selectedTime,
+          type: 'online',
+          status: 'confirmed',
+          meetingLink: link ? link.replace('https://', '') : undefined,
+          eventId: eventId || googleEventId,
+          notes: appointmentNotes || ''
+        };
+  setAppointments(prev => [newApt, ...prev]);
+  setShowModal(true);
+  showToast('Appointment booked (online)', 'success');
+      } catch (error) {
+        console.error('Failed to create Google Meet link:', error);
+        // Still show modal but with error state
+  setShowModal(true);
+  showToast('Appointment booked but Meet link failed', 'warning');
+      } finally {
+        setIsCreatingMeetLink(false);
+      }
+    } else {
+      // For face-to-face appointments or when Google auth is not available
+      const newApt = {
+        id: Date.now(),
+        appointmentId: `APT${Math.floor(Math.random() * 9000 + 1000)}`,
+        doctor: { name: selectedDoctor.name, specialty: selectedDoctor.specialty ? selectedDoctor.specialty : '', avatar: selectedDoctor.name.split(' ').map(s=>s[0]).join('').slice(0,2).toUpperCase() },
+  date: toLocalISODate(selectedDate),
+        time: selectedTime,
+        type: 'face-to-face',
+        status: 'confirmed',
+        clinic: selectedClinic || null,
+        notes: appointmentNotes || ''
+      };
+  setAppointments(prev => [newApt, ...prev]);
+  setShowModal(true);
+  showToast('Appointment booked', 'success');
+    }
   };
 
   const closeModal = () => {
@@ -631,8 +905,11 @@ const Appointments = () => {
   };
 
   const viewAppointments = () => {
-    alert('Redirecting to your appointments page...');
-    closeModal();
+    setShowModal(false);
+    setViewMode('list');
+    // scroll to top of list
+    setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 0);
+    resetForm();
   };
 
   const resetForm = () => {
@@ -745,15 +1022,37 @@ const Appointments = () => {
     
     let meetingLink = null;
     if (selectedAppointmentType === 'online') {
-      const meetId = Math.random().toString(36).substring(2, 15);
-      meetingLink = (
-        <div className={styles.summaryItem}>
-          <span className={styles.summaryLabel}>Google Meet Link:</span>
-          <span className={styles.summaryValue} style={{color: '#1a1a1a', textDecoration: 'underline'}}>
-            meet.google.com/{meetId}
-          </span>
-        </div>
-      );
+      if (googleMeetLink) {
+        const chooserHref = `https://accounts.google.com/AccountChooser?continue=${encodeURIComponent(googleMeetLink)}`;
+        meetingLink = (
+          <div className={styles.summaryItem}>
+            <span className={styles.summaryLabel}>Google Meet Link:</span>
+            <span className={styles.summaryValue} style={{color: '#1a1a1a', textDecoration: 'underline'}}>
+              <a href={chooserHref} target="_blank" rel="noopener noreferrer" style={{color: '#1a1a1a'}}>
+                {googleMeetLink.replace('https://', '')}
+              </a>
+            </span>
+          </div>
+        );
+      } else if (isCreatingMeetLink) {
+        meetingLink = (
+          <div className={styles.summaryItem}>
+            <span className={styles.summaryLabel}>Google Meet Link:</span>
+            <span className={styles.summaryValue} style={{color: '#666'}}>
+              Creating meeting link...
+            </span>
+          </div>
+        );
+      } else {
+        meetingLink = (
+          <div className={styles.summaryItem}>
+            <span className={styles.summaryLabel}>Google Meet Link:</span>
+            <span className={styles.summaryValue} style={{color: '#d32f2f'}}>
+              Failed to create meeting link. Please try booking again.
+            </span>
+          </div>
+        );
+      }
     }
     
     return (
@@ -848,20 +1147,58 @@ const Appointments = () => {
                   className={`${styles.filterTab} ${appointmentFilter === 'all' ? styles.active : ''}`}
                   onClick={() => setAppointmentFilter('all')}
                 >
-                  All Appointments ({appointmentsData.length})
+                  All Appointments ({appointments.length})
                 </button>
                 <button 
                   className={`${styles.filterTab} ${appointmentFilter === 'upcoming' ? styles.active : ''}`}
                   onClick={() => setAppointmentFilter('upcoming')}
                 >
-                  Upcoming ({appointmentsData.filter(apt => isUpcoming(apt.date) && apt.status !== 'cancelled').length})
+                  Upcoming ({appointments.filter(apt => isUpcoming(apt.date) && apt.status !== 'cancelled').length})
                 </button>
                 <button 
                   className={`${styles.filterTab} ${appointmentFilter === 'past' ? styles.active : ''}`}
                   onClick={() => setAppointmentFilter('past')}
                 >
-                  Past ({appointmentsData.filter(apt => !isUpcoming(apt.date)).length})
+                  Past ({appointments.filter(apt => !isUpcoming(apt.date)).length})
                 </button>
+              </div>
+
+              {/* Secondary filters */}
+              <div className={styles.secondaryFilters}>
+                <div className={styles.filterGroup}>
+                  <label>Type</label>
+                  <select value={typeFilter} onChange={(e) => setTypeFilter(e.target.value)}>
+                    <option value="all">All</option>
+                    <option value="online">Online</option>
+                    <option value="face-to-face">Face-to-Face</option>
+                  </select>
+                </div>
+                <div className={styles.filterGroup}>
+                  <label>Status</label>
+                  <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
+                    <option value="all">All</option>
+                    <option value="confirmed">Confirmed</option>
+                    <option value="completed">Completed</option>
+                    <option value="cancelled">Cancelled</option>
+                  </select>
+                </div>
+                <div className={styles.filterGroup}>
+                  <label>Date</label>
+                  <input 
+                    type="date"
+                    value={dateFilter}
+                    onChange={(e) => setDateFilter(e.target.value)}
+                  />
+                </div>
+                <div className={styles.filterGroup}>
+                  <label>Search Doctor</label>
+                  <input 
+                    type="text"
+                    placeholder="Name or specialty"
+                    value={doctorQuery}
+                    onChange={(e) => setDoctorQuery(e.target.value)}
+                  />
+                </div>
               </div>
 
               {/* Appointments grid */}
@@ -1012,14 +1349,14 @@ const Appointments = () => {
           {viewMode === 'booking' && (
             <div className={styles.bookingContainer}>
               {/* Step Indicator */}
-              <div className={styles.stepIndicator}>
+        <div className={styles.stepIndicator} style={rescheduleTarget ? { userSelect: 'none' } : undefined}>
               {[1, 2, 3, 4].map(step => {
                 let stepClass = styles.step;
                 if (step === currentStep) stepClass += ` ${styles.active}`;
                 if (step < currentStep) stepClass += ` ${styles.completed}`;
                 
                 return (
-                  <div key={step} className={stepClass} data-step={step}>
+          <div key={step} className={stepClass} data-step={step} onClick={() => goToStep(step)} style={rescheduleTarget && step < 3 ? { pointerEvents: 'none', opacity: 0.5 } : undefined}>
                     <div className={styles.stepNumber}>{step}</div>
                     <span>
                       {step === 1 && 'Select Doctor'}
@@ -1166,37 +1503,66 @@ const Appointments = () => {
               {/* Online Meeting Info (shown when online is selected) */}
               {selectedAppointmentType === 'online' && (
                 <div className={styles.onlineInfo}>
-                  <div className={styles.infoCard}>
-                    <div className={styles.infoIcon}>
-                      <svg width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                        <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.061L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
-                      </svg>
-                    </div>
-                    <h4>Google Meet Link Ready</h4>
-                    <p>A secure Google Meet link will be automatically generated for your appointment. You'll receive the meeting details via email and SMS before your scheduled time.</p>
-                    <div className={styles.meetingFeatures}>
-                      <div className={styles.feature}>
-                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                          <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
-                        </svg>
-                        <span>End-to-end encrypted</span>
-                      </div>
-                      <div className={styles.feature}>
-                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                          <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zM4.285 9.567a.5.5 0 0 1 .683.183A3.498 3.498 0 0 0 8 11.5a3.498 3.498 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.498 4.498 0 0 1 8 12.5a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683zM10 8c-.552 0-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5S10.552 8 10 8z"/>
-                        </svg>
-                        <span>HD video quality</span>
-                      </div>
-                      <div className={styles.feature}>
-                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                  {!isGoogleAuthenticated ? (
+                    <div className={styles.googleAuthCard}>
+                      <div className={styles.authIcon}>
+                        <svg width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
                           <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                          <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                          <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
                         </svg>
-                        <span>Screen sharing available</span>
+                      </div>
+                      <h4>Google Meet Integration Required</h4>
+                      <p>To create secure Google Meet links for your online appointments, please authenticate with your Google account.</p>
+                      <button 
+                        type="button"
+                        className="global-btn primary"
+                        onClick={(e) => { e.preventDefault(); handleGoogleAuth(); }}
+                        style={{ marginTop: '1rem' }}
+                      >
+                        Connect with Google
+                      </button>
+                      <button 
+                        type="button"
+                        className="global-btn secondary"
+                        onClick={(e) => { e.preventDefault(); checkGoogleAuthStatus(true); }}
+                        style={{ marginTop: '0.5rem', marginLeft: '0.5rem' }}
+                      >
+                        Check Status
+                      </button>
+                    </div>
+                  ) : (
+                    <div className={styles.infoCard}>
+                      <div className={styles.infoIcon}>
+                        <svg width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
+                          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                          <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.061L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+                        </svg>
+                      </div>
+                      <h4>Google Meet Link Ready</h4>
+                      <p>A secure Google Meet link will be automatically generated for your appointment. You'll receive the meeting details via email and SMS before your scheduled time.</p>
+                      <div className={styles.meetingFeatures}>
+                        <div className={styles.feature}>
+                          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+                          </svg>
+                          <span>End-to-end encrypted</span>
+                        </div>
+                        <div className={styles.feature}>
+                          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zM4.285 9.567a.5.5 0 0 1 .683.183A3.498 3.498 0 0 0 8 11.5a3.498 3.498 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.498 4.498 0 0 1 8 12.5a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683zM10 8c-.552 0-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5S10.552 8 10 8z"/>
+                          </svg>
+                          <span>HD video quality</span>
+                        </div>
+                        <div className={styles.feature}>
+                          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                            <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                          </svg>
+                          <span>Screen sharing available</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               )}
             </div>
@@ -1208,6 +1574,11 @@ const Appointments = () => {
                 <p>Select your preferred appointment date and available time slot</p>
               </div>
 
+              {rescheduleTarget && (
+                <div style={{ background: '#fff7ed', border: '1px solid #fed7aa', color: '#9a3412', padding: '10px 12px', borderRadius: 8, marginBottom: 12 }}>
+                  Rescheduling appointment #{rescheduleTarget.appointmentId}. You can change the date and time only.
+                </div>
+              )}
               {showAppointmentSummaryMini()}
 
               <div className={styles.datetimeSelection}>

@@ -11,4 +11,9 @@ export default defineConfig({
   optimizeDeps: {
     include: ['react-big-calendar'], // pre-bundle it for dev
   },
+  server: {
+    proxy: {
+      '/api': 'http://localhost:5000',
+    },
+  },
 });

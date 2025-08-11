@@ -973,6 +973,48 @@
     overflow-x: hidden;
 }
 
+/* Secondary Filters */
+.secondaryFilters {
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.filterGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 200px;
+}
+
+.filterGroup label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.filterGroup select,
+.filterGroup input[type="text"],
+.filterGroup input[type="date"] {
+    padding: 10px 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: "Poppins", sans-serif;
+    background: #fff;
+    color: #111827;
+}
+
+.filterGroup select:focus,
+.filterGroup input[type="text"]:focus,
+.filterGroup input[type="date"]:focus {
+    outline: none;
+    border-color: #434bb8;
+    box-shadow: 0 0 0 3px rgba(67, 75, 184, 0.1);
+}
+
 .appointmentCard {
     background: white;
     border: 1px solid #e5e7eb;

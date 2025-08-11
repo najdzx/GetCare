@@ -78,6 +78,13 @@ const AddDoctorModal = ({ showAddModal, setShowAddModal, handleSubmitDoctorForm 
                 <input type="text" id="ptrLicense" name="ptrLicense" required />
               </div>
             </div>
+
+            <div className={styles.formRow}>
+              <div className={styles.formGroup}>
+                <label htmlFor="tempPassword">Temporary Password <span className={styles.required}>*</span></label>
+                <input type="password" id="tempPassword" name="tempPassword" placeholder="Enter temporary password" required />
+              </div>
+            </div>
             
             <div className={styles.formActions}>
               <button 
