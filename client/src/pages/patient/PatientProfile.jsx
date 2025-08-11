@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../supabaseClient';
 import styles from './PatientProfile.module.css';
+import '../../components/Layout/toast.css';
 
 const PatientProfile = () => {
   const { user } = useAuth();
@@ -37,7 +38,18 @@ const PatientProfile = () => {
 
   // Edit mode states
   const [isPersonalEditMode, setIsPersonalEditMode] = useState(false);
-  const [isMedicalEditMode, setIsMedicalEditMode] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  
+  // Toast notification state
+  const [toast, setToast] = useState({ show: false, message: '', type: '' });
+
+  // Toast functions
+  const showToast = (message, type = 'success') => {
+    setToast({ show: true, message, type });
+    setTimeout(() => {
+      setToast({ show: false, message: '', type: '' });
+    }, 3000); // Hide after 3 seconds
+  };
 
   // Generate patient ID from user ID and account creation date
   const generatePatientId = (userId, createdAt) => {
@@ -60,9 +72,10 @@ const PatientProfile = () => {
   // Fetch profile data from database
   useEffect(() => {
     const fetchProfileData = async () => {
-      if (!user) return;
+      if (!user || isSaving || isPersonalEditMode) return; // Don't refetch while saving or editing
 
       try {
+        console.log('Fetching profile data from database...');
         // Fetch profile data from database
         const { data: profile, error } = await supabase
           .from('profiles')
@@ -77,6 +90,7 @@ const PatientProfile = () => {
         }
 
         if (profile) {
+          console.log('Profile data fetched:', profile);
           // Update personal data
           setPersonalData({
             firstName: profile.first_name || user.user_metadata?.firstName || '',
@@ -103,6 +117,7 @@ const PatientProfile = () => {
             supplements: profile.supplements || ''
           });
         } else {
+          console.log('No profile found, using auth metadata');
           // If no profile found, use auth metadata as fallback
           setPersonalData(prev => ({
             ...prev,
@@ -121,7 +136,7 @@ const PatientProfile = () => {
     };
 
     fetchProfileData();
-  }, [user]);
+  }, [user, isSaving, isPersonalEditMode]);
 
   // Handle photo upload
   const handleFileChange = (e) => {
@@ -166,9 +181,93 @@ const PatientProfile = () => {
   // Personal information handlers
   const handlePersonalEditSave = () => {
     if (isPersonalEditMode) {
-      savePersonalChanges();
+      // Save both personal and medical data
+      saveBothPersonalAndMedical();
     } else {
       togglePersonalEditMode();
+    }
+  };
+
+  // Combined save function for both personal and medical data
+  const saveBothPersonalAndMedical = async () => {
+    if (!user || isSaving) return;
+    
+    console.log('Starting save process...');
+    setIsSaving(true);
+    
+    try {
+      // Prepare combined profile data
+      const profileData = {
+        user_id: user.id,
+        // Personal data
+        first_name: personalData.firstName,
+        last_name: personalData.lastName,
+        suffix: personalData.suffix,
+        nickname: personalData.nickName,
+        date_of_birth: personalData.dateOfBirth,
+        age: personalData.age ? parseInt(personalData.age) : null,
+        sex: personalData.sex,
+        blood_type: personalData.bloodType,
+        civil_status: personalData.civilStatus,
+        philhealth_no: personalData.philHealthNo,
+        email: personalData.email,
+        primary_mobile: personalData.primaryMobile,
+        // Medical data
+        medical_conditions: medicalData.medicalConditions,
+        allergies: medicalData.allergies,
+        surgeries: medicalData.previousSurgeries,
+        family_history: medicalData.familyHistory,
+        medications: medicalData.currentMedications,
+        supplements: medicalData.supplements,
+        updated_at: new Date().toISOString()
+      };
+      
+      console.log('Saving profile data:', profileData);
+      
+      const { error, data } = await supabase
+        .from('profiles')
+        .upsert(profileData, { onConflict: 'user_id', ignoreDuplicates: false })
+        .select();
+        
+      if (error) {
+        console.error('Database error:', error);
+        showToast('Error saving profile information!', 'error');
+      } else {
+        console.log('Save successful, returned data:', data);
+        // Update local states with saved data
+        if (data && data[0]) {
+          setPersonalData({
+            firstName: data[0].first_name || '',
+            lastName: data[0].last_name || '',
+            suffix: data[0].suffix || '',
+            nickName: data[0].nickname || '',
+            dateOfBirth: data[0].date_of_birth || '',
+            age: data[0].age ? `${data[0].age} years old` : '',
+            sex: data[0].sex || '',
+            bloodType: data[0].blood_type || '',
+            civilStatus: data[0].civil_status || '',
+            philHealthNo: data[0].philhealth_no || '',
+            email: data[0].email || user.email || '',
+            primaryMobile: data[0].primary_mobile || ''
+          });
+
+          setMedicalData({
+            medicalConditions: data[0].medical_conditions || '',
+            allergies: data[0].allergies || '',
+            previousSurgeries: data[0].surgeries || '',
+            familyHistory: data[0].family_history || '',
+            currentMedications: data[0].medications || '',
+            supplements: data[0].supplements || ''
+          });
+        }
+        showToast('Profile information saved successfully!', 'success');
+        setIsPersonalEditMode(false);
+      }
+    } catch (err) {
+      console.error('Unexpected error:', err);
+      showToast('Unexpected error saving profile information!', 'error');
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -203,60 +302,14 @@ const PatientProfile = () => {
         .from('profiles')
         .upsert(profileData, { onConflict: 'user_id', ignoreDuplicates: false });
       if (error) {
-        alert('Error saving personal info!');
+        showToast('Error saving personal info!', 'error');
         console.error(error);
       } else {
-        alert('Personal information saved successfully!');
+        showToast('Personal information saved successfully!', 'success');
         setIsPersonalEditMode(false);
       }
     } catch (err) {
-      alert('Unexpected error saving personal info!');
-      console.error(err);
-    }
-  };
-
-  // Medical background handlers
-  const handleMedicalEditSave = () => {
-    if (isMedicalEditMode) {
-      saveMedicalChanges();
-    } else {
-      toggleMedicalEditMode();
-    }
-  };
-
-  const toggleMedicalEditMode = () => {
-    setIsMedicalEditMode(!isMedicalEditMode);
-  };
-
-  const cancelMedicalEdit = () => {
-    toggleMedicalEditMode();
-  };
-
-  const saveMedicalChanges = async () => {
-    if (!user) return;
-    try {
-      const profileData = {
-        user_id: user.id,
-        medical_conditions: medicalData.medicalConditions,
-        allergies: medicalData.allergies,
-        surgeries: medicalData.previousSurgeries,
-        family_history: medicalData.familyHistory,
-        medications: medicalData.currentMedications,
-        supplements: medicalData.supplements,
-        updated_at: new Date().toISOString()
-      };
-      const { error } = await supabase
-        .from('profiles')
-        .upsert(profileData, { onConflict: 'user_id', ignoreDuplicates: false });
-      if (error) {
-        alert('Error saving medical background!');
-        console.error(error);
-      } else {
-        alert('Medical background saved successfully!');
-        setIsMedicalEditMode(false);
-      }
-    } catch (err) {
-      alert('Unexpected error saving medical background!');
+      showToast('Unexpected error saving personal info!', 'error');
       console.error(err);
     }
   };
@@ -327,8 +380,9 @@ const PatientProfile = () => {
                         id="personalEditSaveBtn" 
                         className="global-btn2" 
                         onClick={handlePersonalEditSave}
+                        disabled={isSaving}
                       >
-                        <span id="personalEditModeText">Edit</span>
+                        <span id="personalEditModeText">{isSaving ? 'Saving...' : 'Edit'}</span>
                         <svg id="personalEditIcon" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                           <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708L10.5 8.207l-3-3L12.146.146zM11.207 9.5L7 13.707V10.5a.5.5 0 0 1 .5-.5h3.707zM1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                         </svg>
@@ -447,9 +501,10 @@ const PatientProfile = () => {
                         <button 
                           id="personalEditSaveBtn" 
                           className="global-btn2" 
-                          onClick={savePersonalChanges}
+                          onClick={saveBothPersonalAndMedical}
+                          disabled={isSaving}
                         >
-                          <span id="personalEditModeText">Save</span>
+                          <span id="personalEditModeText">{isSaving ? 'Saving...' : 'Save'}</span>
                           <svg id="personalSaveIcon" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                             <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1H2z"/>
                           </svg>
@@ -760,6 +815,13 @@ const PatientProfile = () => {
           </div>
         </div>
       </div>
+      
+      {/* Toast Notification */}
+      {toast.show && (
+        <div className={`toast show ${toast.type}`}>
+          {toast.message}
+        </div>
+      )}
     </div>
   );
 };
