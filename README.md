@@ -2,8 +2,13 @@
 
 ## Tech Stack
 - React (Frontend)
-- Material UI
-- Node.js
+- Vite (Frontend build tool)
+- Tailwind CSS (Styling)
+- Supabase (Authentication & Database)
+- Node.js (Backend)
+- Express (API server)
+- Prisma (ORM)
+- Material UI (Some UI components)
 
 ## How to Run Locally
 
