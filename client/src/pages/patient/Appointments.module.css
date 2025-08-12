@@ -973,7 +973,6 @@
     overflow-x: hidden;
 }
 
-<<<<<<< HEAD
 /* Secondary Filters */
 .secondaryFilters {
     display: flex;
@@ -1016,8 +1015,6 @@
     box-shadow: 0 0 0 3px rgba(67, 75, 184, 0.1);
 }
 
-=======
->>>>>>> 52125ecf16c29b12570cab00cc87d2781e2c4911
 .appointmentCard {
     background: white;
     border: 1px solid #e5e7eb;

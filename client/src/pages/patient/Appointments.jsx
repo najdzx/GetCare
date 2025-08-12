@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Appointments.module.css';
 import '../../components/Layout/Button.css';
-<<<<<<< HEAD
 import { showToast } from '../../components/Layout/toast';
-=======
->>>>>>> 52125ecf16c29b12570cab00cc87d2781e2c4911
 
 const Appointments = () => {
   // State for view mode
   const [viewMode, setViewMode] = useState('list'); // 'list' or 'booking'
   const [appointmentFilter, setAppointmentFilter] = useState('all'); // 'all', 'upcoming', 'past'
   
-<<<<<<< HEAD
   // Google Meet integration state
   const [isGoogleAuthenticated, setIsGoogleAuthenticated] = useState(false);
   const [creatingMeetLink, setCreatingMeetLink] = useState(false);
@@ -154,95 +150,6 @@ const Appointments = () => {
   const [statusFilter, setStatusFilter] = useState('all'); // all | confirmed | completed | cancelled
   const [doctorQuery, setDoctorQuery] = useState('');
   const [dateFilter, setDateFilter] = useState(''); // YYYY-MM-DD
-=======
-  // Sample appointments data
-  const appointmentsData = [
-    {
-      id: 1,
-      appointmentId: 'APT1234',
-      doctor: {
-        name: 'Dr. Sarah Johnson',
-        specialty: 'Cardiology',
-        avatar: 'SJ'
-      },
-      date: '2025-08-15',
-      time: '10:00 AM',
-      type: 'face-to-face',
-      status: 'confirmed',
-      clinic: {
-        name: 'Heart Care Center - Main',
-        address: '123 Medical Plaza, Building A, Floor 3'
-      },
-      notes: 'Regular checkup and blood pressure monitoring'
-    },
-    {
-      id: 2,
-      appointmentId: 'APT1235',
-      doctor: {
-        name: 'Dr. Michael Chen',
-        specialty: 'Neurology',
-        avatar: 'MC'
-      },
-      date: '2025-08-18',
-      time: '2:30 PM',
-      type: 'online',
-      status: 'confirmed',
-      meetingLink: 'meet.google.com/abc-defg-hij',
-      notes: 'Follow-up on headache symptoms'
-    },
-    {
-      id: 3,
-      appointmentId: 'APT1236',
-      doctor: {
-        name: 'Dr. Emily Rodriguez',
-        specialty: 'Dermatology',
-        avatar: 'ER'
-      },
-      date: '2025-08-12',
-      time: '11:30 AM',
-      type: 'face-to-face',
-      status: 'completed',
-      clinic: {
-        name: 'Skin Health Clinic',
-        address: '456 Wellness Blvd, Suite 300'
-      },
-      notes: 'Skin examination and mole check'
-    },
-    {
-      id: 4,
-      appointmentId: 'APT1237',
-      doctor: {
-        name: 'Dr. David Kim',
-        specialty: 'Orthopedics',
-        avatar: 'DK'
-      },
-      date: '2025-08-22',
-      time: '9:00 AM',
-      type: 'face-to-face',
-      status: 'confirmed',
-      clinic: {
-        name: 'Bone & Joint Clinic',
-        address: '789 Medical Center Dr, Floor 2'
-      },
-      notes: 'Knee injury consultation'
-    },
-    {
-      id: 5,
-      appointmentId: 'APT1238',
-      doctor: {
-        name: 'Dr. Lisa Wong',
-        specialty: 'Pediatrics',
-        avatar: 'LW'
-      },
-      date: '2025-08-10',
-      time: '3:00 PM',
-      type: 'online',
-      status: 'cancelled',
-      meetingLink: 'meet.google.com/xyz-abcd-efg',
-      notes: 'Child vaccination consultation'
-    }
-  ];
->>>>>>> 52125ecf16c29b12570cab00cc87d2781e2c4911
   // Sample data
   const doctorsData = [
     {
@@ -394,7 +301,6 @@ const Appointments = () => {
   }, [currentMonth, currentYear]);
 
   // Appointments list functions
-<<<<<<< HEAD
   // Date/time helpers (use local timezone to avoid off-by-one issues)
   const toLocalISODate = (date) => {
     if (!(date instanceof Date)) return '';
@@ -443,8 +349,6 @@ const Appointments = () => {
     return `Appointment with ${doctorName} — ${dateStr} at ${timeLabel}`;
   };
 
-=======
->>>>>>> 52125ecf16c29b12570cab00cc87d2781e2c4911
   const getStatusColor = (status) => {
     switch (status) {
       case 'confirmed':
@@ -490,7 +394,6 @@ const Appointments = () => {
   };
 
   const formatDate = (dateString) => {
-<<<<<<< HEAD
     const date = parseLocalDate(dateString);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -503,19 +406,6 @@ const Appointments = () => {
       return 'Tomorrow';
     } else {
       return (date || new Date(dateString)).toLocaleDateString('en-US', { 
-=======
-    const date = new Date(dateString);
-    const today = new Date();
-    const tomorrow = new Date(today);
-    tomorrow.setDate(today.getDate() + 1);
-    
-    if (date.toDateString() === today.toDateString()) {
-      return 'Today';
-    } else if (date.toDateString() === tomorrow.toDateString()) {
-      return 'Tomorrow';
-    } else {
-      return date.toLocaleDateString('en-US', { 
->>>>>>> 52125ecf16c29b12570cab00cc87d2781e2c4911
         weekday: 'short', 
         month: 'short', 
         day: 'numeric' 
@@ -524,11 +414,7 @@ const Appointments = () => {
   };
 
   const isUpcoming = (dateString) => {
-<<<<<<< HEAD
     const appointmentDate = parseLocalDate(dateString);
-=======
-    const appointmentDate = new Date(dateString);
->>>>>>> 52125ecf16c29b12570cab00cc87d2781e2c4911
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     return appointmentDate >= today;
@@ -536,31 +422,20 @@ const Appointments = () => {
 
   const sortAppointments = (appointments) => {
     return appointments.sort((a, b) => {
-<<<<<<< HEAD
   const dateA = parseLocalDate(a.date);
   const dateB = parseLocalDate(b.date);
-=======
-      const dateA = new Date(a.date);
-      const dateB = new Date(b.date);
->>>>>>> 52125ecf16c29b12570cab00cc87d2781e2c4911
       return dateB - dateA; // Most recent first
     });
   };
 
   const cancelAppointment = (appointmentId) => {
     if (window.confirm('Are you sure you want to cancel this appointment?')) {
-<<<<<<< HEAD
   setAppointments(prev => prev.map(a => a.appointmentId === appointmentId ? { ...a, status: 'cancelled' } : a));
   showToast('Appointment cancelled', 'info');
-=======
-      alert(`Appointment ${appointmentId} has been cancelled.`);
-      // Here you would update the appointment status in your state or backend
->>>>>>> 52125ecf16c29b12570cab00cc87d2781e2c4911
     }
   };
 
   const rescheduleAppointment = (appointmentId) => {
-<<<<<<< HEAD
     const apt = appointments.find(a => a.appointmentId === appointmentId);
     if (!apt) return setViewMode('booking');
     setRescheduleTarget(apt);
@@ -622,27 +497,6 @@ const Appointments = () => {
       list = list.filter(apt => apt.date === dateFilter);
     }
     return list;
-=======
-    alert(`Redirecting to reschedule appointment ${appointmentId}...`);
-    // Here you would redirect to the booking page with pre-filled data
-    setViewMode('booking');
-  };
-
-  const joinMeeting = (meetingLink) => {
-    window.open(`https://${meetingLink}`, '_blank');
-  };
-
-  const getFilteredAppointments = () => {
-    switch (appointmentFilter) {
-      case 'upcoming':
-        return appointmentsData.filter(apt => isUpcoming(apt.date) && apt.status !== 'cancelled');
-      case 'past':
-        return appointmentsData.filter(apt => !isUpcoming(apt.date));
-      case 'all':
-      default:
-        return appointmentsData;
-    }
->>>>>>> 52125ecf16c29b12570cab00cc87d2781e2c4911
   };
 
   // Doctor selection functions
@@ -787,25 +641,18 @@ const Appointments = () => {
   };
 
   const selectTime = (time) => {
-<<<<<<< HEAD
     const normalized = time.replace(/\s+/g, ' ').trim().toUpperCase();
     setSelectedTime(normalized);
-=======
-    setSelectedTime(time);
->>>>>>> 52125ecf16c29b12570cab00cc87d2781e2c4911
     updateStepNavigation();
   };
 
   // Step navigation
   const nextStep = () => {
-<<<<<<< HEAD
     // When rescheduling, user should only change date/time and confirm
     if (rescheduleTarget) {
       if (currentStep === 3) setCurrentStep(4);
       return;
     }
-=======
->>>>>>> 52125ecf16c29b12570cab00cc87d2781e2c4911
     if (currentStep < 4) {
       setCurrentStep(currentStep + 1);
       updateStepNavigation();
@@ -813,27 +660,20 @@ const Appointments = () => {
   };
 
   const previousStep = () => {
-<<<<<<< HEAD
   // Disable going back to previous steps during reschedule
   if (rescheduleTarget) return;
   if (currentStep > 1) {
-=======
-    if (currentStep > 1) {
->>>>>>> 52125ecf16c29b12570cab00cc87d2781e2c4911
       setCurrentStep(currentStep - 1);
       updateStepNavigation();
     }
   };
 
   const goToStep = (step) => {
-<<<<<<< HEAD
     // During reschedule, only allow steps 3 and 4
     if (rescheduleTarget) {
       if (step < 3) return;
       if (step > 4) return;
     }
-=======
->>>>>>> 52125ecf16c29b12570cab00cc87d2781e2c4911
     setCurrentStep(step);
     updateStepNavigation();
   };
@@ -941,7 +781,6 @@ const Appointments = () => {
     );
   };
 
-<<<<<<< HEAD
   const confirmAppointment = async () => {
     // If rescheduling an existing appointment
     if (rescheduleTarget) {
@@ -1058,10 +897,6 @@ const Appointments = () => {
   setShowModal(true);
   showToast('Appointment booked', 'success');
     }
-=======
-  const confirmAppointment = () => {
-    setShowModal(true);
->>>>>>> 52125ecf16c29b12570cab00cc87d2781e2c4911
   };
 
   const closeModal = () => {
@@ -1070,16 +905,11 @@ const Appointments = () => {
   };
 
   const viewAppointments = () => {
-<<<<<<< HEAD
     setShowModal(false);
     setViewMode('list');
     // scroll to top of list
     setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 0);
     resetForm();
-=======
-    alert('Redirecting to your appointments page...');
-    closeModal();
->>>>>>> 52125ecf16c29b12570cab00cc87d2781e2c4911
   };
 
   const resetForm = () => {
@@ -1192,7 +1022,6 @@ const Appointments = () => {
     
     let meetingLink = null;
     if (selectedAppointmentType === 'online') {
-<<<<<<< HEAD
       if (googleMeetLink) {
         const chooserHref = `https://accounts.google.com/AccountChooser?continue=${encodeURIComponent(googleMeetLink)}`;
         meetingLink = (
@@ -1224,17 +1053,6 @@ const Appointments = () => {
           </div>
         );
       }
-=======
-      const meetId = Math.random().toString(36).substring(2, 15);
-      meetingLink = (
-        <div className={styles.summaryItem}>
-          <span className={styles.summaryLabel}>Google Meet Link:</span>
-          <span className={styles.summaryValue} style={{color: '#1a1a1a', textDecoration: 'underline'}}>
-            meet.google.com/{meetId}
-          </span>
-        </div>
-      );
->>>>>>> 52125ecf16c29b12570cab00cc87d2781e2c4911
     }
     
     return (
@@ -1329,27 +1147,18 @@ const Appointments = () => {
                   className={`${styles.filterTab} ${appointmentFilter === 'all' ? styles.active : ''}`}
                   onClick={() => setAppointmentFilter('all')}
                 >
-<<<<<<< HEAD
                   All Appointments ({appointments.length})
-=======
-                  All Appointments ({appointmentsData.length})
->>>>>>> 52125ecf16c29b12570cab00cc87d2781e2c4911
                 </button>
                 <button 
                   className={`${styles.filterTab} ${appointmentFilter === 'upcoming' ? styles.active : ''}`}
                   onClick={() => setAppointmentFilter('upcoming')}
                 >
-<<<<<<< HEAD
                   Upcoming ({appointments.filter(apt => isUpcoming(apt.date) && apt.status !== 'cancelled').length})
-=======
-                  Upcoming ({appointmentsData.filter(apt => isUpcoming(apt.date) && apt.status !== 'cancelled').length})
->>>>>>> 52125ecf16c29b12570cab00cc87d2781e2c4911
                 </button>
                 <button 
                   className={`${styles.filterTab} ${appointmentFilter === 'past' ? styles.active : ''}`}
                   onClick={() => setAppointmentFilter('past')}
                 >
-<<<<<<< HEAD
                   Past ({appointments.filter(apt => !isUpcoming(apt.date)).length})
                 </button>
               </div>
@@ -1392,12 +1201,6 @@ const Appointments = () => {
                 </div>
               </div>
 
-=======
-                  Past ({appointmentsData.filter(apt => !isUpcoming(apt.date)).length})
-                </button>
-              </div>
-
->>>>>>> 52125ecf16c29b12570cab00cc87d2781e2c4911
               {/* Appointments grid */}
               <div className={styles.appointmentsGrid}>
                 {sortAppointments(getFilteredAppointments()).map(appointment => (
@@ -1546,22 +1349,14 @@ const Appointments = () => {
           {viewMode === 'booking' && (
             <div className={styles.bookingContainer}>
               {/* Step Indicator */}
-<<<<<<< HEAD
         <div className={styles.stepIndicator} style={rescheduleTarget ? { userSelect: 'none' } : undefined}>
-=======
-              <div className={styles.stepIndicator}>
->>>>>>> 52125ecf16c29b12570cab00cc87d2781e2c4911
               {[1, 2, 3, 4].map(step => {
                 let stepClass = styles.step;
                 if (step === currentStep) stepClass += ` ${styles.active}`;
                 if (step < currentStep) stepClass += ` ${styles.completed}`;
                 
                 return (
-<<<<<<< HEAD
           <div key={step} className={stepClass} data-step={step} onClick={() => goToStep(step)} style={rescheduleTarget && step < 3 ? { pointerEvents: 'none', opacity: 0.5 } : undefined}>
-=======
-                  <div key={step} className={stepClass} data-step={step}>
->>>>>>> 52125ecf16c29b12570cab00cc87d2781e2c4911
                     <div className={styles.stepNumber}>{step}</div>
                     <span>
                       {step === 1 && 'Select Doctor'}
@@ -1708,7 +1503,6 @@ const Appointments = () => {
               {/* Online Meeting Info (shown when online is selected) */}
               {selectedAppointmentType === 'online' && (
                 <div className={styles.onlineInfo}>
-<<<<<<< HEAD
                   {!isGoogleAuthenticated ? (
                     <div className={styles.googleAuthCard}>
                       <div className={styles.authIcon}>
@@ -1769,39 +1563,6 @@ const Appointments = () => {
                       </div>
                     </div>
                   )}
-=======
-                  <div className={styles.infoCard}>
-                    <div className={styles.infoIcon}>
-                      <svg width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                        <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.061L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
-                      </svg>
-                    </div>
-                    <h4>Google Meet Link Ready</h4>
-                    <p>A secure Google Meet link will be automatically generated for your appointment. You'll receive the meeting details via email and SMS before your scheduled time.</p>
-                    <div className={styles.meetingFeatures}>
-                      <div className={styles.feature}>
-                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                          <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
-                        </svg>
-                        <span>End-to-end encrypted</span>
-                      </div>
-                      <div className={styles.feature}>
-                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                          <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zM4.285 9.567a.5.5 0 0 1 .683.183A3.498 3.498 0 0 0 8 11.5a3.498 3.498 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.498 4.498 0 0 1 8 12.5a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683zM10 8c-.552 0-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5S10.552 8 10 8z"/>
-                        </svg>
-                        <span>HD video quality</span>
-                      </div>
-                      <div className={styles.feature}>
-                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                          <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
-                        </svg>
-                        <span>Screen sharing available</span>
-                      </div>
-                    </div>
-                  </div>
->>>>>>> 52125ecf16c29b12570cab00cc87d2781e2c4911
                 </div>
               )}
             </div>
@@ -1813,14 +1574,11 @@ const Appointments = () => {
                 <p>Select your preferred appointment date and available time slot</p>
               </div>
 
-<<<<<<< HEAD
               {rescheduleTarget && (
                 <div style={{ background: '#fff7ed', border: '1px solid #fed7aa', color: '#9a3412', padding: '10px 12px', borderRadius: 8, marginBottom: 12 }}>
                   Rescheduling appointment #{rescheduleTarget.appointmentId}. You can change the date and time only.
                 </div>
               )}
-=======
->>>>>>> 52125ecf16c29b12570cab00cc87d2781e2c4911
               {showAppointmentSummaryMini()}
 
               <div className={styles.datetimeSelection}>

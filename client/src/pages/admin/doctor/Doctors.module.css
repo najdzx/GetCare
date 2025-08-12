@@ -691,12 +691,8 @@
   border-radius: 12px;
   width: 90%;
   max-width: 800px;
-<<<<<<< HEAD
   min-height: 520px;
   height: auto;
-=======
-  height: 50vh;
->>>>>>> 52125ecf16c29b12570cab00cc87d2781e2c4911
   overflow: hidden;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
   display: flex;
