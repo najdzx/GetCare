@@ -47,8 +47,8 @@ passport.deserializeUser((obj, done) => {
 });
 
 passport.use(new GoogleStrategy({
-  clientID: process.env.GOOGLE_CLIENT_ID || '***REMOVED***',
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET || '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',
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
   callbackURL: CALLBACK_URL
 },
   (accessToken, refreshToken, profile, done) => {
@@ -59,8 +59,8 @@ passport.use(new GoogleStrategy({
 
 // Auth routes
 router.get('/auth/google', (req, res, next) => {
-  const clientId = process.env.GOOGLE_CLIENT_ID || '***REMOVED***';
-  const clientSecret = process.env.GOOGLE_CLIENT_SECRET || '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';
+  const clientId = process.env.GOOGLE_CLIENT_ID;
+  const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
   
   console.log('CLIENT_ID check:', clientId);
   console.log('CLIENT_SECRET check:', clientSecret ? 'Present' : 'Missing');
