@@ -3,7 +3,10 @@ import { AuthProvider } from './contexts/AuthContext';
 import LandingPage from './pages/LandingPage/LandingPage';
 import LoginPage from './pages/LoginRegister/LoginPage';
 import RegisterPage from './pages/LoginRegister/RegisterPageTest';
+<<<<<<< HEAD
 import { useEffect } from 'react';
+=======
+>>>>>>> 52125ecf16c29b12570cab00cc87d2781e2c4911
 import AuthTest from './components/AuthTest';
 import DoctorLayout from './components/doctor/DoctorLayout';
 import Dashboard from './pages/doctor/dashboard/Dashboard';
@@ -47,6 +50,7 @@ import PatientDiagnostics from './pages/patient/Diagnostics';
 import PatientNotes from './pages/patient/Notes';
 import PatientChat from './pages/patient/Chat';
 import PatientProfile from './pages/patient/PatientProfile';
+<<<<<<< HEAD
 import SymptomChecker from './components/SymptomChecker';
 
 // Helper component to redirect SPA routes to backend endpoints
@@ -56,21 +60,30 @@ const ExternalRedirect = ({ to }) => {
   }, [to]);
   return null;
 };
+=======
+
+>>>>>>> 52125ecf16c29b12570cab00cc87d2781e2c4911
 
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
         <Routes>
+<<<<<<< HEAD
           {/* Catch auth routes if they accidentally hit the SPA and redirect to backend */}
           <Route path="/auth/google" element={<ExternalRedirect to="http://localhost:5000/auth/google" />} />
           <Route path="/auth/google/callback" element={<div style={{ padding: 24 }}><h2>Authentication in progress...</h2><p>You can close this tab and return to the previous window.</p></div>} />
+=======
+>>>>>>> 52125ecf16c29b12570cab00cc87d2781e2c4911
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/auth-test" element={<AuthTest />} />
           <Route path="/setup-profile/complete" element={<CompleteProfile />} />
+<<<<<<< HEAD
           <Route path="/symptom-checker" element={<SymptomChecker />} />
+=======
+>>>>>>> 52125ecf16c29b12570cab00cc87d2781e2c4911
 
         {/* Nested route under Doctor layout */}
         <Route path="/doctor" element={<DoctorLayout />}> 
