@@ -2,7 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const symptomCheckerApi = require('./api/symptom-checker');
 
 const googleAuthApi = require('./api/google-auth');
 const googleMeetApi = require('./api/google-meet');
@@ -11,7 +10,6 @@ app.use(express.json());
 app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
 
 // Mount API route
-app.use('/api/symptom-checker', symptomCheckerApi);
 
 // Mount Google OAuth route
 app.use('/', googleAuthApi);
