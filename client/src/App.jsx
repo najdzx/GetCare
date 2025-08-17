@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import LandingPage from './pages/LandingPage/LandingPage';
 import LoginPage from './pages/LoginRegister/LoginPage';
@@ -14,11 +14,10 @@ import './App.css';
 // 👇 Add these imports for the sub-pages
 import Appointments from './pages/doctor/appointments/Appointments';
 import Patients from './pages/doctor/patients/Patients';
-import Notes from './pages/doctor/Notes';
-import Chat from './pages/doctor/chat/ChatMessenger';
-import Files from './pages/doctor/Files';
+import Chat from './pages/doctor/chat/Doctorchat';
+
 import Analytics from './pages/doctor/Analytics';
-import Engagement from './pages/doctor/Engagement';
+
 import MyClinic from './pages/doctor/myclinic/MyClinic';
 import Invitations from './pages/doctor/Invitations';
 import Profile from './pages/doctor/profile/DoctorProfile';
@@ -39,13 +38,13 @@ import AdminSettings from './pages/admin/Settings';
 import PatientLayout from './components/patient/PatientLayout';
 import PatientDashboard from './pages/patient/Dashboard';
 import PatientAppointments from './pages/patient/Appointments';
-import PatientDoctors from './pages/patient/Doctors';
+import MedicalRecords from './pages/patient/MedicalRecords';
 import PatientAnalytics from './pages/patient/Analytics';
-import PatientEngagement from './pages/patient/Engagement';
-import PatientFiles from './pages/patient/Files';
+
+
 import PatientDiagnostics from './pages/patient/Diagnostics';
-import PatientNotes from './pages/patient/Notes';
-import PatientChat from './pages/patient/Chat';
+
+import PatientChat from './pages/patient/Patientchat';
 import PatientProfile from './pages/patient/PatientProfile';
 import SymptomChecker from './components/SymptomChecker';
 
@@ -79,11 +78,8 @@ function App() {
           <Route path="my-clinic" element={<MyClinic />} />
           <Route path="appointments" element={<Appointments />} />
           <Route path="patients" element={<Patients />} />
-          <Route path="notes" element={<Notes />} />
           <Route path="chat" element={<Chat />} />
-          <Route path="files" element={<Files />} />
           <Route path="analytics" element={<Analytics />} />
-          <Route path="engagement" element={<Engagement />} />
           <Route path="invitations" element={<Invitations />} />
           <Route path="profile" element={<Profile />} />
           <Route path="availability" element={<Availability />} />
@@ -107,12 +103,14 @@ function App() {
           <Route path="dashboard" element={<PatientDashboard />} />
           <Route path="diagnostics" element={<PatientDiagnostics />} />
           <Route path="appointments" element={<PatientAppointments />} />
-          <Route path="doctors" element={<PatientDoctors />} />
-          <Route path="notes" element={<PatientNotes />} />
+          <Route path="medical-records" element={<MedicalRecords />} />
+          {/* Keep /patient/doctors as a direct route (renders the same component as /patient/medical-records) */}
+          <Route path="doctors" element={<MedicalRecords />} />
+          
           <Route path="chat" element={<PatientChat />} />
-          <Route path="files" element={<PatientFiles />} />
+          
           <Route path="analytics" element={<PatientAnalytics />} />
-          <Route path="engagement" element={<PatientEngagement />} />
+          
           <Route path="profile" element={<PatientProfile />} />
         </Route>
       </Routes>

@@ -11,37 +11,35 @@ const RegisterPage = () => {
   const [error, setError] = React.useState('');
   const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
   const toggleConfirmPasswordVisibility = () => setShowConfirmPassword((prev) => !prev);
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
-    
-    const firstName = e.target.firstName.value.trim();
-    const lastName = e.target.lastName.value.trim();
+
     const email = e.target.email.value.trim();
     const password = e.target.password.value;
     const confirmPassword = e.target.confirmPassword.value;
-    
+
     // Validation
-    if (!firstName || !lastName || !email || !password || !confirmPassword) {
+    if (!email || !password || !confirmPassword) {
       setError('Please fill in all fields.');
       setLoading(false);
       return;
     }
-    
+
     if (password.length < 6) {
       setError('Password must be at least 6 characters long.');
       setLoading(false);
       return;
     }
-    
+
     if (password !== confirmPassword) {
       setError('Passwords do not match.');
       setLoading(false);
       return;
     }
-    
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setError('Please enter a valid email address.');
@@ -54,8 +52,6 @@ const RegisterPage = () => {
       const result = await AuthService.signUp({
         email: email,
         password: password,
-        firstName: firstName,
-        lastName: lastName,
         role: 'patient'
       });
 
@@ -129,43 +125,6 @@ const RegisterPage = () => {
             )}
             
             {/* Name Fields */}
-            <div className="signup-name-row">
-              <div className="signup-name-field">
-                <label htmlFor="firstName" className="signup-form-label">First Name</label>
-                <div className="signup-form-input-wrapper">
-                  <svg className="signup-form-input-icon" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd"/>
-                  </svg>
-                  <input
-                    type="text"
-                    id="firstName"
-                    name="firstName"
-                    className="signup-form-input"
-                    placeholder="Enter your first name"
-                    required
-                    disabled={loading}
-                  />
-                </div>
-              </div>
-              
-              <div className="signup-name-field">
-                <label htmlFor="lastName" className="signup-form-label">Last Name</label>
-                <div className="signup-form-input-wrapper">
-                  <svg className="signup-form-input-icon" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd"/>
-                  </svg>
-                  <input
-                    type="text"
-                    id="lastName"
-                    name="lastName"
-                    className="signup-form-input"
-                    placeholder="Enter your last name"
-                    required
-                    disabled={loading}
-                  />
-                </div>
-              </div>
-            </div>
             
             {/* Email Field */}
             <div className="signup-form-group">

@@ -1,0 +1,639 @@
+.container {
+    height: calc(100vh - 100px);
+    padding: 20px;
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.wrapper {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid #f0f0f0;
+    overflow: hidden;
+    box-sizing: border-box;
+    /* allow children to shrink (important for inner scroll areas) */
+    min-height: 0;
+}
+
+/* Header */
+.header {
+    background: white;
+    color: #1a1a1a;
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.doctorInfo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.doctorAvatar {
+    width: 48px;
+    height: 48px;
+    background: #f0f0f0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1a1a1a;
+}
+
+.doctorDetails h1 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.doctorDetails p {
+    font-size: 14px;
+    opacity: 0.8;
+    margin: 0;
+}
+
+.headerActions .btnSecondary {
+    background: #1a1a1a;
+    color: white;
+    border: 1px solid #1a1a1a;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+
+.headerActions .btnSecondary:hover {
+    background: #333;
+}
+
+/* Main Content */
+.mainContent {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    /* allow its children to shrink so their internal scroll works */
+    min-height: 0;
+}
+
+/* Patients Sidebar */
+.patientsSidebar {
+    width: 320px;
+    border-right: 1px solid #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    background: white;
+}
+
+.sidebarHeader {
+    padding: 20px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.searchContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.searchContainer svg {
+    position: absolute;
+    left: 12px;
+    color: #666;
+}
+
+.searchContainer input {
+    width: 100%;
+    padding: 10px 12px 10px 36px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+}
+
+.searchContainer input:focus {
+    outline: none;
+    border-color: #1a1a1a;
+}
+
+.patientsList {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.patientItem {
+    display: flex;
+    align-items: center;
+    padding: 16px 20px;
+    cursor: pointer;
+    border-bottom: 1px solid #f8f9fa;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.patientItem:hover {
+    background: #f8f9fa;
+}
+
+.patientItem.active {
+    background: #f0f9ff;
+    border-right: 3px solid #1a1a1a;
+}
+
+.patientAvatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #1a1a1a;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 16px;
+    position: relative;
+    margin-right: 12px;
+}
+
+.patientAvatar.large {
+    width: 56px;
+    height: 56px;
+    font-size: 18px;
+}
+
+.statusIndicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    border: 2px solid white;
+}
+
+.statusIndicator.online {
+    background: #10b981;
+}
+
+.statusIndicator.offline {
+    background: #6b7280;
+}
+
+.statusIndicator.away {
+    background: #f59e0b;
+}
+
+.patientInfo {
+    flex: 1;
+    min-width: 0;
+}
+
+.patientName {
+    font-weight: 600;
+    font-size: 14px;
+    color: #1a1a1a;
+    margin-bottom: 4px;
+}
+
+.lastMessage {
+    font-size: 13px;
+    color: #666;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 2px;
+}
+
+.messageTime {
+    font-size: 12px;
+    color: #888;
+}
+
+.unreadCount {
+    background: #dc2626;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* Chat Area */
+.chatArea {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: white;
+}
+
+.chatHeader {
+    padding: 16px 24px;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.currentPatientInfo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.patientDetails .patientName {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.patientStatus {
+    font-size: 13px;
+    color: #10b981;
+}
+
+.chatActions {
+    display: flex;
+    gap: 8px;
+}
+
+.actionBtn {
+    width: 36px;
+    height: 36px;
+    border: 1px solid #e5e7eb;
+    background: white;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #666;
+}
+
+.actionBtn:hover {
+    background: #f8f9fa;
+    border-color: #1a1a1a;
+    color: #1a1a1a;
+}
+
+/* Messages */
+.messagesContainer {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.message {
+    display: flex;
+    flex-direction: column;
+    max-width: 70%;
+    position: relative;
+}
+
+.message.sent {
+    align-self: flex-end;
+    align-items: flex-end;
+}
+
+.message.received {
+    align-self: flex-start;
+    align-items: flex-start;
+}
+
+.messageContent {
+    background: #f8f9fa;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.message.sent .messageContent {
+    background: #1a1a1a;
+    color: white;
+}
+
+.message.medicalNote .messageContent {
+    background: #f0f9ff;
+    border: 1px solid #0ea5e9;
+}
+
+.medicalHeader {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: #0ea5e9;
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+
+.messageTime {
+    font-size: 11px;
+    color: #888;
+    margin-top: 4px;
+}
+
+.messageStatus {
+    width: 16px;
+    height: 16px;
+    margin-top: 4px;
+}
+
+.messageStatus.delivered::after {
+    content: "✓✓";
+    color: #10b981;
+    font-size: 12px;
+}
+
+/* Message Input */
+.messageInputArea {
+    border-top: 1px solid #f0f0f0;
+    padding: 12px 24px;
+}
+
+.inputContainer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.attachmentBtn,
+.sendBtn {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #e5e7eb;
+    background: white;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #666;
+    flex-shrink: 0;
+}
+
+.sendBtn {
+    background: #1a1a1a;
+    color: white;
+    border-color: #1a1a1a;
+}
+
+.sendBtn:hover {
+    background: #333;
+}
+
+.attachmentBtn:hover {
+    background: #f8f9fa;
+    border-color: #1a1a1a;
+    color: #1a1a1a;
+}
+
+/* textarea/input shared styles */
+#messageInput, .messageInput {
+    flex: 1;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    resize: none;
+    min-height: 40px;
+    height: 40px;
+    max-height: 120px;
+    box-sizing: border-box;
+    overflow: hidden; /* prevent an empty scrollbar when content is short */
+}
+
+.messageInput:focus, #messageInput:focus {
+    outline: none;
+    border-color: #1a1a1a;
+}
+
+/* helper to keep buttons from shrinking the textarea */
+.sideBtn {
+    flex-shrink: 0;
+}
+
+/* Patient Info Panel */
+.patientInfoPanel {
+    width: 300px;
+    border-left: 1px solid #f0f0f0;
+    background: white;
+    display: none;
+    flex-direction: column;
+}
+
+.patientInfoPanel.active {
+    display: flex;
+}
+
+.panelHeader {
+    padding: 16px 20px;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.panelHeader h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.closeBtn {
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.closeBtn:hover {
+    color: #1a1a1a;
+}
+
+.panelContent {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.patientSummary {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.patientSummary h4 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.patientSummary p {
+    font-size: 13px;
+    color: #666;
+    margin: 2px 0;
+}
+
+.infoSection {
+    margin-bottom: 20px;
+}
+
+.infoSection h5 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #1a1a1a;
+}
+
+.infoSection p {
+    font-size: 13px;
+    color: #666;
+    margin: 4px 0;
+}
+
+.infoSection ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.infoSection li {
+    font-size: 13px;
+    color: #666;
+    padding: 4px 0;
+    border-bottom: 1px solid #f8f9fa;
+}
+
+.panelActions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.btnPrimary {
+    background: #1a1a1a;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btnPrimary:hover {
+    background: #333;
+}
+
+.btnSecondary {
+    background: white;
+    color: #1a1a1a;
+    border: 1px solid #e5e7eb;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btnSecondary:hover {
+    border-color: #1a1a1a;
+    background: #f8f9fa;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .mainContent {
+        flex-direction: column;
+    }
+
+    .patientsSidebar {
+        width: 100%;
+        height: 200px;
+    }
+
+    .chatArea {
+        flex: 1;
+    }
+
+    .patientInfoPanel {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        z-index: 1000;
+        box-shadow: -4px 0 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .chatHeader {
+        padding: 12px 16px;
+    }
+
+    .messagesContainer {
+        padding: 16px;
+    }
+
+    .messageInputArea {
+        padding: 12px 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+
+    .header {
+        padding: 16px;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .doctorInfo {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .message {
+        max-width: 85%;
+    }
+}

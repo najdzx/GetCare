@@ -121,3 +121,27 @@
   left: 0;
   width: 80%;
 } 
+
+/* Visually hidden for screen readers */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Toggle SVG and focus styles */
+.sidebar-toggle-btn svg {
+  transition: transform 220ms ease, opacity 160ms ease;
+}
+.sidebar.collapsed .sidebar-toggle-btn svg {
+  transform: rotate(0deg);
+}
+.sidebar:not(.collapsed) .sidebar-toggle-btn svg {
+  transform: rotate(0deg);
+}

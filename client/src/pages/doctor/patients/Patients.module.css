@@ -402,7 +402,7 @@
 }
 
 .patient-item.shared {
-  border-left: 3px solid #666;
+  /* visually match regular patient items */
 }
 
 .patient-avatar {

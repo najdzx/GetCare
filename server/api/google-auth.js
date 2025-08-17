@@ -21,9 +21,6 @@ const SCOPES = [
 ];
 
 // Debug logging for credentials and scope
-console.log('GOOGLE_CLIENT_ID:', CLIENT_ID);
-console.log('GOOGLE_CLIENT_SECRET:', CLIENT_SECRET ? 'Loaded' : 'Missing');
-console.log('SCOPES:', SCOPES);
 
 // Session setup
 router.use(cors({
@@ -62,8 +59,6 @@ router.get('/auth/google', (req, res, next) => {
   const clientId = process.env.GOOGLE_CLIENT_ID;
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
   
-  console.log('CLIENT_ID check:', clientId);
-  console.log('CLIENT_SECRET check:', clientSecret ? 'Present' : 'Missing');
   
   if (!clientId || !clientSecret) {
     return res.status(500).send('Google OAuth credentials missing');
