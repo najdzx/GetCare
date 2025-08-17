@@ -10,7 +10,6 @@ router.post('/create-meet-link', async (req, res) => {
     }
 
   const { title, startTime, endTime, description, timeZone, attendees } = req.body;
-    console.log('Creating meet link with title:', title);
 
     const oauth2Client = new google.auth.OAuth2();
     oauth2Client.setCredentials({ access_token: req.user.accessToken });
@@ -71,7 +70,6 @@ router.post('/update-meet-event', async (req, res) => {
     }
 
   const { eventId, startTime, endTime, title, description, timeZone } = req.body;
-    console.log('Updating meet event with title:', title);
     if (!eventId || !startTime || !endTime) {
       return res.status(400).json({ error: 'eventId, startTime and endTime are required' });
     }
