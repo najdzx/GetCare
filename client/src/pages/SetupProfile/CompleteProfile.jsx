@@ -218,28 +218,29 @@ const CompleteProfile = () => {
         blood_type: formData.bloodType !== 'N/A' ? formData.bloodType : null,
         civil_status: formData.civilStatus !== 'N/A' ? formData.civilStatus : null,
         philhealth_no: formData.philhealthNo,
-        email: formData.email,
-        primary_mobile: formData.primaryMobile,
         medical_conditions: formData.medicalConditions,
         allergies: formData.allergies,
         surgeries: formData.surgeries,
         family_history: formData.familyHistory,
         medications: formData.medications,
         supplements: formData.supplements,
-        updated_at: new Date().toISOString()
+        tag: 'ongoing',
+        primary_mobile: formData.primaryMobile,
+        updated_at: new Date().toISOString(),
+        created_at: new Date().toISOString()
       };
 
       // Use upsert to insert or update the profile
-      const { error: profileError } = await supabase
-        .from('profiles')
+      const { error: profileError, status, statusText } = await supabase
+        .from('patient_profiles')
         .upsert(profileData, { 
           onConflict: 'user_id',
           ignoreDuplicates: false 
         });
-      
+
       if (profileError) {
-        console.error('Error saving profile to database:', profileError);
-        alert('Profile metadata updated, but detailed profile could not be saved. Please try again.');
+        console.error('Error saving profile to database:', profileError, status, statusText);
+        alert(`Profile metadata updated, but detailed profile could not be saved.\nError: ${profileError.message || profileError}`);
         return;
       }
 
@@ -279,13 +280,14 @@ const CompleteProfile = () => {
             user_id: user.id,
             first_name: formData.firstName,
             last_name: formData.lastName,
-            email: formData.email,
             primary_mobile: formData.primaryMobile,
-            updated_at: new Date().toISOString()
+            updated_at: new Date().toISOString(),
+            created_at: new Date().toISOString(),
+            tag: 'ongoing'
           };
 
           await supabase
-            .from('profiles')
+            .from('patient_profiles')
             .upsert(basicProfileData, { 
               onConflict: 'user_id',
               ignoreDuplicates: false 

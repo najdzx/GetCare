@@ -78,7 +78,7 @@ const PatientProfile = () => {
         console.log('Fetching profile data from database...');
         // Fetch profile data from database
         const { data: profile, error } = await supabase
-          .from('profiles')
+          .from('patient_profiles')
           .select('*')
           .eq('user_id', user.id)
           .single();
@@ -225,7 +225,7 @@ const PatientProfile = () => {
       console.log('Saving profile data:', profileData);
       
       const { error, data } = await supabase
-        .from('profiles')
+        .from('patient_profiles')
         .upsert(profileData, { onConflict: 'user_id', ignoreDuplicates: false })
         .select();
         
@@ -299,7 +299,7 @@ const PatientProfile = () => {
         updated_at: new Date().toISOString()
       };
       const { error } = await supabase
-        .from('profiles')
+        .from('patient_profiles')
         .upsert(profileData, { onConflict: 'user_id', ignoreDuplicates: false });
       if (error) {
         showToast('Error saving personal info!', 'error');
