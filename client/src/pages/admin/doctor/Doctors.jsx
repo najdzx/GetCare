@@ -345,9 +345,73 @@ const Doctors = () => {
   // Handle form submission
   const handleSubmitDoctorForm = (e) => {
     e.preventDefault();
-    // In a real app, you would send this data to your backend
-    alert('Doctor added successfully!');
-    setShowAddModal(false);
+    const form = e.target;
+    const firstName = form.firstName.value.trim();
+    const middleName = form.middleName.value.trim();
+    const lastName = form.lastName.value.trim();
+    const sex = form.sex.value;
+    const email = form.email.value.trim();
+    const phoneNumber = form.phoneNumber.value.trim();
+    const specialization = form.specialization.value.trim();
+    const prcLicenseNumber = form.prcLicense.value.trim();
+    const ptrLicenseNumber = form.ptrLicense.value.trim();
+    const tempPassword = form.tempPassword.value;
+
+    if (!firstName || !lastName || !email || !specialization || !prcLicenseNumber || !ptrLicenseNumber || !tempPassword) {
+      alert('All required fields must be filled.');
+      return;
+    }
+
+    // Call Supabase Auth signUp and insert doctor profile
+    import('../../../services/authService').then(({ AuthService }) => {
+      AuthService.createUserWithoutLogin({
+        email,
+        password: tempPassword,
+        firstName,
+        lastName,
+        role: 'doctor'
+      }).then(async (result) => {
+        if (!result.success) {
+          alert('Error creating doctor: ' + result.error);
+          return;
+        }
+        const userId = result.data.user.id;
+        const { supabase } = await import('../../../supabaseClient');
+        
+        // Debug: Check current user before profile insert
+        const { data: currentUser } = await supabase.auth.getUser();
+        console.log('Current user before doctor profile insert:', currentUser.user?.email, currentUser.user?.user_metadata?.role);
+        
+        // Since doctor_profiles.user_id references auth.users(id) directly,
+        // we can skip the public.users table and insert directly into doctor_profiles
+        const insertData = {
+          user_id: userId, // This references auth.users.id directly
+          email,
+          first_name: firstName,
+          middle_name: middleName,
+          last_name: lastName,
+          sex,
+          phone_number: phoneNumber,
+          specialization,
+          prc_license_number: prcLicenseNumber,
+          ptr_license_number: ptrLicenseNumber
+        };
+        console.log('Insert data:', insertData);
+        
+        const { data: insertResult, error: profileError } = await supabase
+          .from('doctor_profiles')
+          .insert([insertData]);
+          
+        console.log('Insert result:', insertResult);
+        console.log('Insert error:', profileError);
+        if (profileError) {
+          alert('Doctor account created, but profile insert failed: ' + profileError.message);
+        } else {
+          alert('Doctor added successfully!');
+        }
+        setShowAddModal(false);
+      });
+    });
   };
 
   // Close modals when clicking outside

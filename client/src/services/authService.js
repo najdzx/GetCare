@@ -163,4 +163,37 @@ export class AuthService {
       return { success: false, error: error.message };
     }
   }
+
+  // Create user without auto-login (for admin creating doctors)
+  static async createUserWithoutLogin({ email, password, firstName, lastName, role = 'doctor' }) {
+    try {
+      // Save current session
+      const { data: currentSession } = await supabase.auth.getSession();
+      
+      // Create new user
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            first_name: firstName,
+            last_name: lastName,
+            full_name: `${firstName} ${lastName}`,
+            role
+          }
+        }
+      });
+
+      if (error) throw error;
+
+      // Immediately restore the previous session to prevent auto-login
+      if (currentSession.session) {
+        await supabase.auth.setSession(currentSession.session);
+      }
+
+      return { success: true, data };
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  }
 }
