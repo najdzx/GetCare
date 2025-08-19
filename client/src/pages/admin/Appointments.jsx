@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { MdSearch, MdFilterList, MdAdd, MdEdit, MdDelete, MdPerson, MdSchedule, MdEvent } from 'react-icons/md';
-import AdminLayout from '../../components/admin/AdminLayout';
+// ...existing code...
 import styles from './Appointments.module.css';
 
 const Appointments = () => {

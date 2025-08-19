@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import AdminSidebar from './AdminSidebar';
+// import AdminSidebar from './AdminSidebar';
 import AdminTopNav from './AdminTopNav';
 import styles from '../maincontent.module.css';
 
@@ -9,13 +9,11 @@ const AdminLayoutRoute = () => {
 
   return (
     <>
-      <AdminSidebar collapsed={collapsed} setCollapsed={setCollapsed} />
+  {/* Sidebar removed for admin side */}
       <AdminTopNav collapsed={collapsed} />
       <main
         className={styles['main-content']}
-        style={{
-          marginLeft: collapsed ? '80px' : '240px',
-        }}
+
       >
         <Outlet />
       </main>

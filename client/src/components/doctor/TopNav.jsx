@@ -46,10 +46,39 @@ const TopNav = ({ collapsed }) => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  return (
-    <header className="topnav" style={{ left }}>
-      <div className="topnav-icons">
+  // Doctor navigation links (formerly in Sidebar)
+  const navLinks = [
+    { name: 'Dashboard', path: '/doctor' },
+    { name: 'My Clinic', path: '/doctor/my-clinic' },
+    { name: 'Appointments', path: '/doctor/appointments' },
+    { name: 'Patients', path: '/doctor/patients' },
+    { name: 'Invitations', path: '/doctor/invitations' },
+    { name: 'Chat', path: '/doctor/chat' },
+    { name: 'Analytics', path: '/doctor/analytics' },
+  ];
 
+  return (
+    <header className="topnav" style={{ left: 0, width: '100%', display: 'flex', alignItems: 'center', height: '60px', padding: '0 20px', justifyContent: 'space-between' }}>
+      {/* Logo section */}
+      <div className="topnav-logo" style={{ display: 'flex', alignItems: 'center', minWidth: '140px' }}>
+        <span style={{ fontWeight: 700, fontSize: '2rem', letterSpacing: '1px', fontFamily: 'Poppins, sans-serif' }}>
+          <span style={{ color: '#333' }}>Get</span>
+          <span style={{ color: '#434bb8' }}>Care</span>
+        </span>
+      </div>
+      {/* Centered nav links */}
+      <nav className="topnav-links" style={{ display: 'flex', alignItems: 'center', gap: '16px', flex: 1, justifyContent: 'center' }}>
+            {navLinks.map(link => (
+              <Button
+                key={link.name}
+                onClick={() => navigate(link.path)}
+                className="topnav-link-btn"
+              >
+                {link.name}
+              </Button>
+            ))}
+      </nav>
+      <div className="topnav-icons">
         {/* Notification Dropdown */}
         <div className="dropdown-wrapper" onClick={toggleNotif} ref={notifRef}>
           <MdNotifications className="topnav-icon" />
@@ -85,7 +114,6 @@ const TopNav = ({ collapsed }) => {
             </div>
           )}
         </div>
-
       </div>
     </header>
   );

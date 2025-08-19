@@ -25,7 +25,6 @@
   align-items: center;
   height: 60px; /* Match .topnav height for consistent alignment */
   cursor: pointer;
-  
 }
 
 .topnav-icon {
@@ -101,4 +100,55 @@
 .dropdown-menu li.logout {
   color: #c0392b;
   font-weight: bold;
+}
+
+.topnav-links button {
+  margin: 0 8px;
+  background: none;
+  border: none;
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.3s;
+  padding: 0.5rem 0;
+  position: relative;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.topnav-links button:after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--primary);
+  transition: width 0.3s;
+}
+
+.topnav-links button:hover {
+  color: var(--primary);
+}
+
+.topnav-links button:hover:after {
+  width: 100%;
+}
+
+.topnav-links button:focus {
+  color: var(--primary);
+}
+
+.topnav-links button:focus:after {
+  width: 100%;
+}
+
+.topnav-links button.active {
+  color: var(--primary);
+}
+
+.topnav-links button.active:after {
+  width: 100%;
 }
