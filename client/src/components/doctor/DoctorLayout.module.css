@@ -1,7 +1,6 @@
 .doctor-main-content {
   padding: 80px 20px 20px 20px; /* 80px top for TopNav */
-  transition: margin-left 0.3s ease;
   background-color: #f7f7f7;
   min-height: 100vh;
   box-sizing: border-box;
-} 
+}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import Sidebar from './Sidebar.jsx';
+// import Sidebar from './Sidebar.jsx';
 import TopNav from './TopNav.jsx';
 import styles from '../maincontent.module.css';
 
@@ -39,13 +39,10 @@ const PatientLayout = () => {
 
   return (
     <>
-      <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
+  {/* Sidebar fully removed for patient side */}
       <TopNav collapsed={collapsed} />
       <main
         className={styles['main-content']}
-                style={{
-                  marginLeft: collapsed ? '80px' : '240px',
-                }}
       >
         <Outlet /> {/* 👈 This renders the nested route like Dashboard */}
       </main>

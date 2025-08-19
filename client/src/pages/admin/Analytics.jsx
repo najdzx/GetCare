@@ -1,5 +1,5 @@
 import React from 'react';
-import AdminLayout from '../../components/admin/AdminLayout';
+// ...existing code...
 import styles from './Analytics.module.css';
 
 const Analytics = () => {

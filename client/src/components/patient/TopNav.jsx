@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Button } from '@mui/material';
 import { MdNotifications } from 'react-icons/md';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import '../Layout/TopNav.css';
@@ -52,13 +53,39 @@ const TopNav = ({ collapsed }) => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Patient navigation links (formerly in Sidebar)
+  const navLinks = [
+    { name: 'Dashboard', path: '/patient' },
+    { name: 'Diagnostics', path: '/patient/diagnostics' },
+    { name: 'Appointments', path: '/patient/appointments' },
+    { name: 'Records', path: '/patient/medical-records' },
+    { name: 'Chat', path: '/patient/chat' },
+    { name: 'Analytics', path: '/patient/analytics' },
+  ];
+
   return (
-    <header className="topnav" style={{ left }}>
+    <header className="topnav" style={{ left: 0, width: '100%', display: 'flex', alignItems: 'center', height: '60px', padding: '0 20px', justifyContent: 'space-between' }}>
+      {/* Logo section */}
+      <div className="topnav-logo" style={{ display: 'flex', alignItems: 'center', minWidth: '140px' }}>
+        <span style={{ fontWeight: 700, fontSize: '2rem', letterSpacing: '1px', fontFamily: 'Poppins, sans-serif' }}>
+          <span style={{ color: '#333' }}>Get</span>
+          <span style={{ color: '#434bb8' }}>Care</span>
+        </span>
+      </div>
+      {/* Centered nav links */}
+      <nav className="topnav-links" style={{ display: 'flex', alignItems: 'center', gap: '16px', flex: 1, justifyContent: 'center' }}>
+        {navLinks.map(link => (
+          <Button
+            key={link.name}
+            onClick={() => navigate(link.path)}
+            className="topnav-link-btn"
+            sx={{ margin: '0 8px', minWidth: 0, padding: 0 }}
+          >
+            {link.name}
+          </Button>
+        ))}
+      </nav>
       <div className="topnav-icons">
-
-        {/* User Name */}
-        <span className="user-name">{userName}</span>
-
         {/* Notification Dropdown */}
         <div className="dropdown-wrapper" onClick={toggleNotif} ref={notifRef}>
           <MdNotifications className="topnav-icon" />
@@ -94,7 +121,6 @@ const TopNav = ({ collapsed }) => {
             </div>
           )}
         </div>
-
       </div>
     </header>
   );
