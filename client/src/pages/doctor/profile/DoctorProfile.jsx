@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { supabase } from '../../../supabaseClient';
 import styles from './DoctorProfile.module.css';
 import '../../../components/Layout/Button.css';
 
 const DoctorProfile = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [profilePic, setProfilePic] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
   const [formData, setFormData] = useState({
-    doctorId: 'DOC001',
-    firstName: 'John',
-    middleName: 'Michael',
-    lastName: 'Doe',
-    sex: 'Male',
-    dateOfBirth: '1990-05-15',
+    doctorId: '',
+    firstName: '',
+    middleName: '',
+    lastName: '',
+    sex: '',
+    dateOfBirth: '',
     phoneNumber: '',
     email: '',
     prcLicenseNumber: '',
@@ -23,6 +26,97 @@ const DoctorProfile = () => {
     training: '',
     certifications: ''
   });
+
+  // Fetch doctor profile data when component mounts
+  useEffect(() => {
+    fetchDoctorProfile();
+  }, []);
+
+  const fetchDoctorProfile = async () => {
+    try {
+      setLoading(true);
+      
+      // Get current user from auth
+      const { data: { user }, error: authError } = await supabase.auth.getUser();
+      if (authError) throw authError;
+      
+      if (!user) {
+        console.error('No authenticated user found');
+        return;
+      }
+
+      setUser(user);
+
+      // Fetch doctor profile data
+      const { data: doctorProfile, error: profileError } = await supabase
+        .from('doctor_profiles')
+        .select('*')
+        .eq('user_id', user.id)
+        .single();
+
+      if (profileError) {
+        console.error('Error fetching doctor profile:', profileError);
+        return;
+      }
+
+      if (doctorProfile) {
+        // Map database fields to form data
+        setFormData({
+          doctorId: doctorProfile.id?.slice(0, 8).toUpperCase() || 'DOC-XXXX',
+          firstName: doctorProfile.first_name || '',
+          middleName: doctorProfile.middle_name || '',
+          lastName: doctorProfile.last_name || '',
+          sex: doctorProfile.sex || '',
+          dateOfBirth: doctorProfile.date_of_birth || '',
+          phoneNumber: doctorProfile.phone_number || '',
+          email: doctorProfile.email || user.email || '',
+          prcLicenseNumber: doctorProfile.prc_license_number || '',
+          ptrLicenseNumber: doctorProfile.ptr_license_number || '',
+          specialization: doctorProfile.specialization || '',
+          subSpecialization: doctorProfile.sub_specialization || '',
+          yearsOfExperience: doctorProfile.years_of_experience?.toString() || '',
+          affiliatedHospital: doctorProfile.affiliated_hospital || '',
+          training: doctorProfile.training || '',
+          certifications: doctorProfile.certifications || ''
+        });
+      }
+    } catch (error) {
+      console.error('Error in fetchDoctorProfile:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Update doctor profile in database
+  const updateDoctorProfile = async (updatedData) => {
+    try {
+      const { error } = await supabase
+        .from('doctor_profiles')
+        .update({
+          first_name: updatedData.firstName,
+          middle_name: updatedData.middleName,
+          last_name: updatedData.lastName,
+          sex: updatedData.sex,
+          phone_number: updatedData.phoneNumber,
+          email: updatedData.email,
+          prc_license_number: updatedData.prcLicenseNumber,
+          ptr_license_number: updatedData.ptrLicenseNumber,
+          specialization: updatedData.specialization,
+          years_of_experience: updatedData.yearsOfExperience ? parseInt(updatedData.yearsOfExperience) : null,
+          affiliated_hospital: updatedData.affiliatedHospital,
+          training: updatedData.training,
+          certifications: updatedData.certifications,
+          updated_at: new Date().toISOString()
+        })
+        .eq('user_id', user.id);
+
+      if (error) throw error;
+      return true;
+    } catch (error) {
+      console.error('Error updating doctor profile:', error);
+      return false;
+    }
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -45,13 +139,16 @@ const DoctorProfile = () => {
     }
   };
 
-  const handleSave = (e) => {
+  const handleSave = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    
     // Validate phone number (Philippines format: starts with +63 or 09, 11 digits for 09, 13 for +63)
     const phone = formData.phoneNumber.trim();
     const phPhoneRegex = /^(\+63|0)9\d{9}$/;
     if (phone && !phPhoneRegex.test(phone)) {
       alert('Please enter a valid Philippine phone number (e.g., 09171234567 or +639171234567).');
+      setLoading(false);
       return;
     }
 
@@ -59,11 +156,21 @@ const DoctorProfile = () => {
     const years = formData.yearsOfExperience.trim();
     if (years && (!/^\d{1,2}$/.test(years) || parseInt(years, 10) < 0 || parseInt(years, 10) > 99)) {
       alert('Years of experience must be a non-negative number.');
+      setLoading(false);
       return;
     }
 
-    setIsEditMode(false);
-    alert('Profile updated successfully!');
+    // Update profile in database
+    const success = await updateDoctorProfile(formData);
+    
+    if (success) {
+      setIsEditMode(false);
+      alert('Profile updated successfully!');
+    } else {
+      alert('Failed to update profile. Please try again.');
+    }
+    
+    setLoading(false);
   };
 
   const toggleEditMode = () => setIsEditMode(!isEditMode);
@@ -86,6 +193,26 @@ const DoctorProfile = () => {
   const doctorName = formData.firstName || formData.lastName 
     ? `Dr. ${formData.firstName} ${formData.middleName} ${formData.lastName}`.replace(/\s+/g, ' ')
     : 'Dr. [Name]';
+
+  // Show loading state
+  if (loading) {
+    return (
+      <div className={styles['doctor-profile-container']}>
+        <div className={styles['doctor-profile-wrapper']}>
+          <div style={{ 
+            display: 'flex', 
+            justifyContent: 'center', 
+            alignItems: 'center', 
+            height: '400px',
+            fontSize: '18px',
+            color: '#666'
+          }}>
+            Loading doctor profile...
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles['doctor-profile-container']}>

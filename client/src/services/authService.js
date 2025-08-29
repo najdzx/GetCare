@@ -2,7 +2,7 @@ import { supabase } from '../supabaseClient';
 
 export class AuthService {
   // Sign up new user
-  static async signUp({ email, password, firstName, lastName, role = 'patient' }) {
+  static async signUp({ email, password, role = 'patient' }) {
     try {
       // Step 1: Create auth user
       const { data, error } = await supabase.auth.signUp({
@@ -10,9 +10,6 @@ export class AuthService {
         password,
         options: {
           data: {
-            first_name: firstName,
-            last_name: lastName,
-            full_name: `${firstName} ${lastName}`,
             role
           }
         }
@@ -20,33 +17,7 @@ export class AuthService {
 
       if (error) throw error;
 
-      // Step 2: Save to users table
-      if (data.user) {
-        const { error: dbError } = await supabase
-          .from('users')
-          .insert([
-            {
-              id: data.user.id,
-              email,
-              first_name: firstName,
-              last_name: lastName,
-              full_name: `${firstName} ${lastName}`,
-              role,
-              created_at: new Date().toISOString(),
-              updated_at: new Date().toISOString()
-            }
-          ]);
-
-        if (dbError) {
-          console.error('Database insert error:', dbError);
-          // Return success even if DB insert fails since auth user was created
-          return { 
-            success: true, 
-            data, 
-            warning: 'Account created but there was an issue saving additional data.'
-          };
-        }
-      }
+      // Note: public.users record is automatically created via database trigger
 
       return { success: true, data };
     } catch (error) {
