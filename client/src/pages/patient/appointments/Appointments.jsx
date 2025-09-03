@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Appointments.module.css';
-import '../../components/Layout/Button.css';
-import { showToast } from '../../components/Layout/toast';
+import { showToast } from '../../../components/Layout/toast';
 
 const Appointments = () => {
   // State for view mode

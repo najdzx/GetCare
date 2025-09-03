@@ -4,6 +4,8 @@ import styles from './Appointments.module.css';
 import '../../../components/Layout/Button.css';
 import CalendarView from './CalendarView';
 import ListView from './ListView';
+import AppointmentBooking from './AppointmentBooking';
+
 
 const AppointmentsCalendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date(2025, 6, 1)); // July 2024
@@ -32,160 +34,14 @@ const AppointmentsCalendar = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState(null); // 'view' or 'add'
   const [modalTitle, setModalTitle] = useState('');
-  const [showAppointmentForm, setShowAppointmentForm] = useState(false);
-  const [meetingType, setMeetingType] = useState('face-to-face');
   const [reschedIndex, setReschedIndex] = useState(null);
   const [showReschedModal, setShowReschedModal] = useState(false);
-  const [viewMode, setViewMode] = useState('calendar'); // 'calendar' or 'list'
+  const [viewMode, setViewMode] = useState('calendar'); // 'calendar', 'list', or 'booking'
   const [listFilters, setListFilters] = useState({
     date: '',  // exact date filter
     type: 'all',
     meetingType: 'all'
   });
-
-  const generateCalendar = () => {
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth();
-
-    // Get first day of month and number of days
-    const firstDay = new Date(year, month, 1);
-    const lastDay = new Date(year, month + 1, 0);
-    const daysInMonth = lastDay.getDate();
-    const startingDayOfWeek = firstDay.getDay();
-
-    // Get previous month's last days
-    const prevMonth = new Date(year, month, 0);
-    const daysInPrevMonth = prevMonth.getDate();
-
-    const calendarDays = [];
-
-    // Day headers
-    const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    dayHeaders.forEach(day => {
-      calendarDays.push(
-        <div key={`header-${day}`} className={styles['calendar-day-header']}>
-          {day}
-        </div>
-      );
-    });
-
-    // Previous month's trailing days
-    for (let i = startingDayOfWeek - 1; i >= 0; i--) {
-      const day = daysInPrevMonth - i;
-      calendarDays.push(createDayElement(day, true, year, month - 1));
-    }
-
-    // Current month's days
-    for (let day = 1; day <= daysInMonth; day++) {
-      calendarDays.push(createDayElement(day, false, year, month));
-    }
-
-    // Next month's leading days - fill to complete the last week
-    let totalCells = calendarDays.length;
-    let nextMonthDay = 1;
-    while (totalCells < 7 + 42) { // 7 headers + 42 day cells (6 rows)
-      calendarDays.push(createDayElement(nextMonthDay, true, year, month + 1));
-      nextMonthDay++;
-      totalCells++;
-    }
-
-    return calendarDays;
-  };
-
-  const createDayElement = (day, isOtherMonth, year, month) => {
-    const dayDate = new Date(year, month, day);
-    const dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-    const today = new Date();
-    
-    const dayClasses = [styles['calendar-day']];
-    if (isOtherMonth) dayClasses.push(styles['other-month']);
-    if (!isOtherMonth && dayDate.toDateString() === today.toDateString()) {
-      dayClasses.push(styles['today']);
-    }
-    
-    const dayAppointments = appointments[dateKey] || [];
-    const hasAppointments = dayAppointments.length > 0;
-    
-    return (
-      <div 
-        key={dateKey}
-        className={dayClasses.join(' ')}
-        onClick={() => !isOtherMonth && openModal(dateKey, day, month, year)}
-      >
-        <div className={styles['day-number']}>{day}</div>
-        
-        {hasAppointments && (
-          <>
-            <div style={{ flex: 1, overflow: 'hidden', marginBottom: '30px' }}>
-              {dayAppointments.slice(0, 2).map((appointment, idx) => (
-                <div key={idx} className={`${styles.appointment} ${styles[appointment.meetingType]}`}>
-                  <div className={styles['appointment-time']}>{appointment.time}</div>
-                  <div className={styles['appointment-patient']}>{appointment.patient}</div>
-                </div>
-              ))}
-              
-              {dayAppointments.length > 2 && (
-                <div 
-                  className={styles['appointment-more']}
-                  style={{
-                    background: '#6c757d',
-                    color: 'white',
-                    padding: '3px 8px',
-                    borderRadius: '4px',
-                    fontSize: '10px',
-                    marginTop: '2px',
-                    textAlign: 'center',
-                    fontWeight: '600',
-                    cursor: 'pointer',
-                    transition: 'background-color 0.2s'
-                  }}
-                  onMouseOver={(e) => e.target.style.background = '#5a6268'}
-                  onMouseOut={(e) => e.target.style.background = '#6c757d'}
-                >
-                  +{dayAppointments.length - 2} more
-                </div>
-              )}
-            </div>
-            
-            {dayAppointments.length > 1 && (
-              <div 
-                className={styles['appointment-badge']}
-                style={{
-                  position: 'absolute',
-                  top: '8px',
-                  right: '8px',
-                  background: '#434bb8',
-                  color: 'white',
-                  borderRadius: '50%',
-                  width: '20px',
-                  height: '20px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '11px',
-                  fontWeight: '700',
-                  zIndex: '10',
-                  boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
-                }}
-              >
-                {dayAppointments.length}
-              </div>
-            )}
-          </>
-        )}
-        
-        <button 
-          className={styles['add-appointment-btn']}
-          onClick={(e) => {
-            e.stopPropagation();
-            openModal(dateKey, day, month, year);
-          }}
-        >
-          +
-        </button>
-      </div>
-    );
-  };
 
   const openModal = (dateKey, day, month, year) => {
     setMeetingType('face-to-face');
@@ -198,144 +54,18 @@ const AppointmentsCalendar = () => {
   };
 
   const openAddAppointmentModal = () => {
-    setMeetingType('face-to-face');
-    const today = new Date();
-    setCurrentDate(today); // Set calendar to today
-    const dateKey = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
-    setSelectedDate(dateKey);
-    setModalTitle('Add New Appointment');
-    setModalType('add');
-    setShowModal(true);
+    setViewMode('booking');
   };
 
-  const renderAppointmentForm = (dateKey, isNew = false, meetingType, setMeetingType) => {
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      const formData = new FormData(e.target);
-      const appointmentDate = formData.get('date');
-      const newAppointment = {
-        time: formData.get('time'),
-        patient: formData.get('patient'),
-        type: formData.get('type'),
-        meetingType: formData.get('meetingType'),
-        notes: formData.get('notes')
-      };
-      // Only add location for face-to-face; meet link will be generated after creation
-      if (newAppointment.meetingType === 'face-to-face') {
-        newAppointment.location = formData.get('location');
-      } else {
-        // Generate a meet link for online appointments
-        newAppointment.meetLink = `https://meet.google.com/${Math.random().toString(36).substr(2, 9)}-${Math.random().toString(36).substr(2, 9)}-${Math.random().toString(36).substr(2, 9)}`;
-      }
-      const updatedAppointments = { ...appointments };
-      if (!updatedAppointments[appointmentDate]) {
-        updatedAppointments[appointmentDate] = [];
-      }
-      updatedAppointments[appointmentDate].push(newAppointment);
-      updatedAppointments[appointmentDate].sort((a, b) => a.time.localeCompare(b.time));
-      setAppointments(updatedAppointments);
-      setShowModal(false);
-      setShowAppointmentForm(false);
-    };
-    const toggleLocationField = (type) => {
-      setMeetingType(type);
-    };
-    return (
-      <form className={styles['appointment-form']} onSubmit={handleSubmit}>
-        {!isNew && <h3 style={{ 
-          marginBottom: '15px', 
-          color: '#333', 
-          borderTop: '1px solid #e0e0e0', 
-          paddingTop: '20px' 
-        }}>Add New Appointment</h3>}
-        <div className={styles['form-group']}>
-          <label className={styles['form-label']}>Date</label>
-          <input 
-            type="date" 
-            className={styles['form-input']} 
-            name="date" 
-            defaultValue={dateKey} 
-            required 
-          />
-        </div>
-        <div className={styles['form-group']}>
-          <label className={styles['form-label']}>Time</label>
-          <input 
-            type="time" 
-            className={styles['form-input']} 
-            name="time" 
-            required 
-          />
-        </div>
-        <div className={styles['form-group']}>
-          <label className={styles['form-label']}>Patient Name</label>
-          <input 
-            type="text" 
-            className={styles['form-input']} 
-            name="patient" 
-            placeholder="Enter patient name" 
-            required 
-          />
-        </div>
-        <div className={styles['form-group']}>
-          <label className={styles['form-label']}>Appointment Type</label>
-          <select className={styles['form-select']} name="type" required>
-            <option value="consultation">Consultation</option>
-            <option value="follow-up">Follow-up</option>
-            <option value="emergency">Emergency</option>
-            <option value="routine">Routine Check-up</option>
-          </select>
-        </div>
-        <div className={styles['form-group']}>
-          <label className={styles['form-label']}>Meeting Type</label>
-          <select 
-            className={styles['form-select']} 
-            name="meetingType" 
-            required 
-            onChange={(e) => toggleLocationField(e.target.value)}
-            defaultValue="face-to-face"
-          >
-            <option value="face-to-face">Face-to-Face</option>
-            <option value="online">Online</option>
-          </select>
-        </div>
-        {meetingType === 'face-to-face' && (
-          <div className={styles['form-group']}>
-            <label className={styles['form-label']}>Clinic Location</label>
-            <input 
-              type="text" 
-              className={styles['form-input']} 
-              name="location" 
-              placeholder="Enter clinic name or address" 
-              required
-            />
-          </div>
-        )}
-        <div className={styles['form-group']}>
-          <label className={styles['form-label']}>Notes (Optional)</label>
-          <textarea 
-            className={styles['form-textarea']} 
-            name="notes" 
-            placeholder="Additional notes..."
-          ></textarea>
-        </div>
-        <div className={styles['form-actions']}>
-          <button type="submit" className="global-btn secondary"> 
-            Add Appointment
-          </button>
-          <button 
-            type="button" 
-            className="global-btn secondary" 
-            onClick={() => {
-              setShowAppointmentForm(false);
-              if (isNew) setShowModal(false);
-            }}
-          >
-            Cancel
-          </button>
-        </div>
-      </form>
-    );
+  const handleAppointmentCreated = (dateKey, newAppointment) => {
+    const updatedAppointments = { ...appointments };
+    if (!updatedAppointments[dateKey]) {
+      updatedAppointments[dateKey] = [];
+    }
+    updatedAppointments[dateKey].push(newAppointment);
+    updatedAppointments[dateKey].sort((a, b) => a.time.localeCompare(b.time));
+    setAppointments(updatedAppointments);
+    setViewMode('calendar');
   };
 
   const deleteAppointment = (index) => {
@@ -401,7 +131,6 @@ const AppointmentsCalendar = () => {
 
   const closeModal = () => {
     setShowModal(false);
-    setShowAppointmentForm(false);
   };
 
   // Get all appointments as a flat list for list view
@@ -481,39 +210,43 @@ const AppointmentsCalendar = () => {
               </h1>
             </div>
           )}
-          <div style={{ display: 'flex', gap: '12px' }}>
-            <button className="global-btn secondary" onClick={openAddAppointmentModal}>
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-              </svg>
-              Add Appointment
-            </button>
-            <button 
-              className={viewMode === 'list' ? "global-btn secondary" : "global-btn secondary"} 
-              onClick={() => setViewMode(viewMode === 'calendar' ? 'list' : 'calendar')}
-            >
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style={{ marginRight: '8px' }}>
-                {viewMode === 'calendar' ? (
-                  <path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V2zm1 0v12h14V2H1zm1 3v1h12V5H2zm0 2v1h12V7H2zm0 2v1h12V9H2z"/>
-                ) : (
-                  <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
-                )}
-              </svg>
-              {viewMode === 'calendar' ? 'View All' : 'Calendar View'}
-            </button>
-          </div>
+          {viewMode === 'booking' && (
+            <div className={styles['calendar-left']}>
+            </div>
+          )}
+          {viewMode !== 'booking' && (
+            <div style={{ display: 'flex', gap: '12px' }}>
+              <button className="global-btn secondary" onClick={openAddAppointmentModal}>
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg>
+                Add Appointment
+              </button>
+              <button 
+                className={viewMode === 'list' ? "global-btn secondary" : "global-btn secondary"} 
+                onClick={() => setViewMode(viewMode === 'calendar' ? 'list' : 'calendar')}
+              >
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style={{ marginRight: '8px' }}>
+                  {viewMode === 'calendar' ? (
+                    <path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V2zm1 0v12h14V2H1zm1 3v1h12V5H2zm0 2v1h12V7H2zm0 2v1h12V9H2z"/>
+                  ) : (
+                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                  )}
+                </svg>
+                {viewMode === 'calendar' ? 'View All' : 'Calendar View'}
+              </button>
+            </div>
+          )}
         </div>
 
-        {/* Content - Calendar or List View */}
+        {/* Content - Calendar, List, or Booking View */}
         {viewMode === 'calendar' ? (
           <CalendarView 
             currentDate={currentDate}
             appointments={appointments}
             openModal={openModal}
-            generateCalendar={generateCalendar}
-            createDayElement={createDayElement}
           />
-        ) : (
+        ) : viewMode === 'list' ? (
           <ListView 
             listFilters={listFilters}
             setListFilters={setListFilters}
@@ -523,6 +256,11 @@ const AppointmentsCalendar = () => {
             setSelectedDate={setSelectedDate}
             setReschedIndex={setReschedIndex}
             setShowReschedModal={setShowReschedModal}
+          />
+        ) : (
+          <AppointmentBooking
+            onClose={() => setViewMode('calendar')}
+            onAppointmentCreated={handleAppointmentCreated}
           />
         )}
       </div>
@@ -551,7 +289,6 @@ const AppointmentsCalendar = () => {
               <button className={styles['close-btn']} onClick={closeModal}>&times;</button>
             </div>
             <div className={styles['modal-body-scroll']}>
-              {modalType === 'add' && renderAppointmentForm(selectedDate, true, meetingType, setMeetingType)}
               {modalType === 'view' && (() => {
                 const dayAppointments = appointments[selectedDate] || [];
                 return <>
@@ -606,20 +343,24 @@ const AppointmentsCalendar = () => {
                       ))}
                     </div>
                   )}
-                  {/* Always show Add Appointment button in modal */}
-                  {!showAppointmentForm && (
-                    <button 
-                      className="global-btn secondary" 
-                      style={{ width: 'auto', minWidth: '180px', margin: '10px auto 0 auto', display: 'block' }}
-                      onClick={() => setShowAppointmentForm(true)}
-                    >
-                      <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style={{ marginRight: '8px' }}>
-                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                      </svg>
-                      Add Appointment
-                    </button>
+                  {dayAppointments.length === 0 && (
+                    <div style={{ textAlign: 'center', padding: '40px 20px', color: '#666' }}>
+                      <p>No appointments scheduled for this date.</p>
+                      <button 
+                        className="global-btn secondary" 
+                        style={{ marginTop: '15px' }}
+                        onClick={() => {
+                          closeModal();
+                          setViewMode('booking');
+                        }}
+                      >
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style={{ marginRight: '8px' }}>
+                          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                        </svg>
+                        Add Appointment
+                      </button>
+                    </div>
                   )}
-                  {showAppointmentForm && renderAppointmentForm(selectedDate, false, meetingType, setMeetingType)}
                 </>;
               })()}
             </div>

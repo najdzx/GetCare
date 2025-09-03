@@ -48,6 +48,128 @@
   letter-spacing: -0.3px;
 }
 
+/* Calendar Widget Styles */
+.calendarContainer {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.calendarHeader {
+  background: #f8f9fa;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navBtn {
+  background: none;
+  border: none;
+  padding: 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #666;
+  transition: all 0.2s;
+}
+
+.navBtn:hover {
+  background: #e5e7eb;
+  color: #1a1a1a;
+}
+
+.monthYear {
+  font-weight: 600;
+  color: #1a1a1a;
+  font-size: 14px;
+}
+
+.calendarGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background: white;
+}
+
+.calendarDay {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #f0f0f0;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.2s;
+}
+
+.calendarDay:hover {
+  background: #f8f9fa;
+}
+
+.calendarDay.disabled {
+  color: #d1d5db;
+  cursor: not-allowed;
+}
+
+.calendarDay.disabled:hover {
+  background: white;
+}
+
+.calendarDay.selected {
+  background: #1a1a1a;
+  color: white;
+}
+
+.calendarDay.today {
+  background: #fef3c7;
+  color: #92400e;
+  font-weight: 600;
+}
+
+.dayHeader {
+  background: #f8f9fa;
+  font-weight: 600;
+  font-size: 10px;
+  color: #666;
+  text-align: center;
+  padding: 8px 0;
+}
+
+/* Time Slots */
+.timeSlots {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 8px;
+}
+
+.timeSlot {
+  padding: 8px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.2s;
+  background: white;
+}
+
+.timeSlot:hover {
+  border-color: #1a1a1a;
+  color: #1a1a1a;
+}
+
+.timeSlot.selected {
+  background: #1a1a1a;
+  border-color: #1a1a1a;
+  color: white;
+}
+
+.timeSlot.unavailable {
+  background: #f9fafb;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
 .calendar-nav {
   display: flex;
   align-items: center;
@@ -758,4 +880,846 @@
     flex-direction: row;
     justify-content: center;
   }
+}
+
+/* Booking Container Styles */
+.booking-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #fafafa;
+  overflow: hidden;
+}
+
+.booking-header {
+  background-color: white;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 20px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.booking-header h2 {
+  font-size: 20px;
+  font-weight: 500;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.booking-content {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.booking-content .appointment-form {
+  background-color: white;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  width: 100%;
+  max-width: 600px;
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .booking-content {
+    padding: 20px;
+  }
+  
+  .booking-content .appointment-form {
+    padding: 20px;
+  }
+}
+
+/* Booking Container - Patient Style */
+.bookingContainer {
+    background: white;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Main Content */
+.mainContent {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+    scrollbar-gutter: stable;
+}
+
+/* Step Indicator */
+.stepIndicator {
+    display: flex;
+    padding: 20px;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: white;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #9ca3af;
+    font-weight: 500;
+    transition: all 0.3s;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.step.active {
+    color: #1a1a1a;
+}
+
+.step.completed {
+    color: #059669;
+}
+
+.stepNumber {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 12px;
+    transition: all 0.3s;
+}
+
+.step.active .stepNumber {
+    background: #1a1a1a;
+    color: white;
+}
+
+.step.completed .stepNumber {
+    background: #059669;
+    color: white;
+}
+
+/* Step Content */
+.stepContent {
+    display: none;
+    padding: 24px;
+}
+
+.stepContent.active {
+    display: block;
+}
+
+.sectionHeader {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.sectionHeader h3 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+}
+
+.sectionHeader p {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Form Section */
+.formSection {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.formGroup {
+    margin-bottom: 20px;
+}
+
+.formLabel {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: #1a1a1a;
+    font-size: 14px;
+}
+
+.formInput, .formSelect, .formTextarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: "Poppins", sans-serif;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+
+.formInput:focus, .formSelect:focus, .formTextarea:focus {
+    outline: none;
+    border-color: #1a1a1a;
+}
+
+.formTextarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* Appointment Summary */
+.appointmentSummary {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.summaryCard {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid #e5e7eb;
+}
+
+.summaryCard h4 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.summaryItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    padding: 8px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.summaryItem:last-child {
+    border-bottom: none;
+}
+
+.summaryLabel {
+    font-weight: 500;
+    color: #666;
+    font-size: 14px;
+    min-width: 80px;
+}
+
+.summaryValue {
+    color: #1a1a1a;
+    font-size: 14px;
+    text-align: right;
+    flex: 1;
+    margin-left: 16px;
+}
+
+/* Step Navigation */
+.stepNavigation {
+    padding: 24px;
+    border-top: 1px solid #f0f0f0;
+    background: white;
+    position: sticky;
+    bottom: 0;
+}
+
+.navigationButtons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 500px;
+    margin: 0 auto;
+    gap: 12px;
+}
+
+/* Button Styles */
+.btnPrimary {
+    background: #1a1a1a;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btnPrimary:hover:not(:disabled) {
+    background: #2a2a2a;
+}
+
+.btnPrimary:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+}
+
+.btnSecondary {
+    background: white;
+    color: #1a1a1a;
+    border: 1px solid #e5e7eb;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btnSecondary:hover {
+    border-color: #1a1a1a;
+    background: #f8f9fa;
+}
+
+/* Additional styles for appointment booking */
+
+.bookingContainer {
+    background: white;
+    overflow: hidden;
+}
+
+/* Step Indicator */
+.stepIndicator {
+    display: flex;
+    padding: 20px;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #9ca3af;
+    font-weight: 500;
+    transition: all 0.3s;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.step.active {
+    color: #1a1a1a;
+}
+
+.step.completed {
+    color: #059669;
+}
+
+.stepNumber {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 12px;
+    transition: all 0.3s;
+}
+
+.step.active .stepNumber {
+    background: #1a1a1a;
+    color: white;
+}
+
+.step.completed .stepNumber {
+    background: #059669;
+    color: white;
+}
+
+/* Step Content */
+.stepContent {
+    display: none;
+    padding: 24px;
+}
+
+.stepContent.active {
+    display: block;
+}
+
+.sectionHeader {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.sectionHeader h3 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+}
+
+.sectionHeader p {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Search and Filter */
+.searchFilter {
+    margin-bottom: 24px;
+}
+
+.searchBox {
+    position: relative;
+}
+
+.searchBox svg {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+}
+
+.searchBox input {
+    width: 100%;
+    padding: 10px 12px 10px 40px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: "Poppins", sans-serif;
+    transition: border-color 0.2s;
+}
+
+.searchBox input:focus {
+    outline: none;
+    border-color: #1a1a1a;
+}
+
+/* Doctor/Patient Selection Grid */
+.doctorsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.doctorCard {
+    border: 2px solid #f0f0f0;
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: white;
+}
+
+.doctorCard:hover {
+    border-color: #1a1a1a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.doctorCard.selected {
+    border-color: #1a1a1a;
+    background: #f8f9fa;
+}
+
+.doctorHeader {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.doctorAvatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #1a1a1a;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.doctorInfo h4 {
+    color: #1a1a1a;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 4px 0;
+}
+
+.doctorSpecialty {
+    color: #666;
+    font-size: 12px;
+}
+
+.doctorDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.detailItem {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #666;
+    font-size: 12px;
+}
+
+.detailItem svg {
+    color: #1a1a1a;
+    width: 14px;
+    height: 14px;
+}
+
+/* Appointment Types */
+.appointmentTypes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.typeCard {
+    border: 2px solid #f0f0f0;
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: white;
+}
+
+.typeCard:hover {
+    border-color: #1a1a1a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.typeCard.selected {
+    border-color: #1a1a1a;
+    background: #f8f9fa;
+}
+
+.typeIcon {
+    width: 80px;
+    height: 80px;
+    background: #f8f9fa;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    color: #1a1a1a;
+    font-size: 32px;
+}
+
+.typeCard h4 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+}
+
+.typeCard p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+.typeBenefits {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-align: left;
+}
+
+.typeBenefits span {
+    font-size: 12px;
+    color: #666;
+}
+
+/* Clinic Selection */
+.clinicSelection {
+    margin-top: 24px;
+}
+
+.clinicSelection h4 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.clinicSelection p {
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.clinicsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+}
+
+.clinicCard {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: white;
+    text-align: center;
+}
+
+.clinicCard:hover {
+    border-color: #1a1a1a;
+}
+
+.clinicCard.selected {
+    border-color: #1a1a1a;
+    background: #f8f9fa;
+}
+
+.clinicCard h5 {
+    color: #1a1a1a;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 4px 0;
+}
+
+.clinicCard p {
+    color: #666;
+    font-size: 12px;
+    margin: 0 0 4px 0;
+}
+
+.clinicCard span {
+    color: #666;
+    font-size: 11px;
+}
+
+/* Date & Time Selection */
+.datetimeSelection {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.datePicker,
+.timePicker {
+    border: 1px solid #f0f0f0;
+    border-radius: 12px;
+    padding: 20px;
+    background: white;
+}
+
+.datePicker h4,
+.timePicker h4 {
+    color: #1a1a1a;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 12px 0;
+}
+
+.dateInput {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: "Poppins", sans-serif;
+    transition: border-color 0.2s;
+}
+
+.dateInput:focus {
+    outline: none;
+    border-color: #1a1a1a;
+}
+
+.timeSlots {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 8px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.timeSlot {
+    padding: 8px 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 12px;
+    font-weight: 500;
+    background: white;
+}
+
+.timeSlot:hover {
+    border-color: #1a1a1a;
+}
+
+.timeSlot.selected {
+    background-color: #1a1a1a;
+    color: white;
+    border-color: #1a1a1a;
+}
+
+.selectDateFirst {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    padding: 20px;
+    font-size: 14px;
+}
+
+/* Summary and Confirmation */
+.appointmentSummary {
+    border: 1px solid #f0f0f0;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background: #f8f9fa;
+}
+
+.summaryItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 8px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.summaryItem:last-child {
+    border-bottom: none;
+}
+
+.summaryLabel {
+    font-weight: 500;
+    color: #666;
+    min-width: 100px;
+    font-size: 14px;
+}
+
+.summaryValue {
+    font-weight: 500;
+    color: #1a1a1a;
+    text-align: right;
+    flex: 1;
+    margin-left: 16px;
+    font-size: 14px;
+}
+
+.additionalInfo {
+    margin-bottom: 24px;
+}
+
+.additionalInfo h4 {
+    color: #1a1a1a;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.additionalInfo textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: "Poppins", sans-serif;
+    resize: vertical;
+    transition: border-color 0.2s;
+}
+
+.additionalInfo textarea:focus {
+    outline: none;
+    border-color: #1a1a1a;
+}
+
+.confirmationActions {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+/* Step Navigation */
+.stepNavigation {
+    padding: 24px;
+    border-top: 1px solid #f0f0f0;
+    background: white;
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stepNavigation > div {
+    display: flex;
+    gap: 12px;
+}
+
+/* Responsive Design for New Components */
+@media (max-width: 768px) {
+    .datetimeSelection {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .doctorsGrid {
+        grid-template-columns: 1fr;
+    }
+    
+    .appointmentTypes {
+        grid-template-columns: 1fr;
+    }
+    
+    .stepIndicator {
+        gap: 16px;
+    }
+    
+    .confirmationActions {
+        flex-direction: column;
+    }
+    
+    .stepNavigation {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .stepNavigation > div {
+        justify-content: center;
+    }
 }
