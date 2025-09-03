@@ -5,38 +5,25 @@ import '../../../components/Layout/Button.css';
 import CalendarView from './CalendarView';
 import ListView from './ListView';
 import AppointmentBooking from './AppointmentBooking';
+import { showToast } from '../../../components/Layout/toast';
 
 
 const AppointmentsCalendar = () => {
-  const [currentDate, setCurrentDate] = useState(new Date(2025, 6, 1)); // July 2024
+  const [currentDate, setCurrentDate] = useState(new Date(2025, 8, 1)); // September 2025
   const [selectedDate, setSelectedDate] = useState(null);
-  const [appointments, setAppointments] = useState({
-    '2025-12-15': [
-      { time: '09:00', patient: 'John Smith', type: 'consultation', meetingType: 'face-to-face', location: 'Downtown Medical Center' },
-      { time: '14:30', patient: 'Mary Johnson', type: 'follow-up', meetingType: 'online', meetLink: 'https://meet.google.com/abc-defg-hij' }
-    ],
-    '2025-12-18': [
-      { time: '10:00', patient: 'Robert Brown', type: 'emergency', meetingType: 'face-to-face', location: 'Emergency Clinic' }
-    ],
-    '2025-12-22': [
-      { time: '11:00', patient: 'Sarah Davis', type: 'consultation', meetingType: 'face-to-face', location: 'Main Clinic' },
-      { time: '15:00', patient: 'Michael Wilson', type: 'follow-up', meetingType: 'online', meetLink: 'https://meet.google.com/xyz-uvwx-rst' },
-      { time: '16:30', patient: 'Lisa Anderson', type: 'consultation', meetingType: 'face-to-face', location: 'Downtown Medical Center' }
-    ],
-    '2025-07-15': [
-      { time: '08:30', patient: 'Emma Thompson', type: 'routine', meetingType: 'face-to-face', location: 'Main Clinic' },
-      { time: '10:15', patient: 'David Chen', type: 'consultation', meetingType: 'online', meetLink: 'https://meet.google.com/def-ghij-klm' },
-      { time: '13:00', patient: 'Sophie Miller', type: 'follow-up', meetingType: 'online', meetLink: 'https://meet.google.com/nop-qrst-uvw' },
-      { time: '14:45', patient: 'James Rodriguez', type: 'emergency', meetingType: 'face-to-face', location: 'Emergency Clinic' },
-      { time: '16:00', patient: 'Anna Williams', type: 'consultation', meetingType: 'face-to-face', location: 'Downtown Medical Center' }
-    ]
-  });
-  const [showModal, setShowModal] = useState(false);
+  const [appointments, setAppointments] = useState({});
   const [modalType, setModalType] = useState(null); // 'view' or 'add'
   const [modalTitle, setModalTitle] = useState('');
   const [reschedIndex, setReschedIndex] = useState(null);
   const [showReschedModal, setShowReschedModal] = useState(false);
   const [viewMode, setViewMode] = useState('calendar'); // 'calendar', 'list', or 'booking'
+  
+  // Confirmation modal state - matching patient system
+  const [showModal, setShowModal] = useState(false);
+  const [confirmedAppointment, setConfirmedAppointment] = useState(null);
+  const [confirmedDate, setConfirmedDate] = useState(null);
+  const [rescheduleTarget, setRescheduleTarget] = useState(null); // For rescheduling appointments
+  
   const [listFilters, setListFilters] = useState({
     date: '',  // exact date filter
     type: 'all',
@@ -59,13 +46,66 @@ const AppointmentsCalendar = () => {
 
   const handleAppointmentCreated = (dateKey, newAppointment) => {
     const updatedAppointments = { ...appointments };
+    
+    // If rescheduling an existing appointment
+    if (rescheduleTarget) {
+      const { originalDate, originalIndex } = rescheduleTarget;
+      
+      // Remove appointment from original date
+      if (updatedAppointments[originalDate]) {
+        updatedAppointments[originalDate].splice(originalIndex, 1);
+        if (updatedAppointments[originalDate].length === 0) {
+          delete updatedAppointments[originalDate];
+        }
+      }
+      
+      // Add updated appointment to new date
+      if (!updatedAppointments[dateKey]) {
+        updatedAppointments[dateKey] = [];
+      }
+      updatedAppointments[dateKey].push(newAppointment);
+      updatedAppointments[dateKey].sort((a, b) => a.time.localeCompare(b.time));
+      setAppointments(updatedAppointments);
+      
+      // Clear reschedule target
+      setRescheduleTarget(null);
+      
+      // Show confirmation modal and toast for rescheduling
+      setConfirmedAppointment(newAppointment);
+      setConfirmedDate(new Date(dateKey));
+      setShowModal(true);
+      showToast('Appointment rescheduled successfully', 'success');
+      setViewMode('calendar');
+      return;
+    }
+    
+    // Regular appointment creation
     if (!updatedAppointments[dateKey]) {
       updatedAppointments[dateKey] = [];
     }
     updatedAppointments[dateKey].push(newAppointment);
     updatedAppointments[dateKey].sort((a, b) => a.time.localeCompare(b.time));
     setAppointments(updatedAppointments);
+    
+    // Show confirmation modal and toast - matching patient system
+    setConfirmedAppointment(newAppointment);
+    setConfirmedDate(new Date(dateKey));
+    setShowModal(true);
+    showToast('Appointment scheduled successfully', 'success');
     setViewMode('calendar');
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setConfirmedAppointment(null);
+    setConfirmedDate(null);
+  };
+
+  const viewAppointments = () => {
+    setShowModal(false);
+    setViewMode('list');
+    setConfirmedAppointment(null);
+    setConfirmedDate(null);
   };
 
   const deleteAppointment = (index) => {
@@ -78,6 +118,21 @@ const AppointmentsCalendar = () => {
       setAppointments(updatedAppointments);
       setShowModal(false);
     }
+  };
+
+  // Reschedule appointment function - based on patient system
+  const rescheduleAppointment = (date, appointmentIndex) => {
+    const appointment = appointments[date][appointmentIndex];
+    if (!appointment) return;
+    
+    setRescheduleTarget({
+      ...appointment,
+      originalDate: date,
+      originalIndex: appointmentIndex,
+      appointmentId: `${date}-${appointmentIndex}` // Create unique ID for tracking
+    });
+    
+    setViewMode('booking');
   };
 
   const openReschedModal = (index) => {
@@ -129,10 +184,6 @@ const AppointmentsCalendar = () => {
     setCurrentDate(new Date());
   };
 
-  const closeModal = () => {
-    setShowModal(false);
-  };
-
   // Get all appointments as a flat list for list view
   const getAllAppointments = () => {
     const allAppointments = [];
@@ -181,6 +232,122 @@ const AppointmentsCalendar = () => {
     }
     
     return filtered;
+  };
+
+  const renderModalContent = () => {
+    if (!confirmedAppointment || !confirmedDate) return null;
+
+    const formatTime = (timeString) => {
+      const [hours, minutes] = timeString.split(':');
+      const hour = parseInt(hours);
+      const ampm = hour >= 12 ? 'PM' : 'AM';
+      const displayHour = hour % 12 || 12;
+      return `${displayHour}:${minutes} ${ampm}`;
+    };
+
+    const dateStr = confirmedDate.toLocaleDateString('en-US', { 
+      weekday: 'long', 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    });
+
+    let meetingLink = null;
+    if (confirmedAppointment.meetingType === 'online') {
+      if (confirmedAppointment.meetLink && !confirmedAppointment.needsGoogleAuth) {
+        // Real Google Meet link
+        const fullLink = confirmedAppointment.meetLink.startsWith('http') 
+          ? confirmedAppointment.meetLink 
+          : `https://${confirmedAppointment.meetLink}`;
+        
+        const chooserHref = `https://accounts.google.com/AccountChooser?continue=${encodeURIComponent(fullLink)}`;
+        const displayLink = fullLink.replace(/^https?:\/\//, '');
+        
+        meetingLink = (
+          <div className={styles.summaryItem}>
+            <span className={styles.summaryLabel}>Google Meet Link:</span>
+            <span className={styles.summaryValue} style={{color: '#1a1a1a', textDecoration: 'underline'}}>
+              <a href={chooserHref} target="_blank" rel="noopener noreferrer" style={{color: '#1a1a1a'}}>
+                {displayLink}
+              </a>
+            </span>
+          </div>
+        );
+      } else {
+        // No Google Meet link available
+        meetingLink = (
+          <div className={styles.summaryItem}>
+            <span className={styles.summaryLabel}>Google Meet Link:</span>
+            <span className={styles.summaryValue} style={{color: '#d32f2f'}}>
+              Google authentication required to generate meet link
+            </span>
+          </div>
+        );
+      }
+    }
+
+    return (
+      <div className={styles.modalContent}>
+        <div className={styles.modalHeader}>
+          <div className={styles.successIcon}>
+            <svg width="48" height="48" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+              <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.061L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+            </svg>
+          </div>
+          <h2>Appointment Confirmed!</h2>
+          <p>Your appointment has been successfully booked.</p>
+        </div>
+        <div className={styles.modalBody}>
+          <div className={styles.appointmentSummary}>
+            <div className={styles.summaryItem}>
+              <span className={styles.summaryLabel}>Appointment ID:</span>
+              <span className={styles.summaryValue}>#APT{Math.floor(Math.random() * 9000 + 1000)}</span>
+            </div>
+            <div className={styles.summaryItem}>
+              <span className={styles.summaryLabel}>Patient:</span>
+              <span className={styles.summaryValue}>{confirmedAppointment.patientName || confirmedAppointment.patient}</span>
+            </div>
+            <div className={styles.summaryItem}>
+              <span className={styles.summaryLabel}>Date & Time:</span>
+              <span className={styles.summaryValue}>{dateStr} at {formatTime(confirmedAppointment.time)}</span>
+            </div>
+            <div className={styles.summaryItem}>
+              <span className={styles.summaryLabel}>Type:</span>
+              <span className={styles.summaryValue}>
+                {confirmedAppointment.meetingType === 'online' ? 'Online Consultation' : 'Face-to-Face'}
+              </span>
+            </div>
+            {confirmedAppointment.meetingType === 'face-to-face' && confirmedAppointment.location && (
+              <div className={styles.summaryItem}>
+                <span className={styles.summaryLabel}>Location:</span>
+                <span className={styles.summaryValue}>{confirmedAppointment.location}</span>
+              </div>
+            )}
+            {confirmedAppointment.meetingType === 'online' && meetingLink}
+          </div>
+          {confirmedAppointment.meetingType === 'online' && (
+            <div style={{background: confirmedAppointment.needsGoogleAuth ? '#fef3c7' : '#f0f9ff', padding: '12px', borderRadius: '6px', marginTop: '16px', fontSize: '12px', color: confirmedAppointment.needsGoogleAuth ? '#92400e' : '#0369a1'}}>
+              {confirmedAppointment.needsGoogleAuth ? (
+                <>
+                  ⚠️ Google authentication is required to generate a meet link.<br />
+                  📝 Please authenticate with Google to enable automatic meet link creation for future appointments.
+                </>
+              ) : (
+                <>
+                  📧 Meeting details and Google Meet link have been sent to your email.<br />
+                  📱 You'll also receive an SMS reminder 30 minutes before your appointment.
+                </>
+              )}
+            </div>
+          )}
+        </div>
+        <div className={styles.modalActions}>
+          <button className={styles.btnSecondary} onClick={closeModal}>Close</button>
+          <button className={styles.btnPrimary} onClick={viewAppointments}>View My Appointments</button>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -256,11 +423,16 @@ const AppointmentsCalendar = () => {
             setSelectedDate={setSelectedDate}
             setReschedIndex={setReschedIndex}
             setShowReschedModal={setShowReschedModal}
+            rescheduleAppointment={rescheduleAppointment}
           />
         ) : (
           <AppointmentBooking
-            onClose={() => setViewMode('calendar')}
+            onClose={() => {
+              setViewMode('calendar');
+              setRescheduleTarget(null); // Clear reschedule target when closing
+            }}
             onAppointmentCreated={handleAppointmentCreated}
+            rescheduleTarget={rescheduleTarget}
           />
         )}
       </div>
@@ -333,7 +505,7 @@ const AppointmentsCalendar = () => {
                             </button>
                             <button
                               className="global-btn secondary"
-                              onClick={() => openReschedModal(index)}
+                              onClick={() => rescheduleAppointment(selectedDate, index)}
                               style={{ padding: '8px 16px', fontSize: '13px' }}
                             >
                               Reschedule
@@ -395,6 +567,13 @@ const AppointmentsCalendar = () => {
               </div>
             </form>
           </div>
+        </div>
+      )}
+
+      {/* Success Modal - matching patient system */}
+      {showModal && (
+        <div className={styles.modal} onClick={(e) => e.target === e.currentTarget && closeModal()}>
+          {renderModalContent()}
         </div>
       )}
     </div>
