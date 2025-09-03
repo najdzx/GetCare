@@ -34,9 +34,9 @@ CREATE TABLE public.appointments (
   created_at timestamp with time zone NOT NULL DEFAULT now(),
   updated_at timestamp with time zone NOT NULL DEFAULT now(),
   CONSTRAINT appointments_pkey PRIMARY KEY (id),
-  CONSTRAINT appointments_patient_id_fkey FOREIGN KEY (patient_id) REFERENCES public.patient_profiles(id),
+  CONSTRAINT appointments_clinic_id_fkey FOREIGN KEY (clinic_id) REFERENCES public.clinics(id),
   CONSTRAINT appointments_doctor_id_fkey FOREIGN KEY (doctor_id) REFERENCES public.doctor_profiles(id),
-  CONSTRAINT appointments_clinic_id_fkey FOREIGN KEY (clinic_id) REFERENCES public.clinics(id)
+  CONSTRAINT appointments_patient_id_fkey FOREIGN KEY (patient_id) REFERENCES public.patient_profiles(id)
 );
 CREATE TABLE public.clinics (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
@@ -75,8 +75,8 @@ CREATE TABLE public.doctor_availability (
   is_active boolean NOT NULL DEFAULT true,
   created_at timestamp with time zone NOT NULL DEFAULT now(),
   CONSTRAINT doctor_availability_pkey PRIMARY KEY (id),
-  CONSTRAINT doctor_availability_clinic_id_fkey FOREIGN KEY (clinic_id) REFERENCES public.clinics(id),
-  CONSTRAINT doctor_availability_doctor_id_fkey FOREIGN KEY (doctor_id) REFERENCES public.doctor_profiles(id)
+  CONSTRAINT doctor_availability_doctor_id_fkey FOREIGN KEY (doctor_id) REFERENCES public.doctor_profiles(id),
+  CONSTRAINT doctor_availability_clinic_id_fkey FOREIGN KEY (clinic_id) REFERENCES public.clinics(id)
 );
 CREATE TABLE public.doctor_clinics (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
@@ -88,8 +88,8 @@ CREATE TABLE public.doctor_clinics (
   end_time text,
   created_at timestamp with time zone NOT NULL DEFAULT now(),
   CONSTRAINT doctor_clinics_pkey PRIMARY KEY (id),
-  CONSTRAINT doctor_clinics_doctor_id_fkey FOREIGN KEY (doctor_id) REFERENCES public.doctor_profiles(id),
-  CONSTRAINT doctor_clinics_clinic_id_fkey FOREIGN KEY (clinic_id) REFERENCES public.clinics(id)
+  CONSTRAINT doctor_clinics_clinic_id_fkey FOREIGN KEY (clinic_id) REFERENCES public.clinics(id),
+  CONSTRAINT doctor_clinics_doctor_id_fkey FOREIGN KEY (doctor_id) REFERENCES public.doctor_profiles(id)
 );
 CREATE TABLE public.doctor_profiles (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
@@ -183,8 +183,8 @@ CREATE TABLE public.messages (
   is_read boolean NOT NULL DEFAULT false,
   created_at timestamp with time zone NOT NULL DEFAULT now(),
   CONSTRAINT messages_pkey PRIMARY KEY (id),
-  CONSTRAINT messages_conversation_id_fkey FOREIGN KEY (conversation_id) REFERENCES public.conversations(id),
-  CONSTRAINT messages_sender_id_fkey FOREIGN KEY (sender_id) REFERENCES public.users(id)
+  CONSTRAINT messages_sender_id_fkey FOREIGN KEY (sender_id) REFERENCES public.users(id),
+  CONSTRAINT messages_conversation_id_fkey FOREIGN KEY (conversation_id) REFERENCES public.conversations(id)
 );
 CREATE TABLE public.notifications (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
@@ -251,9 +251,9 @@ CREATE TABLE public.patient_visits (
   created_at timestamp with time zone NOT NULL DEFAULT now(),
   updated_at timestamp with time zone NOT NULL DEFAULT now(),
   CONSTRAINT patient_visits_pkey PRIMARY KEY (id),
-  CONSTRAINT patient_visits_appointment_id_fkey FOREIGN KEY (appointment_id) REFERENCES public.appointments(id),
   CONSTRAINT patient_visits_patient_id_fkey FOREIGN KEY (patient_id) REFERENCES public.patient_profiles(id),
-  CONSTRAINT patient_visits_doctor_id_fkey FOREIGN KEY (doctor_id) REFERENCES public.doctor_profiles(id)
+  CONSTRAINT patient_visits_doctor_id_fkey FOREIGN KEY (doctor_id) REFERENCES public.doctor_profiles(id),
+  CONSTRAINT patient_visits_appointment_id_fkey FOREIGN KEY (appointment_id) REFERENCES public.appointments(id)
 );
 CREATE TABLE public.prescriptions (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
@@ -312,28 +312,31 @@ CREATE TABLE public.soap_notes (
   created_at timestamp with time zone NOT NULL DEFAULT now(),
   updated_at timestamp with time zone NOT NULL DEFAULT now(),
   CONSTRAINT soap_notes_pkey PRIMARY KEY (id),
+  CONSTRAINT soap_notes_doctor_id_fkey FOREIGN KEY (doctor_id) REFERENCES public.doctor_profiles(id),
   CONSTRAINT soap_notes_visit_id_fkey FOREIGN KEY (visit_id) REFERENCES public.patient_visits(id),
-  CONSTRAINT soap_notes_patient_id_fkey FOREIGN KEY (patient_id) REFERENCES public.patient_profiles(id),
-  CONSTRAINT soap_notes_doctor_id_fkey FOREIGN KEY (doctor_id) REFERENCES public.doctor_profiles(id)
+  CONSTRAINT soap_notes_patient_id_fkey FOREIGN KEY (patient_id) REFERENCES public.patient_profiles(id)
 );
 CREATE TABLE public.users (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
-  email text NOT NULL UNIQUE,
+  email text NOT NULL UNIQUE CHECK (email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'::text),
   first_name text NOT NULL,
   last_name text NOT NULL,
   middle_name text,
   suffix text,
   nickname text,
   full_name text NOT NULL,
-  role text NOT NULL DEFAULT 'PATIENT'::text,
+  role text NOT NULL DEFAULT 'PATIENT'::text CHECK (role = ANY (ARRAY['PATIENT'::text, 'DOCTOR'::text, 'ADMIN'::text])),
   phone_number text,
   primary_mobile text,
   date_of_birth date,
   age integer,
-  sex text,
+  sex text CHECK (sex = ANY (ARRAY['MALE'::text, 'FEMALE'::text, 'OTHER'::text])),
   profile_image_url text,
   is_active boolean NOT NULL DEFAULT true,
   created_at timestamp with time zone NOT NULL DEFAULT now(),
   updated_at timestamp with time zone NOT NULL DEFAULT now(),
+  email_verified boolean NOT NULL DEFAULT false,
+  phone_verified boolean NOT NULL DEFAULT false,
+  last_login_at timestamp with time zone,
   CONSTRAINT users_pkey PRIMARY KEY (id)
 );
