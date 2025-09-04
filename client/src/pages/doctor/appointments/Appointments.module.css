@@ -1211,13 +1211,7 @@
 }
 
 /* Step Navigation */
-.stepNavigation {
-    padding: 24px;
-    border-top: 1px solid #f0f0f0;
-    background: white;
-    position: sticky;
-    bottom: 0;
-}
+
 
 .navigationButtons {
     display: flex;
@@ -1277,16 +1271,7 @@
 }
 
 /* Step Indicator */
-.stepIndicator {
-    display: flex;
-    padding: 20px;
-    justify-content: center;
-    gap: 32px;
-    flex-wrap: wrap;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
+
 
 .step {
     display: flex;
