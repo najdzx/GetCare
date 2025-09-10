@@ -9,7 +9,8 @@ const ListView = ({
   setAppointments,
   setSelectedDate,
   setReschedIndex,
-  setShowReschedModal 
+  setShowReschedModal,
+  rescheduleAppointment
 }) => {
   return (
     <div className={styles['list-content']}>
@@ -116,9 +117,7 @@ const ListView = ({
                     const appointmentIndex = dateAppointments.findIndex(apt => 
                       apt.time === appointment.time && apt.patient === appointment.patient
                     );
-                    setSelectedDate(appointment.date);
-                    setReschedIndex(appointmentIndex);
-                    setShowReschedModal(true);
+                    rescheduleAppointment(appointment.date, appointmentIndex);
                   }}
                 >
                   Reschedule

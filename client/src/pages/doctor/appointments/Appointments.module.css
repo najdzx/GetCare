@@ -170,6 +170,80 @@
   cursor: not-allowed;
 }
 
+/* Custom Time Input for Doctor */
+.customTimeInput {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.timeInput {
+  padding: 12px 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  background: white;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  max-width: 200px;
+}
+
+.timeInput:focus {
+  outline: none;
+  border-color: #1a1a1a;
+}
+
+.timeHelp {
+  font-size: 12px;
+  color: #666;
+  margin: 0;
+}
+
+/* Clean Appointment Summary (matching patient system) */
+.appointmentSummaryClean {
+  margin-bottom: 24px;
+}
+
+.summaryItemClean {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: none;
+}
+
+.summaryItemClean:last-child {
+  border-bottom: none;
+}
+
+.summaryLabelClean {
+  font-weight: 400;
+  color: #666;
+  font-size: 14px;
+  min-width: 140px;
+  text-align: left;
+}
+
+.summaryValueClean {
+  font-weight: 500;
+  color: #1a1a1a;
+  font-size: 14px;
+  text-align: right;
+  flex: 1;
+}
+
+/* Error Message */
+.errorMessage {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  margin-top: 8px;
+}
+
 .calendar-nav {
   display: flex;
   align-items: center;
@@ -1137,13 +1211,7 @@
 }
 
 /* Step Navigation */
-.stepNavigation {
-    padding: 24px;
-    border-top: 1px solid #f0f0f0;
-    background: white;
-    position: sticky;
-    bottom: 0;
-}
+
 
 .navigationButtons {
     display: flex;
@@ -1203,16 +1271,7 @@
 }
 
 /* Step Indicator */
-.stepIndicator {
-    display: flex;
-    padding: 20px;
-    justify-content: center;
-    gap: 32px;
-    flex-wrap: wrap;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
+
 
 .step {
     display: flex;
@@ -1528,25 +1587,17 @@
 /* Date & Time Selection */
 .datetimeSelection {
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 1fr 1fr;
     gap: 24px;
     margin-bottom: 24px;
 }
 
-.datePicker,
-.timePicker {
-    border: 1px solid #f0f0f0;
-    border-radius: 12px;
-    padding: 20px;
-    background: white;
-}
-
 .datePicker h4,
 .timePicker h4 {
-    color: #1a1a1a;
     font-size: 16px;
     font-weight: 600;
-    margin: 0 0 12px 0;
+    color: #1a1a1a;
+    margin-bottom: 12px;
 }
 
 .dateInput {
@@ -1669,7 +1720,7 @@
 
 .confirmationActions {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     gap: 12px;
     margin-bottom: 24px;
 }
@@ -1722,4 +1773,204 @@
     .stepNavigation > div {
         justify-content: center;
     }
+}
+
+/* Patient-style Modal Styles */
+.modalContent {
+    background-color: white;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.modalHeader {
+    text-align: center;
+    padding: 24px 20px 16px;
+}
+
+.successIcon {
+    width: 60px;
+    height: 60px;
+    background: #ecfdf5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px;
+    color: #059669;
+}
+
+.modalHeader h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 6px;
+}
+
+.modalHeader p {
+    color: #666;
+    font-size: 14px;
+}
+
+.modalBody {
+    padding: 0 20px 16px;
+}
+
+.appointmentSummary {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.summaryItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.summaryItem:last-child {
+    border-bottom: none;
+}
+
+.summaryLabel {
+    font-weight: 500;
+    color: #666;
+    font-size: 14px;
+}
+
+.summaryValue {
+    font-weight: 600;
+    color: #1a1a1a;
+    font-size: 14px;
+}
+
+.modalActions {
+    display: flex;
+    gap: 8px;
+    padding: 16px 20px;
+    border-top: 1px solid #f0f0f0;
+    justify-content: center;
+}
+
+.btnPrimary {
+    background: #1a1a1a;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btnPrimary:hover:not(:disabled) {
+    background: #333;
+    transform: translateY(-1px);
+}
+
+.btnSecondary {
+    background: white;
+    color: #666;
+    border: 1px solid #e5e7eb;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btnSecondary:hover {
+    border-color: #1a1a1a;
+    color: #1a1a1a;
+}
+
+.modal {
+    display: flex;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .modalContent {
+        width: 95%;
+        margin: 20px;
+    }
+    
+    .modalActions {
+        flex-direction: column;
+    }
+}
+
+/* Google Meet Integration Styles */
+.onlineInfo {
+    margin-top: 24px;
+}
+
+.infoCard, .googleAuthCard {
+    background: #f8f9fa;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+}
+
+.infoIcon, .authIcon {
+    width: 60px;
+    height: 60px;
+    background: #059669;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    color: white;
+}
+
+.infoCard h4, .googleAuthCard h4 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+}
+
+.infoCard p, .googleAuthCard p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.meetingFeatures {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.feature {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #666;
+}
+
+.feature svg {
+    color: #059669;
 }

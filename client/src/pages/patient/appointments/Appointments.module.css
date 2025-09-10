@@ -48,7 +48,10 @@
 
 .bookingContainer {
     background: white;
+    height: 100%;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Step Indicator */
@@ -61,6 +64,8 @@
     position: sticky;
     top: 0;
     z-index: 100;
+    background: white;
+    border-bottom: 1px solid #f0f0f0;
 }
 
 .step {
@@ -761,10 +766,14 @@
 
 /* Step Navigation */
 .stepNavigation {
+    padding: 24px;
+    border-top: 1px solid #f0f0f0;
+    background: white;
+    position: sticky;
+    bottom: 0;
     display: flex;
     justify-content: space-between;
-    padding: 20px 24px;
-    border-top: 1px solid #f0f0f0;
+    align-items: center;
 }
 
 .confirmationActions {

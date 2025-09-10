@@ -1124,16 +1124,12 @@ const Appointments = () => {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        <main className={styles.mainContent}>
+        <main className={styles.mainContent} style={viewMode === 'booking' ? { overflow: 'hidden' } : undefined}>
           {/* Toggle Appointment Button */}
           <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '16px' }}>
-            {viewMode === 'list' ? (
+            {viewMode === 'list' && (
               <button className={styles.btnPrimary} onClick={() => setViewMode('booking')}>
                 + Add Appointment
-              </button>
-            ) : (
-              <button className={styles.btnPrimary} onClick={() => setViewMode('list')}>
-                View Appointments
               </button>
             )}
           </div>
@@ -1368,8 +1364,10 @@ const Appointments = () => {
               })}
             </div>
 
-            {/* Step 1: Doctor Selection */}
-            <div className={`${styles.stepContent} ${currentStep === 1 ? styles.active : ''}`} id="step1">
+            {/* Main Content with Scrolling */}
+            <div className={styles.mainContent}>
+              {/* Step 1: Doctor Selection */}
+              <div className={`${styles.stepContent} ${currentStep === 1 ? styles.active : ''}`} id="step1">
               <div className={styles.sectionHeader}>
                 <h3>Select Your Doctor</h3>
                 <p>Choose from your assigned doctors or search for a specialist</p>
@@ -1640,20 +1638,25 @@ const Appointments = () => {
               </div>
             </div>
 
+            </div> {/* End mainContent */}
+
             {/* Navigation Buttons */}
             <div className={styles.stepNavigation}>
-              {currentStep > 1 && (
-                <button className={styles.btnSecondary} onClick={previousStep}>Previous</button>
-              )}
-              {currentStep < 4 && (
-                <button 
-                  className={styles.btnPrimary} 
-                  onClick={nextStep}
-                  disabled={!isNextEnabled()}
-                >
-                  Next
-                </button>
-              )}
+              <button className={styles.btnSecondary} onClick={viewAppointments}>Cancel</button>
+              <div>
+                {currentStep > 1 && (
+                  <button className={styles.btnSecondary} onClick={previousStep}>Previous</button>
+                )}
+                {currentStep < 4 && (
+                  <button 
+                    className={styles.btnPrimary} 
+                    onClick={nextStep}
+                    disabled={!isNextEnabled()}
+                  >
+                    Next
+                  </button>
+                )}
+              </div>
             </div>
             </div>
           )}
