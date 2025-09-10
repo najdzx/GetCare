@@ -19,17 +19,17 @@
    ```
 
 2. **Install dependencies:**
-   ```bash
+cd client
    npm install
    # or
    yarn install
    ```
 
 3. **Start the development server:**
-   ```bash
+cd client
    npm start
    # or
-   yarn start
+  npm run dev
    ```
 
 4. **Open your browser and go to:**
